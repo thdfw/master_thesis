@@ -1,6 +1,6 @@
 from sympy import symbols, diff
 import numpy as np
-import matplotlib.pyplot as plt
+import casadi
 
 '''
 GOAL:
@@ -15,7 +15,7 @@ INPUTS:
 - y = [y_u, y_x] is the point at which we want to get the function value
     y_u is the component for the inputs "u"
     y_x is the component for the states "x"
-- real: True if y is real, False if y is symbolic
+- real: True if y is real, False if y is symbolic (casadi terms)
 
 OUTPUTS:
 Returns a dictionnary with:
@@ -48,11 +48,14 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
     T_S31: a_x[12], T_S32: a_x[13], T_S33: a_x[14], T_S34: a_x[15]}
 
     # Construct "y" from given data
-    y = {T_sup_HP: y_u[0], m_stor: y_u[1], delta_ch: y_u[2], delta_bu: y_u[3], delta_HP: y_u[4],
-    T_B1:  y_x[0],  T_B2:  y_x[1],  T_B3:  y_x[2],  T_B4:  y_x[3],
-    T_S11: y_x[4],  T_S12: y_x[5],  T_S13: y_x[6],  T_S14: y_x[7],
-    T_S21: y_x[8],  T_S22: y_x[9],  T_S23: y_x[10], T_S24: y_x[11],
-    T_S31: y_x[12], T_S32: y_x[13], T_S33: y_x[14], T_S34: y_x[15]}
+    if real:
+        y = {T_sup_HP: y_u[0], m_stor: y_u[1], delta_ch: y_u[2], delta_bu: y_u[3], delta_HP: y_u[4],
+        T_B1:  y_x[0],  T_B2:  y_x[1],  T_B3:  y_x[2],  T_B4:  y_x[3],
+        T_S11: y_x[4],  T_S12: y_x[5],  T_S13: y_x[6],  T_S14: y_x[7],
+        T_S21: y_x[8],  T_S22: y_x[9],  T_S23: y_x[10], T_S24: y_x[11],
+        T_S31: y_x[12], T_S32: y_x[13], T_S33: y_x[14], T_S34: y_x[15]}
+    else:
+        y = casadi.vertcat(y_u,y_x)
     
     # Some constants
     m_load = 0.2
@@ -115,16 +118,22 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
     # ------------------------------------------------------
 
     # Compute the gradient
-    grad_f = [diff(f,sym) for sym in all_variables]
+    grad_f = [diff(f,var_i) for var_i in all_variables]
     
     # Evaluate f and its gradient at "a"
     f_a = f.subs(a)
     grad_f_a = [round(grad_f_i.subs(a),3) for grad_f_i in grad_f]
 
     # f_approx(x) = f(a) + grad_f(a).(x-a)
-    f_approx = f_a
-    for i in range(len(grad_f_a)):
-        f_approx += grad_f_a[i] * (all_variables[i] - a[all_variables[i]])
+    if real:
+        f_approx = f_a
+        for i in range(len(grad_f_a)):
+            f_approx += grad_f_a[i] * (all_variables[i] - a[all_variables[i]])
+            
+    else:
+        f_approx = float(f_a)
+        for i in range(len(grad_f_a)):
+            f_approx += float(grad_f_a[i]) * (y[i] - float(a[all_variables[i]]))
     
     # ------------------------------------------------------
     # Return f_id(y), f_id_approx(y) and the relative error
@@ -136,12 +145,10 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
         approx = f_approx.subs(y)
         rel_error = np.abs((f.subs(y)-f_approx.subs(y))/f.subs(y))*100
         
-    # If not, we just return the function itself
+    # If not, we return the function itself
     else:
         exact = f
         approx = f_approx
-        rel_error = 0
+        rel_error = np.nan
         
-    return {'exact': exact, 'approx': approx, 'rel_error': rel_error}
-
-print("Hello github")
+    return {'exact': exact, 'approx': approx, 'rel_error': rel_error, 'f_a': f_a, 'grad_f_a': grad_f_a}
