@@ -16,7 +16,7 @@ example_symbolic = True
 id = 3
 
 # Point around which to linearize
-a_u = [310,  0.25,   0,    1,    0,    0]
+a_u = [310, 0.25, 0, 1, 0, 0]
 a_x = [308]*4 + [313]*12
 
 # Point at which to evaluate the function
