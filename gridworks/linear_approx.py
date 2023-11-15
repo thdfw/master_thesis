@@ -143,3 +143,5 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
         rel_error = 0
         
     return {'exact': exact, 'approx': approx, 'rel_error': rel_error}
+
+print("Hello github")
