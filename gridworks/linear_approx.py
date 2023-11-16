@@ -4,11 +4,11 @@ import casadi
 
 '''
 GOAL:
-Get the first order Taylor expansion (linear approximation) of a function f_i around a point "a"
+Get the first order Taylor expansion (linear approximation) of a function f around a point "a"
 Evaluate the value of the function and the approximation at a point "y"
 
 INPUTS:
-- id: The function number we want (e.g. id=2 if we want the function f_2)
+- id: The function we want (e.g. id=Q_HP if we want the function Q_HP)
 - a = [a_u, a_x] is the point around which we linearize the function
     a_u is the component for the inputs "u"
     a_x is the component for the states "x"
@@ -19,12 +19,12 @@ INPUTS:
 
 OUTPUTS:
 Returns a dictionnary with:
-- Exact: f_id(y)
-- Approx: f_id_approx(y)
+- Exact: f(y)
+- Approx: f_approx(y)
 - Rel_error: the relative error of the approximation
 '''
 
-def f_id_y(id, a_u, a_x, y_u, y_x, real):
+def f_approx(id, a_u, a_x, y_u, y_x, real):
 
     # ------------------------------------------------------
     # Define variables and construct vectors
@@ -61,7 +61,7 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
     m_load = 0.2
     Delta_T_load = 5/9 * 20
     m_HP = 0.5
-    c_p = 4187
+    cp = 4187
 
     # ------------------------------------------------------
     # Useful functions
@@ -78,41 +78,46 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
     # ------------------------------------------------------
     # The functions to approximate
     # ------------------------------------------------------
-
-    # f1
-    if id == 1: f = T_ret_load * delta_ch
-
-    # f2
-    if id == 2: f = T_sup_load
-
-    # f3,...,f6
-    if id == 3: f = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) * c_p * T_B1
-    if id == 4: f = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) * c_p * T_B2
-    if id == 5: f = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) * c_p * T_B3
-    if id == 6: f = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) * c_p * T_B4
-
-    # f7, f8
-    if id == 7: f = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) * c_p * T_sup_load
-    if id == 8: f = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) * c_p * T_ret_load
-
-    # f9,...,f20
-    if id == 9: f = (2*delta_ch-1) * m_stor * c_p * T_S11
-    if id == 10: f = (2*delta_ch-1) * m_stor * c_p * T_S12
-    if id == 11: f = (2*delta_ch-1) * m_stor * c_p * T_S13
-    if id == 12: f = (2*delta_ch-1) * m_stor * c_p * T_S14
-    if id == 13: f = (2*delta_ch-1) * m_stor * c_p * T_S21
-    if id == 14: f = (2*delta_ch-1) * m_stor * c_p * T_S22
-    if id == 15: f = (2*delta_ch-1) * m_stor * c_p * T_S23
-    if id == 16: f = (2*delta_ch-1) * m_stor * c_p * T_S24
-    if id == 17: f = (2*delta_ch-1) * m_stor * c_p * T_S31
-    if id == 18: f = (2*delta_ch-1) * m_stor * c_p * T_S32
-    if id == 19: f = (2*delta_ch-1) * m_stor * c_p * T_S33
-    if id == 20: f = (2*delta_ch-1) * m_stor * c_p * T_S34
-
-    # f21, f22
-    if id == 21: f = (2*delta_ch-1) * m_stor * c_p * T_sup_HP
-    if id == 22: f = (2*delta_ch-1) * m_stor * c_p * T_ret_HP
-
+    
+    # Objective and constraints
+    if   id == "Q_HP":            f = m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP
+    elif id == "T_sup_load":    f = T_sup_load
+    elif id == "m_buffer":      f = m_buffer
+    
+    # System dynamics: buffer tank
+    elif id == "Q_top_B1":      f = (2*delta_bu-1) * m_buffer * cp * (T_sup_load - T_B1)
+    elif id == "Q_bottom_B4":   f = (2*delta_bu-1) * m_buffer * cp * (T_B4 - T_ret_load)
+    
+    elif id == "Q_conv_B1":     f = -(2*delta_bu-1) * m_buffer * cp * (     - 1*T_B1 + T_B2)
+    elif id == "Q_conv_B2":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B1 - 2*T_B2 + T_B3)
+    elif id == "Q_conv_B3":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B2 - 2*T_B3 + T_B4)
+    elif id == "Q_conv_B4":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B3 - 1*T_B4)
+    
+    # System dynamics: storage tanks
+    elif id == "Q_top_S11":     f = (2*delta_ch-1) * m_stor * cp * (T_sup_HP - T_S11)
+    elif id == "Q_top_S21":     f = (2*delta_ch-1) * m_stor * cp * (T_S14 - T_S21)
+    elif id == "Q_top_S31":     f = (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31)
+    elif id == "Q_bottom_S14":  f = (2*delta_ch-1) * m_stor * cp * (T_S14 - T_S21)
+    elif id == "Q_bottom_S24":  f = (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31)
+    elif id == "Q_bottom_S34":  f = (2*delta_ch-1) * m_stor * cp * (T_S34 - T_ret_HP)
+    
+    elif id == "Q_conv_S11":    f = -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S11 + T_S12)
+    elif id == "Q_conv_S12":    f = -(2*delta_ch-1) * m_stor * cp * (T_S11 - 2*T_S12 + T_S13)
+    elif id == "Q_conv_S13":    f = -(2*delta_ch-1) * m_stor * cp * (T_S12 - 2*T_S13 + T_S14)
+    elif id == "Q_conv_S14":    f = -(2*delta_ch-1) * m_stor * cp * (T_S13 - 1*T_S14)
+    
+    elif id == "Q_conv_S21":    f = -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S21 + T_S22)
+    elif id == "Q_conv_S22":    f = -(2*delta_ch-1) * m_stor * cp * (T_S21 - 2*T_S22 + T_S23)
+    elif id == "Q_conv_S23":    f = -(2*delta_ch-1) * m_stor * cp * (T_S22 - 2*T_S23 + T_S24)
+    elif id == "Q_conv_S24":    f = -(2*delta_ch-1) * m_stor * cp * (T_S23 - 1*T_S24)
+    
+    elif id == "Q_conv_S31":    f = -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S31 + T_S32)
+    elif id == "Q_conv_S32":    f = -(2*delta_ch-1) * m_stor * cp * (T_S31 - 2*T_S32 + T_S33)
+    elif id == "Q_conv_S33":    f = -(2*delta_ch-1) * m_stor * cp * (T_S32 - 2*T_S33 + T_S34)
+    elif id == "Q_conv_S34":    f = -(2*delta_ch-1) * m_stor * cp * (T_S33 - 1*T_S34)
+    
+    else: raise ValueError("The function ID '{}' does not exist.".format(id))
+    
     # ------------------------------------------------------
     # First order Taylor expansion of f around "a"
     # ------------------------------------------------------
@@ -154,4 +159,4 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
         approx = f_approx
         rel_error = np.nan
         
-    return {'exact': exact, 'approx': approx, 'rel_error': rel_error, 'approx_readable': approx_readable}
+    return {'exact': exact, 'approx': approx, 'approx_readable': approx_readable, 'rel_error': rel_error, }
