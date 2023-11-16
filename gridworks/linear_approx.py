@@ -125,12 +125,15 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
     grad_f_a = [round(grad_f_i.subs(a),3) for grad_f_i in grad_f]
 
     # f_approx(x) = f(a) + grad_f(a).(x-a)
-    if real:
-        f_approx = f_a
-        for i in range(len(grad_f_a)):
-            f_approx += grad_f_a[i] * (all_variables[i] - a[all_variables[i]])
-            
-    else:
+    f_approx = f_a
+    for i in range(len(grad_f_a)):
+        f_approx += grad_f_a[i] * (all_variables[i] - a[all_variables[i]])
+        
+    # This is useful for prints, much easier to read
+    approx_readable = f_approx
+                
+    # If y is not real, we just want a symbolic expression
+    if not real:
         f_approx = float(f_a)
         for i in range(len(grad_f_a)):
             f_approx += float(grad_f_a[i]) * (y[i] - float(a[all_variables[i]]))
@@ -151,4 +154,4 @@ def f_id_y(id, a_u, a_x, y_u, y_x, real):
         approx = f_approx
         rel_error = np.nan
         
-    return {'exact': exact, 'approx': approx, 'rel_error': rel_error, 'f_a': f_a, 'grad_f_a': grad_f_a}
+    return {'exact': exact, 'approx': approx, 'rel_error': rel_error, 'approx_readable': approx_readable}

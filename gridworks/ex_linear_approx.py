@@ -42,6 +42,7 @@ approx = f['approx']
 exact = f['exact']
 error = f['rel_error']
 
+# Print the results
 print("\ny = {}".format([y_u, y_x]))
 print("a = {}\n".format([a_u, a_x]))
 print("f_{}(y): {}\n".format(id,exact))
