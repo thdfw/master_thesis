@@ -16,9 +16,6 @@ delta_t_s = 300 #seconds
 cp = 4187 #J/kgK
 
 '''
-GOAL:
-Get the exact values of some functions of the state and input variables
-
 INPUTS:
 u_0: optimal input at time step 0
 x_0: state at time step 0
