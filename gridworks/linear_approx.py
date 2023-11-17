@@ -91,7 +91,7 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     elif id == "T_sup_load":    f = T_sup_load
     elif id == "m_buffer":      f = m_buffer
         
-    # --- Buffer tank --- Top and Bottom [NOT OK]
+    # --- Buffer tank --- Top and Bottom [TEST]
     elif id == "Q_top_B1":      f = (2*delta_bu-1) * m_buffer * cp * (T_sup_load_no_buffer - T_B1) # [TEST]
     elif id == "Q_bottom_B4":   f = (2*delta_bu-1) * m_buffer * cp * (T_ret_load_no_buffer - T_B4) # [TEST]
     
@@ -101,7 +101,7 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     elif id == "Q_conv_B3":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B2 - 2*T_B3 + T_B4)
     elif id == "Q_conv_B4":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B3 - 1*T_B4)
     
-    # --- Storage tanks --- Top and Bottom [NOT OK]
+    # --- Storage tanks --- Top and Bottom [TEST]
     elif id == "Q_top_S11":     f = (2*delta_ch-1) * m_stor * cp * (T_sup_HP - T_S11)
     elif id == "Q_top_S21":     f = (2*delta_ch-1) * m_stor * cp * (T_S14 - T_S21)
     elif id == "Q_top_S31":     f = (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31)
