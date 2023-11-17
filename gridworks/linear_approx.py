@@ -1,6 +1,7 @@
 from sympy import symbols, diff
 import numpy as np
 import casadi
+import math
 
 '''
 GOAL:
@@ -80,7 +81,7 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     # ------------------------------------------------------
     
     # Objective and constraints
-    if   id == "Q_HP":            f = m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP
+    if   id == "Q_HP":          f = m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP
     elif id == "T_sup_load":    f = T_sup_load
     elif id == "m_buffer":      f = m_buffer
     
@@ -116,7 +117,7 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     elif id == "Q_conv_S33":    f = -(2*delta_ch-1) * m_stor * cp * (T_S32 - 2*T_S33 + T_S34)
     elif id == "Q_conv_S34":    f = -(2*delta_ch-1) * m_stor * cp * (T_S33 - 1*T_S34)
     
-    else: raise ValueError("The function ID '{}' does not exist.".format(id))
+    else: raise ValueError("\nThe function ID '{}' does not exist.".format(id))
     
     # ------------------------------------------------------
     # First order Taylor expansion of f around "a"
@@ -126,9 +127,19 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     grad_f = [diff(f,var_i) for var_i in all_variables]
     
     # Evaluate f and its gradient at "a"
-    f_a = f.subs(a)
-    grad_f_a = [round(grad_f_i.subs(a),3) for grad_f_i in grad_f]
-
+    try:
+        f_a = float(f.subs(a))
+        grad_f_a = [round(float(grad_f_i.subs(a)),5) for grad_f_i in grad_f]
+    except:
+        raise ValueError(f"Function f={id} is not defined at 'a' (f(a) and/or grad_f(a) are not floats).")
+        
+    # Check for NaN values in f and its gradient at "a"
+    if math.isnan(f_a):
+        raise ValueError(f"Function f={id} is not defined at 'a' (f(a) is NaN).")
+    for grad_f_a_i in grad_f_a:
+        if math.isnan(grad_f_a_i):
+            raise ValueError(f"Function f={id} is not defined at 'a' (grad_f(a) contains a NaN).")
+    
     # f_approx(x) = f(a) + grad_f(a).(x-a)
     f_approx = f_a
     for i in range(len(grad_f_a)):
