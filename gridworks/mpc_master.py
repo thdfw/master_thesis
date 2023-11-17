@@ -73,6 +73,7 @@ if GUROBI:
         print("\nSolver: Gurobi \nVariables: Continuous\n")
         solver_opts = {'gurobi.OutputFlag': 0}
 else:
+    if MIP: raise ValueError("Change the solver to Gurobi to solve the MIP.")
     print("\nSolver: Ipopt \nVariables: Continuous")
     solver_opts = {'ipopt.print_level': 0, 'print_time': 0, 'ipopt.tol': 1e-4}
     
