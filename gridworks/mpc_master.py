@@ -89,6 +89,10 @@ else:
 # ------------------------------------------------------
 
 x_0 = opti.parameter(16)
+c_el = opti.parameter(N)
+
+# Get all electricity prices
+c_el_all = [12] + [2] + [55] + [18.97]*12 + [18.92]*3 + [11]*9 + [18.21]*12 + [16.58]*12 + [16.27]*12 + [15.49]*12 + [14.64]*12 + [18.93]*12 + [45.56]*12 + [26.42]*12 + [18.0]*12 + [17.17]*12 + [16.19]*12 + [30.74]*12 + [31.17]*12 + [16.18]*12 + [17.11]*12 + [20.24]*12 + [24.94]*12 + [24.69]*12 + [26.48]*12 + [30.15]*12 + [23.14]*12 + [24.11]*12
 
 # Initial state x(:,0) of first iteration
 x_current = [320]*16
@@ -106,20 +110,24 @@ def dynamics(u_t, x_t):
     # All heat transfers are 0 unless specified otherwise later
     Q_top_B = Q_bottom_B = Q_conv_B = Q_losses_B = [0]*4
     Q_top_S = Q_bottom_S = Q_conv_S = Q_losses_S = Q_R_S = [0]*12
-    '''
+    
     # For the buffer tank B
+    #'''
     Q_top_B[0]      = f_approx(id="Q_top_B1", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
     Q_bottom_B[3]   = f_approx(id="Q_bottom_B4", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
+    #'''
     for i in range(1,5):
         Q_conv_B[i-1] = f_approx(id="Q_conv_B{}".format(i), a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
-    '''
+    
     # For the storage tank S
+    #'''
     Q_top_S[0]      = f_approx(id="Q_top_S11", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
     Q_top_S[4]      = f_approx(id="Q_top_S21", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
     Q_top_S[8]      = f_approx(id="Q_top_S31", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
     Q_bottom_S[3]   = f_approx(id="Q_bottom_S14", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
     Q_bottom_S[7]   = f_approx(id="Q_bottom_S24", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
     Q_bottom_S[11]  = f_approx(id="Q_bottom_S34", a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
+    #'''
     for i in range(1,4):
         for j in range(1,5):
             Q_conv_S[4*(i-1)+(j-1)] = f_approx(id="Q_conv_S{}{}".format(i,j), a_u=a_u, a_x=a_x, y_u=u_t, y_x=x_t, real=False)[exact_or_approx]
@@ -190,9 +198,7 @@ for t in range(N):
 
 # Define objective
 obj = sum(\
-
-f_approx(id="Q_HP", a_u=a_u, a_x=a_x, y_u=u[:,t], y_x=x[:,t], real=False)[exact_or_approx] \
-
+c_el[t] * f_approx(id="Q_HP", a_u=a_u, a_x=a_x, y_u=u[:,t], y_x=x[:,t], real=False)[exact_or_approx] \
 for t in range(N))
 
 # Set objective
@@ -211,6 +217,7 @@ for t in range(num_iterations):
     # ------------------------------------------------------
 
     opti.set_value(x_0, x_current)
+    opti.set_value(c_el, c_el_all[t:t+N])
 
     # ------------------------------------------------------
     # Solving

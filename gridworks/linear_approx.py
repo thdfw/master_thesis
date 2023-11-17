@@ -33,16 +33,17 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
 
     # Define all variables as symbols
     T_sup_HP, m_stor = symbols('T_sup_HP m_stor')
-    delta_ch, delta_bu, delta_HP = symbols('delta_ch delta_bu delta_hp')
+    delta_ch, delta_bu, delta_HP, delta_R = symbols('delta_ch delta_bu delta_hp delta_R')
     T_B1, T_B2, T_B3, T_B4 = symbols('T_B1 T_B2 T_B3 T_B4')
     T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S34 \
     = symbols('T_S11 T_S12 T_S13 T_S14 T_S21 T_S22 T_S23 T_S24 T_S31 T_S32 T_S33 T_S34')
     
     # Gather all the symbols in a list
-    all_variables = [T_sup_HP, m_stor, delta_ch, delta_bu, delta_HP, T_B1, T_B2, T_B3, T_B4, T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S34]
+    all_variables = [T_sup_HP, m_stor, delta_ch, delta_bu, delta_HP, delta_R,
+    T_B1, T_B2, T_B3, T_B4, T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S34]
     
     # Construct "a" from given data
-    a = {T_sup_HP: a_u[0], m_stor: a_u[1], delta_ch: a_u[2], delta_bu: a_u[3], delta_HP: a_u[4],
+    a = {T_sup_HP: a_u[0], m_stor: a_u[1], delta_ch: a_u[2], delta_bu: a_u[3], delta_HP: a_u[4], delta_R: a_u[5],
     T_B1:  a_x[0],  T_B2:  a_x[1],  T_B3:  a_x[2],  T_B4:  a_x[3],
     T_S11: a_x[4],  T_S12: a_x[5],  T_S13: a_x[6],  T_S14: a_x[7],
     T_S21: a_x[8],  T_S22: a_x[9],  T_S23: a_x[10], T_S24: a_x[11],
@@ -50,7 +51,7 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
 
     # Construct "y" from given data
     if real:
-        y = {T_sup_HP: y_u[0], m_stor: y_u[1], delta_ch: y_u[2], delta_bu: y_u[3], delta_HP: y_u[4],
+        y = {T_sup_HP: y_u[0], m_stor: y_u[1], delta_ch: y_u[2], delta_bu: y_u[3], delta_HP: y_u[4], delta_R: y_u[5],
         T_B1:  y_x[0],  T_B2:  y_x[1],  T_B3:  y_x[2],  T_B4:  y_x[3],
         T_S11: y_x[4],  T_S12: y_x[5],  T_S13: y_x[6],  T_S14: y_x[7],
         T_S21: y_x[8],  T_S22: y_x[9],  T_S23: y_x[10], T_S24: y_x[11],
@@ -76,32 +77,39 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     T_ret_load = T_sup_load - Delta_T_load
     T_ret_HP = (m_load*T_ret_load + m_stor*T_S34*delta_ch + m_buffer*T_B4*delta_bu) / (m_load + m_stor*delta_ch + m_buffer*delta_bu)
 
+    # TEST
+    T_sup_load_no_buffer = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch)) / (m_HP*delta_HP + m_stor*(1-delta_ch))
+    T_ret_load_no_buffer = T_sup_load_no_buffer - Delta_T_load
+    T_ret_HP_no_stor = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_buffer*delta_bu)
+
     # ------------------------------------------------------
     # The functions to approximate
     # ------------------------------------------------------
     
-    # Objective and constraints
+    # Objective and constraints [OK]
     if   id == "Q_HP":          f = m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP
     elif id == "T_sup_load":    f = T_sup_load
     elif id == "m_buffer":      f = m_buffer
+        
+    # --- Buffer tank --- Top and Bottom [NOT OK]
+    elif id == "Q_top_B1":      f = (2*delta_bu-1) * m_buffer * cp * (T_sup_load_no_buffer - T_B1) # [TEST]
+    elif id == "Q_bottom_B4":   f = (2*delta_bu-1) * m_buffer * cp * (T_ret_load_no_buffer - T_B4) # [TEST]
     
-    # System dynamics: buffer tank
-    elif id == "Q_top_B1":      f = (2*delta_bu-1) * m_buffer * cp * (T_sup_load - T_B1)
-    elif id == "Q_bottom_B4":   f = (2*delta_bu-1) * m_buffer * cp * (T_B4 - T_ret_load)
-    
+    # --- Buffer tank --- Convection [CHECK]
     elif id == "Q_conv_B1":     f = -(2*delta_bu-1) * m_buffer * cp * (     - 1*T_B1 + T_B2)
     elif id == "Q_conv_B2":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B1 - 2*T_B2 + T_B3)
     elif id == "Q_conv_B3":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B2 - 2*T_B3 + T_B4)
     elif id == "Q_conv_B4":     f = -(2*delta_bu-1) * m_buffer * cp * (T_B3 - 1*T_B4)
     
-    # System dynamics: storage tanks
+    # --- Storage tanks --- Top and Bottom [NOT OK]
     elif id == "Q_top_S11":     f = (2*delta_ch-1) * m_stor * cp * (T_sup_HP - T_S11)
     elif id == "Q_top_S21":     f = (2*delta_ch-1) * m_stor * cp * (T_S14 - T_S21)
     elif id == "Q_top_S31":     f = (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31)
-    elif id == "Q_bottom_S14":  f = (2*delta_ch-1) * m_stor * cp * (T_S14 - T_S21)
-    elif id == "Q_bottom_S24":  f = (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31)
-    elif id == "Q_bottom_S34":  f = (2*delta_ch-1) * m_stor * cp * (T_S34 - T_ret_HP)
+    elif id == "Q_bottom_S14":  f = (2*delta_ch-1) * m_stor * cp * (T_S21 - T_S14)
+    elif id == "Q_bottom_S24":  f = (2*delta_ch-1) * m_stor * cp * (T_S31 - T_S24)
+    elif id == "Q_bottom_S34":  f = (2*delta_ch-1) * m_stor * cp * (T_ret_HP_no_stor - T_S34) # [TEST]
     
+    # --- Storage tanks --- Convection [CHECK]
     elif id == "Q_conv_S11":    f = -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S11 + T_S12)
     elif id == "Q_conv_S12":    f = -(2*delta_ch-1) * m_stor * cp * (T_S11 - 2*T_S12 + T_S13)
     elif id == "Q_conv_S13":    f = -(2*delta_ch-1) * m_stor * cp * (T_S12 - 2*T_S13 + T_S14)
