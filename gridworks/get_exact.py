@@ -60,4 +60,4 @@ def x_1(u_0, x_0):
     for i in range(len(x_plus_B)): x_plus.append(x_plus_B[i])
     for i in range(len(x_plus_S)): x_plus.append(x_plus_S[i])
     
-    return x_plus
+    return [round(float(x),2) for x in x_plus]   
