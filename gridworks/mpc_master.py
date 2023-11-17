@@ -42,7 +42,9 @@ cp = 4187 #J/kgK
 N = 3
 
 # Time step
-delta_t_s = 300
+delta_t_m = 5
+delta_t_s = delta_t_m*60
+delta_t_h = delta_t_m/60
 
 # Simulation time
 num_iterations = 3
@@ -164,7 +166,7 @@ for t in range(N+1):
 opti.subject_to(x[:,0] == x_0)
 
 # Additional constraints
-for t in range(N+1):
+for t in range(N):
     
     # Heat pump operation
     opti.subject_to(f_approx(id="Q_HP", a_u=a_u, a_x=a_x, y_u=u[:,t], y_x=x[:,t], real=False)[exact_or_approx] >= Q_HP_min * u[4,t])
@@ -178,7 +180,7 @@ for t in range(N+1):
     
     # Operational constraint (charging is only possible if the heat pump is on)
     opti.subject_to(u[2,t] <= u[4,t])
-
+    
     # System dynamics
     opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t]))
 
@@ -200,6 +202,8 @@ opti.minimize(obj)
 # MPC
 # ------------------------------------------------------
 
+print("Solving optimisation problem...\n")
+
 for t in range(num_iterations):
 
     # ------------------------------------------------------
@@ -212,8 +216,6 @@ for t in range(num_iterations):
     # Solving
     # ------------------------------------------------------
 
-    print("Solving optimisation problem...\n")
-
     # Solving the optimisation problem
     if GUROBI:  opti.solver('gurobi', solver_opts)
     else:       opti.solver('ipopt', solver_opts)
@@ -222,20 +224,26 @@ for t in range(num_iterations):
     # Get optimal u and x
     u_optimal = sol.value(u)
     x_optimal = sol.value(x)
-
+    
+    # Implement u_0*, get corresponding next state
+    x_1 = get_exact.x_1(u_optimal[:,0], x_optimal[:,0])
+    x_current = x_1
+    
+    # ------------------------------------------------------
+    # Prints
+    # ------------------------------------------------------
+    
+    # Print iteration and simulated time
+    hours = int(t*delta_t_h)
+    minutes = round((t*delta_t_h-int(t*delta_t_h))*60)
+    print("Iteration {} ({}h{}min)".format(t+1, hours, minutes))
+    
     # Print state, u0*, next state
     print("-----------------------------------------------------")
     print("x_0 = {}".format([round(x,2) for x in x_optimal[:,0]]))
     print("u_0* = {}".format([round(x,2) for x in u_optimal[:,0]]))
     print("x_1_approx = {}".format([round(x,2) for x in x_optimal[:,1]]))
-
-    # ------------------------------------------------------
-    # Implement u_0*, get next state and implement it
-    # ------------------------------------------------------
-
-    x_1 = get_exact.x_1(u_optimal[:,0], x_optimal[:,0])
     print("x_1_exact = {}".format(x_1))
     print("-----------------------------------------------------\n")
 
-    # Update x_0
-    x_current = x_1
+    
