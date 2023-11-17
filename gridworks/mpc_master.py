@@ -164,7 +164,7 @@ for t in range(N+1):
 opti.subject_to(x[:,0] == x_0)
 
 # Additional constraints
-for t in range(N):
+for t in range(N+1):
     
     # Heat pump operation
     opti.subject_to(f_approx(id="Q_HP", a_u=a_u, a_x=a_x, y_u=u[:,t], y_x=x[:,t], real=False)[exact_or_approx] >= Q_HP_min * u[4,t])
@@ -178,7 +178,7 @@ for t in range(N):
     
     # Operational constraint (charging is only possible if the heat pump is on)
     opti.subject_to(u[2,t] <= u[4,t])
-    
+
     # System dynamics
     opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t]))
 
