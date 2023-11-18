@@ -92,8 +92,8 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     elif id == "m_buffer":      f = m_buffer
         
     # --- Buffer tank --- Top and Bottom [TEST]
-    elif id == "Q_top_B1":      f = (2*delta_bu-1) * m_buffer * cp * (T_sup_load_no_buffer - T_B1) # [TEST]
-    elif id == "Q_bottom_B4":   f = (2*delta_bu-1) * m_buffer * cp * (T_ret_load_no_buffer - T_B4) # [TEST]
+    elif id == "Q_top_B1":      f = (2*delta_bu-1) * m_buffer * cp * (T_sup_load_no_buffer - T_B1)
+    elif id == "Q_bottom_B4":   f = (2*delta_bu-1) * m_buffer * cp * (T_ret_load_no_buffer - T_B4)
     
     # --- Buffer tank --- Convection [CHECK]
     elif id == "Q_conv_B1":     f = -(2*delta_bu-1) * m_buffer * cp * (     - 1*T_B1 + T_B2)
@@ -107,7 +107,7 @@ def f_approx(id, a_u, a_x, y_u, y_x, real):
     elif id == "Q_top_S31":     f = (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31)
     elif id == "Q_bottom_S14":  f = (2*delta_ch-1) * m_stor * cp * (T_S21 - T_S14)
     elif id == "Q_bottom_S24":  f = (2*delta_ch-1) * m_stor * cp * (T_S31 - T_S24)
-    elif id == "Q_bottom_S34":  f = (2*delta_ch-1) * m_stor * cp * (T_ret_HP_no_stor - T_S34) # [TEST]
+    elif id == "Q_bottom_S34":  f = (2*delta_ch-1) * m_stor * cp * (T_ret_HP_no_stor - T_S34)
     
     # --- Storage tanks --- Convection [CHECK]
     elif id == "Q_conv_S11":    f = -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S11 + T_S12)

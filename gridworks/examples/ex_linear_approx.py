@@ -1,4 +1,4 @@
-from linear_approx import f_approx
+from get_linear_approx import f_approx
 import casadi
 from sympy import symbols, diff, Symbol
 import numpy as np

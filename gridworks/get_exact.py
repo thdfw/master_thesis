@@ -1,7 +1,7 @@
 from sympy import symbols, diff
 import numpy as np
 import casadi
-from linear_approx import f_approx
+from get_linear_approx import f_approx
 
 # Tanks
 A = 0.25 #m2
@@ -60,4 +60,4 @@ def x_1(u_0, x_0):
     for i in range(len(x_plus_B)): x_plus.append(x_plus_B[i])
     for i in range(len(x_plus_S)): x_plus.append(x_plus_S[i])
     
-    return [round(float(x),2) for x in x_plus]   
+    return [round(float(x),6) for x in x_plus]   
