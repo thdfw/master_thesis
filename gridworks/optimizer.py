@@ -34,7 +34,7 @@ INPUTS:
 - The state at time step t: x(t)
 - The input at time step t: u(t)
 - The point around which to linearize: a
-- Lineanrized system or not: exact_or_approx
+- Linearized problem or not: exact_or_approx
 
 OUTPUTS:
 - The state at time step t+1: x(t+1)
