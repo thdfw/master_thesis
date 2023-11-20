@@ -3,6 +3,24 @@ import numpy as np
 import casadi
 import math
 
+# -----
+# Compute gradients for all function IDs
+# -----
+
+# Define all variables as symbols
+T_sup_HP, m_stor = symbols('T_sup_HP m_stor')
+delta_ch, delta_bu, delta_HP, delta_R = symbols('delta_ch delta_bu delta_hp delta_R')
+T_B1, T_B2, T_B3, T_B4 = symbols('T_B1 T_B2 T_B3 T_B4')
+T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S34 \
+= symbols('T_S11 T_S12 T_S13 T_S14 T_S21 T_S22 T_S23 T_S24 T_S31 T_S32 T_S33 T_S34')
+
+# Gather all the symbols in a list
+all_variables = [T_sup_HP, m_stor, delta_ch, delta_bu, delta_HP, delta_R,
+T_B1, T_B2, T_B3, T_B4, T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S34]
+
+
+
+
 '''
 GOAL:
 Get the first order Taylor expansion (linear approximation) of a function f around a point "a"
