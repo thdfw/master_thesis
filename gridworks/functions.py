@@ -90,7 +90,8 @@ gradients = {id: [diff(f,var_i) for var_i in all_variables] for id, f in functio
 # ------------------------------------------------------
 
 '''
-Add description
+Input: the point "a" around which to linearize
+Output: f(a) for all non linear functions defined in this file
 '''
 # Compute all the functions at point "a"
 def get_all_f(a):
@@ -110,7 +111,8 @@ def get_all_f(a):
     return functions_a
 
 '''
-Add description
+Input: the point "a" around which to linearize
+Output: grad_f(a) for all non linear functions defined in this file
 '''
 # Compute all the gradients at point "a"
 def get_all_grad_f(a):
