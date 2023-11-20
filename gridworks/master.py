@@ -26,7 +26,7 @@ pb_type = {
 
 # Linearized or not
 if pb_type['linearized']: print("\nProblem type: Linearized")
-else: print("Problem type: Non-linear")
+else: print("\nProblem type: Non-linear")
 
 # Variables: mixed integer or continuous
 if pb_type['mixed-integer']: print("Variables: Mixed-Integer")
@@ -43,7 +43,7 @@ else:
 # ------------------------------------------------------
 
 # Initial state
-x_0 = [320]*16
+x_0 = [320.0]*16
 
 # Initial point around which to linearize
 a = [310, 0.25, 0, 1, 0, 0] + x_0

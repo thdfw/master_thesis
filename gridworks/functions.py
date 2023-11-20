@@ -86,6 +86,68 @@ functions = {
 gradients = {id: [diff(f,var_i) for var_i in all_variables] for id, f in functions.items()}
 
 # ------------------------------------------------------
+# In the case exact value with symbolic values
+# ------------------------------------------------------
+'''
+In the particular case where we ask for the exact functions with
+u and x terms that are casadi symbolic terms, need to redefine the functions
+replacing the variable names by u and x.
+'''
+def functions_exact_sym(id,u,x):
+
+    # Mass flow rate at buffer tank
+    m_buffer = (m_HP * u[4] - u[1] * (2 * u[2] - 1) - m_load) / (2 * u[3] - 1)
+
+    # Mixing temperatures
+    T_sup_load = (m_HP*u[0]*u[4] + u[1]*x[4]*(1-u[2]) + m_buffer*x[0]*(1-u[3])) / (m_HP*u[4] + u[1]*(1-u[2]) + m_buffer*(1-u[3]))
+    T_ret_load = T_sup_load - Delta_T_load
+    T_ret_HP = (m_load*T_ret_load + u[1]*x[15]*u[2] + m_buffer*x[3]*u[3]) / (m_load + u[1]*u[2] + m_buffer*u[3])
+    T_sup_load_no_buffer = (m_HP*u[0]*u[4] + u[1]*x[4]*(1-u[2])) / (m_HP*u[4] + u[1]*(1-u[2]))
+    T_ret_load_no_buffer = T_sup_load_no_buffer - Delta_T_load
+    T_ret_HP_no_stor = (m_load*T_ret_load + m_buffer*x[3]*u[3]) / (m_load + m_buffer*u[3])
+
+    functions_with_u_x = {
+        # Objective and constraints [OK]
+        "Q_HP":         m_HP * cp * (u[0] - T_ret_HP) * u[4],
+        "T_sup_load":   T_sup_load,
+        "m_buffer":     m_buffer,
+            
+        # --- Buffer tank --- Top and Bottom [TEST]
+        "Q_top_B1":     (2*u[3]-1) * m_buffer * cp * (T_sup_load_no_buffer - x[0]),
+        "Q_bottom_B4":  (2*u[3]-1) * m_buffer * cp * (T_ret_load_no_buffer - x[3]),
+
+        # --- Buffer tank --- Convection [CHECK]
+        "Q_conv_B1":    -(2*u[3]-1) * m_buffer * cp * (     - 1*x[0] + x[1]),
+        "Q_conv_B2":    -(2*u[3]-1) * m_buffer * cp * (x[0] - 2*x[1] + x[2]),
+        "Q_conv_B3":    -(2*u[3]-1) * m_buffer * cp * (x[1] - 2*x[2] + x[3]),
+        "Q_conv_B4":    -(2*u[3]-1) * m_buffer * cp * (x[2] - 1*x[3]),
+
+        # --- Storage tanks --- Top and Bottom [TEST]
+        "Q_top_S11":    (2*u[2]-1) * u[1] * cp * (u[0] - x[4]),
+        "Q_top_S21":    (2*u[2]-1) * u[1] * cp * (x[7] - x[8]),
+        "Q_top_S31":    (2*u[2]-1) * u[1] * cp * (x[11] - x[12]),
+        "Q_bottom_S14": (2*u[2]-1) * u[1] * cp * (x[8] - x[7]),
+        "Q_bottom_S24": (2*u[2]-1) * u[1] * cp * (x[12] - x[11]),
+        "Q_bottom_S34": (2*u[2]-1) * u[1] * cp * (T_ret_HP_no_stor - x[15]),
+        
+        # --- Storage taks --- Convection [CHECK]
+        "Q_conv_S11":   -(2*u[2]-1) * u[1] * cp * (      - 1*x[4] + x[5]),
+        "Q_conv_S12":   -(2*u[2]-1) * u[1] * cp * (x[4] - 2*x[5] + x[6]),
+        "Q_conv_S13":   -(2*u[2]-1) * u[1] * cp * (x[5] - 2*x[6] + x[7]),
+        "Q_conv_S14":   -(2*u[2]-1) * u[1] * cp * (x[6] - 1*x[7]),
+        "Q_conv_S21":   -(2*u[2]-1) * u[1] * cp * (      - 1*x[8] + x[9]),
+        "Q_conv_S22":   -(2*u[2]-1) * u[1] * cp * (x[8] - 2*x[9] + x[10]),
+        "Q_conv_S23":   -(2*u[2]-1) * u[1] * cp * (x[9] - 2*x[10] + x[11]),
+        "Q_conv_S24":   -(2*u[2]-1) * u[1] * cp * (x[10] - 1*x[11]),
+        "Q_conv_S31":   -(2*u[2]-1) * u[1] * cp * (      - 1*x[12] + x[13]),
+        "Q_conv_S32":   -(2*u[2]-1) * u[1] * cp * (x[12] - 2*x[13] + x[14]),
+        "Q_conv_S33":   -(2*u[2]-1) * u[1] * cp * (x[13] - 2*x[14] + x[15]),
+        "Q_conv_S34":   -(2*u[2]-1) * u[1] * cp * (x[14] - 1*x[15])
+    }
+    
+    return functions_with_u_x[id]
+
+# ------------------------------------------------------
 # Get f(a) and grad_f(a) for all functions
 # ------------------------------------------------------
 
@@ -135,7 +197,6 @@ def get_all_grad_f(a):
 # ------------------------------------------------------
 # Get f(y) or f_a(y)
 # ------------------------------------------------------
-
 '''
 GOAL:
 Get the first order Taylor expansion (linear approximation) of a function f around a point "a"
@@ -163,16 +224,16 @@ def get_function(id, u, x, a, real, approx):
     
     if not approx:
 
-        # Get the desired function by the provided id
-        f = functions[id]
-    
-        # Construct "y" from given vectors y = [u, x]
-        y = {variable: value_y for variable, value_y in zip(all_variables,(u+x))}
+        if real:
+            # Get the function by ID and evaluate at y=[u,x]
+            f = functions[id]
+            y = {variable: value_y for variable, value_y in zip(all_variables,(u+x))}
+            return float(f.subs(y))
         
-        if not real:
-            ValueError("Symbolic + exact scenario has not been implemented yet.")
-        
-        return float(f.subs(y)) if real else f
+        else:
+            # Redefine the function using u and x
+            f = functions_exact_sym(id, u, x)
+            return f
     
     # ------------------------------------------------------
     # Case 2: Want linear approximation around "a"
@@ -195,7 +256,7 @@ def get_function(id, u, x, a, real, approx):
     
     
     '''
-    # The best for prints
+    # Useful for prints
     if real:
         y = {variable: value_y for variable, value_y in zip(all_variables,(u+x))}
         f_approx = float(f_a)

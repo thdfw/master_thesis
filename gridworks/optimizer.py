@@ -148,7 +148,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         'functions_a': functions.get_all_f(a),
         'gradients_a': functions.get_all_grad_f(a)
         }
-        print("Done in {} seconds.".format(round(time.time()-start_time,3)))
+        print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
     # Constraints
@@ -199,7 +199,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         
         # System dynamics
         opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx))
-    print("Done in {} seconds.\n".format(round(time.time()-start_time,2)))
+    print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
     # Objective
@@ -218,7 +218,12 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     # ------------------------------------------------------
     
     # Solve the optimisation problem
+    print("Solving the optimization problem...")
+    start_time = time.time()
     sol = opti.solve()
+    print("Done in {} seconds.".format(round(time.time()-start_time,1)))
+
+    # Get optimal u=u_0*,...,u_N-1*
     u_optimal = sol.value(u)
 
     # Return optimal u0
