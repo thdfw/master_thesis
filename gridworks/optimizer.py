@@ -49,18 +49,18 @@ def dynamics(u_t, x_t, a, real, approx):
     Q_top_S = Q_bottom_S = Q_conv_S = Q_losses_S = Q_R_S = [0]*12
     
     # For the buffer tank B
-    Q_top_B[0]      = get_function("Q_top_B1", u_t, x_t, a, real, approx)
-    Q_bottom_B[3]   = get_function("Q_bottom_B4", u_t, x_t, a, real, approx)
+    Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx)
+    Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx)
     for i in range(1,5):
         Q_conv_B[i-1] = get_function("Q_conv_B{}".format(i), u_t, x_t, a, real, approx)
     
     # For the storage tanks S1, S2, S3
-    Q_top_S[0]      = get_function("Q_top_S11", u_t, x_t, a, real, approx)
-    Q_top_S[4]      = get_function("Q_top_S21", u_t, x_t, a, real, approx)
-    Q_top_S[8]      = get_function("Q_top_S31", u_t, x_t, a, real, approx)
-    Q_bottom_S[3]   = get_function("Q_bottom_S14", u_t, x_t, a, real, approx)
-    Q_bottom_S[7]   = get_function("Q_bottom_S24", u_t, x_t, a, real, approx)
-    Q_bottom_S[11]  = get_function("Q_bottom_S34", u_t, x_t, a, real, approx)
+    Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx)
+    Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx)
+    Q_top_S[8]      = get_function("Q_top_S3", u_t, x_t, a, real, approx)
+    Q_bottom_S[3]   = get_function("Q_bottom_S1", u_t, x_t, a, real, approx)
+    Q_bottom_S[7]   = get_function("Q_bottom_S2", u_t, x_t, a, real, approx)
+    Q_bottom_S[11]  = get_function("Q_bottom_S3", u_t, x_t, a, real, approx)
     for i in range(1,4):
         for j in range(1,5):
             Q_conv_S[4*(i-1)+(j-1)] = get_function("Q_conv_S{}{}".format(i,j), u_t, x_t, a, real, approx)
@@ -207,7 +207,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
 
     # Define objective
     obj = sum(\
-    c_el[t] * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) \
+    c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) \
     for t in range(N))
 
     # Set objective

@@ -29,45 +29,40 @@ cp = 4187
 # ------------------------------------------------------
 
 # Mass flow rate at buffer tank
-m_buffer = (m_HP * delta_HP - m_stor * (2 * delta_ch - 1) - m_load) / (2 * delta_bu - 1)
+m_buffer = (m_HP * delta_HP - m_stor * (2*delta_ch-1) - m_load) / (2 * delta_bu - 1)
 
-# Mixing temperatures
+# Temperatures entering and exiting the load
 T_sup_load = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch) + m_buffer*T_B1*(1-delta_bu)) / (m_HP*delta_HP + m_stor*(1-delta_ch) + m_buffer*(1-delta_bu))
 T_ret_load = T_sup_load - Delta_T_load
+
+# Temperature entering the heat pump
 T_ret_HP = (m_load*T_ret_load + m_stor*T_S34*delta_ch + m_buffer*T_B4*delta_bu) / (m_load + m_stor*delta_ch + m_buffer*delta_bu)
-T_sup_load_no_buffer = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch)) / (m_HP*delta_HP + m_stor*(1-delta_ch))
-T_ret_load_no_buffer = T_sup_load_no_buffer - Delta_T_load
-T_ret_HP_no_stor = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_buffer*delta_bu)
+
+# Intermediate temperatures
+T_HP_stor = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch)) / (m_HP*delta_HP + m_stor*(1-delta_ch))
+T_ret_load_buffer = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_buffer*delta_bu)
 
 # ------------------------------------------------------
 # The functions to approximate
 # ------------------------------------------------------
 
 functions = {
-    # Objective and constraints
+    # Objective and constraints [ok]
     "Q_HP":         m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP,
     "T_sup_load":   T_sup_load,
     "m_buffer":     m_buffer,
         
-    # --- Buffer tank --- Top and Bottom
-    "Q_top_B1":     delta_bu     * m_buffer * cp * (T_sup_load_no_buffer - T_B1),
-    "Q_bottom_B4":  (1-delta_bu) * m_buffer * cp * (T_ret_load_no_buffer - T_B4),
-
-    # --- Storage tanks --- Top and Bottom
-    "Q_top_S11":    delta_ch * m_stor * cp * (T_sup_HP - T_S11),
-    "Q_top_S21":    delta_ch * m_stor * cp * (T_S14 - T_S21),
-    "Q_top_S31":    delta_ch * m_stor * cp * (T_S24 - T_S31),
-    "Q_bottom_S14": (1-delta_ch) * m_stor * cp * (T_S21 - T_S14),
-    "Q_bottom_S24": (1-delta_ch) * m_stor * cp * (T_S31 - T_S24),
-    "Q_bottom_S34": (1-delta_ch) * m_stor * cp * (T_ret_HP_no_stor - T_S34),
-    
-    # --- Buffer tank --- Convection
+    # --- Buffer tank --- Convection [ok]
     "Q_conv_B1":    m_buffer * cp * (T_B2 - T_B1),
     "Q_conv_B2":    m_buffer * cp * (T_B1 - 2*T_B2 + T_B3),
     "Q_conv_B3":    m_buffer * cp * (T_B2 - 2*T_B3 + T_B4),
     "Q_conv_B4":    m_buffer * cp * (T_B3 - T_B4),
     
-    # --- Storage taks --- Convection
+    # --- Buffer tank --- Top and Bottom [ok]
+    "Q_top_B":     delta_bu     * m_buffer * cp * (T_HP_stor - T_B1),
+    "Q_bottom_B":  (1-delta_bu) * m_buffer * cp * (T_ret_load - T_B4),
+    
+    # --- Storage taks --- Convection [ok]
     "Q_conv_S11":   m_stor * cp * (T_S12 - T_S11),
     "Q_conv_S12":   m_stor * cp * (T_S11 - 2*T_S12 + T_S13),
     "Q_conv_S13":   m_stor * cp * (T_S12 - 2*T_S13 + T_S14),
@@ -81,10 +76,21 @@ functions = {
     "Q_conv_S31":   m_stor * cp * (T_S32 - T_S31),
     "Q_conv_S32":   m_stor * cp * (T_S31 - 2*T_S32 + T_S33),
     "Q_conv_S33":   m_stor * cp * (T_S32 - 2*T_S33 + T_S34),
-    "Q_conv_S34":   m_stor * cp * (T_S33 - T_S34)
+    "Q_conv_S34":   m_stor * cp * (T_S33 - T_S34),
+
+    # --- Storage tanks --- Top and Bottom
+    "Q_top_S1":    delta_ch * m_stor * cp * (T_sup_HP - T_S11),
+    "Q_top_S2":    delta_ch * m_stor * cp * (T_S14 - T_S21),
+    "Q_top_S3":    delta_ch * m_stor * cp * (T_S24 - T_S31),
+    "Q_bottom_S1": (1-delta_ch) * m_stor * cp * (T_S21 - T_S14),
+    "Q_bottom_S2": (1-delta_ch) * m_stor * cp * (T_S31 - T_S24),
+    "Q_bottom_S3": (1-delta_ch) * m_stor * cp * (T_ret_load_buffer - T_S34),
 }
 
-# Compute all the gradients
+# ------------------------------------------------------
+# Compute the gradients of the functions to approximate
+# ------------------------------------------------------
+
 gradients = {id: [diff(f,var_i) for var_i in all_variables] for id, f in functions.items()}
 
 # ------------------------------------------------------
