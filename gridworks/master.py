@@ -82,3 +82,11 @@ for iter in range(num_iterations):
     print("x_0 = {}".format([round(x,2) for x in x_0_old]))
     print("u_0* = {}".format([round(x,2) for x in u_0_optimal]))
     print("x_1 = {}".format([round(x,2) for x in x_1]))
+    
+    # ------------------------------------------------------
+    # Plots
+    # ------------------------------------------------------
+
+    # Store data
+    # Send data to plots.py
+    

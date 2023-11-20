@@ -44,42 +44,44 @@ T_ret_HP_no_stor = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_bu
 # ------------------------------------------------------
 
 functions = {
-    # Objective and constraints [OK]
+    # Objective and constraints
     "Q_HP":         m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP,
     "T_sup_load":   T_sup_load,
     "m_buffer":     m_buffer,
         
-    # --- Buffer tank --- Top and Bottom [TEST]
-    "Q_top_B1":     (2*delta_bu-1) * m_buffer * cp * (T_sup_load_no_buffer - T_B1),
-    "Q_bottom_B4":  (2*delta_bu-1) * m_buffer * cp * (T_ret_load_no_buffer - T_B4),
+    # --- Buffer tank --- Top and Bottom
+    "Q_top_B1":     delta_bu     * m_buffer * cp * (T_sup_load_no_buffer - T_B1),
+    "Q_bottom_B4":  (1-delta_bu) * m_buffer * cp * (T_ret_load_no_buffer - T_B4),
 
-    # --- Buffer tank --- Convection [CHECK]
-    "Q_conv_B1":    -(2*delta_bu-1) * m_buffer * cp * (     - 1*T_B1 + T_B2),
-    "Q_conv_B2":    -(2*delta_bu-1) * m_buffer * cp * (T_B1 - 2*T_B2 + T_B3),
-    "Q_conv_B3":    -(2*delta_bu-1) * m_buffer * cp * (T_B2 - 2*T_B3 + T_B4),
-    "Q_conv_B4":    -(2*delta_bu-1) * m_buffer * cp * (T_B3 - 1*T_B4),
-
-    # --- Storage tanks --- Top and Bottom [TEST]
-    "Q_top_S11":    (2*delta_ch-1) * m_stor * cp * (T_sup_HP - T_S11),
-    "Q_top_S21":    (2*delta_ch-1) * m_stor * cp * (T_S14 - T_S21),
-    "Q_top_S31":    (2*delta_ch-1) * m_stor * cp * (T_S24 - T_S31),
-    "Q_bottom_S14": (2*delta_ch-1) * m_stor * cp * (T_S21 - T_S14),
-    "Q_bottom_S24": (2*delta_ch-1) * m_stor * cp * (T_S31 - T_S24),
-    "Q_bottom_S34": (2*delta_ch-1) * m_stor * cp * (T_ret_HP_no_stor - T_S34),
+    # --- Storage tanks --- Top and Bottom
+    "Q_top_S11":    delta_ch * m_stor * cp * (T_sup_HP - T_S11),
+    "Q_top_S21":    delta_ch * m_stor * cp * (T_S14 - T_S21),
+    "Q_top_S31":    delta_ch * m_stor * cp * (T_S24 - T_S31),
+    "Q_bottom_S14": (1-delta_ch) * m_stor * cp * (T_S21 - T_S14),
+    "Q_bottom_S24": (1-delta_ch) * m_stor * cp * (T_S31 - T_S24),
+    "Q_bottom_S34": (1-delta_ch) * m_stor * cp * (T_ret_HP_no_stor - T_S34),
     
-    # --- Storage taks --- Convection [CHECK]
-    "Q_conv_S11":   -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S11 + T_S12),
-    "Q_conv_S12":   -(2*delta_ch-1) * m_stor * cp * (T_S11 - 2*T_S12 + T_S13),
-    "Q_conv_S13":   -(2*delta_ch-1) * m_stor * cp * (T_S12 - 2*T_S13 + T_S14),
-    "Q_conv_S14":   -(2*delta_ch-1) * m_stor * cp * (T_S13 - 1*T_S14),
-    "Q_conv_S21":   -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S21 + T_S22),
-    "Q_conv_S22":   -(2*delta_ch-1) * m_stor * cp * (T_S21 - 2*T_S22 + T_S23),
-    "Q_conv_S23":   -(2*delta_ch-1) * m_stor * cp * (T_S22 - 2*T_S23 + T_S24),
-    "Q_conv_S24":   -(2*delta_ch-1) * m_stor * cp * (T_S23 - 1*T_S24),
-    "Q_conv_S31":   -(2*delta_ch-1) * m_stor * cp * (      - 1*T_S31 + T_S32),
-    "Q_conv_S32":   -(2*delta_ch-1) * m_stor * cp * (T_S31 - 2*T_S32 + T_S33),
-    "Q_conv_S33":   -(2*delta_ch-1) * m_stor * cp * (T_S32 - 2*T_S33 + T_S34),
-    "Q_conv_S34":   -(2*delta_ch-1) * m_stor * cp * (T_S33 - 1*T_S34)
+    # --- Buffer tank --- Convection
+    "Q_conv_B1":    m_buffer * cp * (T_B2 - T_B1),
+    "Q_conv_B2":    m_buffer * cp * (T_B1 - 2*T_B2 + T_B3),
+    "Q_conv_B3":    m_buffer * cp * (T_B2 - 2*T_B3 + T_B4),
+    "Q_conv_B4":    m_buffer * cp * (T_B3 - T_B4),
+    
+    # --- Storage taks --- Convection
+    "Q_conv_S11":   m_stor * cp * (T_S12 - T_S11),
+    "Q_conv_S12":   m_stor * cp * (T_S11 - 2*T_S12 + T_S13),
+    "Q_conv_S13":   m_stor * cp * (T_S12 - 2*T_S13 + T_S14),
+    "Q_conv_S14":   m_stor * cp * (T_S13 - T_S14),
+    
+    "Q_conv_S21":   m_stor * cp * (T_S22 - T_S21),
+    "Q_conv_S22":   m_stor * cp * (T_S21 - 2*T_S22 + T_S23),
+    "Q_conv_S23":   m_stor * cp * (T_S22 - 2*T_S23 + T_S24),
+    "Q_conv_S24":   m_stor * cp * (T_S23 - T_S24),
+    
+    "Q_conv_S31":   m_stor * cp * (T_S32 - T_S31),
+    "Q_conv_S32":   m_stor * cp * (T_S31 - 2*T_S32 + T_S33),
+    "Q_conv_S33":   m_stor * cp * (T_S32 - 2*T_S33 + T_S34),
+    "Q_conv_S34":   m_stor * cp * (T_S33 - T_S34)
 }
 
 # Compute all the gradients
