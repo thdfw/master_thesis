@@ -6,17 +6,17 @@ from functions import get_function
 import functions
 
 # Heat pump
-Q_HP_min = 8000 #W
+Q_HP_min = 0 # 8000 W
 Q_HP_max = 14000 #W
 
 # Load
 T_sup_load_min = 273 + 38 #K
 
 # Tanks
-A = 0.25 #m2
-z = 0.24 #m
+A = 0.45 #m2
+z = 0.25 #m
 rho = 997 #kg/m3
-m_layer = rho*A*z #kg
+m_layer = rho*A*z #kg (112kg)
 T_w_min = 273 + 10 #K
 T_w_max = 273 + 80 #K
 
@@ -24,7 +24,7 @@ T_w_max = 273 + 80 #K
 cp = 4187 #J/kgK
 
 # Time step
-delta_t_m = 5 #min
+delta_t_m = 2 #min
 delta_t_s = delta_t_m*60 #sec
 delta_t_h = delta_t_m/60 #hours
 
@@ -45,15 +45,24 @@ OUTPUTS:
 def dynamics(u_t, x_t, a, real, approx):
 
     # All heat transfers are 0 unless specified otherwise later
-    Q_top_B = Q_bottom_B = Q_conv_B = Q_losses_B = [0]*4
-    Q_top_S = Q_bottom_S = Q_conv_S = Q_losses_S = Q_R_S = [0]*12
+    Q_top_B     = [0]*4
+    Q_bottom_B  = [0]*4
+    Q_conv_B    = [0]*4
+    Q_losses_B  = [0]*4
+    
+    Q_top_S     = [0]*12
+    Q_bottom_S  = [0]*12
+    Q_conv_S    = [0]*12
+    Q_losses_S  = [0]*12
+    Q_R_S       = [0]*12
     
     # For the buffer tank B
     Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx)
     Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx)
+
     for i in range(1,5):
         Q_conv_B[i-1] = get_function("Q_conv_B{}".format(i), u_t, x_t, a, real, approx)
-    
+
     # For the storage tanks S1, S2, S3
     Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx)
     Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx)
@@ -68,7 +77,7 @@ def dynamics(u_t, x_t, a, real, approx):
     # Next state for buffer and storage
     const = delta_t_s / (m_layer * cp)
     x_plus_B = [x_t[i] + const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
-    x_plus_S = [x_t[i] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
+    x_plus_S = [x_t[i+4] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
     
     # Bring everything together (need to use casadi.vertcat)
     x_plus = []
@@ -173,9 +182,13 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         opti.subject_to(u[1,t] <= 0.5)
         
         # delta terms
-        for i in range(2,6):
-            opti.subject_to(u[i,t] >= 0)
-            opti.subject_to(u[i,t] <= 1)
+        opti.subject_to(u[2,t] == 0)
+        opti.subject_to(u[3,t] == 1)
+        opti.subject_to(u[4,t] == 1)
+        opti.subject_to(u[5,t] == 0)
+        #for i in range(2,6):
+        #opti.subject_to(u[i,t] >= 0)
+        #opti.subject_to(u[i,t] <= 1)
 
     # Bounds constraints for x
     for t in range(N+1):
@@ -239,4 +252,4 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     x1_optimal = [round(float(x),6) for x in x_optimal[:,1]]
 
     # Return optimal u0
-    return u0_optimal
+    return u_optimal, x_optimal
