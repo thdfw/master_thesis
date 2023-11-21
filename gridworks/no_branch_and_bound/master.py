@@ -2,16 +2,17 @@ import casadi
 import numpy as np
 import matplotlib.pyplot as plt
 import optimizer
+import functions
 
 # ------------------------------------------------------
 # Select problem type and solver
 # ------------------------------------------------------
 
 # Simulation time
-num_iterations = 3
+num_iterations = 4
 
 # Horizon
-N = 10
+N = 2
 
 pb_type = {
 'linearized':       True,
@@ -43,10 +44,11 @@ else:
 # ------------------------------------------------------
 
 # Initial state
-x_0 = [320.0]*16
+x_0 = [320.0]*4 + [325.0]*12
 
 # Initial point around which to linearize
-a = [310, 0.25, 0, 1, 0, 0] + x_0
+#   T_HP  m_stor  d_ch, d_bu, d_HP, d_R
+a = [330, 0.25] + [0.6]*4 + x_0
 
 # ------------------------------------------------------
 # MPC
@@ -65,23 +67,20 @@ for iter in range(num_iterations):
     x_0 = x_1
     
     # Update "a", the point around which we linearize
-    a = u_0_optimal[:2] + [0,1,0,0] + x_1
+    a = u_0_optimal[:2] + [0.6]*4 + x_1
 
     # ------------------------------------------------------
     # Prints
     # ------------------------------------------------------
-
-    # Print iteration and simulated time
-    hours = int(iter*1/12)
-    minutes = round((iter*1/12-int(iter*1/12))*60)
-    print("\n-----------------------------------------------------")
-    print("Iteration {} ({}h{}min)".format(iter+1, hours, minutes))
-    print("-----------------------------------------------------\n")
-
-    # Print state, u0*, next state
-    print("x_0 = {}".format([round(x,2) for x in x_0_old]))
+    
+    # Get rounded x0 and x1
+    round_x0 = [round(x,2) for x in x_0_old]
+    round_x1 = [round(x,2) for x in x_1]
+    
+    print("\nResults:")
+    print("T_B = {}, T_S1 = {}, T_S2 = {}, T_S3 = {}".format(round_x0[:4], round_x0[4:8],round_x0[8:12], round_x0[12:]))
     print("u_0* = {}".format([round(x,2) for x in u_0_optimal]))
-    print("x_1 = {}".format([round(x,2) for x in x_1]))
+    print("T_B = {}, T_S1 = {}, T_S2 = {}, T_S3 = {}".format(round_x1[:4], round_x1[4:8],round_x1[8:12], round_x1[12:]))
     
     # ------------------------------------------------------
     # Plots
@@ -90,3 +89,12 @@ for iter in range(num_iterations):
     # Store data
     # Send data to plots.py
     
+    ''' tests
+    a_fake = {
+    'values': a,
+    'functions_a': functions.get_all_f(a),
+    'gradients_a': functions.get_all_grad_f(a)
+    }
+    print("m_buffer real = ", functions.get_function("m_buffer", u_0_optimal, x_0_old, a_fake, True, False))
+    print("m_buffer approx = ", functions.get_function("m_buffer", u_0_optimal, x_0_old, a_fake, True, True))
+    '''

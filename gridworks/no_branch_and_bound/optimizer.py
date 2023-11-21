@@ -96,6 +96,13 @@ OUTPUTS:
 '''
 def optimize_N_steps(x_0, a, iter, pb_type):
 
+    # Print iteration and simulated time
+    hours = int(iter*1/12)
+    minutes = round((iter*1/12-int(iter*1/12))*60)
+    print("\n-----------------------------------------------------")
+    print("Iteration {} ({}h{}min)".format(iter+1, hours, minutes))
+    print("-----------------------------------------------------")
+
     # ------------------------------------------------------
     # Variables
     # ------------------------------------------------------
@@ -225,6 +232,11 @@ def optimize_N_steps(x_0, a, iter, pb_type):
 
     # Get optimal u=u_0*,...,u_N-1*
     u_optimal = sol.value(u)
+    u0_optimal = [round(float(x),6) for x in u_optimal[:,0]]
+   
+    # Get corresponding states x0,...,xN
+    x_optimal = sol.value(x)
+    x1_optimal = [round(float(x),6) for x in x_optimal[:,1]]
 
     # Return optimal u0
-    return [round(float(x),6) for x in u_optimal[:,0]]
+    return u0_optimal

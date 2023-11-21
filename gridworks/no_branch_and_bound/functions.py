@@ -78,7 +78,7 @@ functions = {
     "Q_conv_S33":   m_stor * cp * (T_S32 - 2*T_S33 + T_S34),
     "Q_conv_S34":   m_stor * cp * (T_S33 - T_S34),
 
-    # --- Storage tanks --- Top and Bottom
+    # --- Storage tanks --- Top and Bottom [ok]
     "Q_top_S1":    delta_ch * m_stor * cp * (T_sup_HP - T_S11),
     "Q_top_S2":    delta_ch * m_stor * cp * (T_S14 - T_S21),
     "Q_top_S3":    delta_ch * m_stor * cp * (T_S24 - T_S31),
@@ -104,56 +104,65 @@ replacing the variable names by u and x.
 def functions_exact_sym(id,u,x):
 
     # Mass flow rate at buffer tank
-    m_buffer = (m_HP * u[4] - u[1] * (2 * u[2] - 1) - m_load) / (2 * u[3] - 1)
+    m_buffer = (m_HP * u[4] - u[1] * (2*u[2]-1) - m_load) / (2 * u[3] - 1)
 
-    # Mixing temperatures
+    # Temperatures entering and exiting the load
     T_sup_load = (m_HP*u[0]*u[4] + u[1]*x[4]*(1-u[2]) + m_buffer*x[0]*(1-u[3])) / (m_HP*u[4] + u[1]*(1-u[2]) + m_buffer*(1-u[3]))
     T_ret_load = T_sup_load - Delta_T_load
-    T_ret_HP = (m_load*T_ret_load + u[1]*x[15]*u[2] + m_buffer*x[3]*u[3]) / (m_load + u[1]*u[2] + m_buffer*u[3])
-    T_sup_load_no_buffer = (m_HP*u[0]*u[4] + u[1]*x[4]*(1-u[2])) / (m_HP*u[4] + u[1]*(1-u[2]))
-    T_ret_load_no_buffer = T_sup_load_no_buffer - Delta_T_load
-    T_ret_HP_no_stor = (m_load*T_ret_load + m_buffer*x[3]*u[3]) / (m_load + m_buffer*u[3])
 
-    functions_with_u_x = {
-        # Objective and constraints [OK]
+    # Temperature entering the heat pump
+    T_ret_HP = (m_load*T_ret_load + u[1]*x[15]*u[2] + m_buffer*x[3]*u[3]) / (m_load + u[1]*u[2] + m_buffer*u[3])
+
+    # Intermediate temperatures
+    T_HP_stor = (m_HP*u[0]*u[4] + u[1]*x[4]*(1-u[2])) / (m_HP*u[4] + u[1]*(1-u[2]))
+    T_ret_load_buffer = (m_load*T_ret_load + m_buffer*x[3]*u[3]) / (m_load + m_buffer*u[3])
+
+    # ------------------------------------------------------
+    # The functions to approximate
+    # ------------------------------------------------------
+
+    functions = {
+        # Objective and constraints [ok]
         "Q_HP":         m_HP * cp * (u[0] - T_ret_HP) * u[4],
         "T_sup_load":   T_sup_load,
         "m_buffer":     m_buffer,
             
-        # --- Buffer tank --- Top and Bottom [TEST]
-        "Q_top_B1":     (2*u[3]-1) * m_buffer * cp * (T_sup_load_no_buffer - x[0]),
-        "Q_bottom_B4":  (2*u[3]-1) * m_buffer * cp * (T_ret_load_no_buffer - x[3]),
-
-        # --- Buffer tank --- Convection [CHECK]
-        "Q_conv_B1":    -(2*u[3]-1) * m_buffer * cp * (     - 1*x[0] + x[1]),
-        "Q_conv_B2":    -(2*u[3]-1) * m_buffer * cp * (x[0] - 2*x[1] + x[2]),
-        "Q_conv_B3":    -(2*u[3]-1) * m_buffer * cp * (x[1] - 2*x[2] + x[3]),
-        "Q_conv_B4":    -(2*u[3]-1) * m_buffer * cp * (x[2] - 1*x[3]),
-
-        # --- Storage tanks --- Top and Bottom [TEST]
-        "Q_top_S11":    (2*u[2]-1) * u[1] * cp * (u[0] - x[4]),
-        "Q_top_S21":    (2*u[2]-1) * u[1] * cp * (x[7] - x[8]),
-        "Q_top_S31":    (2*u[2]-1) * u[1] * cp * (x[11] - x[12]),
-        "Q_bottom_S14": (2*u[2]-1) * u[1] * cp * (x[8] - x[7]),
-        "Q_bottom_S24": (2*u[2]-1) * u[1] * cp * (x[12] - x[11]),
-        "Q_bottom_S34": (2*u[2]-1) * u[1] * cp * (T_ret_HP_no_stor - x[15]),
+        # --- Buffer tank --- Convection [ok]
+        "Q_conv_B1":    m_buffer * cp * (x[1] - x[0]),
+        "Q_conv_B2":    m_buffer * cp * (x[0] - 2*x[1] + x[2]),
+        "Q_conv_B3":    m_buffer * cp * (x[1] - 2*x[2] + x[3]),
+        "Q_conv_B4":    m_buffer * cp * (x[2] - x[3]),
         
-        # --- Storage taks --- Convection [CHECK]
-        "Q_conv_S11":   -(2*u[2]-1) * u[1] * cp * (      - 1*x[4] + x[5]),
-        "Q_conv_S12":   -(2*u[2]-1) * u[1] * cp * (x[4] - 2*x[5] + x[6]),
-        "Q_conv_S13":   -(2*u[2]-1) * u[1] * cp * (x[5] - 2*x[6] + x[7]),
-        "Q_conv_S14":   -(2*u[2]-1) * u[1] * cp * (x[6] - 1*x[7]),
-        "Q_conv_S21":   -(2*u[2]-1) * u[1] * cp * (      - 1*x[8] + x[9]),
-        "Q_conv_S22":   -(2*u[2]-1) * u[1] * cp * (x[8] - 2*x[9] + x[10]),
-        "Q_conv_S23":   -(2*u[2]-1) * u[1] * cp * (x[9] - 2*x[10] + x[11]),
-        "Q_conv_S24":   -(2*u[2]-1) * u[1] * cp * (x[10] - 1*x[11]),
-        "Q_conv_S31":   -(2*u[2]-1) * u[1] * cp * (      - 1*x[12] + x[13]),
-        "Q_conv_S32":   -(2*u[2]-1) * u[1] * cp * (x[12] - 2*x[13] + x[14]),
-        "Q_conv_S33":   -(2*u[2]-1) * u[1] * cp * (x[13] - 2*x[14] + x[15]),
-        "Q_conv_S34":   -(2*u[2]-1) * u[1] * cp * (x[14] - 1*x[15])
+        # --- Buffer tank --- Top and Bottom [ok]
+        "Q_top_B":     u[3]     * m_buffer * cp * (T_HP_stor - x[0]),
+        "Q_bottom_B":  (1-u[3]) * m_buffer * cp * (T_ret_load - x[3]),
+        
+        # --- Storage taks --- Convection [ok]
+        "Q_conv_S11":   u[1] * cp * (x[5] - x[4]),
+        "Q_conv_S12":   u[1] * cp * (x[4] - 2*x[5] + x[6]),
+        "Q_conv_S13":   u[1] * cp * (x[5] - 2*x[6] + x[7]),
+        "Q_conv_S14":   u[1] * cp * (x[6] - x[7]),
+        
+        "Q_conv_S21":   u[1] * cp * (x[9] - x[8]),
+        "Q_conv_S22":   u[1] * cp * (x[8] - 2*x[9] + x[10]),
+        "Q_conv_S23":   u[1] * cp * (x[9] - 2*x[10] + x[11]),
+        "Q_conv_S24":   u[1] * cp * (x[10] - x[11]),
+        
+        "Q_conv_S31":   u[1] * cp * (x[13] - x[12]),
+        "Q_conv_S32":   u[1] * cp * (x[12] - 2*x[13] + x[14]),
+        "Q_conv_S33":   u[1] * cp * (x[13] - 2*x[14] + x[15]),
+        "Q_conv_S34":   u[1] * cp * (x[14] - x[15]),
+
+        # --- Storage tanks --- Top and Bottom [ok]
+        "Q_top_S1":    u[2] * u[1] * cp * (u[0] - x[4]),
+        "Q_top_S2":    u[2] * u[1] * cp * (x[7] - x[8]),
+        "Q_top_S3":    u[2] * u[1] * cp * (x[11] - x[12]),
+        "Q_bottom_S1": (1-u[2]) * u[1] * cp * (x[8] - x[7]),
+        "Q_bottom_S2": (1-u[2]) * u[1] * cp * (x[12] - x[11]),
+        "Q_bottom_S3": (1-u[2]) * u[1] * cp * (T_ret_load_buffer - x[15]),
     }
     
-    return functions_with_u_x[id]
+    return functions[id]
 
 # ------------------------------------------------------
 # Get f(a) and grad_f(a) for all functions
@@ -215,8 +224,8 @@ INPUTS:
 - u: the input variables
 - x: the state variables
 - a is a dict
-    values: the point around which we linearize the function
-    f_a: dict with f(a) for every f
+    values:   the point around which we linearize the function
+    f_a:      dict with f(a) for every f
     grad_f_a: dict with grad_f(a) for every f
 - real: True if y is real, False if y is symbolic (casadi terms)
 - approx: True if we want f_a(y), False if we want f(y)
@@ -257,17 +266,11 @@ def get_function(id, u, x, a, real, approx):
     
     # f_a(y) = f(a) + grad_f(a).(y-a)
     f_approx = float(f_a)
+    f_approx_print = f_a
     for i in range(len(grad_f_a)):
         f_approx += float(grad_f_a[i]) * (y[i] - float(values_a[i]))
+        f_approx_print += grad_f_a[i] * (all_variables[i] - values_a[i])
+
+    #print(f"{id} = {f_approx_print}\n")
                
     return f_approx
-    
-    
-    '''
-    # Useful for prints
-    if real:
-        y = {variable: value_y for variable, value_y in zip(all_variables,(u+x))}
-        f_approx = float(f_a)
-        f_approx += grad_f_a[i] * (all_variables[i] - a[all_variables[i]]) # where a[] needs to be defined as a dict like y
-        return f_approx.subs(y)
-    '''
