@@ -1,12 +1,11 @@
 import casadi
 import numpy as np
-import matplotlib.pyplot as plt
 import time
+import functions, forecasts
 from functions import get_function
-import functions
 
 # Heat pump
-Q_HP_min = 0 # 8000 W
+Q_HP_min = 8000 # 8000 W
 Q_HP_max = 14000 #W
 
 # Load
@@ -27,9 +26,6 @@ cp = 4187 #J/kgK
 delta_t_m = 2 #min
 delta_t_s = delta_t_m*60 #sec
 delta_t_h = delta_t_m/60 #hours
-
-# Get all electricity prices
-c_el_all = [12] + [2] + [55] + [18.97]*12 + [18.92]*3 + [11]*9 + [18.21]*12 + [16.58]*12 + [16.27]*12 + [15.49]*12 + [14.64]*12 + [18.93]*12 + [45.56]*12 + [26.42]*12 + [18.0]*12 + [17.17]*12 + [16.19]*12 + [30.74]*12 + [31.17]*12 + [16.18]*12 + [17.11]*12 + [20.24]*12 + [24.94]*12 + [24.69]*12 + [26.48]*12 + [30.15]*12 + [23.14]*12 + [24.11]*12 #cts/kWh
 
 '''
 INPUTS:
@@ -150,8 +146,9 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     # ------------------------------------------------------
 
     # Electricity prices for the next N steps
-    c_el = c_el_all[iter:iter+N]
-    
+    c_el = forecasts.get_c_el(iter,iter+N)
+    m_load = forecasts.get_m_load(iter,iter+N)
+
     # ------------------------------------------------------
     # Compute f(a) and grad_f(a) for all non linear terms
     # ------------------------------------------------------
