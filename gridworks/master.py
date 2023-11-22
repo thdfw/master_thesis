@@ -14,9 +14,9 @@ num_iterations = 4
 N = 10
 
 pb_type = {
-'linearized':       False,
+'linearized':       True,
 'mixed-integer':    False,
-'gurobi':           False,
+'gurobi':           True,
 'horizon':          N
 }
 
