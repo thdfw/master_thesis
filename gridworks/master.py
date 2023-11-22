@@ -8,7 +8,7 @@ import optimizer, functions, plot, forecasts
 # ------------------------------------------------------
 
 # Simulation time
-num_iterations = 4
+num_iterations = 45
 
 # Horizon
 N = 10
@@ -16,7 +16,7 @@ N = 10
 pb_type = {
 'linearized':       True,
 'mixed-integer':    False,
-'gurobi':           True,
+'gurobi':           False,
 'horizon':          N
 }
 
@@ -50,7 +50,10 @@ for iter in range(num_iterations):
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
-
+    
+    # Round the values of deltas
+    u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
+    
     # Implement u_0* and obtain x_1
     x_1 = optimizer.dynamics(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False)
     
@@ -83,7 +86,7 @@ plot_data = {
     'pb_type':      pb_type,
     'iterations':   num_iterations,
     'c_el':         forecasts.get_c_el(0,num_iterations),
-    'Q_load':       forecasts.get_c_el(0,num_iterations),
+    'Q_load':       forecasts.get_m_load(0,num_iterations),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
     'T_S21':        list_S21,

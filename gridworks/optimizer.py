@@ -161,7 +161,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         'functions_a': functions.get_all_f(a),
         'gradients_a': functions.get_all_grad_f(a)
         }
-        print("Done in {} seconds.".format(round(time.time()-start_time,1)))
+        #print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
     # Constraints
@@ -179,13 +179,13 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         opti.subject_to(u[1,t] <= 0.5)
         
         # delta terms
-        opti.subject_to(u[2,t] == 0)
-        opti.subject_to(u[3,t] == 1)
-        opti.subject_to(u[4,t] == 1)
-        opti.subject_to(u[5,t] == 0)
-        #for i in range(2,6):
-        #opti.subject_to(u[i,t] >= 0)
-        #opti.subject_to(u[i,t] <= 1)
+        #opti.subject_to(u[2,t] == 0)
+        #opti.subject_to(u[3,t] == 1)
+        #opti.subject_to(u[4,t] == 1)
+        #opti.subject_to(u[5,t] == 0)
+        for i in range(2,6):
+            opti.subject_to(u[i,t] >= 0)
+            opti.subject_to(u[i,t] <= 1)
 
     # Bounds constraints for x
     for t in range(N+1):
@@ -197,7 +197,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     opti.subject_to(x[:,0] == x_0)
 
     # Additional constraints
-    print("\nSetting all non linear constraints...")
+    print("Setting all non linear constraints...")
     start_time = time.time()
     for t in range(N):
             
@@ -216,7 +216,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         
         # System dynamics
         opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx))
-    print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
+    #print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
     # Objective
@@ -238,7 +238,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     print("Solving the optimization problem...")
     start_time = time.time()
     sol = opti.solve()
-    print("Done in {} seconds.".format(round(time.time()-start_time,1)))
+    #print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # Get optimal u=u_0*,...,u_N-1*
     u_optimal = sol.value(u)

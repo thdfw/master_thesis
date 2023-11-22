@@ -94,10 +94,8 @@ def get_all_f(case):
 
 
 # IMPORTANT
-relaxed = False
-
 case = {'ch': 0, 'bu': 1, 'HP': 1}
-if relaxed: case = {'ch': delta_ch, 'bu': delta_bu, 'HP': delta_HP}
+case = {'ch': delta_ch, 'bu': delta_bu, 'HP': delta_HP}
 
 functions, gradients = get_all_f(case)
 
