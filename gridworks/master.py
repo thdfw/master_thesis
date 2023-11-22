@@ -8,10 +8,10 @@ import optimizer, functions, plot, forecasts
 # ------------------------------------------------------
 
 # Simulation time
-num_iterations = 45
+num_iterations = 288
 
 # Horizon
-N = 10
+N = 30
 
 pb_type = {
 'linearized':       True,
@@ -51,8 +51,23 @@ for iter in range(num_iterations):
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
-    # Round the values of deltas
-    u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
+    # For the relaxed problem
+    if not pb_type['mixed-integer']:
+        
+        # Round the values of deltas
+        u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
+        
+        # Adapt the value of m_stor
+        m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
+        
+        # Toggle buffer if m_buffer is negative
+        if m_buffer < 0:
+            u_opt_0[3] = 0 if u_opt_0[3]==1 else 1
+            m_buffer = np.abs(m_buffer)
+        
+        # Compute m_stor for the new m_buffer and d_bu
+        u_opt_0[1] = (m_buffer*(2*u_opt_0[3]-1) - 0.5*u_opt_0[4] + 0.2)/(1-2*u_opt_0[2])
+        #m_stor = (m_buffer*(2 * delta_bu - 1) - m_HP * delta_HP + m_load)/(1-2*delta_ch)
     
     # Implement u_0* and obtain x_1
     x_1 = optimizer.dynamics(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False)
