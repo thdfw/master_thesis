@@ -72,18 +72,23 @@ for iter in range(num_iterations):
     # ------------------------------------------------------
     # Prints
     # ------------------------------------------------------
+    
+    S_t = "->" if round(u_0_optimal[2])==0 else "<-"
+    S_b = "<-" if round(u_0_optimal[2])==0 else "->"
+    B_t = "->" if round(u_0_optimal[3])==1 else "<-"
+    B_b = "<-" if round(u_0_optimal[3])==1 else "->"
 
-    print(f"\nBuffer -> {round(x_optimal[0,0],1)}  | Storage    {round(x_optimal[12,0],1)} ->    {round(x_optimal[8,0],1)} ->   {round(x_optimal[4,0],0)} ->")
-    print(f"          {round(x_optimal[1,0],1)}  |            {round(x_optimal[13,0],1)}       {round(x_optimal[9,0],1)}      {round(x_optimal[5,0],0)}")
-    print(f"          {round(x_optimal[2,0],1)}  |            {round(x_optimal[14,0],1)}       {round(x_optimal[10,0],1)}      {round(x_optimal[6,0],0)}")
-    print(f"       <- {round(x_optimal[3,0],1)}  |         -> {round(x_optimal[15,0],1)}    -> {round(x_optimal[11,0],1)}   -> {round(x_optimal[7,0],0)}\n")
+    print(f"\nBuffer {B_t} {round(x_optimal[0,0],1)} | Storage  {round(x_optimal[12,0],1)} {S_t}    {round(x_optimal[8,0],1)} {S_t}   {round(x_optimal[4,0],0)} ->")
+    print(f"          {round(x_optimal[1,0],1)} |          {round(x_optimal[13,0],1)}       {round(x_optimal[9,0],1)}      {round(x_optimal[5,0],0)}")
+    print(f"          {round(x_optimal[2,0],1)} |          {round(x_optimal[14,0],1)}       {round(x_optimal[10,0],1)}      {round(x_optimal[6,0],0)}")
+    print(f"       {B_b} {round(x_optimal[3,0],1)} |       {S_t} {round(x_optimal[15,0],1)}    {S_t} {round(x_optimal[11,0],1)}   {S_t} {round(x_optimal[7,0],0)}\n")
         
     print(f"T_HP = {round(u_optimal[0,0],1)}, m_stor = {round(u_optimal[1,0],1)}")
         
-    print(f"\nBuffer -> {round(x_1[0],1)}  | Storage    {round(x_1[12],1)} ->    {round(x_1[8],1)} ->   {round(x_1[4],0)} ->")
-    print(f"          {round(x_1[1],1)}  |            {round(x_1[13],1)}       {round(x_1[9],1)}      {round(x_1[5],0)}")
-    print(f"          {round(x_1[2],1)}  |            {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")
-    print(f"       <- {round(x_1[3],1)}  |         -> {round(x_1[15],1)}    -> {round(x_1[11],1)}   -> {round(x_1[7],0)}\n")
+    print(f"\nBuffer {B_t} {round(x_1[0],1)} | Storage  {round(x_1[12],1)} {S_t}    {round(x_1[8],1)} {S_t}   {round(x_1[4],0)} {S_t}")
+    print(f"          {round(x_1[1],1)} |          {round(x_1[13],1)}       {round(x_1[9],1)}      {round(x_1[5],0)}")
+    print(f"          {round(x_1[2],1)} |          {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")
+    print(f"       {B_b} {round(x_1[3],1)} |       {S_t} {round(x_1[15],1)}    {S_t} {round(x_1[11],1)}   {S_t} {round(x_1[7],0)}\n")
     
     # ------------------------------------------------------
     # Plots
