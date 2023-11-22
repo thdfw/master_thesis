@@ -79,7 +79,7 @@ for iter in range(num_iterations):
     a = u_opt_0[:2] + [0.6]*4 + x_1
 
     # Print iteration
-    plot.print_iteration(u_opt, x_opt, x_1)
+    plot.print_iteration(u_opt, x_opt, x_1, pb_type)
     
     # ------------------------------------------------------
     # Plots

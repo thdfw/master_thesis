@@ -25,32 +25,30 @@ def print_pb_type(pb_type):
 '''
 Prints the current iteration (x0, u0*, x1) in way that is easy to visualize
 '''
-def print_iteration(u_opt, x_opt, x_1):
+def print_iteration(u_opt, x_opt, x_1, pb_type):
 
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
     # ------------------------------------------------------
-    # Process the iteration
+    # Process the iteration if solving the relaxed problem
     # ------------------------------------------------------
     
-    # Rounding the delta terms
-    u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
+    if not pb_type['mixed-integer']:
     
-    # T_sup_HP and mass flow rates
-    print(f"T_sup_HP = {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'}")
-    m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
-
-    # Get m_buffer
-    m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
-    
-    # Toggle buffer if m_buffer is negative, and make it positive
-    if m_buffer < 0:
-        u_opt_0[3] = 0 if u_opt_0[3]==1 else 1
-        m_buffer = np.abs(m_buffer)
-    
-    # Compute m_stor for the new m_buffer>0 and d_bu
-    u_opt_0[1] = (m_buffer*(2*u_opt_0[3]-1) - 0.5*u_opt_0[4] + 0.2)/(1-2*u_opt_0[2])
+        # Rounding the delta terms
+        u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
+        
+        # Get m_buffer
+        m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
+        
+        # If m_buffer is negative, make it positive and toggle buffer state
+        if m_buffer < 0:
+            m_buffer = -m_buffer
+            u_opt_0[3] = 0 if u_opt_0[3]==1 else 1
+        
+        # Compute m_stor for the new m_buffer>0 and d_bu
+        u_opt_0[1] = (m_buffer*(2*u_opt_0[3]-1) - 0.5*u_opt_0[4] + 0.2)/(1-2*u_opt_0[2])
         
     # ------------------------------------------------------
     # Printing
@@ -66,7 +64,7 @@ def print_iteration(u_opt, x_opt, x_1):
     print(f"          {round(x_opt[2,0],1)} |          {round(x_opt[14,0],1)}       {round(x_opt[10,0],1)}      {round(x_opt[6,0],0)}")
     print(f"       {B_b} {round(x_opt[3,0],1)} |       {S_t} {round(x_opt[15,0],1)}    {S_t} {round(x_opt[11,0],1)}   {S_t} {round(x_opt[7,0],0)}\n")
 
-    print(f"T_sup_HP = {round(u_opt_0[0],1)}")
+    print(f"T_sup_HP = {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'}")
     print(f"m_HP = {0.5 if u_opt_0[4]==1 else 0}, m_stor = {round(u_opt[1,0],2)}, m_buffer = {round(m_buffer,2)}, m_load = 0.2")
     
     print(f"\nBuffer {B_t} {round(x_1[0],1)} | Storage  {round(x_1[12],1)} {S_t}    {round(x_1[8],1)} {S_t}   {round(x_1[4],0)} {S_t}")
