@@ -8,19 +8,22 @@ import optimizer, functions, plot, forecasts
 # ------------------------------------------------------
 
 # Simulation time
-num_iterations = 30
+num_iterations = 200
 
 # Horizon
-N = 2
+N = 25
 
 # Relaxed problem: False, False, False
 # Linearized MIP:  True, True, True
 pb_type = {
-'linearized':       True,
-'mixed-integer':    True,
-'gurobi':           True,
+'linearized':       False,
+'mixed-integer':    False,
+'gurobi':           False,
 'horizon':          N,
 }
+
+# Choose between solving the general case or a given combination of the deltas
+general = False
 
 # Print corresponding setup
 plot.print_pb_type(pb_type)
@@ -30,7 +33,7 @@ plot.print_pb_type(pb_type)
 # ------------------------------------------------------
 
 # Initial state
-x_0 = [320.0]*4 + [300.0]*12
+x_0 = [300.0]*4 + [320.0]*12
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
@@ -51,7 +54,7 @@ elec_cost, elec_used = 0, 0
 for iter in range(num_iterations):
 
     # Define the case to solve
-    case = {'case': False, 'd_ch':0, 'd_bu':1, 'd_HP':1, 'd_R':0}
+    case = {'general': general, 'd_ch':0, 'd_bu':1, 'd_HP':1, 'd_R':0}
     
     # Get u* and x*
     u_opt, x_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, case)
@@ -110,7 +113,7 @@ plot_data = {
     'pb_type':      pb_type,
     'iterations':   num_iterations,
     'c_el':         forecasts.get_c_el(0,num_iterations),
-    'Q_load':       forecasts.get_m_load(0,num_iterations),
+    'm_load':       forecasts.get_m_load(0,num_iterations),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
     'T_S21':        list_S21,

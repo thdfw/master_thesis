@@ -9,7 +9,7 @@ from functions import get_function
 # ------------------------------------------------------
 
 # Heat pump
-Q_HP_min = 8000 #W
+Q_HP_min = 0 #8000 W
 Q_HP_max = 14000 #W
 
 # Load
@@ -203,7 +203,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
         opti.subject_to(u[1,t] <= 0.5)
         
         # delta terms if there is a specific case
-        if case['case']:
+        if not case['general']:
             opti.subject_to(u[2,t] == case['d_ch'])
             opti.subject_to(u[3,t] == case['d_bu'])
             opti.subject_to(u[4,t] == case['d_HP'])

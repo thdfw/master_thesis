@@ -71,10 +71,10 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False)
 
     print(f"T_sup_HP = {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'}")
-    print(f"T_ret_HP = {round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'}")
-    print(f"Q_HP = {round(0.5 * 4187 * (u_opt[0,0] - T_ret_HP) * u_opt[4,0],1) if round(u_opt[4,0])==1 else '-'}")
+    #print(f"T_ret_HP = {round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'}")
+    #print(f"Q_HP = {round(0.5 * 4187 * (u_opt[0,0] - T_ret_HP) * u_opt[4,0],1) if round(u_opt[4,0])==1 else '-'}")
     print(f"m_HP = {0.5 if u_opt_0[4]==1 else 0}, m_stor = {round(u_opt[1,0],2)}, m_buffer = {round(m_buffer,2)}, m_load = 0.2")
-    print(f"T_sup_load = {round(T_sup_load,1)}")
+    print(f"=> T_sup_load = {round(T_sup_load,1)}")
 
     print(f"\nBuffer {B_t} {round(x_1[0],1)} | Storage  {round(x_1[12],1)} {S_t}    {round(x_1[8],1)} {S_t}   {round(x_1[4],0)} {S_t}")
     print(f"          {round(x_1[1],1)} |          {round(x_1[13],1)}       {round(x_1[9],1)}      {round(x_1[5],0)}")
@@ -89,6 +89,10 @@ def plot_MPC(data):
 
     fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
     
+    # ------------------------------------------------------
+    # Plot title
+    # ------------------------------------------------------
+    
     linearized = "Linearized" if data['pb_type']['linearized'] else "Non linear"
     variables = "Mixed-Integer" if data['pb_type']['mixed-integer'] else "Continuous"
     solver = "Gurobi" if data['pb_type']['gurobi'] else "Ipopt"
@@ -100,13 +104,18 @@ def plot_MPC(data):
     # First plot
     # ------------------------------------------------------
     
+    # Get the Q_load from the m_load
+    cp, Delta_T_load=  4187, 5/9*20
+    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
+        
     ax[0].set_xlim([0,data['iterations']])
 
     # First plot part 1
-    ax[0].plot(data['Q_load'], label="Load", color='red', alpha=0.4)
+    ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].plot(data['Q_HP'],   label="HP", color='blue', alpha=0.4)
+    ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
-    
+
     # First plot part 2
     ax2 = ax[0].twinx()
     ax2.plot(data['c_el'],     label="Price", color='black', alpha=0.4)

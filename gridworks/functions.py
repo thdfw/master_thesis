@@ -4,7 +4,7 @@ import casadi
 import math
 
 # Choose between solving the general case or a given combination of the deltas
-general = True
+general = False
 
 
 # ------------------------------------------------------
