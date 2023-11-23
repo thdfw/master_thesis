@@ -3,6 +3,14 @@ import numpy as np
 import casadi
 import math
 
+# Choose between solving the general case or a given combination of the deltas
+general = True
+
+
+# ------------------------------------------------------
+# Define all variables and constants
+# ------------------------------------------------------
+
 # Define all variables as symbols
 T_sup_HP, m_stor = symbols('T_sup_HP m_stor')
 delta_ch, delta_bu, delta_HP, delta_R = symbols('delta_ch delta_bu delta_hp delta_R')
@@ -16,9 +24,10 @@ T_B1, T_B2, T_B3, T_B4, T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, 
 
 # Some constants
 m_load = 0.2
-Delta_T_load = 5/9 * 20 #11.11
 m_HP = 0.5
+Delta_T_load = 5/9*20
 cp = 4187
+
 
 # ------------------------------------------------------
 # Define all functions
@@ -27,9 +36,10 @@ cp = 4187
 def get_all_f(case):
 
     # Unpack the specific case
-    delta_ch = case['ch']
-    delta_bu = case['bu']
-    delta_HP = case['HP']
+    delta_ch = case['d_ch']
+    delta_bu = case['d_bu']
+    delta_HP = case['d_HP']
+    delta_R  = case['d_R']
 
     # Mass flow rate at buffer tank
     m_buffer = (m_HP * delta_HP - m_stor * (2*delta_ch-1) - m_load) / (2 * delta_bu - 1)
@@ -85,6 +95,9 @@ def get_all_f(case):
         "Q_bottom_S1": (1-delta_ch) * m_stor * cp * (T_S21 - T_S14),
         "Q_bottom_S2": (1-delta_ch) * m_stor * cp * (T_S31 - T_S24),
         "Q_bottom_S3": (1-delta_ch) * m_stor * cp * (T_ret_load_buffer - T_S34),
+        
+        "T_sup_load": T_sup_load,
+        "T_ret_HP": T_ret_HP,
     }
 
     # Compute the gradients of the functions to approximate
@@ -93,24 +106,43 @@ def get_all_f(case):
     return functions, gradients
 
 
-# IMPORTANT
-case = {'ch': 0, 'bu': 1, 'HP': 1}
-case = {'ch': delta_ch, 'bu': delta_bu, 'HP': delta_HP}
+# ------------------------------------------------------
+# Compute all functions and gradients
+# ------------------------------------------------------
 
+if general:
+    # Solve the general case
+    case = {'d_ch': delta_ch, 'd_bu': delta_bu, 'd_HP': delta_HP, 'd_R': delta_R}
+else:
+    # Choose a specific combination of the binary variables
+    case = {'d_ch': 0, 'd_bu': 1, 'd_HP': 1, 'd_R':0}
+
+# Compute all corresponding functions and gradients
 functions, gradients = get_all_f(case)
 
-# ------------------------------------------------------
-# In the case exact value with symbolic values
-# ------------------------------------------------------
-'''
-In the particular case where we ask for the exact functions with
-u and x terms that are casadi symbolic terms, need to redefine the functions
-replacing the variable names by u and x.
-'''
-def functions_exact_sym(id,u,x):
 
+# ------------------------------------------------------
+# Functions for the non linearized problem
+# ------------------------------------------------------
+'''
+In the functions defined above, the variables are SymPy symbols.
+These symbols can not be replaced by CasADi variables.
+
+However, when we want to compute a non linearized version of the problem,
+we need these functions to be expressed using CasADi variables.
+
+In that case, we call the following function.
+'''
+def functions_exact_sym(id, u, x):
+
+    # Get the delta terms
+    delta_ch = u[2] if general else case['d_ch']
+    delta_bu = u[3] if general else case['d_bu']
+    delta_HP = u[4] if general else case['d_HP']
+    delta_R  = u[5] if general else case['d_R']
+
+    # Get the other variables from the inputs and states
     T_sup_HP, m_stor = u[0], u[1]
-    delta_ch, delta_bu, delta_HP, delta_R = 0, 1, 1, 0
     T_B1, T_B2, T_B3, T_B4 = x[0], x[1], x[2], x[3]
     T_S11, T_S12, T_S13, T_S14 = x[4], x[5], x[6], x[7]
     T_S21, T_S22, T_S23, T_S24 = x[8], x[9], x[10], x[11]
@@ -131,7 +163,7 @@ def functions_exact_sym(id,u,x):
     T_ret_load_buffer = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_buffer*delta_bu)
 
     # The functions to approximate
-    functions = {
+    functions_sym = {
         # Objective and constraints [ok]
         "Q_HP":         m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP,
         "T_sup_load":   T_sup_load,
@@ -170,9 +202,13 @@ def functions_exact_sym(id,u,x):
         "Q_bottom_S1": (1-delta_ch) * m_stor * cp * (T_S21 - T_S14),
         "Q_bottom_S2": (1-delta_ch) * m_stor * cp * (T_S31 - T_S24),
         "Q_bottom_S3": (1-delta_ch) * m_stor * cp * (T_ret_load_buffer - T_S34),
+        
+        "T_sup_load": T_sup_load,
+        "T_ret_HP": T_ret_HP,
     }
     
-    return functions[id]
+    return functions_sym[id]
+    
     
 # ------------------------------------------------------
 # Get f(a) and grad_f(a) for all functions
@@ -199,6 +235,7 @@ def get_all_f(a):
             
     return functions_a
 
+
 '''
 Input: the point "a" around which to linearize
 Output: grad_f(a) for all non linear functions defined in this file
@@ -221,23 +258,24 @@ def get_all_grad_f(a):
     
     return gradients_a
 
+
 # ------------------------------------------------------
 # Get f(y) or f_a(y)
 # ------------------------------------------------------
 '''
 GOAL:
-Get the first order Taylor expansion (linear approximation) of a function f around a point "a"
-Evaluate the value of the function and the approximation at a point "y"
+Evaluate any function f at a point "y": f(y)
+Evaluate the linearization of any f around "a" at point "y": f_a(y)
 
 INPUTS:
-- id: The function we want (e.g. id='m_buffer')
+- id: The function we want to evaluate (e.g. id='m_buffer')
 - u: the input variables
 - x: the state variables
 - a is a dict
     values:   the point around which we linearize the function
     f_a:      dict with f(a) for every f
     grad_f_a: dict with grad_f(a) for every f
-- real: True if y is real, False if y is symbolic (casadi terms)
+- real: True if y is real (numeric), False if y is symbolic (casadi terms)
 - approx: True if we want f_a(y), False if we want f(y)
 
 OUTPUTS:
@@ -246,7 +284,7 @@ OUTPUTS:
 def get_function(id, u, x, a, real, approx):
         
     # ------------------------------------------------------
-    # Case 1: Want exact value of the function
+    # Case 1: Want exact value of the function: f(y)
     # ------------------------------------------------------
     
     if not approx:
@@ -258,12 +296,12 @@ def get_function(id, u, x, a, real, approx):
             return float(f.subs(y))
         
         else:
-            # Redefine the function using u and x
+            # Get the function by ID and return it with CasADi terms
             f = functions_exact_sym(id, u, x)
             return f
     
     # ------------------------------------------------------
-    # Case 2: Want linear approximation around "a"
+    # Case 2: Want linear approximation around "a": f_a(y)
     # ------------------------------------------------------
     
     # Get the desired function by the provided id
@@ -274,7 +312,7 @@ def get_function(id, u, x, a, real, approx):
     # Construct "y" from given vectors y = [u, x]
     y = (u+x) if real else casadi.vertcat(u,x)
     
-    # f_a(y) = f(a) + grad_f(a).(y-a)
+    # Get f_a(y) = f(a) + grad_f(a).(y-a)
     f_approx = float(f_a)
     f_approx_print = f_a
     for i in range(len(grad_f_a)):
@@ -282,5 +320,4 @@ def get_function(id, u, x, a, real, approx):
         f_approx_print += grad_f_a[i] * (all_variables[i] - values_a[i])
 
     # print(f"{id} = {f_approx_print}\n")
-               
     return f_approx

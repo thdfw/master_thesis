@@ -3,7 +3,7 @@ import numpy as np
 import forecasts, optimizer, functions
 
 '''
-Print the selected problem type
+Prints the selected problem type
 '''
 def print_pb_type(pb_type):
 
@@ -13,13 +13,11 @@ def print_pb_type(pb_type):
 
     # Variables: mixed integer or continuous
     if pb_type['mixed-integer']: print("Variables: Mixed-Integer")
-    else: print("Variables: Continuous")
+    else: print("Variables: Continuous (relaxed binary)")
 
-    # Solver: gurobi or ipopt
+    # Solver: gurobi or ipopt/bonmin
     if pb_type['gurobi']: print("Solver: Gurobi")
-    else:
-        print("Solver: Ipopt")
-        if pb_type['mixed-integer']: raise ValueError("Change the solver to Gurobi to solve the MIP.")
+    else: print("Solver: Bonmin") if pb_type['mixed-integer'] else print("Solver: Ipopt")
 
 
 '''
@@ -29,16 +27,19 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
 
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
-    
+
+    '''
     # ------------------------------------------------------
-    # Process the iteration if solving the relaxed problem
+    # Process if solving the linearized or relaxed problem
     # ------------------------------------------------------
-    
-    if not pb_type['mixed-integer']:
+        
+    if pb_type['linearized'] or not pb_type['mixed-integer']:
     
         # Rounding the delta terms
+        #print(f"deltas = {u_opt_0[2:]}")
         u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
-        
+        #print(f"deltas = {u_opt_0[2:]}")
+
         # Get m_buffer
         m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
         
@@ -49,7 +50,8 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
         
         # Compute m_stor for the new m_buffer>0 and d_bu
         u_opt_0[1] = (m_buffer*(2*u_opt_0[3]-1) - 0.5*u_opt_0[4] + 0.2)/(1-2*u_opt_0[2])
-        
+    '''
+    
     # ------------------------------------------------------
     # Printing
     # ------------------------------------------------------
@@ -64,9 +66,16 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     print(f"          {round(x_opt[2,0],1)} |          {round(x_opt[14,0],1)}       {round(x_opt[10,0],1)}      {round(x_opt[6,0],0)}")
     print(f"       {B_b} {round(x_opt[3,0],1)} |       {S_t} {round(x_opt[15,0],1)}    {S_t} {round(x_opt[11,0],1)}   {S_t} {round(x_opt[7,0],0)}\n")
 
+    m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
+    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False)
+    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False)
+
     print(f"T_sup_HP = {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'}")
+    print(f"T_ret_HP = {round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'}")
+    print(f"Q_HP = {round(0.5 * 4187 * (u_opt[0,0] - T_ret_HP) * u_opt[4,0],1) if round(u_opt[4,0])==1 else '-'}")
     print(f"m_HP = {0.5 if u_opt_0[4]==1 else 0}, m_stor = {round(u_opt[1,0],2)}, m_buffer = {round(m_buffer,2)}, m_load = 0.2")
-    
+    print(f"T_sup_load = {round(T_sup_load,1)}")
+
     print(f"\nBuffer {B_t} {round(x_1[0],1)} | Storage  {round(x_1[12],1)} {S_t}    {round(x_1[8],1)} {S_t}   {round(x_1[4],0)} {S_t}")
     print(f"          {round(x_1[1],1)} |          {round(x_1[13],1)}       {round(x_1[9],1)}      {round(x_1[5],0)}")
     print(f"          {round(x_1[2],1)} |          {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")

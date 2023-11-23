@@ -4,8 +4,12 @@ import time
 import functions, forecasts
 from functions import get_function
 
+# ------------------------------------------------------
+# Constants
+# ------------------------------------------------------
+
 # Heat pump
-Q_HP_min = 8000 # 8000 W
+Q_HP_min = 8000 #W
 Q_HP_max = 14000 #W
 
 # Load
@@ -27,6 +31,10 @@ delta_t_m = 2 #min
 delta_t_s = delta_t_m*60 #sec
 delta_t_h = delta_t_m/60 #hours
 
+
+# ------------------------------------------------------
+# System dynamics
+# ------------------------------------------------------
 '''
 INPUTS:
 - The input at time step t: u(t)
@@ -55,9 +63,8 @@ def dynamics(u_t, x_t, a, real, approx):
     # For the buffer tank B
     Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx)
     Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx)
-
     for i in range(1,5):
-        Q_conv_B[i-1] = get_function("Q_conv_B{}".format(i), u_t, x_t, a, real, approx)
+        Q_conv_B[i-1] = get_function(f"Q_conv_B{i}", u_t, x_t, a, real, approx)
 
     # For the storage tanks S1, S2, S3
     Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx)
@@ -68,20 +75,24 @@ def dynamics(u_t, x_t, a, real, approx):
     Q_bottom_S[11]  = get_function("Q_bottom_S3", u_t, x_t, a, real, approx)
     for i in range(1,4):
         for j in range(1,5):
-            Q_conv_S[4*(i-1)+(j-1)] = get_function("Q_conv_S{}{}".format(i,j), u_t, x_t, a, real, approx)
+            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx)
 
-    # Next state for buffer and storage
+    # Compute the next state for buffer and storage tank layers
     const = delta_t_s / (m_layer * cp)
     x_plus_B = [x_t[i] + const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
     x_plus_S = [x_t[i+4] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
     
-    # Bring everything together (need to use casadi.vertcat)
+    # Bring everything together (need to use casadi.vertcat for symbolic values)
     x_plus = []
     for i in range(len(x_plus_B)): x_plus = casadi.vertcat(x_plus, x_plus_B[i])
     for i in range(len(x_plus_S)): x_plus = casadi.vertcat(x_plus, x_plus_S[i])
         
-    return x_plus_B+x_plus_S if real else x_plus
+    return x_plus_B + x_plus_S if real else x_plus
 
+
+# ------------------------------------------------------
+# Optimize over the next steps
+# ------------------------------------------------------
 '''
 GOAL:
 Find the feasible sequence u={u_0,...,u_N-1} that minimizes the objective
@@ -95,18 +106,20 @@ INPUTS:
 --- mixed-integer: True if mixed integer variables, False if continuous
 --- gurobi: True if solver is gurobi, False if it is ipopt
 --- horizon: The horizon of the MPC (N)
+- case: the values of the delta terms if solving a single combination
 
 OUTPUTS:
-- u_0*: The optimal input at the current time step
+- u_optimal: The optimal input sequence for the next N steps
+- x_optimal: The corresponding sequence of states for the next N steps
 '''
-def optimize_N_steps(x_0, a, iter, pb_type):
+def optimize_N_steps(x_0, a, iter, pb_type, case):
 
     # Print iteration and simulated time
     hours = int(iter*1/12)
     minutes = round((iter*1/12-int(iter*1/12))*60)
     print("\n-----------------------------------------------------")
     print("Iteration {} ({}h{}min)".format(iter+1, hours, minutes))
-    print("-----------------------------------------------------")
+    print("-----------------------------------------------------\n")
 
     # ------------------------------------------------------
     # Variables
@@ -131,15 +144,24 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     # ------------------------------------------------------
 
     if pb_type['gurobi']:
-        solver_opts = {'discrete':discrete_var, 'gurobi.OutputFlag':0} if pb_type['mixed-integer'] else {'gurobi.OutputFlag':0}
-        opti.solver('gurobi', solver_opts)
+        if pb_type['mixed-integer']:
+            solver_opts = {'discrete':discrete_var, 'gurobi.OutputFlag':0}
+            opti.solver('gurobi', solver_opts)
+        else:
+            solver_opts = {'gurobi.OutputFlag':0}
+            opti.solver('gurobi', solver_opts)
         
     else:
-        solver_opts = {'ipopt.print_level': 0, 'print_time': 0, 'ipopt.tol': 1e-4}
-        opti.solver('ipopt', solver_opts)
+        if pb_type['mixed-integer']:
+            solver_opts = {'discrete': discrete_var, 'bonmin.tol': 1e-4}
+            opti.solver('bonmin', solver_opts)
+        else:
+            solver_opts = {'ipopt.print_level': 0, 'print_time': 0, 'ipopt.tol': 1e-10}
+            opti.solver('ipopt', solver_opts)
+
                 
     approx = True if pb_type['linearized'] else False
-    real = False # since we are defining the optimization problem
+    real = False # False in this file since we are defining the optimization problem
     
     # ------------------------------------------------------
     # Parameters
@@ -147,6 +169,8 @@ def optimize_N_steps(x_0, a, iter, pb_type):
 
     # Electricity prices for the next N steps
     c_el = forecasts.get_c_el(iter,iter+N)
+    
+    # Load mass flow rate for the next N steps
     m_load = forecasts.get_m_load(iter,iter+N)
 
     # ------------------------------------------------------
@@ -154,7 +178,7 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     # ------------------------------------------------------
         
     if approx:
-        print("\nComputing all f(a) and grad_f(a)...")
+        print("Computing all f(a) and grad_f(a)...")
         start_time = time.time()
         a = {
         'values': a,
@@ -178,15 +202,19 @@ def optimize_N_steps(x_0, a, iter, pb_type):
         opti.subject_to(u[1,t] >= 0)
         opti.subject_to(u[1,t] <= 0.5)
         
-        # delta terms
-        #opti.subject_to(u[2,t] == 0)
-        #opti.subject_to(u[3,t] == 1)
-        #opti.subject_to(u[4,t] == 1)
-        #opti.subject_to(u[5,t] == 0)
-        for i in range(2,6):
-            opti.subject_to(u[i,t] >= 0)
-            opti.subject_to(u[i,t] <= 1)
-
+        # delta terms if there is a specific case
+        if case['case']:
+            opti.subject_to(u[2,t] == case['d_ch'])
+            opti.subject_to(u[3,t] == case['d_bu'])
+            opti.subject_to(u[4,t] == case['d_HP'])
+            opti.subject_to(u[5,t] == case['d_R'])
+        
+        # delta terms if there is no specific case
+        else:
+            for i in range(2,6):
+                opti.subject_to(u[i,t] >= 0)
+                opti.subject_to(u[i,t] <= 1)
+            
     # Bounds constraints for x
     for t in range(N+1):
         for i in range(16):
@@ -222,10 +250,8 @@ def optimize_N_steps(x_0, a, iter, pb_type):
     # Objective
     # ------------------------------------------------------
 
-    # Define objective
-    obj = sum(\
-    c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) \
-    for t in range(N))
+    # Define objective as the cost of used electricity over the next N steps
+    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) for t in range(N))
 
     # Set objective
     opti.minimize(obj)
@@ -242,11 +268,9 @@ def optimize_N_steps(x_0, a, iter, pb_type):
 
     # Get optimal u=u_0*,...,u_N-1*
     u_optimal = sol.value(u)
-    u0_optimal = [round(float(x),6) for x in u_optimal[:,0]]
    
     # Get corresponding states x0,...,xN
     x_optimal = sol.value(x)
-    x1_optimal = [round(float(x),6) for x in x_optimal[:,1]]
 
-    # Return optimal u0
+    # Return optimal sequence of u and x
     return u_optimal, x_optimal
