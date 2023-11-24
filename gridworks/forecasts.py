@@ -1,5 +1,5 @@
 '''
-This file is to obtain the forecasts for electricty prices and loads between two time steps.
+This file is to obtain the forecasts for electricty prices and loads between in a given time frame.
 For both functions, the inputs are the desired start and end time steps.
 '''
 
