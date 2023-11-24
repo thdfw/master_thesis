@@ -27,35 +27,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
 
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
-
-    '''
-    # ------------------------------------------------------
-    # Process if solving the linearized or relaxed problem
-    # ------------------------------------------------------
-        
-    if pb_type['linearized'] or not pb_type['mixed-integer']:
     
-        # Rounding the delta terms
-        #print(f"deltas = {u_opt_0[2:]}")
-        u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
-        #print(f"deltas = {u_opt_0[2:]}")
-
-        # Get m_buffer
-        m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
-        
-        # If m_buffer is negative, make it positive and toggle buffer state
-        if m_buffer < 0:
-            m_buffer = -m_buffer
-            u_opt_0[3] = 0 if u_opt_0[3]==1 else 1
-        
-        # Compute m_stor for the new m_buffer>0 and d_bu
-        u_opt_0[1] = (m_buffer*(2*u_opt_0[3]-1) - 0.5*u_opt_0[4] + 0.2)/(1-2*u_opt_0[2])
-    '''
-    
-    # ------------------------------------------------------
-    # Printing
-    # ------------------------------------------------------
-
     S_t = "->" if round(u_opt_0[2])==0 else "<-"
     S_b = "<-" if round(u_opt_0[2])==0 else "->"
     B_t = "->" if round(u_opt_0[3])==1 else "<-"

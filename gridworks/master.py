@@ -11,7 +11,7 @@ import optimizer, functions, plot, forecasts
 num_iterations = 200
 
 # Horizon
-N = 60
+N = 25
 
 # Relaxed problem: False, False, False
 # Linearized MIP:  True, True, True
@@ -62,24 +62,6 @@ for iter in range(num_iterations):
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
-    
-    '''
-    if pb_type['linearized'] or not pb_type['mixed-integer']:
-
-        # Round the values of deltas
-        u_opt_0 = u_opt_0[:2] + [round(x) for x in u_opt_0[2:]]
-        
-        # Get m_buffer
-        m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
-        
-        # If m_buffer is negative, make it positive and toggle buffer state
-        if m_buffer < 0:
-            m_buffer = -m_buffer
-            u_opt_0[3] = 0 if u_opt_0[3]==1 else 1
-        
-        # Compute m_stor for the new m_buffer and d_bu
-        u_opt_0[1] = (m_buffer*(2*u_opt_0[3]-1) - 0.5*u_opt_0[4] + 0.2)/(1-2*u_opt_0[2])
-    '''
     
     # Implement u_0* and obtain x_1
     x_1 = optimizer.dynamics(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False)
