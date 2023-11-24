@@ -11,7 +11,7 @@ import optimizer, functions, plot, forecasts
 num_iterations = 200
 
 # Horizon
-N = 25
+N = 60
 
 # Relaxed problem: False, False, False
 # Linearized MIP:  True, True, True
