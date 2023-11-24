@@ -13,8 +13,7 @@ num_iterations = 200
 # Horizon
 N = 25
 
-# Relaxed problem: False, False, False
-# Linearized MIP:  True, True, True
+# Problem type
 pb_type = {
 'linearized':       False,
 'mixed-integer':    False,
