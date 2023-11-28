@@ -18,6 +18,9 @@ def print_pb_type(pb_type):
     # Solver: gurobi or ipopt/bonmin
     if pb_type['gurobi']: print("Solver: Gurobi")
     else: print("Solver: Bonmin") if pb_type['mixed-integer'] else print("Solver: Ipopt")
+    
+    print(f"Time step: {pb_type['delta_t_m']} minutes, with {pb_type['eta']} intermediate points")
+    print(f"Horizon: {pb_type['horizon']*pb_type['delta_t_m']/60} hours")
 
 
 '''
@@ -95,8 +98,8 @@ def plot_MPC(data):
     ax2.set_ylabel("Price [$/MWh]")
 
     # x_ticks in hours
-    tick_positions = np.arange(0, data['iterations']+1, step=12)
-    tick_labels = [f'{step * 5 // 60:02d}:00' for step in tick_positions]
+    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['delta_t_m']))
+    tick_labels = [f"{step * data['pb_type']['delta_t_m'] // 60:02d}:00" for step in tick_positions]
     plt.xticks(tick_positions, tick_labels)
 
     # Common legend

@@ -14,18 +14,16 @@ eta = 4
 delta_t_m = 2*(eta+1)       # minutes
 delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
-print(f"Time step: {delta_t_m} minutes")
 
 # ------------------------------------------------------
 # Select problem type and solver
 # ------------------------------------------------------
 
-# Horizon (2 hours)
+# Horizon
 N = 12
-print(f"Horizon: {N*delta_t_h} hours")
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h)
+num_iterations = 3#int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
