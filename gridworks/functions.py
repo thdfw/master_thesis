@@ -24,9 +24,11 @@ T_B1, T_B2, T_B3, T_B4, T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, 
 
 # Some constants
 m_load = 0.2
-m_HP = 0.5
 Delta_T_load = 5/9*20
 cp = 4187
+
+# Mass flow rate from HP
+B_0M, B_1M = 0.5, 0 #4.2669, -0.0117
 
 
 # ------------------------------------------------------
@@ -40,6 +42,9 @@ def get_all_f(case):
     delta_bu = case['d_bu']
     delta_HP = case['d_HP']
     delta_R  = case['d_R']
+    
+    # Mass flow rate from HP
+    m_HP = B_0M + B_1M * T_sup_HP
 
     # Mass flow rate at buffer tank
     m_buffer = (m_HP * delta_HP - m_stor * (2*delta_ch-1) - m_load) / (2 * delta_bu - 1)
@@ -98,6 +103,7 @@ def get_all_f(case):
         
         "T_sup_load": T_sup_load,
         "T_ret_HP": T_ret_HP,
+        "m_HP": m_HP,
     }
 
     # Compute the gradients of the functions to approximate
@@ -147,6 +153,9 @@ def functions_exact_sym(id, u, x):
     T_S11, T_S12, T_S13, T_S14 = x[4], x[5], x[6], x[7]
     T_S21, T_S22, T_S23, T_S24 = x[8], x[9], x[10], x[11]
     T_S31, T_S32, T_S33, T_S34 = x[12], x[13], x[14], x[15]
+    
+    # Mass flow rate from HP
+    m_HP = B_0M + B_1M * T_sup_HP
     
     # Mass flow rate at buffer tank
     m_buffer = (m_HP * delta_HP - m_stor * (2*delta_ch-1) - m_load) / (2 * delta_bu - 1)
@@ -205,6 +214,7 @@ def functions_exact_sym(id, u, x):
         
         "T_sup_load": T_sup_load,
         "T_ret_HP": T_ret_HP,
+        "m_HP": m_HP,
     }
     
     return functions_sym[id]

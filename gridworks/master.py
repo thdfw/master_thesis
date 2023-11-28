@@ -4,14 +4,28 @@ import matplotlib.pyplot as plt
 import optimizer, functions, plot, forecasts
 
 # ------------------------------------------------------
+# Time discretization
+# ------------------------------------------------------
+
+# Number of intermediate points between two time steps
+eta = 4
+
+# Time step
+delta_t_m = 2*(eta+1)       # minutes
+delta_t_h = delta_t_m/60    # hours
+delta_t_s = delta_t_m*60    # seconds
+print(f"Time step: {delta_t_m} minutes")
+
+# ------------------------------------------------------
 # Select problem type and solver
 # ------------------------------------------------------
 
-# Simulation time
-num_iterations = 200
+# Horizon (2 hours)
+N = 12
+print(f"Horizon: {N*delta_t_h} hours")
 
-# Horizon
-N = 25
+# Simulation time (16 hours)
+num_iterations = int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
@@ -19,6 +33,8 @@ pb_type = {
 'mixed-integer':    False,
 'gurobi':           False,
 'horizon':          N,
+'eta':              eta,
+'delta_t_m':        delta_t_m,
 }
 
 # Choose between solving the general case or a given combination of the deltas
@@ -43,7 +59,6 @@ a = [330, 0.25] + [0.6]*4 + x_0
 
 list_Q_HP = []
 list_S11, list_S21, list_S31, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[3]]
-delta_t_h = 2/60
 elec_cost, elec_used = 0, 0
 
 # ------------------------------------------------------
@@ -63,16 +78,16 @@ for iter in range(num_iterations):
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
     # Implement u_0* and obtain x_1
-    x_1 = optimizer.dynamics(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False)
+    x_1 = optimizer.next_state(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False, eta=eta, delta_t_s=delta_t_s)
+    
+    # Print iteration
+    plot.print_iteration(u_opt, x_opt, x_1, pb_type)
     
     # Update x_0
     x_0 = x_1
     
     # Update "a", the point around which we linearize
     a = u_opt_0[:2] + [0.6]*4 + x_1
-
-    # Print iteration
-    plot.print_iteration(u_opt, x_opt, x_1, pb_type)
     
     # ------------------------------------------------------
     # Plots
@@ -81,7 +96,7 @@ for iter in range(num_iterations):
     # Update total electricity use and cost
     Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False)
     elec_used += Q_HP/4 * delta_t_h
-    elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter,iter+1)[0]
+    elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter,iter+1,delta_t_h)[0]
 
     # Append values for the plot
     list_Q_HP.append(Q_HP)
@@ -94,8 +109,8 @@ for iter in range(num_iterations):
 plot_data = {
     'pb_type':      pb_type,
     'iterations':   num_iterations,
-    'c_el':         forecasts.get_c_el(0,num_iterations),
-    'm_load':       forecasts.get_m_load(0,num_iterations),
+    'c_el':         forecasts.get_c_el(0,num_iterations,delta_t_h),
+    'm_load':       forecasts.get_m_load(0,num_iterations,delta_t_h),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
     'T_S21':        list_S21,

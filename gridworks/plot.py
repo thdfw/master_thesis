@@ -13,7 +13,7 @@ def print_pb_type(pb_type):
 
     # Variables: mixed integer or continuous
     if pb_type['mixed-integer']: print("Variables: Mixed-Integer")
-    else: print("Variables: Continuous (relaxed binary)")
+    else: print("Variables: Continuous (relaxed or fixed binary)")
 
     # Solver: gurobi or ipopt/bonmin
     if pb_type['gurobi']: print("Solver: Gurobi")
@@ -38,6 +38,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     print(f"          {round(x_opt[2,0],1)} |          {round(x_opt[14,0],1)}       {round(x_opt[10,0],1)}      {round(x_opt[6,0],0)}")
     print(f"       {B_b} {round(x_opt[3,0],1)} |       {S_t} {round(x_opt[15,0],1)}    {S_t} {round(x_opt[11,0],1)}   {S_t} {round(x_opt[7,0],0)}\n")
 
+    m_HP = functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False)
     m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
     T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False)
     T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False)
@@ -45,7 +46,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     print(f"T_sup_HP = {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'}")
     #print(f"T_ret_HP = {round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'}")
     #print(f"Q_HP = {round(0.5 * 4187 * (u_opt[0,0] - T_ret_HP) * u_opt[4,0],1) if round(u_opt[4,0])==1 else '-'}")
-    print(f"m_HP = {0.5 if u_opt_0[4]==1 else 0}, m_stor = {round(u_opt[1,0],2)}, m_buffer = {round(m_buffer,2)}, m_load = 0.2")
+    print(f"m_HP = {round(m_HP,2) if u_opt_0[4]==1 else 0}, m_stor = {round(u_opt[1,0],2)}, m_buffer = {round(m_buffer,2)}, m_load = 0.2")
     print(f"=> T_sup_load = {round(T_sup_load,1)}")
 
     print(f"\nBuffer {B_t} {round(x_1[0],1)} | Storage  {round(x_1[12],1)} {S_t}    {round(x_1[8],1)} {S_t}   {round(x_1[4],0)} {S_t}")

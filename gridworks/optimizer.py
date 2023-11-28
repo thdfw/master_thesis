@@ -26,11 +26,6 @@ T_w_max = 273 + 80 #K
 # Other
 cp = 4187 #J/kgK
 
-# Time step
-delta_t_m = 2 #min
-delta_t_s = delta_t_m*60 #sec
-delta_t_h = delta_t_m/60 #hours
-
 
 # ------------------------------------------------------
 # System dynamics
@@ -46,7 +41,10 @@ INPUTS:
 OUTPUTS:
 - The state at time step t+1: x(t+1)
 '''
-def dynamics(u_t, x_t, a, real, approx):
+def dynamics(u_t, x_t, a, real, approx, eta, delta_t_s):
+
+    # Get the correspoding time step for eta intermediate points
+    delta_t_dyn = delta_t_s/(eta+1)
 
     # All heat transfers are 0 unless specified otherwise later
     Q_top_B     = [0]*4
@@ -78,7 +76,7 @@ def dynamics(u_t, x_t, a, real, approx):
             Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx)
 
     # Compute the next state for buffer and storage tank layers
-    const = delta_t_s / (m_layer * cp)
+    const = delta_t_dyn / (m_layer * cp)
     x_plus_B = [x_t[i] + const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
     x_plus_S = [x_t[i+4] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
     
@@ -88,6 +86,22 @@ def dynamics(u_t, x_t, a, real, approx):
     for i in range(len(x_plus_S)): x_plus = casadi.vertcat(x_plus, x_plus_S[i])
         
     return x_plus_B + x_plus_S if real else x_plus
+
+
+# ------------------------------------------------------
+# Get the next state with midpoint method
+# ------------------------------------------------------
+'''
+Midpoint method
+With eta intermediate points between the two time steps
+'''
+def next_state(u_t, x_t, a, real, approx, eta, delta_t_s):
+
+    xi = x_t
+    for i in range(eta+1):
+        xi = dynamics(u_t, xi, a, real, approx, eta, delta_t_s)
+        
+    return xi
 
 
 # ------------------------------------------------------
@@ -114,13 +128,18 @@ OUTPUTS:
 '''
 def optimize_N_steps(x_0, a, iter, pb_type, case):
 
+    # Get the time step
+    delta_t_m = pb_type['delta_t_m'] #min
+    delta_t_s = delta_t_m*60 #sec
+    delta_t_h = delta_t_m/60 #hours
+
     # Print iteration and simulated time
-    hours = int(iter*1/12)
-    minutes = round((iter*1/12-int(iter*1/12))*60)
+    hours = int(iter*delta_t_h)
+    minutes = round((iter*delta_t_h-int(iter*delta_t_h))*60)
     print("\n-----------------------------------------------------")
     print("Iteration {} ({}h{}min)".format(iter+1, hours, minutes))
     print("-----------------------------------------------------\n")
-
+    
     # ------------------------------------------------------
     # Variables
     # ------------------------------------------------------
@@ -168,10 +187,10 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     # ------------------------------------------------------
 
     # Electricity prices for the next N steps
-    c_el = forecasts.get_c_el(iter,iter+N)
+    c_el = forecasts.get_c_el(iter, iter+N, delta_t_h)
     
     # Load mass flow rate for the next N steps
-    m_load = forecasts.get_m_load(iter,iter+N)
+    m_load = forecasts.get_m_load(iter, iter+N, delta_t_h)
 
     # ------------------------------------------------------
     # Compute f(a) and grad_f(a) for all non linear terms
@@ -243,7 +262,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
         opti.subject_to(u[2,t] <= u[4,t])
         
         # System dynamics
-        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx))
+        opti.subject_to(x[:,t+1] == next_state(u[:,t], x[:,t], a, real, approx, pb_type['eta'], delta_t_s))
     #print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
