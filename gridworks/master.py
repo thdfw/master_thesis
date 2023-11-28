@@ -23,7 +23,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = 12
 
 # Simulation time (16 hours)
-num_iterations = 3#int(16 * 1/delta_t_h)
+num_iterations = int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {

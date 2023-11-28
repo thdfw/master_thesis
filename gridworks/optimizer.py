@@ -32,14 +32,16 @@ cp = 4187 #J/kgK
 # ------------------------------------------------------
 '''
 INPUTS:
-- The input at time step t: u(t)
-- The state at time step t: x(t)
+- The input at a time step t: u(t)
+- The state at a time step t: x(t)
 - The point around which to linearize: a
 - Real values or symbolic: real
 - Linearized problem or not: approx
+- Number of intermediate points between timesteps: eta
+- Time step in seconds: delta_t_s
 
 OUTPUTS:
-- The state at time step t+1: x(t+1)
+- The state at time step t+delta_t_s/(eta+1): x(t+delta_t_s/(eta+1))
 '''
 def dynamics(u_t, x_t, a, real, approx, eta, delta_t_s):
 
@@ -120,6 +122,8 @@ INPUTS:
 --- mixed-integer: True if mixed integer variables, False if continuous
 --- gurobi: True if solver is gurobi, False if it is ipopt
 --- horizon: The horizon of the MPC (N)
+--- eta: The number of intermediate points between two time steps
+--- delta_t_m: Time step in minutes
 - case: the values of the delta terms if solving a single combination
 
 OUTPUTS:
@@ -137,7 +141,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     hours = int(iter*delta_t_h)
     minutes = round((iter*delta_t_h-int(iter*delta_t_h))*60)
     print("\n-----------------------------------------------------")
-    print("Iteration {} ({}h{}min)".format(iter+1, hours, minutes))
+    print(f"Iteration {iter+1} ({hours}h{minutes}min)")
     print("-----------------------------------------------------\n")
     
     # ------------------------------------------------------
