@@ -19,44 +19,81 @@ def print_pb_type(pb_type):
     if pb_type['gurobi']: print("Solver: Gurobi")
     else: print("Solver: Bonmin") if pb_type['mixed-integer'] else print("Solver: Ipopt")
     
-    print(f"Time step: {pb_type['delta_t_m']} minutes, with {pb_type['eta']} intermediate points")
-    print(f"Horizon: {pb_type['horizon']*pb_type['delta_t_m']/60} hours")
+    print(f"\nTime step: {pb_type['delta_t_m']} minutes, with {pb_type['eta']} intermediate points")
+    print(f"Horizon: {pb_type['horizon']*pb_type['delta_t_m']/60} hours ({pb_type['horizon']} time steps)")
 
 
 '''
-Prints the current iteration (x0, u0*, x1) in way that is easy to visualize
+Prints the current iteration (x0, u0*, x1) in a way that is easy to visualize
 '''
 def print_iteration(u_opt, x_opt, x_1, pb_type):
 
+    # ------------------------------------------------------
+    # Initial state
+    # ------------------------------------------------------
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
+
+    print("************************************************************************************")
+    print("Initial state")
+    print(f"B     -- {round(x_opt[0,0],1)} | S        {round(x_opt[12,0],1)} --    {round(x_opt[8,0],1)} --   {round(x_opt[4,0],0)} --")
+    print(f"         {round(x_opt[1,0],1)} |          {round(x_opt[13,0],1)}       {round(x_opt[9,0],1)}      {round(x_opt[5,0],0)}")
+    print(f"         {round(x_opt[2,0],1)} |          {round(x_opt[14,0],1)}       {round(x_opt[10,0],1)}      {round(x_opt[6,0],0)}")
+    print(f"      -- {round(x_opt[3,0],1)} |       -- {round(x_opt[15,0],1)}    -- {round(x_opt[11,0],1)}   -- {round(x_opt[7,0],0)}")
+
+    # ------------------------------------------------------
+    # Mass flow rates
+    # ------------------------------------------------------
     
-    S_t = "->" if round(u_opt_0[2])==0 else "<-"
-    S_b = "<-" if round(u_opt_0[2])==0 else "->"
-    B_t = "->" if round(u_opt_0[3])==1 else "<-"
-    B_b = "<-" if round(u_opt_0[3])==1 else "->"
+    # Mass flow rates do not change with state => same for all intermediate states
+    m_HP = round(functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False),2) if u_opt_0[4]==1 else 0
+    m_stor = round(u_opt[1,0],1)
+    m_buffer = round(functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False),1)
+    m_load = 0.2
+    
+    # Direction of flows
+    S_t = f"-{m_stor}->" if round(u_opt_0[2])==0 else f"<-{m_stor}-"
+    S_t2 = f"->" if round(u_opt_0[2])==0 else f"<-"
+    B_t = f"-{m_buffer}->" if round(u_opt_0[3])==1 else f"<-{m_buffer}-"
+    B_b = f"<-{m_buffer}-" if round(u_opt_0[3])==1 else f"-{m_buffer}->"
+    
+    # ------------------------------------------------------
+    # Intermediate states up to final state
+    # ------------------------------------------------------
+    
+    # Start at initial state
+    x_inter = x_opt_0
 
-    print(f"\nBuffer {B_t} {round(x_opt[0,0],1)} | Storage  {round(x_opt[12,0],1)} {S_t}    {round(x_opt[8,0],1)} {S_t}   {round(x_opt[4,0],0)} {S_t}")
-    print(f"          {round(x_opt[1,0],1)} |          {round(x_opt[13,0],1)}       {round(x_opt[9,0],1)}      {round(x_opt[5,0],0)}")
-    print(f"          {round(x_opt[2,0],1)} |          {round(x_opt[14,0],1)}       {round(x_opt[10,0],1)}      {round(x_opt[6,0],0)}")
-    print(f"       {B_b} {round(x_opt[3,0],1)} |       {S_t} {round(x_opt[15,0],1)}    {S_t} {round(x_opt[11,0],1)}   {S_t} {round(x_opt[7,0],0)}\n")
+    # From first all intermediate points until the final one
+    for _ in range(pb_type['eta']+1):
+    
+        Q_HP = optimizer.get_function("Q_HP", u_opt_0, x_inter, 0, True, False)
+        T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_inter, 0, True, False)
+        T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_inter, 0, True, False)
+        
+        # Go to next intermediate point
+        x_inter = optimizer.dynamics(u_opt_0, x_inter, 0, True, False, pb_type['eta'], pb_type['delta_t_m']*60)
 
-    m_HP = functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False)
-    m_buffer = functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False)
-    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False)
-    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False)
+        print("************************************************************************************")
+        if _<pb_type['eta']: print(f"Intermediate state {_+1}")
+        else: print(f"Final state")
+        print(f"B {B_t} {round(x_inter[0],1)} | S        {round(x_inter[12],1)} {S_t2}    {round(x_inter[8],1)} {S_t2}   {round(x_inter[4],0)} {S_t}")
+        print(f"         {round(x_inter[1],1)} |          {round(x_inter[13],1)}       {round(x_inter[9],1)}      {round(x_inter[5],0)}")
+        print(f"         {round(x_inter[2],1)} |          {round(x_inter[14],1)}       {round(x_inter[10],1)}      {round(x_inter[6],0)}")
+        print(f"  {B_b} {round(x_inter[3],1)} |   {S_t} {round(x_inter[15],1)}    {S_t2} {round(x_inter[11],1)}   {S_t2} {round(x_inter[7],0)}")
+        
+        print(f"\n{round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'} -{round(m_HP,2) if u_opt_0[4]==1 else 0}-> HP -{round(m_HP,2) if u_opt_0[4]==1 else 0}-> {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'} ({round(Q_HP,2) if round(u_opt[4,0])==1 else '-'} W)")
 
-    print(f"T_sup_HP = {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'}")
-    #print(f"T_ret_HP = {round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'}")
-    #print(f"Q_HP = {round(0.5 * 4187 * (u_opt[0,0] - T_ret_HP) * u_opt[4,0],1) if round(u_opt[4,0])==1 else '-'}")
-    print(f"m_HP = {round(m_HP,2) if u_opt_0[4]==1 else 0}, m_stor = {round(u_opt[1,0],2)}, m_buffer = {round(m_buffer,2)}, m_load = 0.2")
-    print(f"=> T_sup_load = {round(T_sup_load,1)}")
-
-    print(f"\nBuffer {B_t} {round(x_1[0],1)} | Storage  {round(x_1[12],1)} {S_t}    {round(x_1[8],1)} {S_t}   {round(x_1[4],0)} {S_t}")
-    print(f"          {round(x_1[1],1)} |          {round(x_1[13],1)}       {round(x_1[9],1)}      {round(x_1[5],0)}")
-    print(f"          {round(x_1[2],1)} |          {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")
-    print(f"       {B_b} {round(x_1[3],1)} |       {S_t} {round(x_1[15],1)}    {S_t} {round(x_1[11],1)}   {S_t} {round(x_1[7],0)}")
-
+        print(f"{round(T_sup_load,1)} -{round(m_load,2)}-> Load -{round(m_load,2)}-> {round(T_sup_load-11.111,1)}")
+        if _==pb_type['eta']: print("************************************************************************************")
+        
+    # ------------------------------------------------------
+    # For the entire time step
+    # ------------------------------------------------------
+    
+    Q_HP_average = optimizer.get_Q_HP_t(u_opt_0, x_opt_0, 0, True, False, pb_type['eta'], pb_type['delta_t_m']*60)
+    print(f"\nQ_HP_average = {round(Q_HP_average,2)}")
+    
 
 '''
 The final plot with all the data accumulated during the simulation
@@ -120,4 +157,5 @@ def plot_MPC(data):
     ax[1].set_xlabel("$Time [hours]$")
     ax[1].legend()
 
+    #plt.savefig('~/gridworks_ML/my_plot.png')
     plt.show()

@@ -7,20 +7,20 @@ import optimizer, functions, plot, forecasts
 # Time discretization
 # ------------------------------------------------------
 
-# Number of intermediate points between two time steps
-eta = 4
-
 # Time step
-delta_t_m = 2*(eta+1)       # minutes
+delta_t_m = 10              # minutes (needs to be a multiple of 2)
 delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
+
+# Number of intermediate points between two time steps
+eta = int(delta_t_m/2 - 1)
 
 # ------------------------------------------------------
 # Select problem type and solver
 # ------------------------------------------------------
 
-# Horizon
-N = 12
+# Horizon (2 hours)
+N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
 num_iterations = int(16 * 1/delta_t_h)
@@ -92,7 +92,7 @@ for iter in range(num_iterations):
     # ------------------------------------------------------
 
     # Update total electricity use and cost
-    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False)
+    Q_HP = optimizer.get_Q_HP_t(u_opt_0, x_opt_0, 0, True, False, eta, delta_t_s)
     elec_used += Q_HP/4 * delta_t_h
     elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter,iter+1,delta_t_h)[0]
 

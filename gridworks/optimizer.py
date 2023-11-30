@@ -107,6 +107,27 @@ def next_state(u_t, x_t, a, real, approx, eta, delta_t_s):
 
 
 # ------------------------------------------------------
+# Compute the average Q_HP during time step
+# ------------------------------------------------------
+'''
+Compute Q_HP at every intermediate point and get the average
+'''
+def get_Q_HP_t(u_t, x_t, a, real, approx, eta, delta_t_s):
+    
+    xi = x_t
+    Q_HP_total = get_function("Q_HP", u_t, xi, a, real, approx)
+    
+    for i in range(eta):
+        xi = dynamics(u_t, xi, a, real, approx, eta, delta_t_s)
+        Q_HP_total += get_function("Q_HP", u_t, xi, a, real, approx)
+    
+    Q_HP_average = Q_HP_total / (eta+1)
+
+    # Gives the average Q_HP [W] over the time step
+    return Q_HP_average
+
+
+# ------------------------------------------------------
 # Optimize over the next steps
 # ------------------------------------------------------
 '''
@@ -251,13 +272,27 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     print("Setting all non linear constraints...")
     start_time = time.time()
     for t in range(N):
+
+        # Heat pump operation: min Q_HP (true at each intermediate step within time step)
+        xi = x[:,t]
+        opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) >= Q_HP_min * u[4,t])
+        for i in range(pb_type['eta']):
+            xi = dynamics(u[:,t], xi, a, real, approx, pb_type['eta'], delta_t_s)
+            opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) >= Q_HP_min * u[4,t])
             
-        # Heat pump operation
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx) >= Q_HP_min * u[4,t])
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx) <= Q_HP_max)
-        
-        # Load supply temperature
-        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx) >= T_sup_load_min)
+        # Heat pump operation: max Q_HP (true at each intermediate step within time step)
+        xi = x[:,t]
+        opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) <= Q_HP_max)
+        for i in range(pb_type['eta']):
+            xi = dynamics(u[:,t], xi, a, real, approx, pb_type['eta'], delta_t_s)
+            opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) <= Q_HP_max)
+            
+        # Load supply temperature (true at every step within time step)
+        xi = x[:,t]
+        opti.subject_to(get_function("T_sup_load", u[:,t], xi, a, real, approx) >= T_sup_load_min)
+        for i in range(pb_type['eta']):
+            xi = dynamics(u[:,t], xi, a, real, approx, pb_type['eta'], delta_t_s)
+            opti.subject_to(get_function("T_sup_load", u[:,t], xi, a, real, approx) >= T_sup_load_min)
         
         # Mass flow rates
         opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], a, real, approx) >= 0)
@@ -274,7 +309,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     # ------------------------------------------------------
 
     # Define objective as the cost of used electricity over the next N steps
-    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) for t in range(N))
+    obj = sum(c_el[t] * delta_t_h * get_Q_HP_t(u[:,t], x[:,t], a, real, approx, pb_type['eta'], delta_t_s) for t in range(N))
 
     # Set objective
     opti.minimize(obj)
