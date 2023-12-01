@@ -4,13 +4,20 @@ import matplotlib.pyplot as plt
 import optimizer, functions, plot, forecasts
 
 # ------------------------------------------------------
-# Select problem type and solver
+# Time discretization
 # ------------------------------------------------------
 
 # Time step
-delta_t_m = 2               # minutes
+delta_t_m = 10              # minutes (needs to be a multiple of 2)
 delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
+
+# Number of intermediate points between two time steps
+eta = int(delta_t_m/2 - 1)
+
+# ------------------------------------------------------
+# Select problem type and solver
+# ------------------------------------------------------
 
 # Horizon (2 hours)
 N = int(2 * 1/delta_t_h)
@@ -24,7 +31,8 @@ pb_type = {
 'mixed-integer':    False,
 'gurobi':           False,
 'horizon':          N,
-'time_step':        delta_t_m,
+'eta':              eta,
+'delta_t_m':        delta_t_m,
 }
 
 # Choose between solving the general case or a given combination of the deltas
@@ -68,7 +76,7 @@ for iter in range(num_iterations):
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
     # Implement u_0* and obtain x_1
-    x_1 = optimizer.dynamics(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False, delta_t_s=delta_t_s)
+    x_1 = optimizer.next_state(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False, eta=eta, delta_t_s=delta_t_s)
     
     # Print iteration
     plot.print_iteration(u_opt, x_opt, x_1, pb_type)
@@ -84,7 +92,7 @@ for iter in range(num_iterations):
     # ------------------------------------------------------
 
     # Update total electricity use and cost
-    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False)
+    Q_HP = optimizer.get_Q_HP_t(u_opt_0, x_opt_0, 0, True, False, eta, delta_t_s)
     elec_used += Q_HP/4 * delta_t_h
     elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter,iter+1,delta_t_h)[0]
 

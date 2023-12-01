@@ -10,8 +10,8 @@ def get_c_el(start, end, delta_t_h):
     c_el_all = [18.97, 18.92, 18.21, 16.58, 16.27, 15.49, 14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
     
     # The number of time steps that make up one hour
-    time_steps = int(1/delta_t_h)
-    if int(1/delta_t_h) != 1/delta_t_h: raise ValueError("The chosen time step does not add up to an hour.")
+    try: time_steps = int(1/delta_t_h)
+    except: raise ValueError("The chosen time step does not add up to an hour.")
     
     # Extend to match time step (1 hour is 1/delta_t_h time steps)
     c_el_all = [item for item in c_el_all for _ in range(time_steps)]

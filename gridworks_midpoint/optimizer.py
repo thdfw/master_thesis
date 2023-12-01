@@ -9,7 +9,7 @@ from functions import get_function
 # ------------------------------------------------------
 
 # Heat pump
-Q_HP_min = 0 #8000 #W
+Q_HP_min = 0 #8000 W
 Q_HP_max = 14000 #W
 
 # Load
@@ -32,16 +32,21 @@ cp = 4187 #J/kgK
 # ------------------------------------------------------
 '''
 INPUTS:
-- The input at time step t: u(t)
-- The state at time step t: x(t)
+- The input at a time step t: u(t)
+- The state at a time step t: x(t)
 - The point around which to linearize: a
 - Real values or symbolic: real
 - Linearized problem or not: approx
+- Number of intermediate points between timesteps: eta
+- Time step in seconds: delta_t_s
 
 OUTPUTS:
-- The state at time step t+1: x(t+1)
+- The state at time step t+delta_t_s/(eta+1): x(t+delta_t_s/(eta+1))
 '''
-def dynamics(u_t, x_t, a, real, approx, delta_t_s):
+def dynamics(u_t, x_t, a, real, approx, eta, delta_t_s):
+
+    # Get the correspoding time step for eta intermediate points
+    delta_t_dyn = delta_t_s/(eta+1)
 
     # All heat transfers are 0 unless specified otherwise later
     Q_top_B     = [0]*4
@@ -73,7 +78,7 @@ def dynamics(u_t, x_t, a, real, approx, delta_t_s):
             Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx)
 
     # Compute the next state for buffer and storage tank layers
-    const = delta_t_s / (m_layer * cp)
+    const = delta_t_dyn / (m_layer * cp)
     x_plus_B = [x_t[i] + const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
     x_plus_S = [x_t[i+4] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
     
@@ -83,6 +88,43 @@ def dynamics(u_t, x_t, a, real, approx, delta_t_s):
     for i in range(len(x_plus_S)): x_plus = casadi.vertcat(x_plus, x_plus_S[i])
         
     return x_plus_B + x_plus_S if real else x_plus
+
+
+# ------------------------------------------------------
+# Get the next state with midpoint method
+# ------------------------------------------------------
+'''
+Midpoint method
+With eta intermediate points between the two time steps
+'''
+def next_state(u_t, x_t, a, real, approx, eta, delta_t_s):
+
+    xi = x_t
+    for i in range(eta+1):
+        xi = dynamics(u_t, xi, a, real, approx, eta, delta_t_s)
+        
+    return xi
+
+
+# ------------------------------------------------------
+# Compute the average Q_HP during time step
+# ------------------------------------------------------
+'''
+Compute Q_HP at every intermediate point and get the average
+'''
+def get_Q_HP_t(u_t, x_t, a, real, approx, eta, delta_t_s):
+    
+    xi = x_t
+    Q_HP_total = get_function("Q_HP", u_t, xi, a, real, approx)
+    
+    for i in range(eta):
+        xi = dynamics(u_t, xi, a, real, approx, eta, delta_t_s)
+        Q_HP_total += get_function("Q_HP", u_t, xi, a, real, approx)
+    
+    Q_HP_average = Q_HP_total / (eta+1)
+
+    # Gives the average Q_HP [W] over the time step
+    return Q_HP_average
 
 
 # ------------------------------------------------------
@@ -101,6 +143,8 @@ INPUTS:
 --- mixed-integer: True if mixed integer variables, False if continuous
 --- gurobi: True if solver is gurobi, False if it is ipopt
 --- horizon: The horizon of the MPC (N)
+--- eta: The number of intermediate points between two time steps
+--- delta_t_m: Time step in minutes
 - case: the values of the delta terms if solving a single combination
 
 OUTPUTS:
@@ -110,7 +154,7 @@ OUTPUTS:
 def optimize_N_steps(x_0, a, iter, pb_type, case):
 
     # Get the time step
-    delta_t_m = pb_type['time_step'] #min
+    delta_t_m = pb_type['delta_t_m'] #min
     delta_t_s = delta_t_m*60 #sec
     delta_t_h = delta_t_m/60 #hours
 
@@ -120,7 +164,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     print("\n-----------------------------------------------------")
     print(f"Iteration {iter+1} ({hours}h{minutes}min)")
     print("-----------------------------------------------------\n")
-
+    
     # ------------------------------------------------------
     # Variables
     # ------------------------------------------------------
@@ -228,13 +272,27 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     print("Setting all non linear constraints...")
     start_time = time.time()
     for t in range(N):
+
+        # Heat pump operation: min Q_HP (true at each intermediate step within time step)
+        xi = x[:,t]
+        opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) >= Q_HP_min * u[4,t])
+        for i in range(pb_type['eta']):
+            xi = dynamics(u[:,t], xi, a, real, approx, pb_type['eta'], delta_t_s)
+            opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) >= Q_HP_min * u[4,t])
             
-        # Heat pump operation
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx) >= Q_HP_min * u[4,t])
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx) <= Q_HP_max)
-        
-        # Load supply temperature
-        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx) >= T_sup_load_min)
+        # Heat pump operation: max Q_HP (true at each intermediate step within time step)
+        xi = x[:,t]
+        opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) <= Q_HP_max)
+        for i in range(pb_type['eta']):
+            xi = dynamics(u[:,t], xi, a, real, approx, pb_type['eta'], delta_t_s)
+            opti.subject_to(get_function("Q_HP", u[:,t], xi, a, real, approx) <= Q_HP_max)
+            
+        # Load supply temperature (true at every step within time step)
+        xi = x[:,t]
+        opti.subject_to(get_function("T_sup_load", u[:,t], xi, a, real, approx) >= T_sup_load_min)
+        for i in range(pb_type['eta']):
+            xi = dynamics(u[:,t], xi, a, real, approx, pb_type['eta'], delta_t_s)
+            opti.subject_to(get_function("T_sup_load", u[:,t], xi, a, real, approx) >= T_sup_load_min)
         
         # Mass flow rates
         opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], a, real, approx) >= 0)
@@ -243,7 +301,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
         opti.subject_to(u[2,t] <= u[4,t])
         
         # System dynamics
-        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s))
+        opti.subject_to(x[:,t+1] == next_state(u[:,t], x[:,t], a, real, approx, pb_type['eta'], delta_t_s))
     #print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
@@ -251,7 +309,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     # ------------------------------------------------------
 
     # Define objective as the cost of used electricity over the next N steps
-    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) for t in range(N))
+    obj = sum(c_el[t] * delta_t_h * get_Q_HP_t(u[:,t], x[:,t], a, real, approx, pb_type['eta'], delta_t_s) for t in range(N))
 
     # Set objective
     opti.minimize(obj)
