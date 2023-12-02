@@ -3,13 +3,17 @@ import numpy as np
 import casadi
 import math
 
-''' Here! '''
-# Choose between solving the general case or a given combination of the deltas
-general = False
+# Some constants
+m_load = 0.2
+Delta_T_load = 5/9*20
+cp = 4187
 
+# Mass flow rate from HP
+B_0M, B_1M = 0.5, 0 #4.2669, -0.0117
 
+'''
 # ------------------------------------------------------
-# Define all variables and constants
+# Define all variables
 # ------------------------------------------------------
 
 # Define all variables as symbols
@@ -23,27 +27,15 @@ T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S
 all_variables = [T_sup_HP, m_stor, delta_ch, delta_bu, delta_HP, delta_R,
 T_B1, T_B2, T_B3, T_B4, T_S11, T_S12, T_S13, T_S14, T_S21, T_S22, T_S23, T_S24, T_S31, T_S32, T_S33, T_S34]
 
-# Some constants
-m_load = 0.2
-Delta_T_load = 5/9*20
-cp = 4187
-
-# Mass flow rate from HP
-B_0M, B_1M = 0.5, 0 #4.2669, -0.0117
-
-
 # ------------------------------------------------------
 # Define all functions
 # ------------------------------------------------------
 
-def get_all_f(case):
+def get_all_f(combi):
 
-    ''' Here '''
-    # Unpack the specific case
-    delta_ch = case['d_ch']
-    delta_bu = case['d_bu']
-    delta_HP = case['d_HP']
-    delta_R  = case['d_R']
+    # Unpack the specific combination
+    delta_ch, delta_bu, delta_HP = combi
+    delta_R  = 0
     
     # Mass flow rate from HP
     m_HP = B_0M + B_1M * T_sup_HP
@@ -117,17 +109,10 @@ def get_all_f(case):
 # ------------------------------------------------------
 # Compute all functions and gradients
 # ------------------------------------------------------
-''' Here '''
-if general:
-    # Solve the general case
-    case = {'d_ch': delta_ch, 'd_bu': delta_bu, 'd_HP': delta_HP, 'd_R': delta_R}
-else:
-    # Choose a specific combination of the binary variables
-    case = {'d_ch': 0, 'd_bu': 1, 'd_HP': 1, 'd_R':0}
 
-# Compute all corresponding functions and gradients
-functions, gradients = get_all_f(case)
-
+combination = [0,1,1]
+functions, gradients = get_all_f(combination)
+'''
 
 # ------------------------------------------------------
 # Functions for the non linearized problem
@@ -141,14 +126,11 @@ we need these functions to be expressed using CasADi variables.
 
 In that case, we call the following function.
 '''
-def functions_exact_sym(id, u, x):
+def functions_exact_sym(id, u, x, combi):
 
-    ''' Here '''
     # Get the delta terms
-    delta_ch = u[2] if general else case['d_ch']
-    delta_bu = u[3] if general else case['d_bu']
-    delta_HP = u[4] if general else case['d_HP']
-    delta_R  = u[5] if general else case['d_R']
+    delta_ch, delta_bu, delta_HP = combi
+    delta_R = 0
 
     # Get the other variables from the inputs and states
     T_sup_HP, m_stor = u[0], u[1]
@@ -231,6 +213,7 @@ def functions_exact_sym(id, u, x):
 Input: the point "a" around which to linearize
 Output: f(a) for all non linear functions defined in this file
 '''
+'''
 # Compute all the functions at point "a"
 def get_all_f(a):
     
@@ -247,11 +230,12 @@ def get_all_f(a):
             raise ValueError(f"Function f={id} is not defined at 'a' (f(a) is not a float).")
             
     return functions_a
-
+'''
 
 '''
 Input: the point "a" around which to linearize
 Output: grad_f(a) for all non linear functions defined in this file
+'''
 '''
 # Compute all the gradients at point "a"
 def get_all_grad_f(a):
@@ -270,7 +254,7 @@ def get_all_grad_f(a):
             raise ValueError(f"Function f={id} is not defined at 'a' (grad_f(a) is not a list of floats).")
     
     return gradients_a
-
+'''
 
 # ------------------------------------------------------
 # Get f(y) or f_a(y)
@@ -294,7 +278,12 @@ INPUTS:
 OUTPUTS:
 - f(y) or f_a(y)
 '''
-def get_function(id, u, x, a, real, approx):
+def get_function(id, u, x, a, real, approx, t, sequence):
+
+    if t>=0  and t<15: combi = sequence['combi1']
+    if t>=15 and t<30: combi = sequence['combi2']
+    if t>=30 and t<45: combi = sequence['combi3']
+    if t>=45 and t<60: combi = sequence['combi4']
         
     # ------------------------------------------------------
     # Case 1: Want exact value of the function: f(y)
@@ -302,17 +291,18 @@ def get_function(id, u, x, a, real, approx):
     
     if not approx:
 
+        '''
         if real:
             # Get the function by ID and evaluate at y=[u,x]
             f = functions[id]
             y = {variable: value_y for variable, value_y in zip(all_variables,(u+x))}
             return float(f.subs(y))
-        
         else:
-            # Get the function by ID and return it with CasADi terms
-            f = functions_exact_sym(id, u, x)
-            return f
+        '''
+        f = functions_exact_sym(id, u, x, combi)
+        return f
     
+    '''
     # ------------------------------------------------------
     # Case 2: Want linear approximation around "a": f_a(y)
     # ------------------------------------------------------
@@ -334,3 +324,4 @@ def get_function(id, u, x, a, real, approx):
 
     # print(f"{id} = {f_approx_print}\n")
     return f_approx
+    '''

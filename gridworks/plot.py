@@ -27,7 +27,7 @@ def print_pb_type(pb_type):
 '''
 Prints the current iteration (x0, u0*, x1) in way that is easy to visualize
 '''
-def print_iteration(u_opt, x_opt, x_1, pb_type):
+def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
 
     # ------------------------------------------------------
     # Initial state
@@ -46,14 +46,14 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     # Mass flow rates, mixing temperatures and heat
     # ------------------------------------------------------
     
-    m_HP = round(functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False),2) if u_opt_0[4]==1 else 0
+    m_HP = round(functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence),2) if u_opt_0[4]==1 else 0
     m_stor = round(u_opt[1,0],1)
-    m_buffer = round(functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False),1)
+    m_buffer = round(functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False, 0, sequence),1)
     m_load = 0.2
     
-    Q_HP = optimizer.get_function("Q_HP", u_opt_0, x_1, 0, True, False)
-    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_1, 0, True, False)
-    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_1, 0, True, False)
+    Q_HP = optimizer.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
+    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
+    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     
     # ------------------------------------------------------
     # Next state

@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h)
+num_iterations = 10 #int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
@@ -26,10 +26,6 @@ pb_type = {
 'horizon':          N,
 'time_step':        delta_t_m,
 }
-
-''' HERE! '''
-# Choose between solving the general case or a given combination of the deltas
-general = False
 
 # Print corresponding setup
 plot.print_pb_type(pb_type)
@@ -57,23 +53,31 @@ elec_cost, elec_used = 0, 0
 # ------------------------------------------------------
 
 for iter in range(num_iterations):
-    
-    ''' HERE '''
-    # Define the case to solve
-    case = {'general': general, 'd_ch':0, 'd_bu':1, 'd_HP':1, 'd_R':0}
-    
+
+    # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
+    sequence = {
+    'combi1': [0,1,1], #0h00-0h30
+    'combi2': [0,1,1], #0h30-1h00
+    'combi3': [0,1,1], #1h00-1h30
+    'combi4': [0,1,1], #1h30-2h00
+    }
+    '''
+    sequence = get_sequence(x_0, c_el, m_load)
+    '''
+        
     # Get u* and x*
-    u_opt, x_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, case)
+    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, sequence)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
     # Implement u_0* and obtain x_1
-    x_1 = optimizer.dynamics(u_t=u_opt_0, x_t=x_0, a=a, real=True, approx=False, delta_t_s=delta_t_s)
-    
+    x_1 = [round(float(x),6) for x in x_opt[:,15]]
+        
     # Print iteration
-    plot.print_iteration(u_opt, x_opt, x_1, pb_type)
+    plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence)
+    print(f"Cost of next 2 hours: {round(obj_opt,2)} $")
     
     # Update x_0
     x_0 = x_1
@@ -86,7 +90,7 @@ for iter in range(num_iterations):
     # ------------------------------------------------------
 
     # Update total electricity use and cost
-    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False)
+    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     elec_used += Q_HP/4 * delta_t_h
     elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter, iter+1, delta_t_h)[0]
 

@@ -41,7 +41,7 @@ INPUTS:
 OUTPUTS:
 - The state at time step t+1: x(t+1)
 '''
-def dynamics(u_t, x_t, a, real, approx, delta_t_s):
+def dynamics(u_t, x_t, a, real, approx, delta_t_s, t, sequence):
 
     # All heat transfers are 0 unless specified otherwise later
     Q_top_B     = [0]*4
@@ -56,21 +56,21 @@ def dynamics(u_t, x_t, a, real, approx, delta_t_s):
     Q_R_S       = [0]*12
     
     # For the buffer tank B
-    Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx)
-    Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx)
+    Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx, t, sequence)
+    Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx, t, sequence)
     for i in range(1,5):
-        Q_conv_B[i-1] = get_function(f"Q_conv_B{i}", u_t, x_t, a, real, approx)
+        Q_conv_B[i-1] = get_function(f"Q_conv_B{i}", u_t, x_t, a, real, approx, t, sequence)
 
     # For the storage tanks S1, S2, S3
-    Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx)
-    Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx)
-    Q_top_S[8]      = get_function("Q_top_S3", u_t, x_t, a, real, approx)
-    Q_bottom_S[3]   = get_function("Q_bottom_S1", u_t, x_t, a, real, approx)
-    Q_bottom_S[7]   = get_function("Q_bottom_S2", u_t, x_t, a, real, approx)
-    Q_bottom_S[11]  = get_function("Q_bottom_S3", u_t, x_t, a, real, approx)
+    Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx, t, sequence)
+    Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx, t, sequence)
+    Q_top_S[8]      = get_function("Q_top_S3", u_t, x_t, a, real, approx, t, sequence)
+    Q_bottom_S[3]   = get_function("Q_bottom_S1", u_t, x_t, a, real, approx, t, sequence)
+    Q_bottom_S[7]   = get_function("Q_bottom_S2", u_t, x_t, a, real, approx, t, sequence)
+    Q_bottom_S[11]  = get_function("Q_bottom_S3", u_t, x_t, a, real, approx, t, sequence)
     for i in range(1,4):
         for j in range(1,5):
-            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx)
+            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx, t, sequence)
 
     # Compute the next state for buffer and storage tank layers
     const = delta_t_s / (m_layer * cp)
@@ -107,8 +107,7 @@ OUTPUTS:
 - u_optimal: The optimal input sequence for the next N steps
 - x_optimal: The corresponding sequence of states for the next N steps
 '''
-def optimize_N_steps(x_0, a, iter, pb_type, case):
-    ''' Here! '''
+def optimize_N_steps(x_0, a, iter, pb_type, sequence):
 
     # Get the time step
     delta_t_m = pb_type['time_step'] #min
@@ -116,8 +115,8 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     delta_t_h = delta_t_m/60 #hours
 
     # Print iteration and simulated time
-    hours = int(iter*delta_t_h)
-    minutes = round((iter*delta_t_h-int(iter*delta_t_h))*60)
+    hours = int(iter*15*delta_t_h)
+    minutes = round((iter*15*delta_t_h-int(iter*15*delta_t_h))*60)
     print("\n-----------------------------------------------------")
     print(f"Iteration {iter+1} ({hours}h{minutes}min)")
     print("-----------------------------------------------------\n")
@@ -202,19 +201,25 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
         opti.subject_to(u[1,t] >= 0)
         opti.subject_to(u[1,t] <= 0.5)
         
-        ''' Here '''
-        # delta terms if there is a specific case
-        if not case['general']:
-            opti.subject_to(u[2,t] == case['d_ch'])
-            opti.subject_to(u[3,t] == case['d_bu'])
-            opti.subject_to(u[4,t] == case['d_HP'])
-            opti.subject_to(u[5,t] == case['d_R'])
+        # The delta terms are fixed by the provided sequence
+        if t>=0  and t<15: [d_ch, d_bu, d_HP] = sequence['combi1']
+        if t>=15 and t<30: [d_ch, d_bu, d_HP] = sequence['combi2']
+        if t>=30 and t<45: [d_ch, d_bu, d_HP] = sequence['combi3']
+        if t>=45 and t<60: [d_ch, d_bu, d_HP] = sequence['combi4']
         
-        # delta terms if there is no specific case
-        else:
-            for i in range(2,6):
-                opti.subject_to(u[i,t] >= 0)
-                opti.subject_to(u[i,t] <= 1)
+        opti.subject_to(u[2,t] == d_ch)
+        opti.subject_to(u[3,t] == d_bu)
+        opti.subject_to(u[4,t] == d_HP)
+        
+        if t==0:  print("Sequence for next 2 hours:")
+        if t==0:  print(f"0h00-0h30: {sequence['combi1']}")
+        if t==15: print(f"0h30-1h00: {sequence['combi2']}")
+        if t==30: print(f"1h00-1h30: {sequence['combi3']}")
+        if t==45: print(f"1h30-2h00: {sequence['combi4']}\n")
+
+        # The delta_R term
+        opti.subject_to(u[5,t] >= 0)
+        opti.subject_to(u[5,t] <= 1)
             
     # Bounds constraints for x
     for t in range(N+1):
@@ -231,20 +236,20 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     for t in range(N):
             
         # Heat pump operation
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx) >= Q_HP_min * u[4,t])
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx) <= Q_HP_max)
+        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) >= Q_HP_min * u[4,t])
+        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max)
         
         # Load supply temperature
-        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx) >= T_sup_load_min)
+        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx, t, sequence) >= T_sup_load_min)
         
         # Mass flow rates
-        opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], a, real, approx) >= 0)
+        opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], a, real, approx, t, sequence) >= 0)
         
         # Operational constraint (charging is only possible if the heat pump is on)
         opti.subject_to(u[2,t] <= u[4,t])
         
         # System dynamics
-        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s))
+        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s, t, sequence))
     #print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
 
     # ------------------------------------------------------
@@ -252,7 +257,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     # ------------------------------------------------------
 
     # Define objective as the cost of used electricity over the next N steps
-    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx) for t in range(N))
+    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) for t in range(N))
 
     # Set objective
     opti.minimize(obj)
@@ -264,14 +269,20 @@ def optimize_N_steps(x_0, a, iter, pb_type, case):
     # Solve the optimisation problem
     print("Solving the optimization problem...")
     start_time = time.time()
-    sol = opti.solve()
+    success = True
+    try: sol = opti.solve()
+    except:
+        success = False
+        raise ValueError("")
     #print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # Get optimal u=u_0*,...,u_N-1*
-    u_optimal = sol.value(u)
-   
+    u_optimal = sol.value(u) if success else np.nan
+
     # Get corresponding states x0,...,xN
-    x_optimal = sol.value(x)
+    x_optimal = sol.value(x) if success else np.nan
+
+    obj_optimal = sol.value(obj) if success else 100000
 
     # Return optimal sequence of u and x
-    return u_optimal, x_optimal
+    return u_optimal, x_optimal, obj_optimal
