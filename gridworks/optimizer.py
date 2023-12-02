@@ -9,7 +9,7 @@ from functions import get_function
 # ------------------------------------------------------
 
 # Heat pump
-Q_HP_min = 0 #8000 #W
+Q_HP_min = 8000 #W
 Q_HP_max = 14000 #W
 
 # Load
@@ -189,8 +189,20 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
     # ------------------------------------------------------
     # Constraints
     # ------------------------------------------------------
+    
+    print("Setting all constraints with the requested sequence...")
+    start_time = time.time()
+    
+    # ----- Initial state -----
+    opti.subject_to(x[:,0] == x_0)
+    
+    # ----- Bounds on x -----
+    for t in range(N+1):
+        for i in range(16):
+            opti.subject_to(x[i,t] >= T_w_min)
+            opti.subject_to(x[i,t] <= T_w_max)
 
-    # Bounds constraints for u
+    # ----- Bounds on u -----
     for t in range(N):
 
         # T_sup_HP
@@ -211,7 +223,6 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
         opti.subject_to(u[3,t] == d_bu)
         opti.subject_to(u[4,t] == d_HP)
         
-        if t==0:  print("Sequence for next 2 hours:")
         if t==0:  print(f"0h00-0h30: {sequence['combi1']}")
         if t==15: print(f"0h30-1h00: {sequence['combi2']}")
         if t==30: print(f"1h00-1h30: {sequence['combi3']}")
@@ -221,20 +232,8 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
         opti.subject_to(u[5,t] >= 0)
         opti.subject_to(u[5,t] <= 1)
             
-    # Bounds constraints for x
-    for t in range(N+1):
-        for i in range(16):
-            opti.subject_to(x[i,t] >= T_w_min)
-            opti.subject_to(x[i,t] <= T_w_max)
-            
-    # Initial state
-    opti.subject_to(x[:,0] == x_0)
-
-    # Additional constraints
-    print("Setting all non linear constraints...")
-    start_time = time.time()
-    for t in range(N):
-            
+        # ----- Non linear constraints -----
+        
         # Heat pump operation
         opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) >= Q_HP_min * u[4,t])
         opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max)
@@ -251,7 +250,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
         # System dynamics
         opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s, t, sequence))
     #print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
-
+            
     # ------------------------------------------------------
     # Objective
     # ------------------------------------------------------

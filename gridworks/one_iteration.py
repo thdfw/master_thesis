@@ -45,5 +45,12 @@ try_sequence = {
 'combi3': [0,1,1], #1h00-1h30
 'combi4': [0,1,1], #1h30-2h00
 }
+cost = one_iteration(initial_state, try_sequence, 60)
 
+try_sequence = {
+'combi1': [0,1,0], #0h00-0h30
+'combi2': [0,1,0], #0h30-1h00
+'combi3': [0,1,1], #1h00-1h30
+'combi4': [0,1,1], #1h30-2h00
+}
 cost = one_iteration(initial_state, try_sequence, 60)
