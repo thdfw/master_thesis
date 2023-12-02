@@ -3,6 +3,7 @@ import numpy as np
 import casadi
 import math
 
+''' Here '''
 # Choose between solving the general case or a given combination of the deltas
 general = False
 
@@ -37,6 +38,7 @@ B_0M, B_1M = 0.5, 0 #4.2669, -0.0117
 
 def get_all_f(case):
 
+    ''' Here '''
     # Unpack the specific case
     delta_ch = case['d_ch']
     delta_bu = case['d_bu']
@@ -115,7 +117,7 @@ def get_all_f(case):
 # ------------------------------------------------------
 # Compute all functions and gradients
 # ------------------------------------------------------
-
+''' Here '''
 if general:
     # Solve the general case
     case = {'d_ch': delta_ch, 'd_bu': delta_bu, 'd_HP': delta_HP, 'd_R': delta_R}
@@ -141,6 +143,7 @@ In that case, we call the following function.
 '''
 def functions_exact_sym(id, u, x):
 
+    ''' Here '''
     # Get the delta terms
     delta_ch = u[2] if general else case['d_ch']
     delta_bu = u[3] if general else case['d_bu']

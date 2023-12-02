@@ -27,6 +27,7 @@ pb_type = {
 'time_step':        delta_t_m,
 }
 
+''' HERE '''
 # Choose between solving the general case or a given combination of the deltas
 general = False
 
@@ -56,7 +57,8 @@ elec_cost, elec_used = 0, 0
 # ------------------------------------------------------
 
 for iter in range(num_iterations):
-
+    
+    ''' HERE '''
     # Define the case to solve
     case = {'general': general, 'd_ch':0, 'd_bu':1, 'd_HP':1, 'd_R':0}
     
@@ -86,21 +88,21 @@ for iter in range(num_iterations):
     # Update total electricity use and cost
     Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False)
     elec_used += Q_HP/4 * delta_t_h
-    elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter,iter+1,delta_t_h)[0]
+    elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter, iter+1, delta_t_h)[0]
 
     # Append values for the plot
     list_Q_HP.append(Q_HP)
+    list_B4.append(x_1[3])
     list_S11.append(x_1[4])
     list_S21.append(x_1[8])
     list_S31.append(x_1[12])
-    list_B4.append(x_1[3])
 
 # Regroup the data and send it to plot
 plot_data = {
     'pb_type':      pb_type,
     'iterations':   num_iterations,
-    'c_el':         forecasts.get_c_el(0,num_iterations,delta_t_h),
-    'm_load':       forecasts.get_m_load(0,num_iterations,delta_t_h),
+    'c_el':         forecasts.get_c_el(0, num_iterations, delta_t_h),
+    'm_load':       forecasts.get_m_load(0, num_iterations, delta_t_h),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
     'T_S21':        list_S21,
