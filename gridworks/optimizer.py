@@ -108,7 +108,7 @@ OUTPUTS:
 - x_optimal: The corresponding sequence of states for the next N steps
 '''
 def optimize_N_steps(x_0, a, iter, pb_type, case):
-    ''' Here '''
+    ''' Here! '''
 
     # Get the time step
     delta_t_m = pb_type['time_step'] #min

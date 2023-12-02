@@ -19,7 +19,7 @@ def get_c_el(start, end, delta_t_h):
     # Convert to $/Wh
     c_el_all = [x/100/1000 for x in c_el_all]
     
-    # Duplicate
+    # Duplicate days
     c_el_all = c_el_all*30
     
     return c_el_all[start:end]

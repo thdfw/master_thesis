@@ -3,7 +3,7 @@ import numpy as np
 import casadi
 import math
 
-''' Here '''
+''' Here! '''
 # Choose between solving the general case or a given combination of the deltas
 general = False
 

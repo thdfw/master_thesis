@@ -43,7 +43,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     print(f"      -- {round(x_opt[3,0],1)} |       -- {round(x_opt[15,0],1)}    -- {round(x_opt[11,0],1)}   -- {round(x_opt[7,0],0)}")
     
     # ------------------------------------------------------
-    # Mass flow rates
+    # Mass flow rates, mixing temperatures and heat
     # ------------------------------------------------------
     
     m_HP = round(functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False),2) if u_opt_0[4]==1 else 0
@@ -51,19 +51,18 @@ def print_iteration(u_opt, x_opt, x_1, pb_type):
     m_buffer = round(functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False),1)
     m_load = 0.2
     
-    # Direction of flows
-    S_t = f"-{m_stor}->"    if round(u_opt_0[2])==0 else f"<-{m_stor}-"
-    S_t2 = f"->"            if round(u_opt_0[2])==0 else f"<-"
-    B_t = f"-{m_buffer}->"  if round(u_opt_0[3])==1 else f"<-{m_buffer}-"
-    B_b = f"<-{m_buffer}-"  if round(u_opt_0[3])==1 else f"-{m_buffer}->"
+    Q_HP = optimizer.get_function("Q_HP", u_opt_0, x_1, 0, True, False)
+    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_1, 0, True, False)
+    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_1, 0, True, False)
     
     # ------------------------------------------------------
     # Next state
     # ------------------------------------------------------
     
-    Q_HP = optimizer.get_function("Q_HP", u_opt_0, x_1, 0, True, False)
-    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_1, 0, True, False)
-    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_1, 0, True, False)
+    S_t = f"-{m_stor}->"    if round(u_opt_0[2])==0 else f"<-{m_stor}-"
+    S_t2 = f"->"            if round(u_opt_0[2])==0 else f"<-"
+    B_t = f"-{m_buffer}->"  if round(u_opt_0[3])==1 else f"<-{m_buffer}-"
+    B_b = f"<-{m_buffer}-"  if round(u_opt_0[3])==1 else f"-{m_buffer}->"
     
     print("\nNext state x_1")
     print(f"B {B_t} {round(x_1[0],1)} | S        {round(x_1[12],1)} {S_t2}    {round(x_1[8],1)} {S_t2}   {round(x_1[4],0)} {S_t}")
