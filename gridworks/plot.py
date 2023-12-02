@@ -98,8 +98,8 @@ def plot_MPC(data):
     ax2.set_ylabel("Price [$/MWh]")
 
     # x_ticks in hours
-    tick_positions = np.arange(0, data['iterations']+1, step=12)
-    tick_labels = [f'{step * 5 // 60:02d}:00' for step in tick_positions]
+    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']))
+    tick_labels = [f"{step * data['pb_type']['time_step'] // 60:02d}:00" for step in tick_positions]
     plt.xticks(tick_positions, tick_labels)
 
     # Common legend
@@ -117,7 +117,7 @@ def plot_MPC(data):
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4)
     ax[1].plot((data['iterations']+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.4, linestyle='dashed')
     ax[1].set_ylabel("Temperatuere [K]")
-    ax[1].set_xlabel("$Time [hours]$")
+    ax[1].set_xlabel("Time [hours]")
     ax[1].legend()
 
     plt.show()
