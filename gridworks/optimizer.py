@@ -213,7 +213,11 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
         opti.subject_to(u[1,t] >= 0)
         opti.subject_to(u[1,t] <= 0.5)
         
-        # The delta terms are fixed by the provided sequence
+        # delta_R term
+        opti.subject_to(u[5,t] >= 0)
+        opti.subject_to(u[5,t] <= 1)
+        
+        # The other delta terms are fixed by the provided sequence
         if t>=0  and t<15: [d_ch, d_bu, d_HP] = sequence['combi1']
         if t>=15 and t<30: [d_ch, d_bu, d_HP] = sequence['combi2']
         if t>=30 and t<45: [d_ch, d_bu, d_HP] = sequence['combi3']
@@ -227,16 +231,13 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
         if t==15: print(f"0h30-1h00: {sequence['combi2']}")
         if t==30: print(f"1h00-1h30: {sequence['combi3']}")
         if t==45: print(f"1h30-2h00: {sequence['combi4']}\n")
-
-        # The delta_R term
-        opti.subject_to(u[5,t] >= 0)
-        opti.subject_to(u[5,t] <= 1)
             
         # ----- Non linear constraints -----
         
         # Heat pump operation
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) >= Q_HP_min * u[4,t])
-        opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max)
+        if d_HP == 1:
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) >= Q_HP_min * u[4,t])
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max)
         
         # Load supply temperature
         opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx, t, sequence) >= T_sup_load_min)
