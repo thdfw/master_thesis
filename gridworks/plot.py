@@ -114,8 +114,8 @@ def plot_MPC(data):
     ax2.set_ylabel("Price [$/MWh]")
 
     # x_ticks in hours
-    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']))
-    tick_labels = [f"{step * data['pb_type']['time_step'] // 60:02d}:00" for step in tick_positions]
+    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']/15))
+    tick_labels = [f"{step * data['pb_type']['time_step']*15 // 60:02d}:00" for step in tick_positions]
     plt.xticks(tick_positions, tick_labels)
 
     # Common legend

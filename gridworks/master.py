@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h)
+num_iterations = 3#int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
@@ -55,15 +55,7 @@ elec_cost, elec_used = 0, 0
 for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
-    sequence = {
-    'combi1': [0,1,0], #0h00-0h30
-    'combi2': [0,1,0], #0h30-1h00
-    'combi3': [1,1,1], #1h00-1h30
-    'combi4': [1,1,1], #1h30-2h00
-    }
-    '''
-    sequence = get_sequence(x_0, c_el, m_load)
-    '''
+    sequence = forecasts.get_optimal_sequence(x_0, iter)
         
     # Get u* and x*
     u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, sequence)

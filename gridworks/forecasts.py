@@ -1,8 +1,7 @@
 '''
-This file is to obtain the forecasts for electricty prices and loads between in a given time frame.
-For both functions, the inputs are the desired start and end time steps.
+Input: index of desired start and end time steps
+Output: list of forecasted electricty prices between start and end time steps
 '''
-
 # Get all electricity prices
 def get_c_el(start, end, delta_t_h):
 
@@ -25,6 +24,10 @@ def get_c_el(start, end, delta_t_h):
     return c_el_all[start:end]
 
 
+'''
+Input: index of desired start and end time steps
+Output: list of forecasted mass flow rates going to the load between start and end time steps
+'''
 # Get all loads
 def get_m_load(start, end, delta_t_h):
 
@@ -39,3 +42,27 @@ def get_m_load(start, end, delta_t_h):
     m_load_all = [Q_load/(delta_t_h*cp*Delta_T_load) for Q_load in Q_load_all]
     
     return m_load_all[start:end]
+
+
+'''
+!! This function has not been developed yet
+Input: current state and forecasts
+Output: predicted optimal sequence of binary terms for the next N steps
+'''
+def get_optimal_sequence(x_0, iter):
+
+    # Temporary
+    sequence = {
+    'combi1': [0,1,1], #0h00-0h30
+    'combi2': [0,1,1], #0h30-1h00
+    'combi3': [0,1,1], #1h00-1h30
+    'combi4': [0,1,1], #1h30-2h00
+    }
+    
+    # From iter get the forecasts (costs, loads, outside temperature)
+    # Input: x_0, forecasts
+    # -- Some ML method for multi-class classification --
+    # Output: optimal sequence
+
+    return sequence
+
