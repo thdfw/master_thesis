@@ -3,6 +3,9 @@ import numpy as np
 import casadi
 import math
 
+# For the denominators
+epsilon = 1e-7
+
 # Some constants
 m_load = 0.2
 Delta_T_load = 5/9*20
@@ -133,28 +136,28 @@ def functions_exact_sym(id, u, x, combi):
     delta_R = 0
 
     # Get the other variables from the inputs and states
-    T_sup_HP, m_stor = u[0], u[1]
-    T_B1, T_B2, T_B3, T_B4 = x[0], x[1], x[2], x[3]
-    T_S11, T_S12, T_S13, T_S14 = x[4], x[5], x[6], x[7]
-    T_S21, T_S22, T_S23, T_S24 = x[8], x[9], x[10], x[11]
-    T_S31, T_S32, T_S33, T_S34 = x[12], x[13], x[14], x[15]
+    T_sup_HP, m_stor            = u[0], u[1]
+    T_B1, T_B2, T_B3, T_B4      = x[0], x[1], x[2], x[3]
+    T_S11, T_S12, T_S13, T_S14  = x[4], x[5], x[6], x[7]
+    T_S21, T_S22, T_S23, T_S24  = x[8], x[9], x[10], x[11]
+    T_S31, T_S32, T_S33, T_S34  = x[12], x[13], x[14], x[15]
     
     # Mass flow rate from HP
     m_HP = B_0M + B_1M * T_sup_HP
     
     # Mass flow rate at buffer tank
-    m_buffer = (m_HP * delta_HP - m_stor * (2*delta_ch-1) - m_load) / (2 * delta_bu - 1)
+    m_buffer = (m_HP*delta_HP - m_stor*(2*delta_ch-1) - m_load) / (2*delta_bu-1)
 
     # Temperatures entering and exiting the load
-    T_sup_load = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch) + m_buffer*T_B1*(1-delta_bu)) / (m_HP*delta_HP + m_stor*(1-delta_ch) + m_buffer*(1-delta_bu))
+    T_sup_load = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch) + m_buffer*T_B1*(1-delta_bu)) / (m_HP*delta_HP + m_stor*(1-delta_ch) + m_buffer*(1-delta_bu) + epsilon)
     T_ret_load = T_sup_load - Delta_T_load
 
     # Temperature entering the heat pump
-    T_ret_HP = (m_load*T_ret_load + m_stor*T_S34*delta_ch + m_buffer*T_B4*delta_bu) / (m_load + m_stor*delta_ch + m_buffer*delta_bu)
+    T_ret_HP = (m_load*T_ret_load + m_stor*T_S34*delta_ch + m_buffer*T_B4*delta_bu) / (m_load + m_stor*delta_ch + m_buffer*delta_bu + epsilon)
 
     # Intermediate temperatures
-    T_HP_stor = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch)) / (m_HP*delta_HP + m_stor*(1-delta_ch))
-    T_ret_load_buffer = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_buffer*delta_bu)
+    T_HP_stor = (m_HP*T_sup_HP*delta_HP + m_stor*T_S11*(1-delta_ch)) / (m_HP*delta_HP + m_stor*(1-delta_ch) + epsilon)
+    T_ret_load_buffer = (m_load*T_ret_load + m_buffer*T_B4*delta_bu) / (m_load + m_buffer*delta_bu + epsilon)
 
     # The functions to approximate
     functions_sym = {
@@ -197,7 +200,6 @@ def functions_exact_sym(id, u, x, combi):
         "Q_bottom_S2": (1-delta_ch) * m_stor * cp * (T_S31 - T_S24),
         "Q_bottom_S3": (1-delta_ch) * m_stor * cp * (T_ret_load_buffer - T_S34),
         
-        "T_sup_load": T_sup_load,
         "T_ret_HP": T_ret_HP,
         "m_HP": m_HP,
     }

@@ -271,7 +271,10 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
     start_time = time.time()
     success = True
     try: sol = opti.solve()
-    except: success = False
+    except:
+        success = False
+        print(f"\nFailed to solve\n")
+        raise ValueError
     #print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # Get optimal u=u_0*,...,u_N-1*

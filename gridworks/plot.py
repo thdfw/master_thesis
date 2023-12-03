@@ -51,7 +51,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     m_buffer = round(functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False, 0, sequence),1)
     m_load = 0.2
     
-    Q_HP = optimizer.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
+    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     

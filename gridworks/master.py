@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = 10 #int(16 * 1/delta_t_h)
+num_iterations = int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
@@ -56,10 +56,10 @@ for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
     sequence = {
-    'combi1': [0,1,1], #0h00-0h30
-    'combi2': [0,1,1], #0h30-1h00
-    'combi3': [0,1,1], #1h00-1h30
-    'combi4': [0,1,1], #1h30-2h00
+    'combi1': [0,1,0], #0h00-0h30
+    'combi2': [0,1,0], #0h30-1h00
+    'combi3': [1,1,1], #1h00-1h30
+    'combi4': [1,1,1], #1h30-2h00
     }
     '''
     sequence = get_sequence(x_0, c_el, m_load)
