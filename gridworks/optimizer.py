@@ -115,11 +115,11 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, PRINT):
     delta_t_h = delta_t_m/60 #hours
 
     # Print iteration and simulated time
-    hours = int(iter*15*delta_t_h)
-    minutes = round((iter*15*delta_t_h-int(iter*15*delta_t_h))*60)
+    hours = int(iter*delta_t_h)
+    minutes = round((iter*delta_t_h-int(iter*delta_t_h))*60)
     if PRINT:
         print("\n-----------------------------------------------------")
-        print(f"Iteration {iter+1} ({hours}h{minutes}min)")
+        print(f"Iteration {iter/15+1} ({hours}h{minutes}min)")
         print("-----------------------------------------------------\n")
 
     # ------------------------------------------------------

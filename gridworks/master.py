@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h)
+num_iterations = int(16 * 1/delta_t_h / 15)
 
 # Problem type
 pb_type = {
@@ -56,10 +56,10 @@ elec_cost, elec_used = 0, 0
 for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
-    sequence = forecasts.get_optimal_sequence(x_0, iter)
+    sequence = forecasts.get_optimal_sequence(x_0, 15*iter)
         
     # Get u* and x*
-    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, sequence, True)
+    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, True)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
@@ -87,13 +87,13 @@ for iter in range(num_iterations):
     for k in range(15):
         Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence)
     Q_HP = Q_HP/15
-    #print(f"Average Q_HP = {Q_HP}")
-    #print(f"Price of elec = {forecasts.get_c_el(iter, iter+1, delta_t_h*15)[0]}")
-    #print(f"Elec cost = { Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(iter, iter+1, delta_t_h*15)[0]}")
+    print(f"Average Q_HP = {round(Q_HP,2)}")
+    print(f"Price of elec = {round(forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0],2)}")
+    print(f"Elec cost = {round(Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0],2)}")
 
     # Assume a constant COP of 4
     elec_used += Q_HP/4 * delta_t_h * 15
-    elec_cost += Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(iter, iter+1, delta_t_h*15)[0]
+    elec_cost += Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 
     # Append values for the plot
     list_Q_HP.append(Q_HP)

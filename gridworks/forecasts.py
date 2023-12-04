@@ -1,4 +1,4 @@
-import optimizer
+import optimizer, forecasts
 import csv
 from datetime import datetime
 
@@ -58,7 +58,7 @@ Function to append the data to a CSV file
 def append_to_csv(file_name, data):
         
     with open(file_name, 'a', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "iter", "sequence"])
+        writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "prices", "iter", "sequence"])
         
         # If file is empty, write headers
         if file.tell() == 0:
@@ -115,23 +115,29 @@ def get_optimal_sequence(x_0, iter):
 
     # Initial state of the buffer and storage tanks
     initial_state = x_0
-    print(f"\n#########################################\nCurrent state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}\n")
+    print("\n#########################################")
+    #print(f"Current state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}\n")
     print("Searching for optimal sequence...")
     
     # Initialize
     min_cost = 1000
     optimals = []
+    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+60, 2/60)]
+
+    # Data going to the .csv file
     data = [{
         "T_B": [round(x,1) for x in initial_state[:4]],
         "T_S": [round(x,1) for x in initial_state[4:]],
-        "iter": iter}]
+        "iter": iter,
+        "prices": [elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]]
+        }]
     
     # Spare some time and use known results for the given state
     if iter==0:
         print("Minimum cost 0.0$ achieved for {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}")
-        print("Optimal sequence found.\n#########################################")
         data[0]['sequence'] = [[0,1,0], [0,1,0], [0,0,0], [0,0,0]]
         append_to_csv(csv_file_name, data)
+        print("#########################################")
         return {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}
 
     # ------------------------------------------------------
@@ -205,16 +211,16 @@ def get_optimal_sequence(x_0, iter):
                                         
                                     if cost == 0.0:
                                         print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
-                                        print("Optimal sequence found.\n#########################################")
                                         data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
                                         append_to_csv(csv_file_name, data)
+                                        print("#########################################")
                                         return(optimals)
 
     print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
-    print("Optimal sequence found.\n#########################################")
     
     # Append the solution to CSV file
     data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
     append_to_csv(csv_file_name, data)
+    print("#########################################")
 
     return optimals
