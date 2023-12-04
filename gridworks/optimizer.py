@@ -4,6 +4,8 @@ import time
 import functions, forecasts
 from functions import get_function
 
+PRINT = False
+
 # ------------------------------------------------------
 # Constants
 # ------------------------------------------------------
@@ -117,9 +119,10 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
     # Print iteration and simulated time
     hours = int(iter*15*delta_t_h)
     minutes = round((iter*15*delta_t_h-int(iter*15*delta_t_h))*60)
-    print("\n-----------------------------------------------------")
-    print(f"Iteration {iter+1} ({hours}h{minutes}min)")
-    print("-----------------------------------------------------\n")
+    if PRINT:
+        print("\n-----------------------------------------------------")
+        print(f"Iteration {iter+1} ({hours}h{minutes}min)")
+        print("-----------------------------------------------------\n")
 
     # ------------------------------------------------------
     # Variables
@@ -190,7 +193,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
     # Constraints
     # ------------------------------------------------------
     
-    print("Setting all constraints with the requested sequence...")
+    if PRINT: print("Setting all constraints with the requested sequence...")
     start_time = time.time()
     
     # ----- Initial state -----
@@ -227,10 +230,11 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
         opti.subject_to(u[3,t] == d_bu)
         opti.subject_to(u[4,t] == d_HP)
         
-        if t==0:  print(f"0h00-0h30: {sequence['combi1']}")
-        if t==15: print(f"0h30-1h00: {sequence['combi2']}")
-        if t==30: print(f"1h00-1h30: {sequence['combi3']}")
-        if t==45: print(f"1h30-2h00: {sequence['combi4']}\n")
+        if PRINT:
+            if t==0:  print(f"0h00-0h30: {sequence['combi1']}")
+            if t==15: print(f"0h30-1h00: {sequence['combi2']}")
+            if t==30: print(f"1h00-1h30: {sequence['combi3']}")
+            if t==45: print(f"1h30-2h00: {sequence['combi4']}\n")
             
         # ----- Non linear constraints -----
         
@@ -267,14 +271,14 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
     # ------------------------------------------------------
     
     # Solve the optimisation problem
-    print("Solving the optimization problem...")
+    if PRINT: print("Solving the optimization problem...")
     start_time = time.time()
     success = True
     try: sol = opti.solve()
     except:
         success = False
-        print(f"\nFailed to solve\n")
-        raise ValueError
+        if PRINT: print(f"Failed to solve")
+        #raise ValueError
     #print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # Get optimal u=u_0*,...,u_N-1*
@@ -283,7 +287,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence):
     # Get corresponding states x0,...,xN
     x_optimal = sol.value(x) if success else np.nan
 
-    obj_optimal = sol.value(obj) if success else 100000
+    obj_optimal = sol.value(obj) if success else 1e5
 
     # Return optimal sequence of u and x
     return u_optimal, x_optimal, obj_optimal
