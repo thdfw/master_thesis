@@ -90,15 +90,18 @@ def get_optimal_sequence(x_0, iter):
 
     # Initial state of the buffer and storage tanks
     initial_state = x_0
-    print(f"\nCurrent state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}")
-    print("\n#########################################\nSearching for optimal sequence...")
+    print(f"\n#########################################\nCurrent state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}\n")
+    print("Searching for optimal sequence...")
     
     # Initialize
     min_cost = 1000
     optimals = []
     
     # spare some time
-    if iter==0: return {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}
+    if iter==0:
+        print("Minimum cost 0.0$ achieved for {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}")
+        print("Optimal sequence found.\n#########################################")
+        return {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}
 
     # ------------------------------------------------------
     # Find feasible combi1 over N=30min
@@ -107,7 +110,7 @@ def get_optimal_sequence(x_0, iter):
         
         sequence = {'combi1': combi1}
         cost = one_iteration(initial_state, iter, sequence, 15)
-        print(f"\n******* combi1={combi1} *******\n")
+        print(f"\n******* combi1={combi1} *******")
 
         if cost == 1e5:
             print(f"combi1 = {combi1} is not feasible")
@@ -170,7 +173,8 @@ def get_optimal_sequence(x_0, iter):
                                         optimals = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4}
                                         
                                     if cost == 0.0:
-                                        print(f"\nCost = 0 for {combi1}, {combi2}, {combi3}, {combi4}\n")
+                                        print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
+                                        print("Optimal sequence found.\n#########################################\n")
                                         return(optimals)
 
     print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")

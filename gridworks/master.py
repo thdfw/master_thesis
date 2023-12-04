@@ -56,7 +56,7 @@ for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
     sequence = forecasts.get_optimal_sequence(x_0, iter)
-    print(f"Optimal sequence for the next 2 hours: {sequence}")
+    #print(f"Optimal sequence for the next 2 hours: {sequence}")
         
     # Get u* and x*
     u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, sequence, True)
