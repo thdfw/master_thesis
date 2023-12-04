@@ -132,7 +132,7 @@ def plot_MPC(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((data['iterations']+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2)
+    ax[1].plot((data['iterations']+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time [hours]")
     ax[1].legend()
