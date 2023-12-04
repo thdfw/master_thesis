@@ -137,6 +137,8 @@ def plot_MPC(data):
     ax[1].set_xlabel("Time [hours]")
     ax[1].legend()
 
+    # Save the plot
+    plt.savefig('plot.png')
     plt.show()
 
 

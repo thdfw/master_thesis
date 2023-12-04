@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = 3#int(16 * 1/delta_t_h)
+num_iterations = int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
@@ -29,6 +29,7 @@ pb_type = {
 
 # Print corresponding setup
 plot.print_pb_type(pb_type)
+print(f"Simulating for {round(num_iterations*delta_t_h,2)} hours")
 
 # ------------------------------------------------------
 # Initial state of the system
