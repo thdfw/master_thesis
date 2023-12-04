@@ -82,10 +82,18 @@ for iter in range(num_iterations):
     # Plots
     # ------------------------------------------------------
 
-    # Update total electricity use and cost
-    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
-    elec_used += Q_HP/4 * delta_t_h
-    elec_cost += Q_HP/4 * delta_t_h * forecasts.get_c_el(iter, iter+1, delta_t_h)[0]
+    # Update total electricity use and cost using the average Q_HP over 30min
+    Q_HP = 0
+    for k in range(15):
+        Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence)
+    Q_HP = Q_HP/15
+    #print(f"Average Q_HP = {Q_HP}")
+    #print(f"Price of elec = {forecasts.get_c_el(iter, iter+1, delta_t_h*15)[0]}")
+    #print(f"Elec cost = { Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(iter, iter+1, delta_t_h*15)[0]}")
+
+    # Assume a constant COP of 4
+    elec_used += Q_HP/4 * delta_t_h * 15
+    elec_cost += Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(iter, iter+1, delta_t_h*15)[0]
 
     # Append values for the plot
     list_Q_HP.append(Q_HP)
