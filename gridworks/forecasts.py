@@ -167,7 +167,7 @@ def get_optimal_sequence(x_0, iter):
                                         
                                     if cost == min_cost:
                                         #optimals.append({'c1':combi1, 'c2':combi2, 'c3':combi3, 'c4':combi4})
-                                        optimals = [combi1, combi2, combi3, combi4]
+                                        optimals = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4}
                                         
                                     if cost == 0.0:
                                         print(f"\nCost = 0 for {combi1}, {combi2}, {combi3}, {combi4}\n")

@@ -45,7 +45,7 @@ a = [330, 0.25] + [0.6]*4 + x_0
 # ------------------------------------------------------
 
 list_Q_HP = []
-list_S11, list_S21, list_S31, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[3]]
+list_S11, list_S21, list_S31, list_B1, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[0]], [x_0[3]]
 elec_cost, elec_used = 0, 0
 
 # ------------------------------------------------------
@@ -89,6 +89,7 @@ for iter in range(num_iterations):
 
     # Append values for the plot
     list_Q_HP.append(Q_HP)
+    list_B1.append(x_1[0])
     list_B4.append(x_1[3])
     list_S11.append(x_1[4])
     list_S21.append(x_1[8])
@@ -104,6 +105,7 @@ plot_data = {
     'T_S11':        list_S11,
     'T_S21':        list_S21,
     'T_S31':        list_S31,
+    'T_B1':         list_B1,
     'T_B4':         list_B4,
     'elec_cost':    round(elec_cost,2),
     'elec_used':    round(elec_used/1000,2),
