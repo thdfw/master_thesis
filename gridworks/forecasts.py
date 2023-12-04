@@ -61,7 +61,7 @@ def get_optimal_sequence(x_0, iter):
     
     # From iter get the forecasts (costs, loads, outside temperature)
     # Input: x_0, forecasts
-    # -- Some ML method for multi-class classification --
+    # -- Add some ML method for multi-class classification --
     # Output: optimal sequence
 
     return sequence
