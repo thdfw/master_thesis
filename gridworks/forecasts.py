@@ -174,10 +174,10 @@ def get_optimal_sequence(x_0, iter):
                                         
                                     if cost == 0.0:
                                         print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
-                                        print("Optimal sequence found.\n#########################################\n")
+                                        print("Optimal sequence found.\n#########################################")
                                         return(optimals)
 
     print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
-    print("Optimal sequence found.\n#########################################\n")
+    print("Optimal sequence found.\n#########################################")
     
     return optimals
