@@ -4,8 +4,6 @@ import time
 import functions, forecasts
 from functions import get_function
 
-PRINT = False
-
 # ------------------------------------------------------
 # Constants
 # ------------------------------------------------------
@@ -109,7 +107,7 @@ OUTPUTS:
 - u_optimal: The optimal input sequence for the next N steps
 - x_optimal: The corresponding sequence of states for the next N steps
 '''
-def optimize_N_steps(x_0, a, iter, pb_type, sequence):
+def optimize_N_steps(x_0, a, iter, pb_type, sequence, PRINT):
 
     # Get the time step
     delta_t_m = pb_type['time_step'] #min

@@ -104,13 +104,13 @@ def plot_MPC(data):
 
     # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
-    ax[0].plot(data['Q_HP'],   label="HP", color='blue', alpha=0.4)
+    ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
     # First plot part 2
     ax2 = ax[0].twinx()
-    ax2.plot(data['c_el'],     label="Price", color='black', alpha=0.4)
+    ax2.plot(data['c_el'], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [$/MWh]")
 
     # x_ticks in hours
@@ -132,6 +132,71 @@ def plot_MPC(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4)
     ax[1].plot((data['iterations']+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.4, linestyle='dashed')
+    ax[1].set_ylabel("Temperatuere [K]")
+    ax[1].set_xlabel("Time [hours]")
+    ax[1].legend()
+
+    plt.show()
+
+
+'''
+To visualize the 2 hours predicted by a single iteration
+'''
+def plot_singe_iter(data):
+
+    fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
+    
+    # ------------------------------------------------------
+    # Plot title
+    # ------------------------------------------------------
+        
+    #fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh")
+    
+    # ------------------------------------------------------
+    # First plot
+    # ------------------------------------------------------
+    
+    # Get the Q_load from the m_load
+    cp, Delta_T_load=  4187, 5/9*20
+    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
+    
+    # Get Q_HP
+        
+    ax[0].set_xlim([0,60])
+
+    # First plot part 1
+    ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
+    ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
+    ax[0].set_ylim([0,20000])
+    ax[0].set_ylabel("Power [W]")
+
+    # First plot part 2
+    ax2 = ax[0].twinx()
+    ax2.plot(data['c_el'], label="Price", color='black', alpha=0.4)
+    ax2.set_ylabel("Price [$/MWh]")
+
+    '''
+    # x_ticks in hours
+    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']/15))
+    tick_labels = [f"{step * data['pb_type']['time_step']*15 // 60:02d}:00" for step in tick_positions]
+    plt.xticks(tick_positions, tick_labels)
+    '''
+    
+    # Common legend
+    lines1, labels1 = ax[0].get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax[0].legend(lines1 + lines2, labels1 + labels2)
+    
+    # ------------------------------------------------------
+    # Second plot
+    # ------------------------------------------------------
+
+    ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
+    ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
+    ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
+    ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
+    ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
+    ax[1].plot((60)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.4, linestyle='dashed')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time [hours]")
     ax[1].legend()

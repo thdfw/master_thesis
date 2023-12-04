@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h)
+num_iterations = 2#int(16 * 1/delta_t_h)
 
 # Problem type
 pb_type = {
@@ -56,9 +56,10 @@ for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
     sequence = forecasts.get_optimal_sequence(x_0, iter)
+    print(f"Optimal sequence for the next 2 hours: {sequence}")
         
     # Get u* and x*
-    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, sequence)
+    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, iter, pb_type, sequence, True)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
