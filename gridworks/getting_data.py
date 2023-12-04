@@ -129,21 +129,6 @@ if min_cost!=0:
 print(min_cost)
 print(optimals)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 '''
 sequence = {'combi1': [1,1,1], 'combi2': [1,1,1], 'combi3': [1,1,1], 'combi4': [0,0,0]}
 cost, x_opt, u_opt = one_iteration(initial_state, sequence, 60)
