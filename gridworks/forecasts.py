@@ -117,9 +117,6 @@ def get_optimal_sequence(x_0, iter):
 
     # Initial state of the buffer and storage tanks
     initial_state = x_0
-    print("\n#########################################")
-    print(f"Current state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}\n")
-    print("Searching for optimal sequence...")
     
     # Initialize
     min_cost = 1000
@@ -134,7 +131,10 @@ def get_optimal_sequence(x_0, iter):
         "prices": [elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]]
         }]
     
-    print(data['prices'])
+    print("\n#########################################")
+    print(f"Current state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}")
+    print(f"Electricity forecasts: {data[0]['prices']}")
+    print("Searching for optimal sequence...")
     
     # ------------------------------------------------------
     # Find feasible combi1 over N=30min
