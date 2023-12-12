@@ -1,6 +1,6 @@
-import optimizer, forecasts
 import csv
 from datetime import datetime
+import optimizer, forecasts, plot, functions
 
 '''
 Input: index of desired start and end time steps
@@ -25,9 +25,8 @@ def get_c_el(start, end, delta_t_h):
     # Duplicate days
     c_el_all = c_el_all*30
     
-    #return [18.93/1000/100]*15 + [45.56/1000/100]*30 + [26.42/1000/100]*15
-    return [20/1000/100]*15 + [20/1000/100]*30 + [20/1000/100]*15
-    # return c_el_all[start:end]
+    return [18.93/1000/100]*15 + [45.56/1000/100]*30 + [26.42/1000/100]*15
+    #return c_el_all[start:end]
 
 
 '''
@@ -101,9 +100,9 @@ def one_iteration(x_0, iter, sequence, horizon):
     pb_type['horizon'] = horizon
     
     # Get u* and x*
-    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, 0, iter, pb_type, sequence, False)
-    
-    return round(obj_opt,3) #, x_opt, u_opt
+    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 0, iter, pb_type, sequence, False)
+        
+    return round(obj_opt,3), x_opt, u_opt, error
 
 
 '''
@@ -137,20 +136,28 @@ def get_optimal_sequence(x_0, iter):
     print(f"Electricity forecasts: {data[0]['prices']}")
     print("\nSearching for optimal sequence...")
     
+    # When you want to test a specific combination
+    sequence = {'combi1': [0,1,0], 'combi2': [0,0,0], 'combi3': [0,0,0], 'combi4': [0,0,0]}
+    print(f"Fixed: {sequence}")
+    min_cost, best_x_opt, best_u_opt, error = one_iteration(initial_state, iter, sequence, 60)
+    print(f"{error}") if error != '' else print(min_cost)
+    print("#########################################\n")
+    
+    '''
     # ------------------------------------------------------
     # Find feasible combi1 over N=30min
     # ------------------------------------------------------
     for combi1 in operating_modes:
         
         sequence = {'combi1': combi1}
-        cost = one_iteration(initial_state, iter, sequence, 15)
+        cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 15)
         print(f"\n******* combi1={combi1} *******")
 
         if cost == 1e5:
-            print(f"combi1 = {combi1} is not feasible")
+            print(f"combi1 = {combi1} could not be solved: {error}")
         
         else:
-            print(f"combi1 = {combi1} has cost {cost} $. Testing for combi2:")
+            print(f"combi1 = {combi1} is feasible. Testing for combi2:")
             
             # ------------------------------------------------------
             # Find feasible combi1, combi2 over N=1h
@@ -158,13 +165,13 @@ def get_optimal_sequence(x_0, iter):
             for combi2 in operating_modes:
             
                 sequence = {'combi1': combi1, 'combi2': combi2}
-                cost = one_iteration(initial_state, iter, sequence, 30)
+                cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 30)
                 
                 if cost == 1e5:
-                    print(f"- combi1={combi1}, combi2={combi2} is not feasible.")
+                    print(f"- combi1={combi1}, combi2={combi2} could not be solved: {error}")
                 
                 else:
-                    print(f"- combi1={combi1}, combi2={combi2} has cost {cost} $. Testing for combi3:")
+                    print(f"- combi1={combi1}, combi2={combi2} is feasible. Testing for combi3:")
                     
                     # ------------------------------------------------------
                     # Find feasible combi1, combi2, combi3 over N=1h30
@@ -172,13 +179,13 @@ def get_optimal_sequence(x_0, iter):
                     for combi3 in operating_modes:
                     
                         sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3}
-                        cost = one_iteration(initial_state, iter, sequence, 45)
+                        cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 45)
                         
                         if cost == 1e5:
-                            print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} is not feasible.")
+                            print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} could not be solved: {error}")
                         
                         else:
-                            print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} has cost {cost} $. Testing for combi4:")
+                            print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} is feasible. Testing for combi4:")
                                 
                             # ------------------------------------------------------
                             # Find feasible combi1, combi2, combi3, combi4 over N=2h
@@ -186,10 +193,10 @@ def get_optimal_sequence(x_0, iter):
                             for combi4 in operating_modes:
                             
                                 sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4}
-                                cost = one_iteration(initial_state, iter, sequence, 60)
+                                cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 60)
                                 
                                 if cost == 1e5:
-                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} is not feasible.")
+                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} could not be solved: {error}")
                                 
                                 else:
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} has cost {cost} $.")
@@ -200,13 +207,15 @@ def get_optimal_sequence(x_0, iter):
                                     
                                     if cost < min_cost:
                                         min_cost = cost
-                                        optimals = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4}
+                                        optimals = sequence
+                                        best_x_opt, best_u_opt = x_opt, u_opt
                                         
                                     if cost == 0.0:
-                                        print(f"Minimum cost 0.0$ achieved for {optimals}")
-                                        data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
+                                        print(f"Minimum cost 0.0$ achieved for {sequence}")
+                                        data[0]['sequence'] = [sequence['combi1'], sequence['combi2'], sequence['combi3'], sequence['combi4']]
                                         append_to_csv(csv_file_name, data)
                                         print("#########################################")
+                                        
                                         return optimals
 
     # ------------------------------------------------------
@@ -217,5 +226,24 @@ def get_optimal_sequence(x_0, iter):
     data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
     append_to_csv(csv_file_name, data)
     print("#########################################")
-
+    '''
+    
+    # ------------------------------------------------------
+    # Plot the optimal sequence
+    # ------------------------------------------------------
+ 
+    plot_data = {
+        'T_B1':  [round(x,3) for x in best_x_opt[0,:]],
+        'T_B4':  [round(x,3) for x in best_x_opt[3,:]],
+        'T_S11': [round(x,3) for x in best_x_opt[4,:]],
+        'T_S21': [round(x,3) for x in best_x_opt[8,:]],
+        'T_S31': [round(x,3) for x in best_x_opt[12,:]],
+        'Q_HP': [functions.get_function("Q_HP", best_u_opt[:,t], best_x_opt[:,t], 0, True, False, t, optimals) for t in range(60)],
+        'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+60, 2/60)],
+        'm_load': forecasts.get_m_load(iter, iter+60, 2/60),
+        'sequence': optimals
+    }
+    
+    plot.plot_single_iter(plot_data)
+    
     return optimals

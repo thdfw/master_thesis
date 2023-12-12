@@ -1,0 +1,209 @@
+(ada) thomasdefauw@visitor-10-59-16-54 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (relaxed or fixed binary)
+Solver: Ipopt
+
+Time step: 2 minutes
+Horizon: 2.0 hours (60 time steps)
+Simulating for 1.07 hours
+
+#########################################
+Buffer: [310.0, 310.0, 310.0, 310.0] 
+Storage: [320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0]
+Electricity forecasts: [18.93, 45.56, 45.56, 26.42]
+
+Searching for optimal sequence...
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1] has cost 2.016 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 2.07 $.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 3.15 $.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.194 $.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 2.336 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[0, 1, 0] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 0, 1] has cost 1.839 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 0, 0] has cost 1.842 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.054 $.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1] has cost 3.65 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.726 $.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.735 $.
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1] has cost 3.67 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.674 $.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 1, 1] is not feasible.
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 1, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 1.057 $.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 0, 1] has cost 1.822 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.822 $.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 2.879 $.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.879 $.
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 1.822 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.822 $.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.879 $.
+- combi1=[0, 1, 0], combi2=[0, 1, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.0 $.
+Minimum cost 0.0$ achieved for {'combi1': [0, 1, 0], 'combi2': [0, 1, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-12_10-45-18.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 1.0 (0h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 1, 0]
+0h30-1h00: [0, 1, 0]
+1h00-1h30: [0, 0, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 310.0 | S        320.0 --    320.0 --   320.0 --
+         310.0 |          320.0       320.0      320.0
+         310.0 |          320.0       320.0      320.0
+      -- 310.0 |       -- 320.0    -- 320.0   -- 320.0
+
+Next state x_1
+B -0.1-> 319.1 | S        311.0 ->    318.6 ->   320.0 -0.3->
+         316.6 |          310.0       317.1      320.0
+         313.8 |          309.7       315.0      320.0
+  <-0.1- 311.6 |   -0.3-> 309.7    -> 312.8   -> 319.0
+
+- -0->  HP  -0-> - (- W)
+320.0 -0.2-> Load -0.2-> 308.9
+Cost of next 2 hours: 0.0 $
+Average Q_HP = 0.0
+Price of elec = 0.0
+Elec cost = 0.0
+
+#########################################
+Buffer: [319.057177, 316.646727, 313.768858, 311.642264] 
+Storage: [319.993205, 319.961374, 319.836679, 319.466626, 318.619481, 317.111326, 315.024058, 312.799439, 311.015247, 309.997236, 309.664702, 309.732047]
+Electricity forecasts: [18.93, 45.56, 45.56, 26.42]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.0 $.
+Minimum cost 0.0$ achieved for {'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-12_10-45-18.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 2.0 (0h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 0, 0]
+0h30-1h00: [0, 0, 0]
+1h00-1h30: [0, 0, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 319.1 | S        311.0 --    318.6 --   320.0 --
+         316.6 |          310.0       317.1      320.0
+         313.8 |          309.7       315.0      320.0
+      -- 311.6 |       -- 309.7    -- 312.8   -- 319.0
+
+Next state x_1
+B <-0.0- 315.9 | S        309.8 ->    315.1 ->   320.0 -0.2->
+         313.3 |          309.3       313.2      319.0
+         310.8 |          308.8       311.6      318.0
+  -0.0-> 308.7 |   -0.2-> 308.1    -> 310.5   -> 317.0
+
+- -0->  HP  -0-> - (- W)
+319.9 -0.2-> Load -0.2-> 308.8
+Cost of next 2 hours: 0.0 $
+Average Q_HP = 0.0
+Price of elec = 0.0
+Elec cost = 0.0
+
+#########################################
+Buffer: [315.930453, 313.3489, 310.825259, 308.667341] 
+Storage: [319.595111, 319.079304, 318.167161, 316.795345, 315.054075, 313.208736, 311.59916, 310.455954, 309.76417, 309.294701, 308.78582, 308.101598]
+Electricity forecasts: [18.93, 45.56, 45.56, 26.42]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+^C^CTraceback (most recent call last):
+  File "/Users/thomasdefauw/miniconda3/envs/ada/lib/python3.8/site-packages/casadi/casadi.py", line 13974, in <lambda>
+    __setattr__ = lambda self, name, value: _swig_setattr(self, MX, name, value)
+KeyboardInterrupt
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "master.py", line 59, in <module>
+    sequence = forecasts.get_optimal_sequence(x_0, 15*iter)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/forecasts.py", line 197, in get_optimal_sequence
+    cost, x_opt, u_opt = one_iteration(initial_state, iter, sequence, 60)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/forecasts.py", line 105, in one_iteration
+    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, 0, iter, pb_type, sequence, False)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/optimizer.py", line 254, in optimize_N_steps
+    opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s, t, sequence))
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/optimizer.py", line 73, in dynamics
+    Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx, t, sequence)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/functions.py", line 304, in get_function
+    f = functions_exact_sym(id, u, x, combi)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/functions.py", line 187, in functions_exact_sym
+    "Q_conv_S23":    (1-delta_ch) * (m_stor * cp * (T_S24 - T_S23)) + delta_ch * (m_stor * cp * (T_S22 - T_S23)),
+  File "/Users/thomasdefauw/miniconda3/envs/ada/lib/python3.8/site-packages/casadi/casadi.py", line 9037, in __sub__
+    def __sub__(x, y): return _casadi.minus(x, y)
+SystemError: <built-in function minus> returned a result with an error set
+^C
+(ada) thomasdefauw@visitor-10-59-16-54 gridworks %   

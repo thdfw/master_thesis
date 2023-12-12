@@ -97,7 +97,7 @@ def plot_MPC(data):
     # ------------------------------------------------------
     
     # Get the Q_load from the m_load
-    cp, Delta_T_load=  4187, 5/9*20
+    cp, Delta_T_load= 4187, 5/9*20
     Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
         
     ax[0].set_xlim([0,data['iterations']])
@@ -110,8 +110,8 @@ def plot_MPC(data):
 
     # First plot part 2
     ax2 = ax[0].twinx()
-    ax2.plot(data['c_el'], label="Price", color='black', alpha=0.4)
-    ax2.set_ylabel("Price [$/MWh]")
+    ax2.plot([x*100*1000 for x in data['c_el']], label="Price", color='black', alpha=0.4)
+    ax2.set_ylabel("Price [cts/kWh]")
 
     # x_ticks in hours
     tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']/15))
@@ -146,10 +146,11 @@ def plot_MPC(data):
 '''
 To visualize the 2 hours predicted by a single iteration
 '''
-def plot_singe_iter(data):
+def plot_single_iter(data):
 
     fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
-    
+    fig.suptitle(f"Sequence: {data['sequence']}")
+
     # ------------------------------------------------------
     # First plot
     # ------------------------------------------------------
@@ -158,27 +159,17 @@ def plot_singe_iter(data):
     cp, Delta_T_load=  4187, 5/9*20
     Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
     
-    # Get Q_HP
-        
-    ax[0].set_xlim([0,60])
-
     # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
+    ax[0].set_xlim([0,60])
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
     # First plot part 2
     ax2 = ax[0].twinx()
     ax2.plot(data['c_el'], label="Price", color='black', alpha=0.4)
-    ax2.set_ylabel("Price [$/MWh]")
-
-    '''
-    # x_ticks in hours
-    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']/15))
-    tick_labels = [f"{step * data['pb_type']['time_step']*15 // 60:02d}:00" for step in tick_positions]
-    plt.xticks(tick_positions, tick_labels)
-    '''
+    ax2.set_ylabel("Price [cts/kWh]")
     
     # Common legend
     lines1, labels1 = ax[0].get_legend_handles_labels()
@@ -194,9 +185,9 @@ def plot_singe_iter(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((60)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.4, linestyle='dashed')
+    ax[1].plot((60)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
-    ax[1].set_xlabel("Time [hours]")
+    ax[1].set_xlabel("Time steps")
     ax[1].legend()
 
     plt.show()

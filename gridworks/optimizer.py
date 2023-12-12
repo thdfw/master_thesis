@@ -271,12 +271,12 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, PRINT):
     # Solve the optimisation problem
     if PRINT: print("Solving the optimization problem...")
     start_time = time.time()
-    success = True
+    success, err_message = True, ""
     try: sol = opti.solve()
-    except:
+    except Exception as e:
         success = False
-        if PRINT: print(f"Failed to solve")
-        #raise ValueError
+        err_message = str(e).split()[-1]
+        if PRINT: print(f"Failed to solve: {err_message}!")
     #print("Done in {} seconds.".format(round(time.time()-start_time,1)))
 
     # Get optimal u=u_0*,...,u_N-1*
@@ -285,7 +285,8 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, PRINT):
     # Get corresponding states x0,...,xN
     x_optimal = sol.value(x) if success else np.nan
 
+    # Get the value of the objective at optimal
     obj_optimal = sol.value(obj) if success else 1e5
 
     # Return optimal sequence of u and x
-    return u_optimal, x_optimal, obj_optimal
+    return u_optimal, x_optimal, obj_optimal, err_message

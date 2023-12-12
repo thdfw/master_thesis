@@ -29,15 +29,14 @@ pb_type = {
 
 # Print corresponding setup
 plot.print_pb_type(pb_type)
-print(f"Simulating for {round(num_iterations*delta_t_h,2)} hours")
+print(f"Simulation: {round(num_iterations*15*delta_t_h)} hours")
 
 # ------------------------------------------------------
 # Initial state of the system
 # ------------------------------------------------------
 
 # Initial state
-x_0 = [300.0]*4 + [320.0]*12
-x_0 = [320.2, 319.7, 319.1, 318.3, 309.4, 307.6, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.8, 301.4, 300.3]
+x_0 = [310.0]*4 + [320.0]*12
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
@@ -60,7 +59,7 @@ for iter in range(num_iterations):
     sequence = forecasts.get_optimal_sequence(x_0, 15*iter)
         
     # Get u* and x*
-    u_opt, x_opt, obj_opt = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, True)
+    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, True)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
