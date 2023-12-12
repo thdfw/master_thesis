@@ -25,8 +25,7 @@ def get_c_el(start, end, delta_t_h):
     # Duplicate days
     c_el_all = c_el_all*30
     
-    #return [18.93/1000/100]*15 + [45.56/1000/100]*30 + [26.42/1000/100]*15#c_el_all[start:end]
-    return [20/1000/100]*15 + [20/1000/100]*30 + [20/1000/100]*15#c_el_all[start:end]
+    return c_el_all[start:end]
 
 
 '''
@@ -117,15 +116,14 @@ def get_optimal_sequence(x_0, iter):
     # Initial state of the buffer and storage tanks
     initial_state = x_0
     print("\n#########################################")
-    print(f"Current state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}\n")
+    #print(f"Current state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}\n")
     print("Searching for optimal sequence...")
     
     # Initialize
     min_cost = 1000
     optimals = []
     elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+60, 2/60)]
-    print([elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]])
-    
+
     # Data going to the .csv file
     data = [{
         "T_B": [round(x,1) for x in initial_state[:4]],
@@ -135,15 +133,13 @@ def get_optimal_sequence(x_0, iter):
         }]
     
     # Spare some time and use known results for the given state
-    '''
     if iter==0:
         print("Minimum cost 0.0$ achieved for {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}")
         data[0]['sequence'] = [[0,1,0], [0,1,0], [0,0,0], [0,0,0]]
         append_to_csv(csv_file_name, data)
         print("#########################################")
         return {'combi1': [0,1,0], 'combi2':[0,1,0], 'combi3':[0,0,0], 'combi4': [0,0,0]}
-    '''
-    
+
     # ------------------------------------------------------
     # Find feasible combi1 over N=30min
     # ------------------------------------------------------
@@ -218,10 +214,11 @@ def get_optimal_sequence(x_0, iter):
                                         data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
                                         append_to_csv(csv_file_name, data)
                                         print("#########################################")
-                                        return optimals
+                                        return(optimals)
 
-    # Append the solution to CSV file
     print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
+    
+    # Append the solution to CSV file
     data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
     append_to_csv(csv_file_name, data)
     print("#########################################")
