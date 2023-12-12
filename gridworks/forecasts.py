@@ -136,6 +136,7 @@ def get_optimal_sequence(x_0, iter):
     print(f"Electricity forecasts: {data[0]['prices']}")
     print("\nSearching for optimal sequence...")
     
+    '''
     # When you want to test a specific combination
     sequence = {'combi1': [0,1,0], 'combi2': [0,0,0], 'combi3': [0,0,0], 'combi4': [0,0,0]}
     print(f"Fixed: {sequence}")
@@ -245,5 +246,6 @@ def get_optimal_sequence(x_0, iter):
     }
     
     plot.plot_single_iter(plot_data)
+    '''
     
     return optimals
