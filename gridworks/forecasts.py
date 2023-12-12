@@ -132,9 +132,9 @@ def get_optimal_sequence(x_0, iter):
         }]
     
     print("\n#########################################")
-    print(f"Current state: \nBuffer: {initial_state[:4]} \nStorage: {initial_state[4:]}")
+    print(f"Buffer: {initial_state[:4]} \nStorage: {initial_state[4:]}")
     print(f"Electricity forecasts: {data[0]['prices']}")
-    print("Searching for optimal sequence...")
+    print("\nSearching for optimal sequence...")
     
     # ------------------------------------------------------
     # Find feasible combi1 over N=30min
