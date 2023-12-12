@@ -37,6 +37,7 @@ print(f"Simulating for {round(num_iterations*delta_t_h,2)} hours")
 
 # Initial state
 x_0 = [300.0]*4 + [320.0]*12
+x_0 = [320.2, 319.7, 319.1, 318.3, 309.4, 307.6, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.8, 301.4, 300.3]
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
@@ -107,7 +108,7 @@ for iter in range(num_iterations):
 plot_data = {
     'pb_type':      pb_type,
     'iterations':   num_iterations,
-    'c_el':         forecasts.get_c_el(0, num_iterations, delta_t_h),
+    'c_el':         forecasts.get_c_el(0, 15*num_iterations, 15*delta_t_h),
     'm_load':       forecasts.get_m_load(0, num_iterations, delta_t_h),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,

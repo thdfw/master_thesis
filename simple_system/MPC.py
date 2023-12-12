@@ -6,11 +6,6 @@ Description:
     A "warm-up" problem on which to implement MPC before moving to more
     complex systems (e.g. GridWorks). Refer to the README for a detailed
     description of the system and model.
-    
-Author and date:
-    Thomas Defauw
-    Berkeley Lab, EPFL
-    October 2023
 '''
 
 import casadi
