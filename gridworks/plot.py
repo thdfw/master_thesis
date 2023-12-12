@@ -138,9 +138,10 @@ def plot_MPC(data):
     ax[1].legend()
 
     # Save the plot
-    plt.savefig('plot.png')
+    current_datetime = datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
+    plt.savefig("plot_" + formatted_datetime + ".png")
     plt.show()
-
 
 '''
 To visualize the 2 hours predicted by a single iteration

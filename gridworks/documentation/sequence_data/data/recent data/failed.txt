@@ -1,0 +1,681 @@
+(ada) thomasdefauw@Macbook-pro-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (relaxed or fixed binary)
+Solver: Ipopt
+
+Time step: 2 minutes
+Horizon: 2.0 hours (60 time steps)
+Simulating for 0.67 hours
+
+#########################################
+Searching for optimal sequence...
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] is not feasible
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is not feasible
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] has cost 0.62 $. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] has cost 0.62 $. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.62 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.62 $.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 1.205 $.
+-- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] has cost 0.62 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 1.417 $.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] has cost 1.269 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.269 $.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 1.854 $.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 1.854 $.
+-- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 1.205 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] is not feasible.
+--- combi1=[1, 0, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 1.791 $.
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is not feasible.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] has cost 1.239 $. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] has cost 1.239 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.239 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 1.846 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.41 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.41 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] has cost 1.239 $. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 1.239 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.239 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 1.825 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 1.825 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.41 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 1.825 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.41 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] has cost 0.62 $. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] has cost 0.62 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.62 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.62 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 1.276 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 1.205 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] has cost 0.62 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 0.62 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] has cost 0.62 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 1.205 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] has cost 1.205 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.205 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 1.791 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 1.791 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 1.205 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.205 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 1.205 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 1.791 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 1.791 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is not feasible.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] has cost 1.239 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] has cost 1.239 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.239 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 1.239 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 1.825 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] has cost 1.239 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 1.239 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.41 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.41 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] has cost 1.239 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 1.239 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.239 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 1.239 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 1.825 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] has cost 1.239 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 1.239 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 1.825 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.41 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] has cost 1.825 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.825 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 2.41 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.41 $.
+Minimum cost 0.62$ achieved for {'combi1': [1, 1, 1], 'combi2': [0, 0, 0], 'combi3': [0, 1, 0], 'combi4': [0, 1, 0]}
+Data was appended to results_2023-12-04_22-08-15.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 1.0 (0h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [0, 0, 0]
+1h00-1h30: [0, 1, 0]
+1h30-2h00: [0, 1, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 310.0 | S        310.0 --    310.0 --   310.0 --
+         310.0 |          310.0       310.0      310.0
+         310.0 |          310.0       310.0      310.0
+      -- 310.0 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state x_1
+B -0.1-> 311.3 | S        310.1 <-    311.4 <-   312.0 <-0.3-
+         310.5 |          310.0       310.9      312.0
+         310.2 |          310.0       310.5      312.0
+  <-0.1- 310.0 |   <-0.3- 310.0    <- 310.3   <- 312.0
+
+308.2 -0.5->  HP  -0.5-> 312.0 (8000.0 W)
+312.0 -0.2-> Load -0.2-> 300.9
+Cost of next 2 hours: 0.62 $
+Average Q_HP = 8000.0
+Price of elec = 0.0
+Elec cost = 0.15
+
+#########################################
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.0 $.
+Minimum cost 0.0$ achieved for {'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-04_22-08-15.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 2.0 (0h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 0, 0]
+0h30-1h00: [0, 0, 0]
+1h00-1h30: [0, 0, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 311.3 | S        310.1 --    311.4 --   312.0 --
+         310.5 |          310.0       310.9      312.0
+         310.2 |          310.0       310.5      312.0
+      -- 310.0 |       -- 310.0    -- 310.3   -- 312.0
+
+Next state x_1
+B <-0.0- 310.9 | S        309.9 ->    311.0 ->   312.0 -0.1->
+         310.1 |          309.4       310.6      312.0
+         308.8 |          307.7       310.3      312.0
+  -0.0-> 305.4 |   -0.1-> 304.0    -> 310.1   -> 311.0
+
+- -0->  HP  -0-> - (- W)
+311.7 -0.2-> Load -0.2-> 300.6
+Cost of next 2 hours: 0.0 $
+Average Q_HP = 0.0
+Price of elec = 0.0
+Elec cost = 0.0
+
+#########################################
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[0, 1, 0] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 0, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 1, 1] is not feasible.
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 0, 0], combi3=[1, 1, 1] is not feasible.
+- combi1=[0, 1, 0], combi2=[0, 1, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[0, 0, 0] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 1, 1] is not feasible.
+- combi1=[0, 1, 0], combi2=[1, 0, 1] is not feasible.
+- combi1=[0, 1, 0], combi2=[1, 1, 1] has cost 0.586 $. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 0.586 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.586 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 1.575 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 1.343 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 1.515 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.515 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 2.277 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.304 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] has cost 1.343 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 2.137 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.1 $.
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is not feasible
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is not feasible
+Minimum cost 0.59$ achieved for {'combi1': [0, 1, 0], 'combi2': [1, 1, 1], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-04_22-08-15.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 3.0 (1h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 1, 0]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [0, 0, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 310.9 | S        309.9 --    311.0 --   312.0 --
+         310.1 |          309.4       310.6      312.0
+         308.8 |          307.7       310.3      312.0
+      -- 305.4 |       -- 304.0    -- 310.1   -- 311.0
+
+Next state x_1
+B -0.1-> 311.2 | S        304.9 ->    309.0 ->   311.0 -0.2->
+         311.3 |          305.0       308.0      311.0
+         311.1 |          305.7       306.7      310.0
+  <-0.1- 310.3 |   -0.2-> 307.0    -> 305.6   -> 310.0
+
+- -0->  HP  -0-> - (- W)
+311.9 -0.2-> Load -0.2-> 300.8
+Cost of next 2 hours: 0.59 $
+Average Q_HP = 0.0
+Price of elec = 0.0
+Elec cost = 0.0
+
+#########################################
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] is not feasible.
+- combi1=[0, 0, 0], combi2=[0, 1, 0] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 0, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 1, 1] is not feasible.
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is not feasible
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] has cost 0.838 $. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] is not feasible.
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is not feasible.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is not feasible.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is not feasible.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] has cost 0.586 $. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] has cost 0.586 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.586 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.602 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 0.624 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.215 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 2.408 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] has cost 0.586 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 0.59 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.5 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 2.485 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] has cost 1.583 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 1.585 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 1.586 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] is not feasible.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 1.641 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.343 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.65 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.165 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is not feasible.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] has cost 1.525 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] has cost 1.525 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.553 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.433 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 3.431 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] has cost 1.525 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.431 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.351 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] has cost 2.282 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 2.282 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.105 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.105 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] has cost 2.282 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.282 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.105 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.105 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] has cost 1.343 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 1.343 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.343 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 1.343 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.315 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 3.165 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 2.14 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 2.142 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 2.141 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 3.962 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.963 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] has cost 2.1 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.1 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 2.1 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.922 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.922 $.
+Minimum cost 0.59$ achieved for {'combi1': [1, 1, 1], 'combi2': [0, 0, 0], 'combi3': [0, 1, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-04_22-08-15.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 4.0 (1h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [0, 0, 0]
+1h00-1h30: [0, 1, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 311.2 | S        304.9 --    309.0 --   311.0 --
+         311.3 |          305.0       308.0      311.0
+         311.1 |          305.7       306.7      310.0
+      -- 310.3 |       -- 307.0    -- 305.6   -- 310.0
+
+Next state x_1
+B -0.4-> 312.8 | S        305.7 <-    309.6 <-   312.0 <--0.0-
+         312.9 |          305.2       308.8      311.0
+         312.8 |          305.3       307.8      311.0
+  <-0.4- 312.6 |   <--0.0- 306.0    <- 306.6   <- 310.0
+
+308.5 -0.5->  HP  -0.5-> 312.3 (8000.0 W)
+312.3 -0.2-> Load -0.2-> 301.2
+Cost of next 2 hours: 0.59 $
+Average Q_HP = 8057.76
+Price of elec = 0.0
+Elec cost = 0.15
+
+#########################################
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 1.822 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 1.822 $.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.645 $.
+- combi1=[0, 0, 0], combi2=[0, 1, 0] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 0, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 1, 1] has cost 0.757 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 0.757 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.757 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 3.393 $.
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 3.133 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 3.149 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.957 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] has cost 2.58 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.58 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 2.58 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.605 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.402 $.
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] is not feasible.
+- combi1=[0, 1, 0], combi2=[0, 1, 0] is not feasible.
+- combi1=[0, 1, 0], combi2=[1, 0, 1] is not feasible.
+- combi1=[0, 1, 0], combi2=[1, 1, 1] has cost 0.757 $. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 0.757 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.221 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 2.58 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 3.139 $. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 3.139 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.959 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.961 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] is not feasible.
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] has cost 0.99 $. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] is not feasible.
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is not feasible.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is not feasible.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is not feasible.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] has cost 0.757 $. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] has cost 0.757 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.757 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.757 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 0.757 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.231 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 2.58 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] has cost 0.757 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 0.757 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.251 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 2.58 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] has cost 2.58 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.863 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 2.58 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.682 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.402 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] has cost 0.757 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] is not feasible.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] has cost 2.775 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.597 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.658 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is not feasible.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] has cost 1.586 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] has cost 1.586 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.409 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 3.432 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is not feasible.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] has cost 3.408 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 3.408 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.23 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.23 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] has cost 3.408 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.412 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.23 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.235 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] has cost 1.514 $. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] has cost 1.514 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 1.514 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.337 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 3.337 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] has cost 1.514 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 1.514 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] has cost 1.514 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.337 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] has cost 3.337 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 3.337 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.159 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.159 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] has cost 3.337 $. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.337 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] is not feasible.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.159 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.159 $.
+Minimum cost 0.76$ achieved for {'combi1': [1, 1, 1], 'combi2': [0, 0, 0], 'combi3': [0, 1, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-04_22-08-15.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 5.0 (2h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [0, 0, 0]
+1h00-1h30: [0, 1, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 312.8 | S        305.7 --    309.6 --   312.0 --
+         312.9 |          305.2       308.8      311.0
+         312.8 |          305.3       307.8      311.0
+      -- 312.6 |       -- 306.0    -- 306.6   -- 310.0
+
+Next state x_1
+B -0.3-> 314.1 | S        306.8 <-    310.2 <-   313.0 <-0.1-
+         313.9 |          305.9       309.5      312.0
+         313.7 |          305.5       308.8      311.0
+  <-0.3- 313.6 |   <-0.1- 305.6    <- 307.8   <- 311.0
+
+309.9 -0.5->  HP  -0.5-> 313.7 (8000.0 W)
+313.7 -0.2-> Load -0.2-> 302.6
+Cost of next 2 hours: 0.76 $
+Average Q_HP = 8000.0
+Price of elec = 0.0
+Elec cost = 0.19
+
+#########################################
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 0.0 $.
+Minimum cost 0.0$ achieved for {'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-04_22-08-15.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 6.0 (2h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 0, 0]
+0h30-1h00: [0, 0, 0]
+1h00-1h30: [0, 0, 0]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+
+Initial state x_0
+B     -- 314.1 | S        306.8 --    310.2 --   313.0 --
+         313.9 |          305.9       309.5      312.0
+         313.7 |          305.5       308.8      311.0
+      -- 313.6 |       -- 305.6    -- 307.8   -- 311.0
+
+Next state x_1
+B <-0.1- 313.4 | S        306.6 ->    310.0 ->   313.0 -0.0->
+         312.0 |          305.8       309.4      312.0
+         309.2 |          305.4       308.5      311.0
+  -0.1-> 305.2 |   -0.0-> 305.0    -> 307.6   -> 311.0
+
+- -0->  HP  -0-> - (- W)
+314.0 -0.2-> Load -0.2-> 302.9
+Cost of next 2 hours: 0.0 $
+Average Q_HP = 0.0
+Price of elec = 0.0
+Elec cost = 0.0
+
+#########################################
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] has cost 0.0 $. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0] has cost 0.0 $. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] is not feasible.
+--- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 0, 0], combi3=[1, 1, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[0, 1, 0] has cost 0.0 $. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[0, 1, 0], combi3=[0, 0, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 1, 0], combi3=[0, 1, 0] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 1, 0], combi3=[1, 0, 1] is not feasible.
+-- combi1=[0, 0, 0], combi2=[0, 1, 0], combi3=[1, 1, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 0, 1] is not feasible.
+- combi1=[0, 0, 0], combi2=[1, 1, 1] is not feasible.
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is not feasible
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is not feasible
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is not feasible
+Minimum cost 1000$ achieved for []
+Traceback (most recent call last):
+  File "master.py", line 59, in <module>
+    sequence = forecasts.get_optimal_sequence(x_0, 15*iter)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/forecasts.py", line 225, in get_optimal_sequence
+    data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
+TypeError: list indices must be integers or slices, not str
+(ada) thomasdefauw@Macbook-pro-2011 gridworks % 
