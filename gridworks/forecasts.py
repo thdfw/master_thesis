@@ -90,6 +90,7 @@ current_datetime = datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
 csv_file_name = "results_" + formatted_datetime + ".csv"
 
+
 '''
 Input: current state and forecasts (through iter). A sequence and a horizon.
 Output: cost of one step optimization over the given horizon.
