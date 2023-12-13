@@ -36,7 +36,7 @@ print(f"Simulation: {round(num_iterations*15*delta_t_h)} hours")
 # ------------------------------------------------------
 
 # Initial state
-x_0 = [310.0]*4 + [320.0]*12
+x_0 = [310.0]*4 + [310.0]*12
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
