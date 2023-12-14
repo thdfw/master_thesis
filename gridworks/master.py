@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h / 15)
+num_iterations = 1#int(16 * 1/delta_t_h / 15)
 
 # Problem type
 pb_type = {
@@ -29,17 +29,24 @@ pb_type = {
 
 # Print corresponding setup
 plot.print_pb_type(pb_type)
-print(f"Simulation: {round(num_iterations*15*delta_t_h)} hours")
+print(f"Simulation: {round(num_iterations*15*delta_t_h)} hours ({num_iterations} iterations)")
 
 # ------------------------------------------------------
 # Initial state of the system
 # ------------------------------------------------------
 
 # Initial state
-x_0 = [310.0]*4 + [310.0]*12
+x_0 = [300.0]*4 + [320.0]*12
+#x_0 = [317.1, 315.7, 314.4, 313.9] + [308.8, 307.5, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.7, 301.3, 300.3]
+#x_0 = [316.3, 315.1, 313.8, 313.0] + [308.8, 307.5, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.7, 301.3, 300.3]
+#x_0 = [320.2, 319.7, 319.1, 318.3] + [309.4, 307.6, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.8, 301.4, 300.3]
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
+
+# Initial warm start
+u_opt = np.zeros((6, N))
+x_opt = np.zeros((16, N+1))
 
 # ------------------------------------------------------
 # Initialize variables for the final plot
@@ -56,7 +63,7 @@ elec_cost, elec_used = 0, 0
 for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
-    sequence = forecasts.get_optimal_sequence(x_0, 15*iter)
+    sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
         
     # Get u* and x*
     u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, True)
@@ -88,8 +95,8 @@ for iter in range(num_iterations):
         Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence)
     Q_HP = Q_HP/15
     print(f"Average Q_HP = {round(Q_HP,2)}")
-    print(f"Price of elec = {round(forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0],2)}")
-    print(f"Elec cost = {round(Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0],2)}")
+    print(f"Electricity price: {round(forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]*100*1000,2)} cts/kWh")
+    print(f"Step cost = {round(Q_HP/4 * delta_t_h * 15 * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0],2)}")
 
     # Assume a constant COP of 4
     elec_used += Q_HP/4 * delta_t_h * 15
