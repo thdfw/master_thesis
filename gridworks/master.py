@@ -16,7 +16,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = 1#int(16 * 1/delta_t_h / 15)
+num_iterations = int(16 * 1/delta_t_h / 15)
 
 # Problem type
 pb_type = {
@@ -40,6 +40,7 @@ x_0 = [300.0]*4 + [320.0]*12
 #x_0 = [317.1, 315.7, 314.4, 313.9] + [308.8, 307.5, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.7, 301.3, 300.3]
 #x_0 = [316.3, 315.1, 313.8, 313.0] + [308.8, 307.5, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.7, 301.3, 300.3]
 #x_0 = [320.2, 319.7, 319.1, 318.3] + [309.4, 307.6, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.8, 301.4, 300.3]
+x_0 = [314.0, 314.6, 313.7, 308.8] + [308.8, 307.5, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.7, 301.3, 300.3]
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
@@ -65,8 +66,15 @@ for iter in range(num_iterations):
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
     sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
         
+    # Set the warm start
+    initial_x = [[round(x,4) for x in x_opt[k,-46:]] for k in range(16)]
+    initial_u = [[round(u,4) for u in u_opt[k,-45:]] for k in range(6)]
+    initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
+    initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
+    warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
+    
     # Get u* and x*
-    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, True)
+    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
