@@ -11,7 +11,7 @@ Output: list of forecasted electricty prices between start and end time steps
 def get_c_el(start, end, delta_t_h):
 
     # Electricity prices in cts/kWh, hourly prices for 24 hours
-    c_el_all = [18.97, 18.92, 18.21, 16.58, 16.27, 15.49, 14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
+    #c_el_all = [18.97, 18.92, 18.21, 16.58, 16.27, 15.49, 14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
     c_el_all = [14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11, 18.97, 18.92, 18.21, 16.58, 16.27, 15.49]
 
     # The number of time steps that make up one hour
@@ -27,8 +27,6 @@ def get_c_el(start, end, delta_t_h):
     # Duplicate days
     c_el_all = c_el_all*30
     
-    #return [14.64/1000/100]*15 + [18.93/1000/100]*30 + [45.56/1000/100]*15
-    #return [18.93/1000/100]*30 + [45.56/1000/100]*30
     #return [18.93/1000/100]*15 + [45.56/1000/100]*30 + [26.42/1000/100]*15
     return c_el_all[start:end]
 
@@ -57,25 +55,6 @@ def get_m_load(start, end, delta_t_h):
 # Everything related to optimal sequence prediction
 # ------------------------------------------------------
 
-'''
-Function to append the data to a CSV file
-'''
-def append_to_csv(file_name, data):
-        
-    with open(file_name, 'a', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "prices", "iter", "sequence"])
-        
-        # If file is empty, write headers
-        if file.tell() == 0:
-            writer.writeheader()
-        
-        # Append data to CSV
-        for row in data:
-            writer.writerow(row)
-            
-    print("Data was appended to", file_name)
-    
-
 # Problem type
 pb_type = {
 'linearized':       False,
@@ -93,7 +72,29 @@ current_datetime = datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
 csv_file_name = "results_" + formatted_datetime + ".csv"
 
+# ------------------------------------------------------
+# Append data to CSV file
+# ------------------------------------------------------
 
+def append_to_csv(file_name, data):
+        
+    with open(file_name, 'a', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "prices", "iter", "sequence"])
+        
+        # If file is empty, write headers
+        if file.tell() == 0:
+            writer.writeheader()
+        
+        # Append data to CSV
+        for row in data:
+            writer.writerow(row)
+            
+    print("Data was appended to", file_name)
+    
+
+# ------------------------------------------------------
+# One iteration of the optimization algorithm
+# ------------------------------------------------------
 '''
 Input: current state and forecasts (through iter). A sequence and a horizon.
 Output: cost of one step optimization over the given horizon.
@@ -101,36 +102,33 @@ Output: cost of one step optimization over the given horizon.
 def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
 
     # Warm start the solver with the previous MPC solution
+    
     if horizon == 15: # testing for combi1
-        # OPTION 1: Dont initialize
-        # OPTION 2: Get the combi2 from the previous MPC iteration
+        # OPTION 1: Get the combi2 from the previous MPC iteration
         initial_x = [[round(x,4) for x in x_opt_prev[k,-46:-30]] for k in range(16)]
         initial_u = [[round(u,4) for u in u_opt_prev[k,-45:-30]] for k in range(6)]
-        #print("30min")
+        # OPTION 2: Dont initialize
         
     if horizon == 30: # testing for combi1,combi2
-        # OPTION 1: Get the combi1 from the ongoing test, set combi2 to '0'
-        # OPTION 2: Get the combi2,combi3 from the previous MPC iteration
+        # OPTION 1: Get the combi2,combi3 from the previous MPC iteration
         initial_x = [[round(x,4) for x in x_opt_prev[k,-46:-15]] for k in range(16)]
         initial_u = [[round(u,4) for u in u_opt_prev[k,-45:-15]] for k in range(6)]
-        #print("1h")
+        # OPTION 2: Get the combi1 from the ongoing test, set combi2 to '0'
 
     if horizon == 45: # testing for combi1,combi2,combi3
-        # OPTION 1: Get the combi1,combi2 from the ongoing test, set combi3 to '0'
-        # OPTION 2: Get the combi2,combi3,combi4 from the previous MPC iteration
+        # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration
         initial_x = [[round(x,4) for x in x_opt_prev[k,-46:]] for k in range(16)]
         initial_u = [[round(u,4) for u in u_opt_prev[k,-45:]] for k in range(6)]
-        #print("1h30")
+        # OPTION 2: Get the combi1,combi2 from the ongoing test, set combi3 to '0'
 
     if horizon == 60: # testing for combi1,combi2,combi3,combi4
-        # OPTION 1: Get the combi1,combi2,combi3 from the ongoing test, set combi4 to '0'
-        # OPTION 2: Get the combi2,combi3,combi4 from the previous MPC iteration, set the rest to '0'
+        # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration, set the rest to '0'
         initial_x = [[round(x,4) for x in x_opt_prev[k,-46:]] for k in range(16)]
         initial_u = [[round(u,4) for u in u_opt_prev[k,-45:]] for k in range(6)]
         initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
         initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
-        #print("2h")
-        
+        # OPTION 2: Get the combi1,combi2,combi3 from the ongoing test, set combi4 to '0'
+
     # Set the warm start
     warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
         
@@ -140,12 +138,15 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
     # Get u* and x*
     u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 0, iter, pb_type, sequence, warm_start, False)
         
-    return round(obj_opt,3), x_opt, u_opt, error
+    return obj_opt, x_opt, u_opt, error
 
 
+# ------------------------------------------------------
+# Get the optimal sequence for the next N steps
+# ------------------------------------------------------
 '''
 Input: current state and forecasts
-Output: predicted optimal sequence of binary terms for the next N steps
+Output: optimal sequence of binary terms for the next N steps
 '''
 def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
 
@@ -174,23 +175,6 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     print(f"Electricity forecasts: {data[0]['prices']}")
     print("\nSearching for optimal sequence...")
     
-    if iter==0:
-        sequence = {'combi1': [1,1,1], 'combi2': [1,1,1], 'combi3': [0,0,0], 'combi4': [0,0,0]}
-        print(f"Minimum cost 0.0$ achieved for {sequence}")
-        data[0]['sequence'] = [sequence['combi1'], sequence['combi2'], sequence['combi3'], sequence['combi4']]
-        append_to_csv(csv_file_name, data)
-        print("#########################################")
-        return sequence
-    
-    ''' Test a specific combination
-    optimals = {'combi1': [0,1,0], 'combi2': [0,1,0], 'combi3': [0,0,0], 'combi4': [0,0,0]}
-    print(f"Fixed: {optimals}")
-    min_cost, best_x_opt, best_u_opt, error = one_iteration(initial_state, iter, optimals, 60, x_opt_prev, u_opt_prev)
-    print(f"{error}") if error != '' else print(min_cost)
-    print("#########################################\n")
-    Test a specific combination '''
-
-    #''' Find the optimal combination
     # ------------------------------------------------------
     # Find feasible combi1 over N=30min
     # ------------------------------------------------------
@@ -273,25 +257,5 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
     append_to_csv(csv_file_name, data)
     print("#########################################")
-    #Find the optimal combination'''
-    
-    # ------------------------------------------------------
-    # Plot the optimal sequence
-    # ------------------------------------------------------
-    '''
-    plot_data = {
-        'T_B1':  [round(x,3) for x in best_x_opt[0,:]],
-        'T_B4':  [round(x,3) for x in best_x_opt[3,:]],
-        'T_S11': [round(x,3) for x in best_x_opt[4,:]],
-        'T_S21': [round(x,3) for x in best_x_opt[8,:]],
-        'T_S31': [round(x,3) for x in best_x_opt[12,:]],
-        'Q_HP': [functions.get_function("Q_HP", best_u_opt[:,t], best_x_opt[:,t], 0, True, False, t, optimals) for t in range(60)],
-        'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+60, 2/60)],
-        'm_load': forecasts.get_m_load(iter, iter+60, 2/60),
-        'sequence': optimals
-    }
-    
-    plot.plot_single_iter(plot_data)
-    '''
     
     return optimals

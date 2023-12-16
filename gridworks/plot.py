@@ -37,7 +37,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
-    print("\nInitial state x_0")
+    print("\nInitial state")
     print(f"B     -- {round(x_opt[0,0],1)} | S        {round(x_opt[12,0],1)} --    {round(x_opt[8,0],1)} --   {round(x_opt[4,0],0)} --")
     print(f"         {round(x_opt[1,0],1)} |          {round(x_opt[13,0],1)}       {round(x_opt[9,0],1)}      {round(x_opt[5,0],0)}")
     print(f"         {round(x_opt[2,0],1)} |          {round(x_opt[14,0],1)}       {round(x_opt[10,0],1)}      {round(x_opt[6,0],0)}")
@@ -47,12 +47,23 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     # Mass flow rates, mixing temperatures and heat
     # ------------------------------------------------------
     
-    m_HP = round(functions.get_function("m_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence),2) if u_opt_0[4]==1 else 0
-    m_stor = round(u_opt[1,0],1)
-    m_buffer = round(functions.get_function("m_buffer", u_opt_0, x_opt_0, 0, True, False, 0, sequence),1)
-    m_load = 0.2
+    Q_HP = []
+    m_stor, m_buffer = 0, 0
     
-    Q_HP = functions.get_function("Q_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
+    for k in range(15):
+    
+        u_k = [round(float(x),6) for x in u_opt[:,k]]
+        x_k = [round(float(x),6) for x in x_opt[:,k]]
+        
+        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, True, False, 0, sequence))
+        m_stor += u_opt[1,k]
+        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, True, False, 0, sequence),1)
+
+    m_stor = round(m_stor/15,1)
+    m_buffer = round(m_buffer/15,1)
+    if m_stor<=0 and m_stor>-0.05: m_stor = 0.0
+    if m_buffer<=0 and m_buffer>-0.05: m_buffer = 0.0
+
     T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
     
@@ -65,15 +76,20 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     B_t = f"-{m_buffer}->"  if round(u_opt_0[3])==1 else f"<-{m_buffer}-"
     B_b = f"<-{m_buffer}-"  if round(u_opt_0[3])==1 else f"-{m_buffer}->"
     
-    print("\nNext state x_1")
+    print("\nNext state")
     print(f"B {B_t} {round(x_1[0],1)} | S        {round(x_1[12],1)} {S_t2}    {round(x_1[8],1)} {S_t2}   {round(x_1[4],0)} {S_t}")
     print(f"         {round(x_1[1],1)} |          {round(x_1[13],1)}       {round(x_1[9],1)}      {round(x_1[5],0)}")
     print(f"         {round(x_1[2],1)} |          {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")
     print(f"  {B_b} {round(x_1[3],1)} |   {S_t} {round(x_1[15],1)}    {S_t2} {round(x_1[11],1)}   {S_t2} {round(x_1[7],0)}")
     
-    print(f"\n{round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'} -{round(m_HP,2) if u_opt_0[4]==1 else 0}->  HP  -{round(m_HP,2) if u_opt_0[4]==1 else 0}-> {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'} ({round(Q_HP,2) if round(u_opt[4,0])==1 else '-'} W)")
-    print(f"{round(T_sup_load,1)} -{round(m_load,2)}-> Load -{round(m_load,2)}-> {round(T_sup_load-11.111,1)}")
-
+    #m_HP = 0.5 if u_opt_0[4]==1 else 0
+    #m_load = 0.2
+    #print(f"\n{round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'} -{round(m_HP,2) if u_opt_0[4]==1 else 0}->  HP  -{round(m_HP,2) if u_opt_0[4]==1 else 0}-> {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'} ({round(Q_HP,2) if round(u_opt[4,0])==1 else '-'} W)")
+    #print(f"{round(T_sup_load,1)} -{round(m_load,2)}-> Load -{round(m_load,2)}-> {round(T_sup_load-11.111,1)}")
+    
+    print(f"\nQ_HP = {[round(x) for x in Q_HP]}")
+    print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:15]]}\n")
+    
 
 '''
 The final plot with all the data accumulated during the simulation
@@ -101,7 +117,7 @@ def plot_MPC(data):
     cp, Delta_T_load= 4187, 5/9*20
     Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
         
-    ax[0].set_xlim([0,data['iterations']])
+    ax[0].set_xlim([0,15*data['iterations']])
 
     # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
@@ -115,8 +131,8 @@ def plot_MPC(data):
     ax2.set_ylabel("Price [cts/kWh]")
 
     # x_ticks in hours
-    tick_positions = np.arange(0, data['iterations']+1, step=int(60/data['pb_type']['time_step']/15))
-    tick_labels = [f"{step * data['pb_type']['time_step']*15 // 60:02d}:00" for step in tick_positions]
+    tick_positions = np.arange(0, data['iterations']*15+1, step=int(60/data['pb_type']['time_step']))
+    tick_labels = [f"{step * data['pb_type']['time_step'] // 60:02d}:00" for step in tick_positions]
     plt.xticks(tick_positions, tick_labels)
 
     # Common legend
@@ -133,7 +149,7 @@ def plot_MPC(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((data['iterations']+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
+    ax[1].plot((data['iterations']*15+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time [hours]")
     ax[1].legend()

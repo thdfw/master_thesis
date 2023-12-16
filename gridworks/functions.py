@@ -133,7 +133,7 @@ def functions_exact_sym(id, u, x, combi):
 
     # Get the delta terms
     delta_ch, delta_bu, delta_HP = combi
-    delta_R = 0
+    delta_R = u[5]
 
     # Get the other variables from the inputs and states
     T_sup_HP, m_stor            = u[0], u[1]

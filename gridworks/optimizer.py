@@ -274,11 +274,13 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
     opti.set_initial(u, initial_u)
     opti.set_initial(x, initial_x)
 
-    '''print("\n\n - - THE WARM START - - \n\n")
+    '''
+    print("\n - - WARM START - - \n")
     print("X:")
     print(initial_x)
     print("\nU:")
-    print(initial_u)'''
+    print(initial_u)
+    '''
     
     # Solve the optimisation problem
     if PRINT: print("Solving the optimization problem...")
@@ -299,7 +301,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
     x_optimal = sol.value(x) if success else np.nan
 
     # Get the value of the objective at optimal
-    obj_optimal = sol.value(obj) if success else 1e5
+    obj_optimal = round(sol.value(obj),3) if success else 1e5
 
     # Return optimal sequence of u and x
     return u_optimal, x_optimal, obj_optimal, err_message
