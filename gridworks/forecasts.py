@@ -105,26 +105,26 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
     
     if horizon == 15: # testing for combi1
         # OPTION 1: Get the combi2 from the previous MPC iteration
-        initial_x = [[round(x,4) for x in x_opt_prev[k,-46:-30]] for k in range(16)]
-        initial_u = [[round(u,4) for u in u_opt_prev[k,-45:-30]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:-30]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:-30]] for k in range(6)]
         # OPTION 2: Dont initialize
         
     if horizon == 30: # testing for combi1,combi2
         # OPTION 1: Get the combi2,combi3 from the previous MPC iteration
-        initial_x = [[round(x,4) for x in x_opt_prev[k,-46:-15]] for k in range(16)]
-        initial_u = [[round(u,4) for u in u_opt_prev[k,-45:-15]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:-15]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:-15]] for k in range(6)]
         # OPTION 2: Get the combi1 from the ongoing test, set combi2 to '0'
 
     if horizon == 45: # testing for combi1,combi2,combi3
         # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration
-        initial_x = [[round(x,4) for x in x_opt_prev[k,-46:]] for k in range(16)]
-        initial_u = [[round(u,4) for u in u_opt_prev[k,-45:]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
         # OPTION 2: Get the combi1,combi2 from the ongoing test, set combi3 to '0'
 
     if horizon == 60: # testing for combi1,combi2,combi3,combi4
         # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration, set the rest to '0'
-        initial_x = [[round(x,4) for x in x_opt_prev[k,-46:]] for k in range(16)]
-        initial_u = [[round(u,4) for u in u_opt_prev[k,-45:]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
         initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
         initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
         # OPTION 2: Get the combi1,combi2,combi3 from the ongoing test, set combi4 to '0'

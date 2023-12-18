@@ -55,7 +55,7 @@ list_Q_HP = []
 list_S11, list_S21, list_S31, list_B1, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[0]], [x_0[3]]
 elec_cost, elec_used = 0, 0
 
-file_path = input("Results file: ").replace(" ","")
+file_path = input("\nResults file (enter to skip): ").replace(" ","")
 if file_path != "": df = pd.read_csv(file_path)
 
 # ------------------------------------------------------
@@ -79,8 +79,8 @@ for iter in range(num_iterations):
         sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4}
     
     # Give the solver a warm start using the previous solution
-    initial_x = [[round(x,4) for x in x_opt[k,-46:]] for k in range(16)]
-    initial_u = [[round(u,4) for u in u_opt[k,-45:]] for k in range(6)]
+    initial_x = [[float(x) for x in x_opt[k,-46:]] for k in range(16)]
+    initial_u = [[float(u) for u in u_opt[k,-45:]] for k in range(6)]
     initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
     initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
     warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
@@ -93,8 +93,7 @@ for iter in range(num_iterations):
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
     # Implement u_0* and obtain x_1
-    x_1 = [round(float(x),6) for x in x_opt[:,15]]
-    '''plus tard changer pour x_opt[:,14]!!'''
+    x_1 = [float(x) for x in x_opt[:,15]]
         
     # Print iteration
     plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence)
