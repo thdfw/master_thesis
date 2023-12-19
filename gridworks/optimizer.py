@@ -11,6 +11,7 @@ from functions import get_function
 # Heat pump
 Q_HP_min = 8000 #W
 Q_HP_max = 14000 #W
+COP = 3
 
 # Load
 T_sup_load_min = 273 + 38 #K
@@ -62,6 +63,7 @@ def dynamics(u_t, x_t, a, real, approx, delta_t_s, t, sequence):
         Q_conv_B[i-1] = get_function(f"Q_conv_B{i}", u_t, x_t, a, real, approx, t, sequence)
 
     # For the storage tanks S1, S2, S3
+    # Q_R_S           = ([0] + [4500*u_t[5]] + [0] + [4500*u_t[5]])*3
     Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx, t, sequence)
     Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx, t, sequence)
     Q_top_S[8]      = get_function("Q_top_S3", u_t, x_t, a, real, approx, t, sequence)
@@ -202,6 +204,9 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         for i in range(16):
             opti.subject_to(x[i,t] >= T_w_min)
             opti.subject_to(x[i,t] <= T_w_max)
+            
+        for i in range(4):
+            opti.subject_to(x[i,t] >= 308)
 
     # ----- Bounds on u -----
     for t in range(N):
@@ -260,6 +265,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
 
     # Define objective as the cost of used electricity over the next N steps
     obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) for t in range(N))
+    # obj = sum(c_el[t] * delta_t_h * (get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence)/COP + 27000*u[5,t]) for t in range(N))
 
     # Set objective
     opti.minimize(obj)

@@ -187,6 +187,7 @@ def plot_single_iter(data):
     ax2 = ax[0].twinx()
     ax2.plot(data['c_el'], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [cts/kWh]")
+    ax2.set_ylim([0,50])
     
     # Common legend
     lines1, labels1 = ax[0].get_legend_handles_labels()

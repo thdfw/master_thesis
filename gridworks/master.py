@@ -67,16 +67,20 @@ for iter in range(num_iterations):
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
     if file_path == "": sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     else:
-        seq = df['sequence'][iter]
-        combi1 = seq[2:9].split(",")
-        combi2 = seq[13:20].split(",")
-        combi3 = seq[24:31].split(",")
-        combi4 = seq[35:42].split(",")
-        combi1 = [int(combi1[0]), int(combi1[1]), int(combi1[2])]
-        combi2 = [int(combi2[0]), int(combi2[1]), int(combi2[2])]
-        combi3 = [int(combi3[0]), int(combi3[1]), int(combi3[2])]
-        combi4 = [int(combi4[0]), int(combi4[1]), int(combi4[2])]
-        sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4}
+        if iter < len(df):
+            print(f"{iter} < {len(df)}")
+            seq = df['sequence'][iter]
+            combi1 = seq[2:9].split(",")
+            combi2 = seq[13:20].split(",")
+            combi3 = seq[24:31].split(",")
+            combi4 = seq[35:42].split(",")
+            combi1 = [int(combi1[0]), int(combi1[1]), int(combi1[2])]
+            combi2 = [int(combi2[0]), int(combi2[1]), int(combi2[2])]
+            combi3 = [int(combi3[0]), int(combi3[1]), int(combi3[2])]
+            combi4 = [int(combi4[0]), int(combi4[1]), int(combi4[2])]
+            sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4}
+        else:
+            sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     
     # Give the solver a warm start using the previous solution
     initial_x = [[float(x) for x in x_opt[k,-46:]] for k in range(16)]
@@ -98,6 +102,21 @@ for iter in range(num_iterations):
     # Print iteration
     plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence)
     print(f"Cost of next 2 hours: {round(obj_opt,2)} $")
+    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(15*iter, 15*iter+60, 2/60)]
+    print([elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]])
+    
+    # Plot the iteration
+    plot_data = {
+        'T_B1': [round(x,3) for x in x_opt[0,:]],
+        'T_B4': [round(x,3) for x in x_opt[3,:]],
+        'T_S11': [round(x,3) for x in x_opt[4,:]],
+        'T_S21': [round(x,3) for x in x_opt[8,:]],
+        'T_S31': [round(x,3) for x in x_opt[12,:]],
+        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, True, False, t, sequence) for t in range(60)],
+        'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*15, iter*15+60, 2/60)],
+        'm_load': forecasts.get_m_load(iter*15, iter*15+60, 2/60),
+        'sequence': sequence}
+    #plot.plot_single_iter(plot_data)
     
     # Update x_0
     x_0 = x_1
