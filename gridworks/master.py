@@ -17,7 +17,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(2 * 1/delta_t_h)
 
 # Simulation time (16 hours)
-num_iterations = int(16 * 1/delta_t_h / 15)
+num_iterations = 19#int(16 * 1/delta_t_h / 15)
 
 # Problem type
 pb_type = {
@@ -68,7 +68,6 @@ for iter in range(num_iterations):
     if file_path == "": sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     else:
         if iter < len(df):
-            print(f"{iter} < {len(df)}")
             seq = df['sequence'][iter]
             combi1 = seq[2:9].split(",")
             combi2 = seq[13:20].split(",")
