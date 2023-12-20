@@ -21,7 +21,7 @@ A = 0.45 #m2
 z = 0.25 #m
 rho = 997 #kg/m3
 m_layer = rho*A*z #kg (112kg)
-T_w_min = 273 + 10 #K
+T_w_min = 273 + 35 #K
 T_w_max = 273 + 80 #K
 
 # Other
@@ -204,9 +204,6 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         for i in range(16):
             opti.subject_to(x[i,t] >= T_w_min)
             opti.subject_to(x[i,t] <= T_w_max)
-            
-        for i in range(4):
-            opti.subject_to(x[i,t] >= 308)
 
     # ----- Bounds on u -----
     for t in range(N):
