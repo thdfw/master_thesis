@@ -282,10 +282,10 @@ OUTPUTS:
 '''
 def get_function(id, u, x, a, real, approx, t, sequence):
 
-    if t>=0  and t<15: combi = sequence['combi1']
-    if t>=15 and t<30: combi = sequence['combi2']
-    if t>=30 and t<45: combi = sequence['combi3']
-    if t>=45 and t<60: combi = sequence['combi4']
+    if t>=0  and t<30: combi = sequence['combi1']
+    if t>=30 and t<60: combi = sequence['combi2']
+    if t>=60 and t<90: combi = sequence['combi3']
+    if t>=90 and t<120: combi = sequence['combi4']
         
     # ------------------------------------------------------
     # Case 1: Want exact value of the function: f(y)

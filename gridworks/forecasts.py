@@ -103,30 +103,30 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
 
     # Warm start the solver with the previous MPC solution
     
-    if horizon == 15: # testing for combi1
+    if horizon == 30: # testing for combi1
         # OPTION 1: Get the combi2 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:-30]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:-30]] for k in range(6)]
-        # OPTION 2: Dont initialize
-        
-    if horizon == 30: # testing for combi1,combi2
+        initial_x = [[float(x) for x in x_opt_prev[k,-91:-60]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-90:-60]] for k in range(6)]
+        # OPTION 2: Don't initialize
+
+    if horizon == 60: # testing for combi1,combi2
         # OPTION 1: Get the combi2,combi3 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:-15]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:-15]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-91:-30]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-90:-30]] for k in range(6)]
         # OPTION 2: Get the combi1 from the ongoing test, set combi2 to '0'
 
-    if horizon == 45: # testing for combi1,combi2,combi3
+    if horizon == 90: # testing for combi1,combi2,combi3
         # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-91:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-90:]] for k in range(6)]
         # OPTION 2: Get the combi1,combi2 from the ongoing test, set combi3 to '0'
 
-    if horizon == 60: # testing for combi1,combi2,combi3,combi4
+    if horizon == 120: # testing for combi1,combi2,combi3,combi4
         # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration, set the rest to '0'
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
-        initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
-        initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
+        initial_x = [[float(x) for x in x_opt_prev[k,-91:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-90:]] for k in range(6)]
+        initial_x = np.array([initial_x_i+[0]*30 for initial_x_i in initial_x])
+        initial_u = np.array([initial_u_i+[0]*30 for initial_u_i in initial_u])
         # OPTION 2: Get the combi1,combi2,combi3 from the ongoing test, set combi4 to '0'
 
     # Set the warm start
@@ -158,16 +158,17 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     initial_state = x_0
     
     # Initialize
-    min_cost = 1000
+    min_cost = 1e6
     optimals = []
-    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+60, 2/60)]
+    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+120, 2/60)]
+    delta_t_h = 2/60
 
     # Data going to the .csv file
     data = [{
         "T_B": [round(x,1) for x in initial_state[:4]],
         "T_S": [round(x,1) for x in initial_state[4:]],
         "iter": iter,
-        "prices": [elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]]
+        "prices": [elec_prices[0], elec_prices[30], elec_prices[60], elec_prices[90]]
         }]
     
     print("\n#########################################")
@@ -176,78 +177,102 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     print("\nSearching for optimal sequence...")
     
     # ------------------------------------------------------
-    # Find feasible combi1 over N=30min
+    # Find feasible combi1 over N=1h
     # ------------------------------------------------------
     for combi1 in operating_modes:
         
-        sequence = {'combi1': combi1}
-        cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 15, x_opt_prev, u_opt_prev)
         print(f"\n******* combi1={combi1} *******")
 
-        if cost == 1e5:
+        # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+        if (combi1[2] == 1) and (elec_prices[0]/1000/100 * delta_t_h * 8000 * 30 > min_cost):
+            print(f"combi1 = {combi1} will be more expensive than current minimum")
+            continue
+            
+        sequence = {'combi1': combi1}
+        cost1, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 30, x_opt_prev, u_opt_prev)
+
+        if cost1 == 1e5:
             print(f"combi1 = {combi1} could not be solved: {error}")
         
         else:
-            print(f"combi1 = {combi1} is feasible. Testing for combi2:")
-            
+            if cost1 > min_cost:
+                print(f"combi1 = {combi1} is feasible but more expensive than current minimum")
+                continue
+            else:
+                print(f"combi1 = {combi1} is feasible. Testing for combi2:")
+
             # ------------------------------------------------------
-            # Find feasible combi1, combi2 over N=1h
+            # Find feasible combi1, combi2 over N=2h
             # ------------------------------------------------------
             for combi2 in operating_modes:
             
+                # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                if (combi2[2] == 1) and (cost1 + (elec_prices[30]/1000/100 * delta_t_h * 8000 * 30) > min_cost):
+                    print(f"- combi1={combi1}, combi2={combi2} will be more expensive than current minimum")
+                    continue
+            
                 sequence = {'combi1': combi1, 'combi2': combi2}
-                cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 30, x_opt_prev, u_opt_prev)
+                cost2, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 60, x_opt_prev, u_opt_prev)
                 
-                if cost == 1e5:
+                if cost2 == 1e5:
                     print(f"- combi1={combi1}, combi2={combi2} could not be solved: {error}")
                 
                 else:
-                    print(f"- combi1={combi1}, combi2={combi2} is feasible. Testing for combi3:")
-                    
+                    if cost2 > min_cost:
+                        print(f"- combi1={combi1}, combi2={combi2} is feasible but more expensive than current minimum")
+                        continue
+                    else:
+                        print(f"- combi1={combi1}, combi2={combi2} is feasible. Testing for combi3:")
+
                     # ------------------------------------------------------
-                    # Find feasible combi1, combi2, combi3 over N=1h30
+                    # Find feasible combi1, combi2, combi3 over N=3h
                     # ------------------------------------------------------
                     for combi3 in operating_modes:
                     
+                        # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                        if (combi3[2] == 1) and (cost2 + (elec_prices[60]/1000/100 * delta_t_h * 8000 * 30) > min_cost):
+                            print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} will be more expensive than current minimum")
+                            continue
+                    
                         sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3}
-                        cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 45, x_opt_prev, u_opt_prev)
+                        cost3, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 90, x_opt_prev, u_opt_prev)
                         
-                        if cost == 1e5:
+                        if cost3 == 1e5:
                             print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} could not be solved: {error}")
                         
                         else:
-                            print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} is feasible. Testing for combi4:")
-                                
+                            if cost3 > min_cost:
+                                print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} is feasible but more expensive than current minimum")
+                                continue
+                            else:
+                                print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} is feasible. Testing for combi4:")
+
                             # ------------------------------------------------------
-                            # Find feasible combi1, combi2, combi3, combi4 over N=2h
+                            # Find feasible combi1, combi2, combi3, combi4 over N=4h
                             # ------------------------------------------------------
                             for combi4 in operating_modes:
                             
+                                # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                                if (combi4[2] == 1) and (cost3 + (elec_prices[90]/1000/100 * delta_t_h * 8000 * 30) > min_cost):
+                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} will be more expensive than current minimum")
+                                    continue
+                            
                                 sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4}
-                                cost, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 60, x_opt_prev, u_opt_prev)
+                                cost4, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 120, x_opt_prev, u_opt_prev)
                                 
-                                if cost == 1e5:
+                                if cost4 == 1e5:
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} could not be solved: {error}")
                                 
                                 else:
-                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} has cost {cost} $.")
+                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} has cost {cost4} $.")
                                     
                                     # ------------------------------------------------------
                                     # Compare to current minimum cost, update if better
                                     # ------------------------------------------------------
                                     
-                                    if cost < min_cost:
-                                        min_cost = cost
+                                    if cost4 < min_cost:
+                                        min_cost = cost4
                                         optimals = sequence
-                                        best_x_opt, best_u_opt = x_opt, u_opt
-                                        
-                                    if cost == 0.0:
-                                        print(f"Minimum cost 0.0$ achieved for {sequence}")
-                                        data[0]['sequence'] = [sequence['combi1'], sequence['combi2'], sequence['combi3'], sequence['combi4']]
-                                        append_to_csv(csv_file_name, data)
-                                        print("#########################################")
-                                        
-                                        return optimals
 
     # ------------------------------------------------------
     # Print and append the solution to CSV file

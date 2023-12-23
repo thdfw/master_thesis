@@ -50,7 +50,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     Q_HP = []
     m_stor, m_buffer = 0, 0
     
-    for k in range(15):
+    for k in range(30):
     
         u_k = [round(float(x),6) for x in u_opt[:,k]]
         x_k = [round(float(x),6) for x in x_opt[:,k]]
@@ -59,8 +59,8 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
         m_stor += u_opt[1,k]
         m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, True, False, 0, sequence),1)
 
-    m_stor = round(m_stor/15,1)
-    m_buffer = round(m_buffer/15,1)
+    m_stor = round(m_stor/30,1)
+    m_buffer = round(m_buffer/30,1)
     if m_stor<=0 and m_stor>-0.05: m_stor = 0.0
     if m_buffer<=0 and m_buffer>-0.05: m_buffer = 0.0
 
@@ -88,7 +88,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     #print(f"{round(T_sup_load,1)} -{round(m_load,2)}-> Load -{round(m_load,2)}-> {round(T_sup_load-11.111,1)}")
     
     print(f"\nQ_HP = {[round(x) for x in Q_HP]}")
-    print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:15]]}\n")
+    # print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:30]]}\n")
     
 
 '''
@@ -117,7 +117,7 @@ def plot_MPC(data):
     cp, Delta_T_load= 4187, 5/9*20
     Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
         
-    ax[0].set_xlim([0,15*data['iterations']])
+    ax[0].set_xlim([0,30*data['iterations']])
 
     # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
@@ -131,7 +131,7 @@ def plot_MPC(data):
     ax2.set_ylabel("Price [cts/kWh]")
 
     # x_ticks in hours
-    tick_positions = np.arange(0, data['iterations']*15+1, step=int(60/data['pb_type']['time_step']))
+    tick_positions = np.arange(0, data['iterations']*30+1, step=int(60/data['pb_type']['time_step']))
     tick_labels = [f"{step * data['pb_type']['time_step'] // 60:02d}:00" for step in tick_positions]
     plt.xticks(tick_positions, tick_labels)
 
@@ -149,7 +149,7 @@ def plot_MPC(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((data['iterations']*15+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
+    ax[1].plot((data['iterations']*30+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time [hours]")
     ax[1].legend()
@@ -179,7 +179,7 @@ def plot_single_iter(data):
     # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
-    ax[0].set_xlim([0,60])
+    ax[0].set_xlim([0,120])
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
@@ -203,7 +203,7 @@ def plot_single_iter(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((60)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
+    ax[1].plot((120)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time steps")
     ax[1].legend()
