@@ -1,7 +1,7 @@
 import numpy as np
 import csv
 from datetime import datetime
-import optimizer, forecasts, plot, functions
+import optimizer, plot, functions
 
 '''
 Input: index of desired start and end time steps
@@ -49,6 +49,27 @@ def get_m_load(start, end, delta_t_h):
     m_load_all = [Q_load/(delta_t_h*cp*Delta_T_load) for Q_load in Q_load_all]
     
     return m_load_all[start:end]
+    
+
+'''
+Input: index of desired start and end time steps
+Output: list of forecasted outside air temperatures
+'''
+# Get all outside temperatures
+def get_T_OA(start, end, delta_t_h):
+    
+    # Outside air temperature in K
+    T_OA_all = [273+12]*1000
+
+    # Get 1/COP from the T_OA with linear regression
+    B0_C, B1_C = 2.695868, -0.008533
+    COP1_all = [round(B0_C + B1_C*T_OA_all[i],4) for i in range(len(T_OA_all))]
+
+    # Get Q_HP_max from the T_OA with linear regression
+    B0_Q, B1_Q = -68851.589, 313.3151
+    Q_HP_max_all = [round(B0_Q + B1_Q*T_OA_all[i],2) if T_OA_all[i]<(273-7) else 14000 for i in range(len(T_OA_all))]
+    
+    return COP1_all[start:end], Q_HP_max_all[start:end]
 
 
 # ------------------------------------------------------
@@ -160,7 +181,9 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     # Initialize
     min_cost = 1e6
     optimals = []
-    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(iter, iter+120, 2/60)]
+    elec_prices = [round(100*1000*x,2) for x in get_c_el(iter, iter+120, 2/60)]
+    COP1, Q_HP_max = get_T_OA(iter, iter+120, 2/60)
+    COP1_avg = [sum(COP1[0:30])/30, sum(COP1[30:60])/30, sum(COP1[60:90])/30, sum(COP1[90:120])/30]
     delta_t_h = 2/60
 
     # Data going to the .csv file
@@ -184,7 +207,7 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
         print(f"\n******* combi1={combi1} *******")
 
         # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-        if (combi1[2] == 1) and (elec_prices[0]/1000/100 * delta_t_h * 8000 * 30 > min_cost):
+        if (combi1[2] == 1) and (elec_prices[0]/1000/100 * delta_t_h * 8000 * 30 * COP1_avg[0] > min_cost):
             print(f"combi1 = {combi1} will be more expensive than current minimum")
             continue
             
@@ -207,7 +230,7 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
             for combi2 in operating_modes:
             
                 # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                if (combi2[2] == 1) and (cost1 + (elec_prices[30]/1000/100 * delta_t_h * 8000 * 30) > min_cost):
+                if (combi2[2] == 1) and (cost1 + (elec_prices[30]/1000/100 * delta_t_h * 8000 * 30 * COP1_avg[1]) > min_cost):
                     print(f"- combi1={combi1}, combi2={combi2} will be more expensive than current minimum")
                     continue
             
@@ -230,7 +253,7 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                     for combi3 in operating_modes:
                     
                         # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                        if (combi3[2] == 1) and (cost2 + (elec_prices[60]/1000/100 * delta_t_h * 8000 * 30) > min_cost):
+                        if (combi3[2] == 1) and (cost2 + (elec_prices[60]/1000/100 * delta_t_h * 8000 * 30 * COP1_avg[2]) > min_cost):
                             print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} will be more expensive than current minimum")
                             continue
                     
@@ -253,7 +276,7 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                             for combi4 in operating_modes:
                             
                                 # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                                if (combi4[2] == 1) and (cost3 + (elec_prices[90]/1000/100 * delta_t_h * 8000 * 30) > min_cost):
+                                if (combi4[2] == 1) and (cost3 + (elec_prices[90]/1000/100 * delta_t_h * 8000 * 30 * COP1_avg[3]) > min_cost):
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} will be more expensive than current minimum")
                                     continue
                             

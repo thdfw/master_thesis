@@ -10,8 +10,6 @@ from functions import get_function
 
 # Heat pump
 Q_HP_min = 8000 #W
-Q_HP_max = 14000 #W
-COP = 3
 
 # Load
 T_sup_load_min = 273 + 38 #K
@@ -174,6 +172,9 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
     
     # Load mass flow rate for the next N steps
     m_load = forecasts.get_m_load(iter, iter+N, delta_t_h)
+    
+    # 1/COP and Q_HP_max
+    COP1, Q_HP_max = forecasts.get_T_OA(iter, iter+N, delta_t_h)
 
     # ------------------------------------------------------
     # Compute f(a) and grad_f(a) for all non linear terms
@@ -241,7 +242,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         # Heat pump operation
         if d_HP == 1:
             opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) >= Q_HP_min * u[4,t])
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max)
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max[t])
         
         # Load supply temperature
         opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx, t, sequence) >= T_sup_load_min)
@@ -261,7 +262,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
     # ------------------------------------------------------
 
     # Define objective as the cost of used electricity over the next N steps
-    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) for t in range(N))
+    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence)*COP1[t] for t in range(N))
     # obj = sum(c_el[t] * delta_t_h * (get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence)/COP + 27000*u[5,t]) for t in range(N))
 
     # Set objective
