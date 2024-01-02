@@ -28,7 +28,7 @@ def print_pb_type(pb_type):
 '''
 Prints the current iteration (x0, u0*, x1) in way that is easy to visualize
 '''
-def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
+def print_iteration(u_opt, x_opt, x_1, pb_type, sequence, iter):
 
     # ------------------------------------------------------
     # Initial state
@@ -44,29 +44,27 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     print(f"      -- {round(x_opt[3,0],1)} |       -- {round(x_opt[15,0],1)}    -- {round(x_opt[11,0],1)}   -- {round(x_opt[7,0],0)}")
     
     # ------------------------------------------------------
-    # Mass flow rates, mixing temperatures and heat
+    # Get average mass flow rates and heat over the hour
     # ------------------------------------------------------
     
     Q_HP = []
     m_stor, m_buffer = 0, 0
-    
+    delta_t_h = pb_type['time_step']/60
+
     for k in range(30):
     
         u_k = [round(float(x),6) for x in u_opt[:,k]]
         x_k = [round(float(x),6) for x in x_opt[:,k]]
         
-        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, True, False, 0, sequence))
+        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, True, False, 0, sequence, iter, delta_t_h))
         m_stor += u_opt[1,k]
-        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, True, False, 0, sequence),1)
+        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, True, False, 0, sequence, iter, delta_t_h),1)
 
-    m_stor = round(m_stor/30,1)
-    m_buffer = round(m_buffer/30,1)
-    if m_stor<=0 and m_stor>-0.05: m_stor = 0.0
-    if m_buffer<=0 and m_buffer>-0.05: m_buffer = 0.0
+    m_buffer = round(m_buffer/30, 1)
+    m_stor = round(m_stor/30, 1)
+    if m_buffer<=0 and m_buffer>-0.04: m_buffer = 0.0
+    if m_stor<=0   and m_stor>-0.04:   m_stor = 0.0
 
-    T_ret_HP = functions.get_function("T_ret_HP", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
-    T_sup_load = functions.get_function("T_sup_load", u_opt_0, x_opt_0, 0, True, False, 0, sequence)
-    
     # ------------------------------------------------------
     # Next state
     # ------------------------------------------------------
@@ -82,12 +80,11 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence):
     print(f"         {round(x_1[2],1)} |          {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")
     print(f"  {B_b} {round(x_1[3],1)} |   {S_t} {round(x_1[15],1)}    {S_t2} {round(x_1[11],1)}   {S_t2} {round(x_1[7],0)}")
     
-    #m_HP = 0.5 if u_opt_0[4]==1 else 0
-    #m_load = 0.2
-    #print(f"\n{round(T_ret_HP,1) if round(u_opt[4,0])==1 else '-'} -{round(m_HP,2) if u_opt_0[4]==1 else 0}->  HP  -{round(m_HP,2) if u_opt_0[4]==1 else 0}-> {round(u_opt[0,0],1) if round(u_opt[4,0])==1 else '-'} ({round(Q_HP,2) if round(u_opt[4,0])==1 else '-'} W)")
-    #print(f"{round(T_sup_load,1)} -{round(m_load,2)}-> Load -{round(m_load,2)}-> {round(T_sup_load-11.111,1)}")
+    m_HP = 0.5 if u_opt_0[4]==1 else 0
+    m_load = forecasts.get_m_load(iter, iter+1, delta_t_h)
     
     print(f"\nQ_HP = {[round(x) for x in Q_HP]}")
+    print(f"m_HP = {m_HP}, m_load = {m_load}")
     # print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:30]]}\n")
     
 

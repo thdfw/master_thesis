@@ -40,7 +40,9 @@ INPUTS:
 OUTPUTS:
 - The state at time step t+1: x(t+1)
 '''
-def dynamics(u_t, x_t, a, real, approx, delta_t_s, t, sequence):
+def dynamics(u_t, x_t, a, real, approx, delta_t_s, t, sequence, iter):
+
+    delta_t_h = delta_t_s / 3600
 
     # All heat transfers are 0 unless specified otherwise later
     Q_top_B     = [0]*4
@@ -55,22 +57,22 @@ def dynamics(u_t, x_t, a, real, approx, delta_t_s, t, sequence):
     Q_R_S       = [0]*12
     
     # For the buffer tank B
-    Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx, t, sequence)
-    Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx, t, sequence)
+    Q_top_B[0]      = get_function("Q_top_B", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
+    Q_bottom_B[3]   = get_function("Q_bottom_B", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
     for i in range(1,5):
-        Q_conv_B[i-1] = get_function(f"Q_conv_B{i}", u_t, x_t, a, real, approx, t, sequence)
+        Q_conv_B[i-1] = get_function(f"Q_conv_B{i}", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
 
     # For the storage tanks S1, S2, S3
     # Q_R_S           = ([0] + [4500*u_t[5]] + [0] + [4500*u_t[5]])*3
-    Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx, t, sequence)
-    Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx, t, sequence)
-    Q_top_S[8]      = get_function("Q_top_S3", u_t, x_t, a, real, approx, t, sequence)
-    Q_bottom_S[3]   = get_function("Q_bottom_S1", u_t, x_t, a, real, approx, t, sequence)
-    Q_bottom_S[7]   = get_function("Q_bottom_S2", u_t, x_t, a, real, approx, t, sequence)
-    Q_bottom_S[11]  = get_function("Q_bottom_S3", u_t, x_t, a, real, approx, t, sequence)
+    Q_top_S[0]      = get_function("Q_top_S1", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
+    Q_top_S[4]      = get_function("Q_top_S2", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
+    Q_top_S[8]      = get_function("Q_top_S3", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
+    Q_bottom_S[3]   = get_function("Q_bottom_S1", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
+    Q_bottom_S[7]   = get_function("Q_bottom_S2", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
+    Q_bottom_S[11]  = get_function("Q_bottom_S3", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
     for i in range(1,4):
         for j in range(1,5):
-            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx, t, sequence)
+            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, a, real, approx, t, sequence, iter, delta_t_h)
 
     # Compute the next state for buffer and storage tank layers
     const = delta_t_s / (m_layer * cp)
@@ -241,20 +243,20 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         
         # Heat pump operation
         if d_HP == 1:
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) >= Q_HP_min * u[4,t])
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence) <= Q_HP_max[t])
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence, iter, delta_t_h) >= Q_HP_min * u[4,t])
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence, iter, delta_t_h) <= Q_HP_max[t])
         
         # Load supply temperature
-        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx, t, sequence) >= T_sup_load_min)
+        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], a, real, approx, t, sequence, iter, delta_t_h) >= T_sup_load_min)
         
         # Mass flow rates
-        opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], a, real, approx, t, sequence) >= 0)
+        opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], a, real, approx, t, sequence, iter, delta_t_h) >= 0)
         
         # Operational constraint (charging is only possible if the heat pump is on)
         opti.subject_to(u[2,t] <= u[4,t])
         
         # System dynamics
-        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s, t, sequence))
+        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], a, real, approx, delta_t_s, t, sequence, iter))
     #print("Done in {} seconds.\n".format(round(time.time()-start_time,1)))
             
     # ------------------------------------------------------
@@ -262,8 +264,8 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
     # ------------------------------------------------------
 
     # Define objective as the cost of used electricity over the next N steps
-    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence)*COP1[t] for t in range(N))
-    # obj = sum(c_el[t] * delta_t_h * (get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence)/COP + 27000*u[5,t]) for t in range(N))
+    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], a, real, approx, t, sequence, iter, delta_t_h)*COP1[t] for t in range(N))
+    # Adding resistances: +27000*u[5,t]) for t in range(N))
 
     # Set objective
     opti.minimize(obj)

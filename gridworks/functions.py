@@ -2,12 +2,12 @@ from sympy import symbols, diff
 import numpy as np
 import casadi
 import math
+import forecasts
 
 # For the denominators
 epsilon = 1e-7
 
 # Some constants
-m_load = 0.2
 Delta_T_load = 5/9*20
 cp = 4187
 
@@ -129,7 +129,7 @@ we need these functions to be expressed using CasADi variables.
 
 In that case, we call the following function.
 '''
-def functions_exact_sym(id, u, x, combi):
+def functions_exact_sym(id, u, x, combi, m_load):
 
     # Get the delta terms
     delta_ch, delta_bu, delta_HP = combi
@@ -280,13 +280,25 @@ INPUTS:
 OUTPUTS:
 - f(y) or f_a(y)
 '''
-def get_function(id, u, x, a, real, approx, t, sequence):
+def get_function(id, u, x, a, real, approx, t, sequence, iter, delta_t_h):
 
-    if t>=0  and t<30: combi = sequence['combi1']
-    if t>=30 and t<60: combi = sequence['combi2']
-    if t>=60 and t<90: combi = sequence['combi3']
-    if t>=90 and t<120: combi = sequence['combi4']
+    # Get current combination and load mass flow rate (both are hourly)
+    if t>=0 and t<30:
+        combi = sequence['combi1']
+        m_load = forecasts.get_m_load(int(iter+0/delta_t_h), int(iter+0/delta_t_h+1), delta_t_h)
         
+    if t>=30 and t<60:
+        combi = sequence['combi2']
+        m_load = forecasts.get_m_load(int(iter+1/delta_t_h), int(iter+1/delta_t_h+1), delta_t_h)
+        
+    if t>=60 and t<90:
+        combi = sequence['combi3']
+        m_load = forecasts.get_m_load(int(iter+2/delta_t_h), int(iter+2/delta_t_h+1), delta_t_h)
+        
+    if t>=90 and t<120:
+        combi = sequence['combi4']
+        m_load = forecasts.get_m_load(int(iter+3/delta_t_h), int(iter+3/delta_t_h+1), delta_t_h)
+
     # ------------------------------------------------------
     # Case 1: Want exact value of the function: f(y)
     # ------------------------------------------------------
@@ -301,7 +313,7 @@ def get_function(id, u, x, a, real, approx, t, sequence):
             return float(f.subs(y))
         else:
         '''
-        f = functions_exact_sym(id, u, x, combi)
+        f = functions_exact_sym(id, u, x, combi, m_load)
         return f
     
     '''

@@ -99,7 +99,7 @@ for iter in range(num_iterations):
     x_1 = [float(x) for x in x_opt[:,30]]
         
     # Print iteration
-    plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence)
+    plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence, 30*iter)
     print(f"Cost of next 4 hours: {round(obj_opt,2)} $")
     elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(30*iter, 30*iter+120, delta_t_h)]
     print([elec_prices[0], elec_prices[30], elec_prices[60], elec_prices[90]])
@@ -111,7 +111,7 @@ for iter in range(num_iterations):
         'T_S11': [round(x,3) for x in x_opt[4,:]],
         'T_S21': [round(x,3) for x in x_opt[8,:]],
         'T_S31': [round(x,3) for x in x_opt[12,:]],
-        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, True, False, t, sequence) for t in range(120)],
+        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, True, False, t, sequence, 30*iter, delta_t_h) for t in range(120)],
         'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*30, iter*30+120, delta_t_h)],
         'm_load': forecasts.get_m_load(iter*30, iter*30+120, delta_t_h),
         'sequence': sequence}
@@ -130,7 +130,7 @@ for iter in range(num_iterations):
     # Update total electricity use and cost using the average Q_HP over 1h
     Q_HP = 0
     for k in range(30):
-        Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence)
+        Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 30*iter, delta_t_h)
     Q_HP = Q_HP/30
 
     # Assume a constant COP of 4
@@ -144,7 +144,7 @@ for iter in range(num_iterations):
     list_S21.extend([round(float(x),6) for x in x_opt[8,0:30]])
     list_S31.extend([round(float(x),6) for x in x_opt[12,0:30]])
     for k in range(30):
-        list_Q_HP.append(functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence))
+        list_Q_HP.append(functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 30*iter, delta_t_h))
 
 # Regroup the data and send it to plot
 plot_data = {

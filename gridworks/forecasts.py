@@ -38,17 +38,18 @@ Output: list of forecasted mass flow rates going to the load between start and e
 # Get all loads
 def get_m_load(start, end, delta_t_h):
 
-    # Loads in Wh (this is not the final data)
-    Q_load_all = [310]*1000
-    
-    # Some constants
-    cp = 4187
-    Delta_T_load = 5/9*20
+    # Hourly average heating power [kW] -> [W]
+    Q_load_all = [5.91, 5.77, 5.67, 5.77, 5.71, 6.06, 6.34, 6.34, 6.01, 5.77, 5.05, 5.05, 4.91, 4.91, 4.91, 4.91, 5.05, 5.1, 4.91, 4.91, 4.91, 4.91, 4.98, 4.91]
+    Q_load_all = [item*1000 for item in Q_load_all]
     
     # Corresponding mass flow rates in kg/s
-    m_load_all = [Q_load/(delta_t_h*cp*Delta_T_load) for Q_load in Q_load_all]
+    cp, Delta_T_load = 4187,  5/9*20
+    m_load_all = [round(Q_load/(cp*Delta_T_load), 3) for Q_load in Q_load_all]
     
-    return m_load_all[start:end]
+    # Extend to match time step (1 hour is 1/delta_t_h time steps)
+    m_load_all = [item for item in m_load_all for _ in range(int(1/delta_t_h))]
+    
+    return m_load_all[start] if end-start==1 else m_load_all[start:end]
     
 
 '''
