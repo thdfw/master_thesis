@@ -18,7 +18,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(4 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 10
+num_iterations = 3
 
 # Problem type
 pb_type = {
@@ -167,9 +167,9 @@ plot_data = {
 
 # Print total time
 total_time = time.time()-start_time
-hours = total_time // 3600
-minutes = (total_time % 3600) // 60
-seconds = total_time % 60
+hours = round(total_time // 3600)
+minutes = round((total_time % 3600) // 60)
+seconds = round(total_time % 60)
 print(f"The simulation ran in {hours} hours, {minutes} minutes and {seconds} seconds.")
     
 print("\nPlotting the data...")
