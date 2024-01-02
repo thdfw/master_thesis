@@ -2,6 +2,7 @@ import casadi
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
 import optimizer, functions, plot, forecasts
 
 # ------------------------------------------------------
@@ -61,6 +62,8 @@ if file_path != "": df = pd.read_csv(file_path)
 # ------------------------------------------------------
 # MPC
 # ------------------------------------------------------
+
+start_time = time.time()
 
 for iter in range(num_iterations):
 
@@ -162,5 +165,12 @@ plot_data = {
     'elec_used':    round(elec_used/1000,2),
 }
 
+# Print total time
+total_time = time.time()-start_time
+hours = total_time // 3600
+minutes = (total_time % 3600) // 60
+seconds = total_time % 60
+print(f"The simulation ran in {hours} hours, {minutes} minutes and {seconds} seconds.")
+    
 print("\nPlotting the data...")
 plot.plot_MPC(plot_data)
