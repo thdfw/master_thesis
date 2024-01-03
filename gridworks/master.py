@@ -136,9 +136,9 @@ for iter in range(num_iterations):
         Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 30*iter, delta_t_h)
     Q_HP = Q_HP/30
 
-    # Assume a constant COP of 4
-    elec_used += Q_HP/4 * delta_t_h * 30
-    elec_cost += Q_HP/4 * delta_t_h * 30 * forecasts.get_c_el(30*iter, 30*iter+1, delta_t_h)[0]
+    COP1, Q_HP_max = forecasts.get_T_OA(30*iter, 30*iter+1, delta_t_h)
+    elec_used += Q_HP*COP1[0] * delta_t_h * 30
+    elec_cost += Q_HP*COP1[0] * delta_t_h * 30 * forecasts.get_c_el(30*iter, 30*iter+1, delta_t_h)[0]
 
     # Append values for the plot
     list_B1.extend([round(float(x),6) for x in x_opt[0,0:30]])
