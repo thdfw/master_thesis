@@ -82,8 +82,8 @@ pb_type = {
 'linearized':       False,
 'mixed-integer':    False,
 'gurobi':           False,
-'horizon':          60,
-'time_step':        2,
+'horizon':          180,
+'time_step':        4,
 }
 
 # The four possible operating modes
