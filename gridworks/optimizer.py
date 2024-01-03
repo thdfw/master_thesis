@@ -171,7 +171,6 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
 
     # Electricity prices for the next N steps
     c_el = forecasts.get_c_el(iter, iter+N, delta_t_h)
-    print([x*100*1000 for x in c_el])
     
     # Load mass flow rate for the next N steps
     m_load = forecasts.get_m_load(iter, iter+N, delta_t_h)
