@@ -18,7 +18,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(12 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 1
+num_iterations = 4
 
 # Problem type
 pb_type = {
@@ -118,7 +118,7 @@ for iter in range(num_iterations):
         'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*45, iter*45+180, delta_t_h)],
         'm_load': forecasts.get_m_load(iter*45, iter*45+180, delta_t_h),
         'sequence': sequence}
-    plot.plot_single_iter(plot_data)
+    #plot.plot_single_iter(plot_data)
     
     # Update x_0
     x_0 = x_1
