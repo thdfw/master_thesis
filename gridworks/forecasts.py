@@ -82,8 +82,8 @@ pb_type = {
 'linearized':       False,
 'mixed-integer':    False,
 'gurobi':           False,
-'horizon':          180,
-'time_step':        4,
+'horizon':          60,
+'time_step':        2,
 }
 
 # The four possible operating modes
@@ -125,30 +125,30 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
 
     # Warm start the solver with the previous MPC solution
     
-    if horizon == 45: # testing for combi1
+    if horizon == 15: # testing for combi1
         # OPTION 1: Get the combi2 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-136:-90]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-135:-90]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:-30]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:-30]] for k in range(6)]
         # OPTION 2: Don't initialize
 
-    if horizon == 90: # testing for combi1,combi2
+    if horizon == 30: # testing for combi1,combi2
         # OPTION 1: Get the combi2,combi3 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-136:-45]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-135:-45]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:-15]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:-15]] for k in range(6)]
         # OPTION 2: Get the combi1 from the ongoing test, set combi2 to '0'
 
-    if horizon == 135: # testing for combi1,combi2,combi3
+    if horizon == 45: # testing for combi1,combi2,combi3
         # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-136:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-135:]] for k in range(6)]
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
         # OPTION 2: Get the combi1,combi2 from the ongoing test, set combi3 to '0'
 
-    if horizon == 180: # testing for combi1,combi2,combi3,combi4
+    if horizon == 60: # testing for combi1,combi2,combi3,combi4
         # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration, set the rest to '0'
-        initial_x = [[float(x) for x in x_opt_prev[k,-136:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-135:]] for k in range(6)]
-        initial_x = np.array([initial_x_i+[0]*45 for initial_x_i in initial_x])
-        initial_u = np.array([initial_u_i+[0]*45 for initial_u_i in initial_u])
+        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
+        initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
+        initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
         # OPTION 2: Get the combi1,combi2,combi3 from the ongoing test, set combi4 to '0'
 
     # Set the warm start
@@ -182,9 +182,9 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     # Initialize
     min_cost = 1e6
     optimals = []
-    elec_prices = [round(100*1000*x,2) for x in get_c_el(iter, iter+180, 4/60)]
-    COP1, Q_HP_max = get_T_OA(iter, iter+180, 4/60)
-    COP1_avg = [sum(COP1[0:45])/45, sum(COP1[45:90])/45, sum(COP1[90:135])/45, sum(COP1[135:180])/45]
+    elec_prices = [round(100*1000*x,2) for x in get_c_el(iter, iter+120, 4/60)]
+    COP1, Q_HP_max = get_T_OA(iter, iter+60, 4/60)
+    COP1_avg = [sum(COP1[0:15])/15, sum(COP1[15:30])/15, sum(COP1[30:45])/15, sum(COP1[45:60])/15]
     delta_t_h = 4/60
 
     # Data going to the .csv file
@@ -192,7 +192,7 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
         "T_B": [round(x,1) for x in initial_state[:4]],
         "T_S": [round(x,1) for x in initial_state[4:]],
         "iter": iter,
-        "prices": [elec_prices[0], elec_prices[45], elec_prices[90], elec_prices[135]]
+        "prices": [elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]]
         }]
     
     print("\n#########################################")
@@ -208,12 +208,12 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
         print(f"\n******* combi1={combi1} *******")
 
         # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-        if (combi1[2] == 1) and (elec_prices[0]/1000/100 * delta_t_h * 8000 * 45 * COP1_avg[0] > min_cost):
+        if (combi1[2] == 1) and (elec_prices[0]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[0] > min_cost):
             print(f"combi1 = {combi1} will be more expensive than current minimum")
             continue
             
         sequence = {'combi1': combi1}
-        cost1, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 45, x_opt_prev, u_opt_prev)
+        cost1, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 15, x_opt_prev, u_opt_prev)
 
         if cost1 == 1e5:
             print(f"combi1 = {combi1} could not be solved: {error}")
@@ -231,12 +231,12 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
             for combi2 in operating_modes:
             
                 # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                if (combi2[2] == 1) and (cost1 + (elec_prices[45]/1000/100 * delta_t_h * 8000 * 45 * COP1_avg[1]) > min_cost):
+                if (combi2[2] == 1) and (cost1 + (elec_prices[15]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[1]) > min_cost):
                     print(f"- combi1={combi1}, combi2={combi2} will be more expensive than current minimum")
                     continue
             
                 sequence = {'combi1': combi1, 'combi2': combi2}
-                cost2, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 90, x_opt_prev, u_opt_prev)
+                cost2, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 30, x_opt_prev, u_opt_prev)
                 
                 if cost2 == 1e5:
                     print(f"- combi1={combi1}, combi2={combi2} could not be solved: {error}")
@@ -254,12 +254,12 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                     for combi3 in operating_modes:
                     
                         # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                        if (combi3[2] == 1) and (cost2 + (elec_prices[90]/1000/100 * delta_t_h * 8000 * 45 * COP1_avg[2]) > min_cost):
+                        if (combi3[2] == 1) and (cost2 + (elec_prices[30]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[2]) > min_cost):
                             print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} will be more expensive than current minimum")
                             continue
                     
                         sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3}
-                        cost3, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 135, x_opt_prev, u_opt_prev)
+                        cost3, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 45, x_opt_prev, u_opt_prev)
                         
                         if cost3 == 1e5:
                             print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} could not be solved: {error}")
@@ -277,12 +277,12 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                             for combi4 in operating_modes:
                             
                                 # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                                if (combi4[2] == 1) and (cost3 + (elec_prices[135]/1000/100 * delta_t_h * 8000 * 45 * COP1_avg[3]) > min_cost):
+                                if (combi4[2] == 1) and (cost3 + (elec_prices[45]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[3]) > min_cost):
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} will be more expensive than current minimum")
                                     continue
                             
                                 sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4}
-                                cost4, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 180, x_opt_prev, u_opt_prev)
+                                cost4, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 60, x_opt_prev, u_opt_prev)
                                 
                                 if cost4 == 1e5:
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} could not be solved: {error}")

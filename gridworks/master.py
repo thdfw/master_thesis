@@ -14,11 +14,11 @@ delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
 
-# Horizon (12 hours)
-N = int(12 * 1/delta_t_h)
+# Horizon (4 hours)
+N = int(4 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 4
+num_iterations = 10
 
 # Problem type
 pb_type = {
@@ -31,7 +31,7 @@ pb_type = {
 
 # Print corresponding setup
 plot.print_pb_type(pb_type)
-print(f"Simulation: {round(num_iterations*45*delta_t_h)} hours ({num_iterations} iterations)")
+print(f"Simulation: {round(num_iterations*15*delta_t_h)} hours ({num_iterations} iterations)")
 
 # ------------------------------------------------------
 # Initial state of the system
@@ -68,7 +68,7 @@ start_time = time.time()
 for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
-    if file_path == "": sequence = forecasts.get_optimal_sequence(x_0, 45*iter, x_opt, u_opt)
+    if file_path == "": sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     else:
         if iter < len(df):
             seq = df['sequence'][iter]
@@ -82,30 +82,30 @@ for iter in range(num_iterations):
             combi4 = [int(combi4[0]), int(combi4[1]), int(combi4[2])]
             sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4}
         else:
-            sequence = forecasts.get_optimal_sequence(x_0, 45*iter, x_opt, u_opt)
+            sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     
     # Give the solver a warm start using the previous solution
-    initial_x = [[float(x) for x in x_opt[k,-136:]] for k in range(16)]
-    initial_u = [[float(u) for u in u_opt[k,-135:]] for k in range(6)]
-    initial_x = np.array([initial_x_i+[0]*45 for initial_x_i in initial_x])
-    initial_u = np.array([initial_u_i+[0]*45 for initial_u_i in initial_u])
+    initial_x = [[float(x) for x in x_opt[k,-46:]] for k in range(16)]
+    initial_u = [[float(u) for u in u_opt[k,-45:]] for k in range(6)]
+    initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
+    initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
     warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
     
     # Get u* and x*
-    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 45*iter, pb_type, sequence, warm_start, True)
+    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
     x_opt_0 = [round(float(x),6) for x in x_opt[:,0]]
     
     # Implement u_0* and obtain x_1
-    x_1 = [float(x) for x in x_opt[:,45]]
+    x_1 = [float(x) for x in x_opt[:,15]]
         
     # Print iteration
-    plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence, 45*iter)
+    plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence, 15*iter)
     print(f"Cost of next 4 hours: {round(obj_opt,2)} $")
-    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(45*iter, 45*iter+180, delta_t_h)]
-    print([elec_prices[0], elec_prices[45], elec_prices[90], elec_prices[135]])
+    elec_prices = [round(100*1000*x,2) for x in forecasts.get_c_el(15*iter, 15*iter+60, delta_t_h)]
+    print([elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]])
     
     # Plot the iteration
     plot_data = {
@@ -114,9 +114,9 @@ for iter in range(num_iterations):
         'T_S11': [round(x,3) for x in x_opt[4,:]],
         'T_S21': [round(x,3) for x in x_opt[8,:]],
         'T_S31': [round(x,3) for x in x_opt[12,:]],
-        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, True, False, t, sequence, 45*iter, delta_t_h) for t in range(180)],
-        'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*45, iter*45+180, delta_t_h)],
-        'm_load': forecasts.get_m_load(iter*45, iter*45+180, delta_t_h),
+        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, True, False, t, sequence, 15*iter, delta_t_h) for t in range(60)],
+        'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*15, iter*15+60, delta_t_h)],
+        'm_load': forecasts.get_m_load(iter*15, iter*15+60, delta_t_h),
         'sequence': sequence}
     #plot.plot_single_iter(plot_data)
     
@@ -132,29 +132,29 @@ for iter in range(num_iterations):
 
     # Update total electricity use and cost using the average Q_HP over 1h
     Q_HP = 0
-    for k in range(45):
-        Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 45*iter, delta_t_h)
-    Q_HP = Q_HP/45
+    for k in range(15):
+        Q_HP += functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 15*iter, delta_t_h)
+    Q_HP = Q_HP/15
 
-    COP1, Q_HP_max = forecasts.get_T_OA(45*iter, 45*iter+1, delta_t_h)
-    elec_used += Q_HP*COP1[0] * delta_t_h * 45
-    elec_cost += Q_HP*COP1[0] * delta_t_h * 45 * forecasts.get_c_el(45*iter, 45*iter+1, delta_t_h)[0]
+    COP1, Q_HP_max = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
+    elec_used += Q_HP*COP1[0] * delta_t_h * 15
+    elec_cost += Q_HP*COP1[0] * delta_t_h * 15 * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 
     # Append values for the plot
-    list_B1.extend([round(float(x),6) for x in x_opt[0,0:45]])
-    list_B4.extend([round(float(x),6) for x in x_opt[3,0:45]])
-    list_S11.extend([round(float(x),6) for x in x_opt[4,0:45]])
-    list_S21.extend([round(float(x),6) for x in x_opt[8,0:45]])
-    list_S31.extend([round(float(x),6) for x in x_opt[12,0:45]])
-    for k in range(45):
-        list_Q_HP.append(functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 45*iter, delta_t_h))
+    list_B1.extend([round(float(x),6) for x in x_opt[0,0:15]])
+    list_B4.extend([round(float(x),6) for x in x_opt[3,0:15]])
+    list_S11.extend([round(float(x),6) for x in x_opt[4,0:15]])
+    list_S21.extend([round(float(x),6) for x in x_opt[8,0:15]])
+    list_S31.extend([round(float(x),6) for x in x_opt[12,0:15]])
+    for k in range(15):
+        list_Q_HP.append(functions.get_function("Q_HP", u_opt[:,k], x_opt[:,k], 0, True, False, 0, sequence, 15*iter, delta_t_h))
 
 # Regroup the data and send it to plot
 plot_data = {
     'pb_type':      pb_type,
     'iterations':   num_iterations,
-    'c_el':         forecasts.get_c_el(0, 45*num_iterations, delta_t_h),
-    'm_load':       forecasts.get_m_load(0, 45*num_iterations, delta_t_h),
+    'c_el':         forecasts.get_c_el(0, 15*num_iterations, delta_t_h),
+    'm_load':       forecasts.get_m_load(0, 15*num_iterations, delta_t_h),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
     'T_S21':        list_S21,

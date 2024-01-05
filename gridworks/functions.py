@@ -283,19 +283,19 @@ OUTPUTS:
 def get_function(id, u, x, a, real, approx, t, sequence, iter, delta_t_h):
 
     # Get current combination and load mass flow rate (both are hourly)
-    if t>=0 and t<45:
+    if t>=0 and t<15:
         combi = sequence['combi1']
         m_load = forecasts.get_m_load(int(iter+0/delta_t_h), int(iter+0/delta_t_h+1), delta_t_h)
         
-    if t>=45 and t<90:
+    if t>=15 and t<30:
         combi = sequence['combi2']
         m_load = forecasts.get_m_load(int(iter+1/delta_t_h), int(iter+1/delta_t_h+1), delta_t_h)
         
-    if t>=90 and t<135:
+    if t>=30 and t<45:
         combi = sequence['combi3']
         m_load = forecasts.get_m_load(int(iter+2/delta_t_h), int(iter+2/delta_t_h+1), delta_t_h)
         
-    if t>=135 and t<180:
+    if t>=45 and t<60:
         combi = sequence['combi4']
         m_load = forecasts.get_m_load(int(iter+3/delta_t_h), int(iter+3/delta_t_h+1), delta_t_h)
 

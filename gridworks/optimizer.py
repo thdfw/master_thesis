@@ -121,7 +121,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
     minutes = round((iter*delta_t_h-int(iter*delta_t_h))*60)
     if PRINT:
         print("\n-----------------------------------------------------")
-        print(f"Iteration {iter/45+1} ({hours}h{minutes}min)")
+        print(f"Iteration {iter/15+1} ({hours}h{minutes}min)")
         print("-----------------------------------------------------\n")
 
     # ------------------------------------------------------
@@ -224,10 +224,10 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         opti.subject_to(u[5,t] <= 1)
         
         # The other delta terms are fixed by the provided sequence
-        if t>=0  and t<45: [d_ch, d_bu, d_HP] = sequence['combi1']
-        if t>=45 and t<90: [d_ch, d_bu, d_HP] = sequence['combi2']
-        if t>=90 and t<135: [d_ch, d_bu, d_HP] = sequence['combi3']
-        if t>=135 and t<180: [d_ch, d_bu, d_HP] = sequence['combi4']
+        if t>=0  and t<15: [d_ch, d_bu, d_HP] = sequence['combi1']
+        if t>=15 and t<30: [d_ch, d_bu, d_HP] = sequence['combi2']
+        if t>=30 and t<45: [d_ch, d_bu, d_HP] = sequence['combi3']
+        if t>=45 and t<60: [d_ch, d_bu, d_HP] = sequence['combi4']
         
         opti.subject_to(u[2,t] == d_ch)
         opti.subject_to(u[3,t] == d_bu)
@@ -235,9 +235,9 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         
         if PRINT:
             if t==0:  print(f"0h00-0h30: {sequence['combi1']}")
-            if t==45: print(f"0h30-1h00: {sequence['combi2']}")
-            if t==90: print(f"1h00-1h30: {sequence['combi3']}")
-            if t==135: print(f"1h30-2h00: {sequence['combi4']}\n")
+            if t==15: print(f"0h30-1h00: {sequence['combi2']}")
+            if t==30: print(f"1h00-1h30: {sequence['combi3']}")
+            if t==45: print(f"1h30-2h00: {sequence['combi4']}\n")
             
         # ----- Non linear constraints -----
         
