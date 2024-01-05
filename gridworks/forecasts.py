@@ -83,7 +83,7 @@ pb_type = {
 'mixed-integer':    False,
 'gurobi':           False,
 'horizon':          60,
-'time_step':        2,
+'time_step':        4,
 }
 
 # The four possible operating modes
