@@ -119,7 +119,7 @@ for iter in range(num_iterations):
         'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*15, iter*15+120, delta_t_h)],
         'm_load': forecasts.get_m_load(iter*15, iter*15+120, delta_t_h),
         'sequence': sequence}
-    plot.plot_single_iter(plot_data)
+    #plot.plot_single_iter(plot_data)
     
     # Update x_0
     x_0 = x_1

@@ -229,7 +229,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         if t>=30 and t<45: [d_ch, d_bu, d_HP] = sequence['combi3']
         if t>=45 and t<60: [d_ch, d_bu, d_HP] = sequence['combi4']
         if t>=60 and t<75: [d_ch, d_bu, d_HP] = sequence['combi5']
-        if t>=75 and t<00: [d_ch, d_bu, d_HP] = sequence['combi6']
+        if t>=75 and t<90: [d_ch, d_bu, d_HP] = sequence['combi6']
         if t>=90 and t<105: [d_ch, d_bu, d_HP] = sequence['combi7']
         if t>=105 and t<120: [d_ch, d_bu, d_HP] = sequence['combi8']
 
