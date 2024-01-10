@@ -13,6 +13,7 @@ def get_c_el(start, end, delta_t_h):
     # Electricity prices in cts/kWh, hourly prices for 24 hours
     #c_el_all = [18.97, 18.92, 18.21, 16.58, 16.27, 15.49, 14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
     c_el_all = [14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11, 18.97, 18.92, 18.21, 16.58, 16.27, 15.49]
+    c_el_all = [6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4] # cluster 4
 
     # The number of time steps that make up one hour
     time_steps = int(1/delta_t_h)
@@ -82,12 +83,12 @@ pb_type = {
 'linearized':       False,
 'mixed-integer':    False,
 'gurobi':           False,
-'horizon':          60,
+'horizon':          120,
 'time_step':        4,
 }
 
 # The four possible operating modes
-operating_modes = [[0,0,0], [0,1,0], [1,0,1], [1,1,1]]
+operating_modes = [[0,0,0], [1,1,1], [0,1,0], [1,0,1]]
 
 # The name of the CSV file for the results
 current_datetime = datetime.now()
@@ -124,32 +125,21 @@ Output: cost of one step optimization over the given horizon.
 def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
 
     # Warm start the solver with the previous MPC solution
+
+    if horizon < 105:
+        until = -(105-horizon)
+        initial_x = [[float(x) for x in x_opt_prev[k,-106:until]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-105:until]] for k in range(6)]
+        
+    if horizon == 105:
+        initial_x = [[float(x) for x in x_opt_prev[k,-106:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-105:]] for k in range(6)]
     
-    if horizon == 15: # testing for combi1
-        # OPTION 1: Get the combi2 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:-30]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:-30]] for k in range(6)]
-        # OPTION 2: Don't initialize
-
-    if horizon == 30: # testing for combi1,combi2
-        # OPTION 1: Get the combi2,combi3 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:-15]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:-15]] for k in range(6)]
-        # OPTION 2: Get the combi1 from the ongoing test, set combi2 to '0'
-
-    if horizon == 45: # testing for combi1,combi2,combi3
-        # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
-        # OPTION 2: Get the combi1,combi2 from the ongoing test, set combi3 to '0'
-
-    if horizon == 60: # testing for combi1,combi2,combi3,combi4
-        # OPTION 1: Get the combi2,combi3,combi4 from the previous MPC iteration, set the rest to '0'
-        initial_x = [[float(x) for x in x_opt_prev[k,-46:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-45:]] for k in range(6)]
+    if horizon == 120:
+        initial_x = [[float(x) for x in x_opt_prev[k,-106:]] for k in range(16)]
+        initial_u = [[float(u) for u in u_opt_prev[k,-105:]] for k in range(6)]
         initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
         initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
-        # OPTION 2: Get the combi1,combi2,combi3 from the ongoing test, set combi4 to '0'
 
     # Set the warm start
     warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
@@ -180,19 +170,21 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     initial_state = x_0
     
     # Initialize
+    delta_t_h = 4/60
     min_cost = 1e6
     optimals = []
-    elec_prices = [round(100*1000*x,2) for x in get_c_el(iter, iter+120, 4/60)]
-    COP1, Q_HP_max = get_T_OA(iter, iter+60, 4/60)
-    COP1_avg = [sum(COP1[0:15])/15, sum(COP1[15:30])/15, sum(COP1[30:45])/15, sum(COP1[45:60])/15]
-    delta_t_h = 4/60
+    elec_prices = [round(100*1000*x,2) for x in get_c_el(iter, iter+120, delta_t_h)]
+    elec_prices = [elec_prices[i*15] for i in range(8)]
+    price_treshold = 20
+    COP1, Q_HP_max = get_T_OA(iter, iter+120, delta_t_h)
+    COP1_avg = [sum(COP1[15*i:15*(i+1)])/15 for i in range(8)]
 
     # Data going to the .csv file
     data = [{
         "T_B": [round(x,1) for x in initial_state[:4]],
         "T_S": [round(x,1) for x in initial_state[4:]],
         "iter": iter,
-        "prices": [elec_prices[0], elec_prices[15], elec_prices[30], elec_prices[45]]
+        "prices": elec_prices
         }]
     
     print("\n#########################################")
@@ -204,7 +196,10 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
     # Find feasible combi1 over N=1h
     # ------------------------------------------------------
     for combi1 in operating_modes:
-        
+    
+        if (elec_prices[0]>=price_treshold) and (combi1[2] == 1): continue
+        if (elec_prices[0]<price_treshold) and (combi1[2] == 0): continue
+
         print(f"\n******* combi1={combi1} *******")
 
         # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
@@ -230,8 +225,11 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
             # ------------------------------------------------------
             for combi2 in operating_modes:
             
+                if (elec_prices[1]>=price_treshold) and (combi2[2] == 1): continue
+                if (elec_prices[1]<price_treshold) and (combi2[2] == 0): continue
+            
                 # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                if (combi2[2] == 1) and (cost1 + (elec_prices[15]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[1]) > min_cost):
+                if (combi2[2] == 1) and (cost1 + (elec_prices[1]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[1]) > min_cost):
                     print(f"- combi1={combi1}, combi2={combi2} will be more expensive than current minimum")
                     continue
             
@@ -253,8 +251,11 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                     # ------------------------------------------------------
                     for combi3 in operating_modes:
                     
+                        if (elec_prices[2]>=price_treshold) and (combi3[2] == 1): continue
+                        if (elec_prices[2]<price_treshold) and (combi3[2] == 0): continue
+                    
                         # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                        if (combi3[2] == 1) and (cost2 + (elec_prices[30]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[2]) > min_cost):
+                        if (combi3[2] == 1) and (cost2 + (elec_prices[2]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[2]) > min_cost):
                             print(f"-- combi1={combi1}, combi2={combi2}, combi3={combi3} will be more expensive than current minimum")
                             continue
                     
@@ -276,8 +277,11 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                             # ------------------------------------------------------
                             for combi4 in operating_modes:
                             
+                                if (elec_prices[3]>=price_treshold) and (combi4[2] == 1): continue
+                                if (elec_prices[3]<price_treshold) and (combi4[2] == 0): continue
+                            
                                 # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
-                                if (combi4[2] == 1) and (cost3 + (elec_prices[45]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[3]) > min_cost):
+                                if (combi4[2] == 1) and (cost3 + (elec_prices[3]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[3]) > min_cost):
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} will be more expensive than current minimum")
                                     continue
                             
@@ -288,23 +292,111 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                                     print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} could not be solved: {error}")
                                 
                                 else:
-                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} has cost {cost4} $.")
+                                    print(f"--- combi1={combi1}, combi2={combi2}, combi3={combi3}, combi4={combi4} is feasible. Testing for combi5:")
                                     
                                     # ------------------------------------------------------
-                                    # Compare to current minimum cost, update if better
+                                    # Find feasible combi1, ..., combi5 over N=5h
                                     # ------------------------------------------------------
+                                    for combi5 in operating_modes:
                                     
-                                    if cost4 < min_cost:
-                                        min_cost = cost4
-                                        optimals = sequence
+                                        if (elec_prices[4]>=price_treshold) and (combi5[2] == 1): continue
+                                        if (elec_prices[4]<price_treshold) and (combi5[2] == 0): continue
+                                    
+                                        # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                                        if (combi5[2] == 1) and (cost4 + (elec_prices[4]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[4]) > min_cost):
+                                            print(f"---- combi1={combi1}, ..., combi5={combi5} will be more expensive than current minimum")
+                                            continue
+                                    
+                                        sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4, 'combi5': combi5}
+                                        cost5, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 75, x_opt_prev, u_opt_prev)
+                                        
+                                        if cost5 == 1e5:
+                                            print(f"---- combi1={combi1}, ..., combi5={combi5} could not be solved: {error}")
+                                        
+                                        else:
+                                            print(f"---- combi1={combi1}, ..., combi5={combi5} is feasible. Testing for combi6:")
+                                            
+                                            # ------------------------------------------------------
+                                            # Find feasible combi1, ..., combi6 over N=6h
+                                            # ------------------------------------------------------
+                                            for combi6 in operating_modes:
+                                            
+                                                if (elec_prices[5]>=price_treshold) and (combi6[2] == 1): continue
+                                                if (elec_prices[5]<price_treshold) and (combi6[2] == 0): continue
+                                            
+                                                # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                                                if (combi6[2] == 1) and (cost5 + (elec_prices[5]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[5]) > min_cost):
+                                                    print(f"----- combi1={combi1}, ..., combi6={combi6} will be more expensive than current minimum")
+                                                    continue
+                                            
+                                                sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4, 'combi5': combi5, 'combi6': combi6}
+                                                cost6, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 90, x_opt_prev, u_opt_prev)
+                                                
+                                                if cost6 == 1e5:
+                                                    print(f"----- combi1={combi1}, ..., combi6={combi6} could not be solved: {error}")
+                                                
+                                                else:
+                                                    print(f"----- combi1={combi1}, ..., combi6={combi6} is feasible. Testing for combi7:")
+                                                    
+                                                    # ------------------------------------------------------
+                                                    # Find feasible combi1, ..., combi7 over N=7h
+                                                    # ------------------------------------------------------
+                                                    for combi7 in operating_modes:
+                                                    
+                                                        if (elec_prices[6]>=price_treshold) and (combi7[2] == 1): continue
+                                                        if (elec_prices[6]<price_treshold) and (combi7[2] == 0): continue
+                                                    
+                                                        # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                                                        if (combi7[2] == 1) and (cost6 + (elec_prices[6]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[6]) > min_cost):
+                                                            print(f"------ combi1={combi1}, ..., combi7={combi7} will be more expensive than current minimum")
+                                                            continue
+                                                    
+                                                        sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4, 'combi5': combi5, 'combi6': combi6, 'combi7': combi7}
+                                                        cost7, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 105, x_opt_prev, u_opt_prev)
+                                                        
+                                                        if cost7 == 1e5:
+                                                            print(f"------ combi1={combi1}, ..., combi7={combi7} could not be solved: {error}")
+                                                        
+                                                        else:
+                                                            print(f"------ combi1={combi1}, ..., combi7={combi7} is feasible. Testing for combi8:")
+                                                            
+                                                            # ------------------------------------------------------
+                                                            # Find feasible combi1, ..., combi8 over N=8h
+                                                            # ------------------------------------------------------
+                                                            for combi8 in operating_modes:
+                                                            
+                                                                if (elec_prices[7]>=price_treshold) and (combi8[2] == 1): continue
+                                                                if (elec_prices[7]<price_treshold) and (combi8[2] == 0): continue
+                                                            
+                                                                # If the HP will be on, and at the minimum power, and the price is higher than the current minimum, skip
+                                                                if (combi8[2] == 1) and (cost7 + (elec_prices[7]/1000/100 * delta_t_h * 8000 * 15 * COP1_avg[7]) > min_cost):
+                                                                    print(f"----- combi1={combi1}, ..., combi8={combi8} will be more expensive than current minimum")
+                                                                    continue
+                                                            
+                                                                sequence = {'combi1': combi1, 'combi2': combi2, 'combi3': combi3, 'combi4': combi4, 'combi5': combi5, 'combi6': combi6, 'combi7': combi7, 'combi8': combi8}
+                                                                cost8, x_opt, u_opt, error = one_iteration(initial_state, iter, sequence, 120, x_opt_prev, u_opt_prev)
+                                                                
+                                                                if cost8 == 1e5:
+                                                                    print(f"------- combi1={combi1}, ..., combi8={combi8} could not be solved: {error}")
+                                                                
+                                                                else:
+                                                                    print(f"------- combi1={combi1}, ..., combi8={combi8} has cost {cost8}")
 
-    # ------------------------------------------------------
-    # Print and append the solution to CSV file
-    # ------------------------------------------------------
-    
-    print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
-    data[0]['sequence'] = [optimals['combi1'], optimals['combi2'], optimals['combi3'], optimals['combi4']]
-    append_to_csv(csv_file_name, data)
-    print("#########################################")
-    
-    return optimals
+                                                                # ------------------------------------------------------
+                                                                # Compare to current minimum cost, update if better
+                                                                # ------------------------------------------------------
+                                                                
+                                                                if cost8 < min_cost:
+                                                                    min_cost = cost8
+                                                                    optimals = sequence
+
+                                                                    # ------------------------------------------------------
+                                                                    # Print and append the solution to CSV file
+                                                                    # ------------------------------------------------------
+                                                                    
+                                                                    print(f"Minimum cost {round(min_cost,2)}$ achieved for {optimals}")
+                                                                    data[0]['sequence'] = [optimals[f'combi{i}'] for i in range(1,9)]
+                                                                    append_to_csv(csv_file_name, data)
+                                                                    print("#########################################")
+                                                                    
+                                                                    return optimals

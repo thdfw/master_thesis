@@ -298,7 +298,23 @@ def get_function(id, u, x, a, real, approx, t, sequence, iter, delta_t_h):
     if t>=45 and t<60:
         combi = sequence['combi4']
         m_load = forecasts.get_m_load(int(iter+3/delta_t_h), int(iter+3/delta_t_h+1), delta_t_h)
+        
+    if t>=60 and t<75:
+        combi = sequence['combi5']
+        m_load = forecasts.get_m_load(int(iter+4/delta_t_h), int(iter+4/delta_t_h+1), delta_t_h)
 
+    if t>=75 and t<90:
+        combi = sequence['combi6']
+        m_load = forecasts.get_m_load(int(iter+5/delta_t_h), int(iter+5/delta_t_h+1), delta_t_h)
+        
+    if t>=90 and t<105:
+        combi = sequence['combi7']
+        m_load = forecasts.get_m_load(int(iter+6/delta_t_h), int(iter+6/delta_t_h+1), delta_t_h)
+    
+    if t>=105 and t<120:
+        combi = sequence['combi8']
+        m_load = forecasts.get_m_load(int(iter+7/delta_t_h), int(iter+7/delta_t_h+1), delta_t_h)
+    
     # ------------------------------------------------------
     # Case 1: Want exact value of the function: f(y)
     # ------------------------------------------------------

@@ -176,7 +176,7 @@ def plot_single_iter(data):
     # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
-    ax[0].set_xlim([0,60])
+    ax[0].set_xlim([0,120])
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
@@ -200,7 +200,7 @@ def plot_single_iter(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((60)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
+    ax[1].plot((120)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time steps")
     ax[1].legend()

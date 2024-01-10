@@ -228,16 +228,24 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
         if t>=15 and t<30: [d_ch, d_bu, d_HP] = sequence['combi2']
         if t>=30 and t<45: [d_ch, d_bu, d_HP] = sequence['combi3']
         if t>=45 and t<60: [d_ch, d_bu, d_HP] = sequence['combi4']
-        
+        if t>=60 and t<75: [d_ch, d_bu, d_HP] = sequence['combi5']
+        if t>=75 and t<00: [d_ch, d_bu, d_HP] = sequence['combi6']
+        if t>=90 and t<105: [d_ch, d_bu, d_HP] = sequence['combi7']
+        if t>=105 and t<120: [d_ch, d_bu, d_HP] = sequence['combi8']
+
         opti.subject_to(u[2,t] == d_ch)
         opti.subject_to(u[3,t] == d_bu)
         opti.subject_to(u[4,t] == d_HP)
         
         if PRINT:
-            if t==0:  print(f"0h00-0h30: {sequence['combi1']}")
-            if t==15: print(f"0h30-1h00: {sequence['combi2']}")
-            if t==30: print(f"1h00-1h30: {sequence['combi3']}")
-            if t==45: print(f"1h30-2h00: {sequence['combi4']}\n")
+            if t==0:  print(f"0h-1h: {sequence['combi1']}")
+            if t==15: print(f"1h-2h: {sequence['combi2']}")
+            if t==30: print(f"2h-3h: {sequence['combi3']}")
+            if t==45: print(f"3h-4h: {sequence['combi4']}")
+            if t==60: print(f"4h-5h: {sequence['combi5']}")
+            if t==75: print(f"5h-6h: {sequence['combi6']}")
+            if t==90: print(f"6h-7h: {sequence['combi7']}")
+            if t==105: print(f"7h-8h: {sequence['combi8']}\n")
             
         # ----- Non linear constraints -----
         
