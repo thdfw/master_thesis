@@ -18,7 +18,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 10
+num_iterations = 24
 
 # Problem type
 pb_type = {
