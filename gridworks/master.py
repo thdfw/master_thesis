@@ -76,11 +76,20 @@ for iter in range(num_iterations):
             combi2 = seq[13:20].split(",")
             combi3 = seq[24:31].split(",")
             combi4 = seq[35:42].split(",")
+            combi5 = seq[46:53].split(",")
+            combi6 = seq[57:64].split(",")
+            combi7 = seq[68:75].split(",")
+            combi8 = seq[79:86].split(",")
             combi1 = [int(combi1[0]), int(combi1[1]), int(combi1[2])]
             combi2 = [int(combi2[0]), int(combi2[1]), int(combi2[2])]
             combi3 = [int(combi3[0]), int(combi3[1]), int(combi3[2])]
             combi4 = [int(combi4[0]), int(combi4[1]), int(combi4[2])]
-            sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4}
+            combi5 = [int(combi5[0]), int(combi5[1]), int(combi5[2])]
+            combi6 = [int(combi6[0]), int(combi6[1]), int(combi6[2])]
+            combi7 = [int(combi7[0]), int(combi7[1]), int(combi7[2])]
+            combi8 = [int(combi8[0]), int(combi8[1]), int(combi8[2])]
+            sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4,
+            'combi5': combi5, 'combi6': combi6, 'combi7': combi7, 'combi8': combi8}
         else:
             sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     
