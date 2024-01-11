@@ -50,6 +50,9 @@ def get_m_load(start, end, delta_t_h):
     # Extend to match time step (1 hour is 1/delta_t_h time steps)
     m_load_all = [item for item in m_load_all for _ in range(int(1/delta_t_h))]
     
+    # Duplicate days
+    m_load_all = m_load_all*30
+    
     return m_load_all[start] if end-start==1 else m_load_all[start:end]
     
 
@@ -386,7 +389,7 @@ def get_optimal_sequence(x_0, iter, x_opt_prev, u_opt_prev):
                                                                 # Compare to current minimum cost, update if better
                                                                 # ------------------------------------------------------
                                                                 
-                                                                if cost8 < min_cost:
+                                                                if cost8 < min_cost and cost8 != 1e5:
                                                                     min_cost = cost8
                                                                     optimals = sequence
 
