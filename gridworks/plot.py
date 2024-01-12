@@ -157,6 +157,7 @@ def plot_MPC(data):
     plt.savefig("plot_" + formatted_datetime + ".png")
     plt.show()
 
+
 '''
 To visualize the 2 hours predicted by a single iteration
 '''
