@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
-import optimizer, functions, plot, forecasts
+import optimizer, functions, plot, forecasts, sequencer
 
 # ------------------------------------------------------
 # Select problem type and solver
@@ -68,7 +68,11 @@ start_time = time.time()
 for iter in range(num_iterations):
 
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
-    if file_path == "": sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
+    if file_path == "":
+        c_el_hours = [round(x*1000*100,2) for x in forecasts.get_c_el(0, 24, 1)]
+        m_load_hours = forecasts.get_m_load(0, 24, 1)
+        sequence, two_options = sequencer.get_sequence(c_el_hours, m_load_hours, iter)
+        # sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     else:
         if iter < len(df):
             seq = df['sequence'][iter]
@@ -100,8 +104,29 @@ for iter in range(num_iterations):
     initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
     warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
     
+    # For the fat sequencer
+    x_opt_warm = x_opt
+    u_opt_warm = u_opt
+    
     # Get u* and x*
     u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+    
+    # If the solver failed to converge, try again
+    if file_path=="" and obj_opt == 1e5:
+        
+        if two_options == True:
+            # Try not turning off the HP in the first step
+            sequence['combi1'] = [1,1,1]
+            u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+            # If that didn't work, try the long version
+            if obj_opt == 1e5:
+                sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
+                u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+        
+        else:
+            # If it didn't work, try the long version
+            sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
+            u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
