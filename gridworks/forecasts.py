@@ -47,12 +47,12 @@ def get_m_load(start, end, delta_t_h):
     cp, Delta_T_load = 4187,  5/9*20
     m_load_all = [round(Q_load/(cp*Delta_T_load), 3) for Q_load in Q_load_all]
     
+    # intermediate cluster
+    m_load_all = [0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.1, 0.1, 0.08, 0.08, 0.08, 0.08, 0.08, 0.07, 0.07, 0.07, 0.07, 0.07, 0.09, 0.09, 0.1, 0.1, 0.11, 0.11]
+    
     # Extend to match time step (1 hour is 1/delta_t_h time steps)
     m_load_all = [item for item in m_load_all for _ in range(int(1/delta_t_h))]
-    
-    # intermediate cluster
-    # m_load_all = [0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.1, 0.1, 0.08, 0.08, 0.08, 0.08, 0.08, 0.07, 0.07, 0.07, 0.07, 0.07, 0.09, 0.09, 0.1, 0.1, 0.11, 0.11]
-    
+        
     # Duplicate days
     m_load_all = m_load_all*30
     

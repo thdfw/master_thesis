@@ -107,8 +107,14 @@ def get_sequence(c_el, m_load, hour):
     # Trim the sequence to fit the 8-hour horizon
     sequence_trimmed = sequence[hour:] + [1] * hour
     sequence_trimmed = sequence_trimmed[:8]
+    
+    # Convert to combination format
+    sequence_trimmed = [[1,1,1] if x==1 else [0,0,0] for x in sequence_trimmed]
+    sequence_dict = {}
+    for i in range(len(sequence_trimmed)):
+        sequence_dict[f'combi{i+1}'] = sequence_trimmed[i]
 
-    # Check if yes or no there are two options
+    # Report if there are two options (current mode is undetermined)
     undertermined_now = two_option_indices[hour] == 1
-
-    return sequence_trimmed, undertermined_now
+    
+    return sequence_dict, undertermined_now
