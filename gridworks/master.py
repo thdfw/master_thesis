@@ -55,6 +55,7 @@ x_opt = np.zeros((16, N+1))
 list_Q_HP = []
 list_S11, list_S21, list_S31, list_B1, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[0]], [x_0[3]]
 elec_cost, elec_used = 0, 0
+iter_eff = -1
 
 file_path = input("\nResults file (enter to skip): ").replace(" ","")
 if file_path != "": df = pd.read_csv(file_path)
@@ -70,8 +71,16 @@ for iter in range(num_iterations):
     # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
     if file_path == "":
         c_el_hours = [round(x*1000*100,2) for x in forecasts.get_c_el(0, 24, 1)]
+        # Update the electricity price with the next day prices at 4:00 PM
+        for k in range(30):
+            if iter==16+k*24:
+                c_el = c_el + c_el[:24] # replace c_el[:24] with new day-ahead prices
+            if iter==24+k*24:
+                c_el = c_el[:24]
+                iter_eff=-1
+        iter_eff+=1
         m_load_hours = forecasts.get_m_load(0, 24, 1)
-        sequence, two_options = sequencer.get_sequence(c_el_hours, m_load_hours, iter)
+        sequence, two_options = sequencer.get_sequence(c_el_hours, m_load_hours, iter_eff)
         # sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     else:
         if iter < len(df):
@@ -115,14 +124,20 @@ for iter in range(num_iterations):
     if file_path=="" and obj_opt == 1e5:
         
         if two_options == True:
-            # Try not turning off the HP in the first step
-            sequence['combi1'] = [1,1,1]
+            # Try the [0,1,0] option
+            sequence['combi1'] = [0,1,0]
             u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
-            # If that didn't work, try the long version
+            
+            # If it didn't work, try not turning off the HP in the first step
             if obj_opt == 1e5:
-                sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
+                sequence['combi1'] = [1,1,1]
                 u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
-        
+            
+                # If that didn't work, try the long version
+                if obj_opt == 1e5:
+                    sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
+                    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+            
         else:
             # If it didn't work, try the long version
             sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)

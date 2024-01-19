@@ -117,8 +117,8 @@ def plot_MPC(data):
     ax[0].set_xlim([0,15*data['iterations']])
 
     # First plot part 1
+    ax[0].plot(data['Q_HP'], label="Heat pump", color='blue', alpha=0.4)
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
-    ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
