@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_sequence(c_el, m_load, hour):
+def get_sequence(c_el, m_load, hour, previous_sequence):
 
     PLOT, PRINT = False, False
     
@@ -116,5 +116,17 @@ def get_sequence(c_el, m_load, hour):
 
     # Report if there are two options (current mode is undetermined)
     undertermined_now = two_option_indices[hour] == 1
+    
+    print("Previous sequence:\n", previous_sequence)
+    print("Current sequence before comparison:\n", sequence_dict)
+    for i in range(1,9):
+        # If there is a [0,0,0] -> [0,1,0] change in previous sequence
+        if i<8 and sequence_dict[f'combi{i}'] == [0,0,0] and previous_sequence[f'combi{i+1}'] == [0,1,0]:
+            sequence_dict[f'combi{i}'] = [0,1,0]
+            print(f"Replaced [0,0,0] with [0,1,0] in combi{i}")
+        # If there is a [1,1,1] -> [1,0,1] change in previous sequence
+        if i<8 and sequence_dict[f'combi{i}'] == [1,1,1] and previous_sequence[f'combi{i+1}'] == [1,0,1]:
+            sequence_dict[f'combi{i}'] = [1,0,1]
+            print(f"Replaced [1,1,1] with [1,0,1] in combi{i}")
     
     return sequence_dict, undertermined_now

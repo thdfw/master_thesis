@@ -56,6 +56,8 @@ list_Q_HP = []
 list_S11, list_S21, list_S31, list_B1, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[0]], [x_0[3]]
 elec_cost, elec_used = 0, 0
 iter_eff = -1
+previous_sequence = {}
+for i in range(8): previous_sequence[f'combi{i+1}'] = [1,1,1]
 
 file_path = input("\nResults file (enter to skip): ").replace(" ","")
 if file_path != "": df = pd.read_csv(file_path)
@@ -74,13 +76,13 @@ for iter in range(num_iterations):
         # Update the electricity price with the next day prices at 4:00 PM
         for k in range(30):
             if iter==16+k*24:
-                c_el = c_el + c_el[:24] # replace c_el[:24] with new day-ahead prices
+                c_el_hours = c_el_hours + c_el_hours[:24] # replace c_el[:24] with new day-ahead prices
             if iter==24+k*24:
-                c_el = c_el[:24]
+                c_el_hours = c_el_hours[:24]
                 iter_eff=-1
         iter_eff+=1
         m_load_hours = forecasts.get_m_load(0, 24, 1)
-        sequence, two_options = sequencer.get_sequence(c_el_hours, m_load_hours, iter_eff)
+        sequence, two_options = sequencer.get_sequence(c_el_hours, m_load_hours, iter_eff, previous_sequence)
         # sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
     else:
         if iter < len(df):
@@ -142,6 +144,8 @@ for iter in range(num_iterations):
             # If it didn't work, try the long version
             sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
             u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+    
+    previous_sequence = sequence
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
