@@ -15,7 +15,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     PLOT, PRINT = False, False
 
     # --------------------------------------------
-    # If a previous results (csv file) were given
+    # If previous results were given (csv file)
     # --------------------------------------------
     
     if results_file != "" and iter < len(df):
