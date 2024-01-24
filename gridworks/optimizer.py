@@ -159,7 +159,7 @@ def optimize_N_steps(x_0, a, iter, pb_type, sequence, warm_start, PRINT):
             solver_opts = {'discrete': discrete_var, 'bonmin.tol': 1e-4}
             opti.solver('bonmin', solver_opts)
         else:
-            solver_opts = {'ipopt.print_level': 0, 'print_time': 0, 'ipopt.tol': 1e-10}
+            solver_opts = {'ipopt.print_level': 0, 'print_time': 0, 'ipopt.tol': 1e-10}#, 'ipopt.max_iter': 10}
             opti.solver('ipopt', solver_opts)
                 
     approx = True if pb_type['linearized'] else False
