@@ -19,19 +19,21 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     # If previous results were given (csv file)
     # --------------------------------------------
     
-    if results_file != "" and iter < len(df):
+    if results_file != "":
     
         # Read the csv as a pandas dataframe
         df = pd.read_csv(results_file)
-    
-        # Read the corresponding sequence in the file
-        sequence_string = df['sequence'][iter]
-        sequence_file_dict = {}
-        for i in range(1,9):
-            combi = sequence_string[2+(i-1)*11:9+(i-1)*11].split(",")
-            sequence_file_dict[f'combi{i}'] = [int(combi[0]), int(combi[1]), int(combi[2])]
         
-        return sequence_file_dict
+        if iter < len(df):
+    
+            # Read the corresponding sequence in the file
+            sequence_string = df['sequence'][iter]
+            sequence_file_dict = {}
+            for i in range(1,9):
+                combi = sequence_string[2+(i-1)*11:9+(i-1)*11].split(",")
+                sequence_file_dict[f'combi{i}'] = [int(combi[0]), int(combi[1]), int(combi[2])]
+            
+            return sequence_file_dict
     
     # --------------------------------------------
     # For all attempts: get pre-maid sequence
