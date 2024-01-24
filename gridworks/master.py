@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
+import csv
 import optimizer, functions, plot, forecasts, sequencer
 
 # ------------------------------------------------------
@@ -18,7 +19,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 72
+num_iterations = 24
 
 # Problem type
 pb_type = {
@@ -128,7 +129,7 @@ for iter in range(num_iterations):
         attempt += 1
     
     # Save the working sequence for the next step
-    sequencer.append_to_csv(csv_file_name, data, sequence)
+    sequencer.append_to_csv(data, sequence)
     previous_sequence = sequence
     
     # ---------------------------------------------------

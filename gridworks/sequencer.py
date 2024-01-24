@@ -177,7 +177,6 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     # Final attempts: run through all sequences
     # --------------------------------------------
 
-    print("sequence012 = ", sequence012)
     if PRINT: print("There are two options") if undertermined_now==True else print("Only one option")
     
     if attempt == 1:
@@ -268,6 +267,7 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices):
     print("\n#########################################")
     print(f"Buffer: {x_0[:4]} \nStorage: {x_0[4:]}")
     print(f"Electricity forecasts: {elec_prices}")
+    print(f"Sequence suggestion: {sequence012}")
     print("\nSearching for feasible sequence...")
 
     # Initialize
@@ -314,12 +314,12 @@ current_datetime = datetime.datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
 csv_file_name = "results_" + formatted_datetime + ".csv"
 
-def append_to_csv(file_name, data, final_sequence):
+def append_to_csv(data, final_sequence):
     
     # Add the sequence to the data going to csv
     data[0]['sequence'] = [final_sequence[f'combi{i}'] for i in range(1,9)]
         
-    with open(file_name, 'a', newline='') as file:
+    with open(csv_file_name, 'a', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "prices", "loads", "iter", "sequence"])
         
         # If file is empty, write headers
@@ -330,4 +330,4 @@ def append_to_csv(file_name, data, final_sequence):
         for row in data:
             writer.writerow(row)
             
-    print("Data was appended to", file_name)
+    print("Data was appended to", csv_file_name)
