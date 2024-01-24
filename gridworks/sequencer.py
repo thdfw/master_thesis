@@ -180,7 +180,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     if PRINT: print("There are two options") if undertermined_now==True else print("Only one option")
     
     if attempt == 1:
-        sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8])
+        if load_type == "Low load": sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8])
         return sequence_dict
     
     if undertermined_now == True:
