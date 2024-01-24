@@ -18,7 +18,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 24
+num_iterations = 72
 
 # Problem type
 pb_type = {
@@ -34,79 +34,70 @@ plot.print_pb_type(pb_type)
 print(f"Simulation: {round(num_iterations*15*delta_t_h)} hours ({num_iterations} iterations)")
 
 # ------------------------------------------------------
-# Initial state of the system
+# Initialize
 # ------------------------------------------------------
 
-# Initial state
-x_0 = [300.0]*4 + [320.0]*12
-x_0 = [314.0, 314.6, 313.7, 308.8] + [310]*12 #[308.8, 307.5, 306.7, 306.1, 305.8, 305.6, 305.4, 304.9, 304.0, 302.7, 301.3, 300.3]
+# Initial state of the system (buffer + storage)
+x_0 = [314.0, 314.6, 313.7, 308.8] + [310]*12
+
+# Initial solver warm start
+u_opt = np.zeros((6, N))
+x_opt = np.zeros((16, N+1))
+
+# Initial previous sequence
+previous_sequence = {}
+for i in range(8): previous_sequence[f'combi{i+1}'] = [1,1,1]
+
+# Load previous sequence results from a csv file
+file_path = input("\nResults file (enter to skip): ").replace(" ","")
+
+# For the final plot
+list_Q_HP = []
+list_B1, list_B4, list_S11, list_S21, list_S31 = [x_0[0]], [x_0[3]], [x_0[4]], [x_0[8]], [x_0[12]]
+elec_cost, elec_used = 0, 0
 
 # Initial point around which to linearize
 a = [330, 0.25] + [0.6]*4 + x_0
 
-# Initial warm start
-u_opt = np.zeros((6, N))
-x_opt = np.zeros((16, N+1))
-
 # ------------------------------------------------------
-# Initialize variables for the final plot
-# ------------------------------------------------------
-
-list_Q_HP = []
-list_S11, list_S21, list_S31, list_B1, list_B4 = [x_0[4]], [x_0[8]], [x_0[12]], [x_0[0]], [x_0[3]]
-elec_cost, elec_used = 0, 0
-iter_eff = -1
-previous_sequence = {}
-for i in range(8): previous_sequence[f'combi{i+1}'] = [1,1,1]
-
-file_path = input("\nResults file (enter to skip): ").replace(" ","")
-if file_path != "": df = pd.read_csv(file_path)
-
-# ------------------------------------------------------
-# MPC
+# MPC closed loop
 # ------------------------------------------------------
 
 start_time = time.time()
 
 for iter in range(num_iterations):
 
-    # Predicted optimal sequence of combinations (d_ch, d_bu, d_HP)
-    if file_path == "":
-        c_el_hours = [round(x*1000*100,2) for x in forecasts.get_c_el(0, 24, 1)]
-        # Update the electricity price with the next day prices at 4:00 PM
-        for k in range(30):
-            if iter==16+k*24:
-                c_el_hours = c_el_hours + c_el_hours[:24] # replace c_el[:24] with new day-ahead prices
-            if iter==24+k*24:
-                c_el_hours = c_el_hours[:24]
-                iter_eff=-1
-        iter_eff+=1
-        m_load_hours = forecasts.get_m_load(0, 24, 1)
-        sequence, two_options = sequencer.get_sequence(c_el_hours, m_load_hours, iter_eff, previous_sequence)
-        # sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
-    else:
-        if iter < len(df):
-            seq = df['sequence'][iter]
-            combi1 = seq[2:9].split(",")
-            combi2 = seq[13:20].split(",")
-            combi3 = seq[24:31].split(",")
-            combi4 = seq[35:42].split(",")
-            combi5 = seq[46:53].split(",")
-            combi6 = seq[57:64].split(",")
-            combi7 = seq[68:75].split(",")
-            combi8 = seq[79:86].split(",")
-            combi1 = [int(combi1[0]), int(combi1[1]), int(combi1[2])]
-            combi2 = [int(combi2[0]), int(combi2[1]), int(combi2[2])]
-            combi3 = [int(combi3[0]), int(combi3[1]), int(combi3[2])]
-            combi4 = [int(combi4[0]), int(combi4[1]), int(combi4[2])]
-            combi5 = [int(combi5[0]), int(combi5[1]), int(combi5[2])]
-            combi6 = [int(combi6[0]), int(combi6[1]), int(combi6[2])]
-            combi7 = [int(combi7[0]), int(combi7[1]), int(combi7[2])]
-            combi8 = [int(combi8[0]), int(combi8[1]), int(combi8[2])]
-            sequence = {'combi1':combi1, 'combi2':combi2, 'combi3':combi3, 'combi4':combi4,
-            'combi5': combi5, 'combi6': combi6, 'combi7': combi7, 'combi8': combi8}
-        else:
-            sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt, u_opt)
+    # ---------------------------------------------------
+    # Forecasts
+    # ---------------------------------------------------
+    
+    # Get the first hourly forecasts
+    if iter==0:
+        c_el = [round(x*1000*100,2) for x in forecasts.get_c_el(0, 24, 1)]
+        m_load = forecasts.get_m_load(0, 24, 1)
+
+    # Get next day forecasts at 4:00 PM - TODO: replace with real forecasts
+    if iter%24==16:
+        c_el = c_el + [x+1 for x in c_el[:24]]
+        m_load = m_load + m_load[:24]
+        
+    # At the start of a new day, crop forecasts
+    if iter%24==0:
+        c_el = c_el[-24:]
+        m_load = m_load[-24:]
+     
+    # To save the iteration in a csv file
+    data = [{
+        "T_B": [round(x,1) for x in x_0[:4]],
+        "T_S": [round(x,1) for x in x_0[4:]],
+        "iter": iter,
+        "prices": c_el[iter%24:iter%24+8],
+        "loads": m_load[iter%24:iter%24+8]
+    }]
+
+    # ---------------------------------------------------
+    # Solver warm start
+    # ---------------------------------------------------
     
     # Give the solver a warm start using the previous solution
     initial_x = [[float(x) for x in x_opt[k,-106:]] for k in range(16)]
@@ -115,37 +106,34 @@ for iter in range(num_iterations):
     initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
     warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
     
-    # For the fat sequencer
-    x_opt_warm = x_opt
-    u_opt_warm = u_opt
+    # ---------------------------------------------------
+    # Find a sequence and solve the optimization problem
+    # ---------------------------------------------------
+
+    # Prepare package for possible long sequence check
+    long_seq_pack = {'x_0': x_0, 'x_opt_prev': x_opt, 'u_opt_prev': u_opt}
     
-    # Get u* and x*
-    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
-    
-    # If the solver failed to converge, try again
-    if file_path=="" and obj_opt == 1e5:
+    # As long as a feasible sequence is not found, try something new
+    attempt = 1
+    obj_opt = 1e5
+    while obj_opt == 1e5:
         
-        if two_options == True:
-            # Try the [0,1,0] option
-            sequence['combi1'] = [0,1,0]
-            u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
-            
-            # If it didn't work, try not turning off the HP in the first step
-            if obj_opt == 1e5:
-                sequence['combi1'] = [1,1,1]
-                u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
-            
-                # If that didn't work, try the long version
-                if obj_opt == 1e5:
-                    sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
-                    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
-            
-        else:
-            # If it didn't work, try the long version
-            sequence = forecasts.get_optimal_sequence(x_0, 15*iter, x_opt_warm, u_opt_warm)
-            u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+        # Get a good sequence proposition (method depends on attempt)
+        sequence = sequencer.get_sequence(c_el, m_load, iter, previous_sequence, file_path, attempt, long_seq_pack)
+        
+        # Try to solve the optimization problem, get u* and x*
+        u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, a, 15*iter, pb_type, sequence, warm_start, True)
+        
+        # Next attempt
+        attempt += 1
     
+    # Save the working sequence for the next step
+    sequencer.append_to_csv(csv_file_name, data, sequence)
     previous_sequence = sequence
+    
+    # ---------------------------------------------------
+    # Implement u0*, print/plot, and append results
+    # ---------------------------------------------------
     
     # Extract u0* and x0
     u_opt_0 = [round(float(x),6) for x in u_opt[:,0]]
@@ -219,12 +207,11 @@ plot_data = {
     'elec_used':    round(elec_used/1000,2),
 }
 
-# Print total time
+# Print total simulation time
 total_time = time.time()-start_time
 hours = round(total_time // 3600)
 minutes = round((total_time % 3600) // 60)
-seconds = round(total_time % 60)
-print(f"The simulation ran in {hours} hours, {minutes} minutes and {seconds} seconds.")
+print(f"The {num_iterations}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
     
-print("\nPlotting the data...")
+print("\nPlotting the data...\n")
 plot.plot_MPC(plot_data)

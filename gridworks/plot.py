@@ -104,16 +104,16 @@ def plot_MPC(data):
     solver = "Gurobi" if data['pb_type']['gurobi'] else "Ipopt"
     N = data['pb_type']['horizon']
     
-    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh")
+    # Get the Q_load from the m_load
+    cp, Delta_T_load= 4187, 5/9*20
+    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
+    
+    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh, Load: {sum(Q_load_list)} kWh")
     
     # ------------------------------------------------------
     # First plot
     # ------------------------------------------------------
     
-    # Get the Q_load from the m_load
-    cp, Delta_T_load= 4187, 5/9*20
-    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
-        
     ax[0].set_xlim([0,15*data['iterations']])
 
     # First plot part 1
