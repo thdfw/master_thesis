@@ -170,7 +170,6 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
                 print(f"Replaced {sequence_dict[f'combi{i}']} by {previous_sequence[f'combi{i+1}']} in combi{i}")
                 sequence_dict[f'combi{i}'] = previous_sequence[f'combi{i+1}']
                 most_likely[f'combi{i}'] = previous_sequence[f'combi{i+1}']
-    print(most_likely)
 
     # --------------------------------------------
     # Attempt 1: use pre-maid sequence

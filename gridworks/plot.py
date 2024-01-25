@@ -106,9 +106,9 @@ def plot_MPC(data):
     
     # Get the Q_load from the m_load
     cp, Delta_T_load= 4187, 5/9*20
-    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
+    Q_load_list = [m_load*cp*Delta_T_load/1000 for m_load in data['m_load']]
     
-    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh, Load: {sum(Q_load_list)} kWh")
+    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Load: {round(sum(Q_load_list)*4/60,1)} kWh_th")
     
     # ------------------------------------------------------
     # First plot

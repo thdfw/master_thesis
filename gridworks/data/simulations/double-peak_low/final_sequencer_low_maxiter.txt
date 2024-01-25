@@ -1,0 +1,1403 @@
+(ada) thomasdefauw@Macbook-pro-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (relaxed or fixed binary)
+Solver: Ipopt
+
+Time step: 4 minutes
+Horizon: 8.0 hours (120 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): /Users/thomasdefauw/Desktop/results_2024-01-24_19-07-29.csv 
+
+-----------------------------------------------------
+Iteration 1.0 (0h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+Done in 52.6 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 314.0 | S        310.0 --    310.0 --   310.0 --
+         314.6 |          310.0       310.0      310.0
+         313.7 |          310.0       310.0      310.0
+      -- 308.8 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.4-> 324.2 | S        310.0 <-    310.0 <-   313.0 <-0.0-
+         322.7 |          310.0       310.0      311.0
+         321.9 |          310.0       310.0      310.0
+  <-0.4- 322.1 |   <-0.0- 310.0    <- 310.0   <- 310.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.05
+Cost of next 8 hours: 0.55 $
+[6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51]
+
+-----------------------------------------------------
+Iteration 2.0 (1h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 9.6 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 324.2 | S        310.0 --    310.0 --   313.0 --
+         322.7 |          310.0       310.0      311.0
+         321.9 |          310.0       310.0      310.0
+      -- 322.1 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B <-0.0- 323.0 | S        310.0 ->    310.0 ->   312.0 -0.0->
+         321.6 |          310.0       310.0      310.0
+         319.2 |          310.0       310.0      310.0
+  -0.0-> 314.3 |   -0.0-> 309.7    -> 310.0   -> 310.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.42 $
+[6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16]
+
+-----------------------------------------------------
+Iteration 3.0 (2h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 9.9 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 323.0 | S        310.0 --    310.0 --   312.0 --
+         321.6 |          310.0       310.0      310.0
+         319.2 |          310.0       310.0      310.0
+      -- 314.3 |       -- 309.7    -- 310.0   -- 310.0
+
+Next state
+B <-0.0- 321.3 | S        310.0 ->    310.0 ->   312.0 -0.0->
+         318.7 |          310.0       310.0      310.0
+         314.8 |          309.8       310.0      310.0
+  -0.0-> 310.5 |   -0.0-> 309.1    -> 310.0   -> 310.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.42 $
+[6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07]
+
+-----------------------------------------------------
+Iteration 4.0 (3h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 7.3 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 321.3 | S        310.0 --    310.0 --   312.0 --
+         318.7 |          310.0       310.0      310.0
+         314.8 |          309.8       310.0      310.0
+      -- 310.5 |       -- 309.1    -- 310.0   -- 310.0
+
+Next state
+B <-0.0- 316.9 | S        310.0 ->    310.0 ->   311.0 -0.0->
+         313.5 |          309.9       310.0      310.0
+         310.5 |          309.6       310.0      310.0
+  -0.0-> 308.0 |   -0.0-> 308.2    -> 310.0   -> 310.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.42 $
+[6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [316.8503140181315, 313.53868410039274, 310.45097795278184, 308.01172918098484] 
+Storage: [311.3770847212222, 310.21675790112863, 310.0245523399576, 310.00202843767994, 310.0001222953211, 309.99997762209574, 309.99972687999286, 309.9977579298701, 309.9847564683281, 309.9167273234749, 309.6467147510831, 308.20931436861576]
+Electricity forecasts: [6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08]
+Load forecasts: [0.05, 0.04, 0.04, 0.03, 0.02, 0.01, 0.01, 0.0]
+Sequence suggestion: [2, 1, 1, 0, 0, 0, 0, 0]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+-- combi2 = [1, 1, 1] is feasible. Testing for combi3:
+--- combi3 = [1, 1, 1] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+-------- combi8 = [0, 0, 0] could not be solved: 'Restoration_Failed'
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 1, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 5.0 (4h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 1, 0]
+
+Solving the optimization problem...
+Done in 165.4 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 316.9 | S        310.0 --    310.0 --   311.0 --
+         313.5 |          309.9       310.0      310.0
+         310.5 |          309.6       310.0      310.0
+      -- 308.0 |       -- 308.2    -- 310.0   -- 310.0
+
+Next state
+B -0.2-> 314.9 | S        311.6 <-    313.9 <-   315.0 <-0.3-
+         314.6 |          311.0       313.5      315.0
+         314.2 |          310.5       312.9      314.0
+  <-0.2- 314.0 |   <-0.3- 310.2    <- 312.2   <- 314.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.05
+Cost of next 8 hours: 0.42 $
+[6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08]
+Replaced [0, 0, 0] by [0, 1, 0] in combi7
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [0, 1, 0], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [314.92797011616744, 314.5622609191329, 314.2345388289677, 313.9545991864369] 
+Storage: [314.9229682230895, 314.6237827761541, 314.3976649235712, 314.18740989193253, 313.9136831998009, 313.50340149173167, 312.93201063565857, 312.2499753777248, 311.5616896462241, 310.9694733269133, 310.530049548554, 310.24861128089174]
+Electricity forecasts: [6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16]
+Load forecasts: [0.04, 0.04, 0.03, 0.02, 0.01, 0.01, 0.0, 0.0]
+Sequence suggestion: [1, 1, 0, 0, 0, 0, 0, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+-- combi2 = [1, 1, 1] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+------- combi7 = [0, 1, 0] is feasible. Testing for combi8:
+-------- combi8 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 1, 0], 'combi8': [1, 1, 1]}
+#########################################
+
+-----------------------------------------------------
+Iteration 6.0 (5h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 1, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 50.0 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 314.9 | S        311.6 --    313.9 --   315.0 --
+         314.6 |          311.0       313.5      315.0
+         314.2 |          310.5       312.9      314.0
+      -- 314.0 |       -- 310.2    -- 312.2   -- 314.0
+
+Next state
+B -0.2-> 317.7 | S        314.8 <-    316.5 <-   318.0 <-0.2-
+         317.4 |          314.5       316.0      318.0
+         317.1 |          314.1       315.6      317.0
+  <-0.2- 316.7 |   <-0.2- 313.8    <- 315.2   <- 317.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.43 $
+[6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16]
+Replaced [0, 0, 0] by [0, 1, 0] in combi6
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [0, 1, 0], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [317.7135724894985, 317.37873404647314, 317.0535890628222, 316.7240460740203] 
+Storage: [317.8218032554932, 317.5445983941646, 317.2314653919231, 316.8690371672358, 316.4601420094992, 316.02276897909985, 315.58445416388753, 315.1728082438423, 314.8033752472137, 314.469838706243, 314.14358007475573, 313.785296616656]
+Electricity forecasts: [6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18]
+Load forecasts: [0.04, 0.03, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0]
+Sequence suggestion: [1, 0, 0, 0, 0, 0, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+------ combi6 = [0, 1, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+------- combi7 = [1, 1, 1] is feasible. Testing for combi8:
+-------- combi8 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 1, 0], 'combi7': [1, 1, 1], 'combi8': [1, 1, 1]}
+#########################################
+
+-----------------------------------------------------
+Iteration 7.0 (6h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 1, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 29.3 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 317.7 | S        314.8 --    316.5 --   318.0 --
+         317.4 |          314.5       316.0      318.0
+         317.1 |          314.1       315.6      317.0
+      -- 316.7 |       -- 313.8    -- 315.2   -- 317.0
+
+Next state
+B -0.3-> 323.1 | S        317.2 <-    318.5 <-   321.0 <-0.2-
+         321.9 |          316.8       318.1      320.0
+         321.3 |          316.5       317.8      320.0
+  <-0.3- 320.9 |   <-0.2- 316.1    <- 317.5   <- 319.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.45 $
+[6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18]
+Replaced [0, 0, 0] by [0, 1, 0] in combi5
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [0, 1, 0], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [323.10239630153603, 321.91942215963695, 321.26358278930985, 320.91281569972153] 
+Storage: [321.41298406234733, 320.29785237018916, 319.50063804237607, 318.9112045708815, 318.48055717675595, 318.13792472094474, 317.83024728678964, 317.52328892039344, 317.19628676248874, 316.83995987965017, 316.4556167967897, 316.05326696997184]
+Electricity forecasts: [41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18]
+Load forecasts: [0.03, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0]
+Sequence suggestion: [0, 0, 0, 0, 0, 2, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+----- combi5 = [0, 1, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+------ combi6 = [1, 1, 1] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+------- combi7 = [1, 1, 1] is feasible. Testing for combi8:
+-------- combi8 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 1, 0], 'combi6': [1, 1, 1], 'combi7': [1, 1, 1], 'combi8': [1, 1, 1]}
+#########################################
+
+-----------------------------------------------------
+Iteration 8.0 (7h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 1, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 23.8 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 323.1 | S        317.2 --    318.5 --   321.0 --
+         321.9 |          316.8       318.1      320.0
+         321.3 |          316.5       317.8      320.0
+      -- 320.9 |       -- 316.1    -- 317.5   -- 319.0
+
+Next state
+B <-0.0- 322.5 | S        317.1 ->    318.4 ->   321.0 -0.0->
+         321.4 |          316.7       318.0      320.0
+         320.0 |          316.1       317.7      319.0
+  -0.0-> 316.4 |   -0.0-> 314.5    -> 317.4   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.03
+Cost of next 8 hours: 0.46 $
+[41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18]
+Replaced [0, 0, 0] by [0, 1, 0] in combi4
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [0, 1, 0], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [322.4565029911987, 321.3866981823329, 319.9572108345361, 316.4243197712852] 
+Storage: [321.02268534722793, 320.01776673569645, 319.29366209163413, 318.7582163316639, 318.3566807988533, 318.02482128331275, 317.716173177724, 317.4012480425711, 317.0619814901867, 316.6742275922513, 316.0817968751413, 314.50387499465893]
+Electricity forecasts: [41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16]
+Load forecasts: [0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0]
+Sequence suggestion: [0, 0, 0, 0, 2, 2, 2, 1]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+---- combi4 = [0, 1, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+----- combi5 = [1, 1, 1] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+------ combi6 = [1, 1, 1] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+------- combi7 = [1, 1, 1] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 1, 0], 'combi5': [1, 1, 1], 'combi6': [1, 1, 1], 'combi7': [1, 1, 1], 'combi8': [1, 1, 1]}
+#########################################
+
+-----------------------------------------------------
+Iteration 9.0 (8h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 1, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 32.1 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 322.5 | S        317.1 --    318.4 --   321.0 --
+         321.4 |          316.7       318.0      320.0
+         320.0 |          316.1       317.7      319.0
+      -- 316.4 |       -- 314.5    -- 317.4   -- 319.0
+
+Next state
+B <-0.0- 322.0 | S        316.9 ->    318.3 ->   321.0 -0.0->
+         320.7 |          316.5       317.9      320.0
+         318.6 |          315.6       317.6      319.0
+  -0.0-> 314.6 |   -0.0-> 313.6    -> 317.3   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.61 $
+[41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16]
+Replaced [0, 0, 0] by [0, 1, 0] in combi3
+{'combi1': [], 'combi2': [], 'combi3': [0, 1, 0], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [322.0255184410311, 320.7240632462151, 318.55045834504404, 314.58882248954615] 
+Storage: [320.7597808044426, 319.82788557752656, 319.1530008446592, 318.6516849880014, 318.2674809722705, 317.9409277589877, 317.62992347811655, 317.3071549780833, 316.947785729032, 316.4775093008944, 315.5908485164947, 313.56105919597536]
+Electricity forecasts: [41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2]
+Load forecasts: [0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Sequence suggestion: [0, 0, 0, 2, 2, 2, 1, 0]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+--- combi3 = [0, 1, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+---- combi4 = [1, 1, 1] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+----- combi5 = [1, 1, 1] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+------ combi6 = [1, 1, 1] is feasible. Testing for combi7:
+------- combi7 = [1, 1, 1] is feasible. Testing for combi8:
+-------- combi8 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 1, 0], 'combi4': [1, 1, 1], 'combi5': [1, 1, 1], 'combi6': [1, 1, 1], 'combi7': [1, 1, 1], 'combi8': [0, 1, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 10.0 (9h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 1, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 1, 0]
+
+Solving the optimization problem...
+Done in 50.8 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 322.0 | S        316.9 --    318.3 --   321.0 --
+         320.7 |          316.5       317.9      320.0
+         318.6 |          315.6       317.6      319.0
+      -- 314.6 |       -- 313.6    -- 317.3   -- 319.0
+
+Next state
+B <-0.0- 321.8 | S        316.9 ->    318.2 ->   321.0 -0.0->
+         320.3 |          316.3       317.9      320.0
+         317.9 |          315.3       317.6      319.0
+  -0.0-> 313.9 |   -0.0-> 313.1    -> 317.3   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.61 $
+[41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2]
+Replaced [0, 0, 0] by [0, 1, 0] in combi2
+Replaced [0, 0, 0] by [0, 1, 0] in combi7
+{'combi1': [], 'combi2': [0, 1, 0], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [0, 1, 0], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [321.7875211162027, 320.3240013040588, 317.8629904084796, 313.8936522610273] 
+Storage: [320.6245358231899, 319.72981349285067, 319.08002318757366, 318.59542935878994, 318.2193287002676, 317.8947968031389, 317.58177505421406, 317.25273157746045, 316.873670593375, 316.3347101316259, 315.27965130756434, 313.101528952424]
+Electricity forecasts: [41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64]
+Load forecasts: [0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Sequence suggestion: [0, 0, 2, 2, 2, 1, 0, 0]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+-- combi2 = [0, 1, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi3 = [1, 1, 1] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+---- combi4 = [1, 1, 1] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+----- combi5 = [1, 1, 1] is feasible. Testing for combi6:
+------ combi6 = [1, 1, 1] is feasible. Testing for combi7:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+------- combi7 = [0, 1, 0] is feasible. Testing for combi8:
+-------- combi8 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 1, 0], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1], 'combi5': [1, 1, 1], 'combi6': [1, 1, 1], 'combi7': [0, 1, 0], 'combi8': [0, 1, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 11.0 (10h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 1, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 1, 0]
+7h-8h: [0, 1, 0]
+
+Solving the optimization problem...
+Done in 42.9 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 321.8 | S        316.9 --    318.2 --   321.0 --
+         320.3 |          316.3       317.9      320.0
+         317.9 |          315.3       317.6      319.0
+      -- 313.9 |       -- 313.1    -- 317.3   -- 319.0
+
+Next state
+B <-0.0- 321.5 | S        316.8 ->    318.2 ->   320.0 -0.0->
+         319.9 |          316.2       317.8      320.0
+         317.2 |          314.9       317.5      319.0
+  -0.0-> 313.3 |   -0.0-> 312.7    -> 317.2   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.61 $
+[41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64]
+Replaced [0, 0, 0] by [0, 1, 0] in combi1
+Replaced [0, 0, 0] by [0, 1, 0] in combi6
+Replaced [0, 0, 0] by [0, 1, 0] in combi7
+{'combi1': [0, 1, 0], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [0, 1, 0], 'combi7': [0, 1, 0], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [321.52539444425133, 319.88711556989426, 317.1934194504534, 313.2872769901852] 
+Storage: [320.4918152385955, 319.63329040466334, 319.00787569677186, 318.53908825502265, 318.17036376851456, 317.8472745873103, 317.5314295850786, 317.19353552068424, 316.7863937147287, 316.163362501435, 314.9428439748131, 312.66792648236776]
+Electricity forecasts: [41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43]
+Load forecasts: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02]
+Sequence suggestion: [0, 2, 2, 2, 1, 0, 0, 0]
+
+Searching for feasible sequence...
+Found from previous: [0, 0, 0] != [0, 1, 0]
+
+******* combi1=[0, 1, 0] *******
+- combi1 = [0, 1, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi2 = [1, 1, 1] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi3 = [1, 1, 1] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+---- combi4 = [1, 1, 1] is feasible. Testing for combi5:
+----- combi5 = [1, 1, 1] is feasible. Testing for combi6:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+------ combi6 = [0, 1, 0] is feasible. Testing for combi7:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+------- combi7 = [0, 1, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 1, 0], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1], 'combi5': [1, 1, 1], 'combi6': [0, 1, 0], 'combi7': [0, 1, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 12.0 (11h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 1, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 1, 0]
+6h-7h: [0, 1, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 7.9 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 321.5 | S        316.8 --    318.2 --   320.0 --
+         319.9 |          316.2       317.8      320.0
+         317.2 |          314.9       317.5      319.0
+      -- 313.3 |       -- 312.7    -- 317.2   -- 319.0
+
+Next state
+B -0.3-> 315.1 | S        318.8 ->    319.3 ->   315.0 -0.3->
+         315.8 |          318.3       319.7      316.0
+         316.6 |          318.0       319.6      317.0
+  <-0.3- 317.1 |   -0.3-> 317.6    -> 319.2   -> 318.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.0
+Cost of next 8 hours: 0.61 $
+[41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43]
+Replaced [0, 0, 0] by [0, 1, 0] in combi5
+Replaced [0, 0, 0] by [0, 1, 0] in combi6
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [0, 1, 0], 'combi6': [0, 1, 0], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [315.14720003034404, 315.81851624669804, 316.55474966607386, 317.1354180090049] 
+Storage: [314.96306517785735, 315.57385631514995, 316.8544239979501, 318.28529271254627, 319.32303912298744, 319.7327149128342, 319.6183380236832, 319.22896900337645, 318.7702545359104, 318.33943870445995, 317.9501707575112, 317.5709168210177]
+Electricity forecasts: [7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51]
+Load forecasts: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.02]
+Sequence suggestion: [2, 2, 2, 1, 0, 0, 0, 0]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi2 = [1, 1, 1] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi3 = [1, 1, 1] is feasible. Testing for combi4:
+---- combi4 = [1, 1, 1] is feasible. Testing for combi5:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+----- combi5 = [0, 1, 0] is feasible. Testing for combi6:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+------ combi6 = [0, 1, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1], 'combi5': [0, 1, 0], 'combi6': [0, 1, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 13.0 (12h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 1, 0]
+5h-6h: [0, 1, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 3.9 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 315.1 | S        318.8 --    319.3 --   315.0 --
+         315.8 |          318.3       319.7      316.0
+         316.6 |          318.0       319.6      317.0
+      -- 317.1 |       -- 317.6    -- 319.2   -- 318.0
+
+Next state
+B -0.3-> 324.7 | S        317.6 <-    321.6 <-   325.0 <-0.2-
+         324.4 |          317.6       320.4      324.0
+         323.9 |          318.0       319.2      323.0
+  <-0.3- 323.3 |   <-0.2- 318.5    <- 318.2   <- 323.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.0
+Cost of next 8 hours: 0.61 $
+[7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51]
+Replaced [0, 0, 0] by [0, 1, 0] in combi4
+Replaced [0, 0, 0] by [0, 1, 0] in combi5
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [0, 1, 0], 'combi5': [0, 1, 0], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [324.7139228988536, 324.35620791046625, 323.87840649686575, 323.278749891547] 
+Storage: [324.63892586785033, 324.15334074310783, 323.48152393245454, 322.61202102810853, 321.5577113579825, 320.37727867692854, 319.19189340272135, 318.202505841756, 317.6373294454903, 317.60451748550565, 317.98867541258284, 318.5173609444091]
+Electricity forecasts: [7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84]
+Load forecasts: [0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.02, 0.04]
+Sequence suggestion: [2, 2, 1, 0, 0, 0, 0, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi2 = [1, 1, 1] is feasible. Testing for combi3:
+--- combi3 = [1, 1, 1] is feasible. Testing for combi4:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+---- combi4 = [0, 1, 0] is feasible. Testing for combi5:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+----- combi5 = [0, 1, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 1, 0], 'combi5': [0, 1, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 14.0 (13h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 1, 0]
+4h-5h: [0, 1, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4.5 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 324.7 | S        317.6 --    321.6 --   325.0 --
+         324.4 |          317.6       320.4      324.0
+         323.9 |          318.0       319.2      323.0
+      -- 323.3 |       -- 318.5    -- 318.2   -- 323.0
+
+Next state
+B -0.3-> 327.6 | S        323.7 <-    325.5 <-   327.0 <-0.2-
+         327.2 |          322.9       325.1      327.0
+         326.7 |          322.1       324.7      326.0
+  <-0.3- 326.4 |   <-0.2- 321.1    <- 324.2   <- 326.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.0
+Cost of next 8 hours: 0.46 $
+[7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84]
+Replaced [0, 0, 0] by [0, 1, 0] in combi3
+Replaced [0, 0, 0] by [0, 1, 0] in combi4
+{'combi1': [], 'combi2': [], 'combi3': [0, 1, 0], 'combi4': [0, 1, 0], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [327.5860352911081, 327.1519207906225, 326.7489910115063, 326.38091480456814] 
+Storage: [327.3950695272034, 326.8059813576515, 326.2921158044705, 325.85290747430315, 325.47017663757754, 325.1078722450337, 324.7172776924719, 324.24732662518335, 323.65681885885596, 322.92538614386143, 322.06236095529704, 321.11317752134653]
+Electricity forecasts: [7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65]
+Load forecasts: [0.0, 0.0, 0.0, 0.0, 0.02, 0.02, 0.04, 0.04]
+Sequence suggestion: [2, 1, 0, 0, 0, 0, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+-- combi2 = [1, 1, 1] is feasible. Testing for combi3:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+--- combi3 = [0, 1, 0] is feasible. Testing for combi4:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+---- combi4 = [0, 1, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [0, 1, 0], 'combi4': [0, 1, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 15.0 (14h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 1, 0]
+3h-4h: [0, 1, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 6.8 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 327.6 | S        323.7 --    325.5 --   327.0 --
+         327.2 |          322.9       325.1      327.0
+         326.7 |          322.1       324.7      326.0
+      -- 326.4 |       -- 321.1    -- 324.2   -- 326.0
+
+Next state
+B -0.3-> 331.8 | S        326.7 <-    329.2 <-   332.0 <-0.2-
+         331.4 |          326.2       328.5      331.0
+         331.0 |          325.8       327.9      331.0
+  <-0.3- 330.6 |   <-0.2- 325.3    <- 327.3   <- 330.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.0
+Cost of next 8 hours: 0.3 $
+[7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65]
+Replaced [0, 0, 0] by [0, 1, 0] in combi2
+Replaced [0, 0, 0] by [0, 1, 0] in combi3
+{'combi1': [], 'combi2': [0, 1, 0], 'combi3': [0, 1, 0], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [331.76831336979654, 331.3938208849893, 331.0004856812225, 330.5873273894775] 
+Storage: [331.63551426327905, 331.0973954777867, 330.50989496788793, 329.8786598130129, 329.21798038429864, 328.54921816933404, 327.89685520637084, 327.28312469716377, 326.7225729635093, 326.21790187605853, 325.7583342399811, 325.32086804880606]
+Electricity forecasts: [7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46]
+Load forecasts: [0.0, 0.0, 0.0, 0.02, 0.02, 0.04, 0.04, 0.04]
+Sequence suggestion: [1, 0, 0, 0, 0, 2, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[1, 1, 1] *******
+- combi1 = [1, 1, 1] is feasible. Testing for combi2:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+-- combi2 = [0, 1, 0] is feasible. Testing for combi3:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+--- combi3 = [0, 1, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [1, 1, 1], 'combi2': [0, 1, 0], 'combi3': [0, 1, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 16.0 (15h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 1, 0]
+2h-3h: [0, 1, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 9.2 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 331.8 | S        326.7 --    329.2 --   332.0 --
+         331.4 |          326.2       328.5      331.0
+         331.0 |          325.8       327.9      331.0
+      -- 330.6 |       -- 325.3    -- 327.3   -- 330.0
+
+Next state
+B -0.3-> 335.1 | S        331.1 <-    333.2 <-   335.0 <-0.2-
+         334.7 |          330.6       332.7      335.0
+         334.3 |          330.0       332.2      334.0
+  <-0.3- 333.9 |   <-0.2- 329.3    <- 331.7   <- 334.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.0
+Cost of next 8 hours: 0.15 $
+[7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46]
+Replaced [0, 0, 0] by [0, 1, 0] in combi1
+Replaced [0, 0, 0] by [0, 1, 0] in combi2
+{'combi1': [0, 1, 0], 'combi2': [0, 1, 0], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [335.0877296011581, 334.69236643688214, 334.3055692228442, 333.9231809818155] 
+Storage: [335.04660780611044, 334.5893732559506, 334.1242404845326, 333.65255043236175, 333.17680781232707, 332.69447169738817, 332.19864034211133, 331.6816006585132, 331.1369262628832, 330.56148205485465, 329.95745403710464, 329.3332229086554]
+Electricity forecasts: [41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
+Load forecasts: [0.0, 0.0, 0.02, 0.02, 0.04, 0.04, 0.04, 0.05]
+Sequence suggestion: [0, 0, 0, 0, 2, 2, 2, 2]
+
+Searching for feasible sequence...
+Found from previous: [0, 0, 0] != [0, 1, 0]
+
+******* combi1=[0, 1, 0] *******
+- combi1 = [0, 1, 0] is feasible. Testing for combi2:
+Found from previous: [0, 0, 0] != [0, 1, 0]
+-- combi2 = [0, 1, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 1, 0], 'combi2': [0, 1, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 17.0 (16h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 1, 0]
+1h-2h: [0, 1, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 14.3 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 335.1 | S        331.1 --    333.2 --   335.0 --
+         334.7 |          330.6       332.7      335.0
+         334.3 |          330.0       332.2      334.0
+      -- 333.9 |       -- 329.3    -- 331.7   -- 334.0
+
+Next state
+B -0.3-> 331.1 | S        334.2 ->    333.9 ->   331.0 -0.3->
+         331.4 |          333.8       334.4      331.0
+         331.9 |          333.4       334.6      332.0
+  <-0.3- 332.4 |   -0.3-> 332.9    -> 334.5   -> 333.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.0
+Cost of next 8 hours: 0.0 $
+[41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
+Replaced [0, 0, 0] by [0, 1, 0] in combi1
+{'combi1': [0, 1, 0], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [331.057915518132, 331.42041340498275, 331.9108847551326, 332.42095847082874] 
+Storage: [331.00207735330866, 331.3866235419759, 332.16012789960314, 333.0837925366205, 333.88240370835183, 334.38979038298, 334.576226243711, 334.4946064571354, 334.2242820813597, 333.83931677330537, 333.39358595057263, 332.917077388459]
+Electricity forecasts: [41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 7.36]
+Load forecasts: [0.0, 0.02, 0.02, 0.04, 0.04, 0.04, 0.05, 0.05]
+Sequence suggestion: [0, 0, 0, 2, 2, 2, 2, 2]
+
+Searching for feasible sequence...
+Found from previous: [0, 0, 0] != [0, 1, 0]
+
+******* combi1=[0, 1, 0] *******
+- combi1 = [0, 1, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 1, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 18.0 (17h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 1, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 11.0 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 331.1 | S        334.2 --    333.9 --   331.0 --
+         331.4 |          333.8       334.4      331.0
+         331.9 |          333.4       334.6      332.0
+      -- 332.4 |       -- 332.9    -- 334.5   -- 333.0
+
+Next state
+B -0.3-> 334.0 | S        331.9 ->    332.1 ->   334.0 -0.3->
+         334.2 |          332.3       331.7      333.0
+         334.1 |          332.9       331.5      333.0
+  <-0.3- 333.9 |   -0.3-> 333.4    -> 331.6   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.0
+Cost of next 8 hours: 0.0 $
+[41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [334.0198075360583, 334.1596332922491, 334.1198688317333, 333.87797789898315] 
+Storage: [333.7414308201334, 333.36775664921345, 332.9379038555456, 332.4891066486071, 332.06604050533997, 331.728432396659, 331.5468698020159, 331.5818884552882, 331.85406487297183, 332.32356084307463, 332.8951134825084, 333.44849121993144]
+Electricity forecasts: [41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 7.36, 7.34]
+Load forecasts: [0.02, 0.02, 0.04, 0.04, 0.04, 0.05, 0.05, 0.04]
+Sequence suggestion: [0, 0, 2, 2, 2, 2, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 19.0 (18h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 17.4 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 334.0 | S        331.9 --    332.1 --   334.0 --
+         334.2 |          332.3       331.7      333.0
+         334.1 |          332.9       331.5      333.0
+      -- 333.9 |       -- 333.4    -- 331.6   -- 332.0
+
+Next state
+B <-0.0- 334.1 | S        332.0 ->    332.0 ->   334.0 -0.0->
+         334.1 |          332.5       331.7      333.0
+         333.7 |          332.6       331.6      333.0
+  -0.0-> 330.9 |   -0.0-> 330.3    -> 331.7   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.0 $
+[41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [334.05244519419034, 334.10521141975073, 333.6526030056647, 330.93071117416025] 
+Storage: [333.6124000423525, 333.2217716760085, 332.78797483373694, 332.35109999903545, 331.9606001407336, 331.67871691286524, 331.57109819351706, 331.68368062352386, 332.01428161597823, 332.46785921908565, 332.5858912776753, 330.3474764806473]
+Electricity forecasts: [41.51, 6.84, 6.65, 6.46, 6.4, 7.36, 7.34, 7.34]
+Load forecasts: [0.02, 0.04, 0.04, 0.04, 0.05, 0.05, 0.04, 0.04]
+Sequence suggestion: [0, 2, 2, 2, 2, 2, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 20.0 (19h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 18.5 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 334.1 | S        332.0 --    332.0 --   334.0 --
+         334.1 |          332.5       331.7      333.0
+         333.7 |          332.6       331.6      333.0
+      -- 330.9 |       -- 330.3    -- 331.7   -- 332.0
+
+Next state
+B <-0.0- 334.0 | S        332.1 ->    331.9 ->   333.0 -0.0->
+         333.9 |          332.4       331.7      333.0
+         332.7 |          331.6       331.6      333.0
+  -0.0-> 328.8 |   -0.0-> 328.1    -> 331.8   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.0 $
+[41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [334.04117325265713, 333.87101710886395, 332.66721944695934, 328.7989789481629] 
+Storage: [333.4748292525383, 333.0715407665713, 332.6395169514014, 332.22221300349787, 331.872913840783, 331.65370780187436, 331.6216392266549, 331.80199043080114, 332.14122482264827, 332.36507404516306, 331.5717139275116, 328.07492990906565]
+Electricity forecasts: [6.84, 6.65, 6.46, 6.4, 7.36, 7.34, 7.34, 7.37]
+Load forecasts: [0.04, 0.04, 0.04, 0.05, 0.05, 0.04, 0.04, 0.05]
+Sequence suggestion: [2, 2, 2, 2, 2, 2, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 21.0 (20h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 20.4 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 334.0 | S        332.1 --    331.9 --   333.0 --
+         333.9 |          332.4       331.7      333.0
+         332.7 |          331.6       331.6      333.0
+      -- 328.8 |       -- 328.1    -- 331.8   -- 332.0
+
+Next state
+B <-0.0- 333.8 | S        331.9 ->    331.8 ->   333.0 -0.0->
+         333.0 |          331.1       331.7      333.0
+         330.5 |          328.6       331.8      332.0
+  -0.0-> 326.2 |   -0.0-> 325.0    -> 332.0   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.0 $
+[6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [333.8068523414622, 332.9595194948181, 330.54723827574963, 326.2443448577871] 
+Storage: [333.1560074445916, 332.74323440768717, 332.3380937469275, 331.99056729001484, 331.7559161170351, 331.68271822430256, 331.78325116764285, 331.971856767835, 331.947770330259, 331.0762928101054, 328.6406240784862, 324.97868065078444]
+Electricity forecasts: [6.65, 6.46, 6.4, 7.36, 7.34, 7.34, 7.37, 7.41]
+Load forecasts: [0.04, 0.04, 0.05, 0.05, 0.04, 0.04, 0.05, 0.05]
+Sequence suggestion: [2, 2, 2, 2, 2, 2, 2, 2]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 0, 0]}
+#########################################
+
+-----------------------------------------------------
+Iteration 22.0 (21h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 21.4 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 333.8 | S        331.9 --    331.8 --   333.0 --
+         333.0 |          331.1       331.7      333.0
+         330.5 |          328.6       331.8      332.0
+      -- 326.2 |       -- 325.0    -- 332.0   -- 332.0
+
+Next state
+B <-0.0- 333.2 | S        330.8 ->    331.7 ->   333.0 -0.0->
+         331.6 |          328.9       331.8      332.0
+         328.6 |          326.0       331.8      332.0
+  -0.0-> 324.7 |   -0.0-> 323.3    -> 331.7   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.0 $
+[6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [333.2382946158393, 331.64735684948516, 328.57301701808234, 324.65171208899176] 
+Storage: [332.8280484405154, 332.4369244625623, 332.09439857708617, 331.8496437651682, 331.74104644290435, 331.76606020651326, 331.8261216567918, 331.6553304420691, 330.80699041951567, 328.8747453974687, 326.0298486124607, 323.33669087357123]
+Electricity forecasts: [6.46, 6.4, 7.36, 7.34, 7.34, 7.37, 7.41, 7.46]
+Load forecasts: [0.04, 0.05, 0.05, 0.04, 0.04, 0.05, 0.05, 0.04]
+Sequence suggestion: [2, 2, 2, 2, 2, 2, 2, 1]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [0, 0, 0] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [1, 1, 1]}
+#########################################
+
+-----------------------------------------------------
+Iteration 23.0 (22h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 16.6 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 333.2 | S        330.8 --    331.7 --   333.0 --
+         331.6 |          328.9       331.8      332.0
+         328.6 |          326.0       331.8      332.0
+      -- 324.7 |       -- 323.3    -- 331.7   -- 332.0
+
+Next state
+B <-0.0- 332.4 | S        329.0 ->    331.8 ->   333.0 -0.0->
+         330.2 |          326.6       331.7      332.0
+         326.9 |          324.2       331.4      332.0
+  -0.0-> 323.5 |   -0.0-> 322.3    -> 330.6   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.14 $
+[6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46]
+{'combi1': [], 'combi2': [], 'combi3': [], 'combi4': [], 'combi5': [], 'combi6': [], 'combi7': [], 'combi8': []}
+This is the new version
+
+#########################################
+Buffer: [332.37573338042455, 330.1828912988602, 326.89582950401257, 323.52359510683226] 
+Storage: [332.52379167447674, 332.18728316705227, 331.93399391853274, 331.79288074236774, 331.75075159623054, 331.7093674193387, 331.4455350326477, 330.63131823581455, 328.9979734815665, 326.6364673130073, 324.16169489779645, 322.3403731670842]
+Electricity forecasts: [6.4, 7.36, 7.34, 7.34, 7.37, 7.41, 7.46, 7.95]
+Load forecasts: [0.05, 0.05, 0.04, 0.04, 0.05, 0.05, 0.04, 0.04]
+Sequence suggestion: [2, 2, 2, 2, 2, 2, 1, 1]
+
+Searching for feasible sequence...
+
+******* combi1=[0, 0, 0] *******
+- combi1 = [0, 0, 0] is feasible. Testing for combi2:
+-- combi2 = [0, 0, 0] is feasible. Testing for combi3:
+--- combi3 = [0, 0, 0] is feasible. Testing for combi4:
+---- combi4 = [0, 0, 0] is feasible. Testing for combi5:
+----- combi5 = [0, 0, 0] is feasible. Testing for combi6:
+------ combi6 = [0, 0, 0] is feasible. Testing for combi7:
+------- combi7 = [1, 1, 1] is feasible. Testing for combi8:
+Found a working sequence!
+{'combi1': [0, 0, 0], 'combi2': [0, 0, 0], 'combi3': [0, 0, 0], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [1, 1, 1], 'combi8': [1, 1, 1]}
+#########################################
+
+-----------------------------------------------------
+Iteration 24.0 (23h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 16.3 seconds.
+Data was appended to results_2024-01-24_19-36-33.csv
+
+Initial state
+B     -- 332.4 | S        329.0 --    331.8 --   333.0 --
+         330.2 |          326.6       331.7      332.0
+         326.9 |          324.2       331.4      332.0
+      -- 323.5 |       -- 322.3    -- 330.6   -- 332.0
+
+Next state
+B <-0.0- 331.1 | S        326.5 ->    331.5 ->   332.0 -0.0->
+         328.5 |          324.3       331.1      332.0
+         325.3 |          322.6       330.1      332.0
+  -0.0-> 322.5 |   -0.0-> 321.4    -> 328.6   -> 332.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.28 $
+[6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95]
+The 24-hour simulation ran in 2 hour(s) and 33 minute(s).
+
+Plotting the data...
+
+2024-01-24 22:10:22.431 python[640:12464] ASB: LNW <NSApplication: 0x7ff44abe6800> <Window: 0x7ff44d703210> <NSThemeFrame: 0x7ff44abcc1d0> (null)
+2024-01-24 23:24:04.184 python[640:12464] ASB: LNW <NSApplication: 0x7ff44abe6800> <NSSavePanel: 0x7ff44c058ae0> <NSThemeFrame: 0x7ff44c04ff90> <_NSViewBackingLayer: 0x7ff44c059f60>
+
