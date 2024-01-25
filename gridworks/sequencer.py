@@ -75,9 +75,9 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
                 elif load_type == "Medium load":
                     hours_charge = int(round(length/2 + 0.001)) if length>=2 else 1
                 elif load_type == "Low load":
-                    # hours_charge = int(round(length/3 + 0.001)) if length>=3 else 1
+                    hours_charge = int(round(length/3 + 0.001)) if length>=3 else 1
                     # With low loads it might not be necessary to charge, leave undecided
-                    hours_charge = 0
+                    # hours_charge = 0
 
                 # Charge the tanks for as long as necessary before the peak
                 for j in range(hours_charge):
@@ -161,25 +161,16 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     # Update the sequence with previous results
     #print("Previous sequence:\n", previous_sequence)
     #print("Current sequence before comparison:\n", sequence_dict)
-    for i in range(1,9):
-        
-        '''
-        # If there is a [0,0,0] -> [0,1,0] change in previous sequence
-        if i<8 and sequence_dict[f'combi{i}'] == [0,0,0] and previous_sequence[f'combi{i+1}'] == [0,1,0]:
-            sequence_dict[f'combi{i}'] = [0,1,0]
-            print(f"Replaced [0,0,0] with [0,1,0] in combi{i}")
-        # If there is a [1,1,1] -> [1,0,1] change in previous sequence
-        if i<8 and sequence_dict[f'combi{i}'] == [1,1,1] and previous_sequence[f'combi{i+1}'] == [1,0,1]:
-            sequence_dict[f'combi{i}'] = [1,0,1]
-            print(f"Replaced [1,1,1] with [1,0,1] in combi{i}")
-        if i<8 and sequence_dict[f'combi{i}'] == [1,1,1] and previous_sequence[f'combi{i+1}'] == [0,0,0]:
-            sequence_dict[f'combi{i}'] = [0,0,0]
-            print(f"Replaced [1,1,1] with [0,0,0] in combi{i}")
-        '''
-        
-        if i<8 and sequence_dict[f'combi{i}'] != previous_sequence[f'combi{i+1}']:
-            sequence_dict[f'combi{i}'] = previous_sequence[f'combi{i+1}']
-            print(f"Replaced {sequence_dict[f'combi{i}']} by {previous_sequence[f'combi{i+1}']} in combi{i}")
+    most_likely = {}
+    for i in range(1,9): most_likely[f'combi{i}'] = []
+    for i in range(1,8):
+        if sequence_dict[f'combi{i}'] != previous_sequence[f'combi{i+1}']:
+            if (sequence_dict[f'combi{i}'] == [0,0,0] and previous_sequence[f'combi{i+1}'] == [0,1,0]) \
+            or (sequence_dict[f'combi{i}'] == [1,1,1] and previous_sequence[f'combi{i+1}'] == [1,0,1]):
+                print(f"Replaced {sequence_dict[f'combi{i}']} by {previous_sequence[f'combi{i+1}']} in combi{i}")
+                sequence_dict[f'combi{i}'] = previous_sequence[f'combi{i+1}']
+                most_likely[f'combi{i}'] = previous_sequence[f'combi{i+1}']
+    print(most_likely)
 
     # --------------------------------------------
     # Attempt 1: use pre-maid sequence
@@ -191,7 +182,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     
     if load_type == "Low load":
         if attempt == 1:
-            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8])
+            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
         if attempt > 1:
             raise RuntimeError("No feasible sequence was found!")
     return sequence_dict
@@ -202,7 +193,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
         if attempt == 3:
             sequence_dict['combi1'] = [1,1,1]
         if attempt == 4:
-            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8])
+            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
         if attempt > 4:
             raise RuntimeError("No feasible sequence was found!")
         return sequence_dict
@@ -212,7 +203,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
             if sequence_dict['combi8'] != [0,0,0]: sequence_dict['combi8'] = [0,0,0]
             else: attempt += 1
         if attempt == 3:
-            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8])
+            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
         if attempt > 3:
             raise RuntimeError("No feasible sequence was found!")
         return sequence_dict
@@ -270,7 +261,7 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
 # The long check
 # ------------------------------------------------------
 
-def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads):
+def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, most_likely):
     
     # Unpack values for long sequence check
     x_0 = long_seq_pack['x_0']
@@ -293,15 +284,11 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads):
     for i in range(1,9): tested_and_failed[f'combi{i}'] = []
     
     while step<9:
-    
-        if step==8 and first_try:
-            first_try = False
-                
+                    
         # Either this is our first step or we solved for the previous step
         if step==1 or solved:
             
             # Preparing for next step
-            #step = step+1 if step>1 else step
             solved = False
             #print(f"Searching for an operating mode at step {step}...")
 
@@ -314,9 +301,13 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads):
                     if sequence012[step-1] == 1 and combi[0]==0: continue #try [1,1,1] and [1,0,1] only
                     if sequence012[step-1] == 0 and combi[0]==1: continue #try [0,0,0] and [0,1,0] only
                 
-                    # Be selective only if you are not at the last step
-                    if step!=8 and not first_try:
-                        
+                    # Be selective only if you are not at the last step for the first time
+                    if step==8 and first_try:
+                        # Don't explore previously explored combinations
+                        # print(tested_and_failed)
+                        print("First try at hour 8, allow all combinations")
+                        first_try = False
+                    else:
                         # Don't explore previously explored combinations
                         # print(tested_and_failed)
                         if combi in tested_and_failed[f'combi{step}']: continue
@@ -331,7 +322,14 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads):
                          len(tested_and_failed[f'combi{step-1}']) <= num_options_prev_step:
                             if [1,1,1] in tested_and_failed[f'combi{step}'] and combi == [1,0,1]: continue
                             if [0,0,0] in tested_and_failed[f'combi{step}'] and combi == [0,1,0]: continue
-
+                            
+                        # You need to try the previous answer once
+                        if most_likely[f'combi{step}']!=[]:
+                            if (combi == [0,0,0] and most_likely[f'combi{step}'] == [0,1,0]) \
+                            or (combi == [1,1,1] and most_likely[f'combi{step}'] == [1,0,1]):
+                                print(f"Found from previous: {combi} != {most_likely[f'combi{step}']}")
+                                combi = most_likely[f'combi{step}']
+                                
                     # Try solving for {step} hours
                     sequence[f'combi{step}'] = combi
                     cost, x_opt, u_opt, error = one_iteration(x_0, 15*iter, sequence, 15*step, x_opt_prev, u_opt_prev)
