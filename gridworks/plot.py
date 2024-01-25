@@ -106,9 +106,9 @@ def plot_MPC(data):
     
     # Get the Q_load from the m_load
     cp, Delta_T_load= 4187, 5/9*20
-    Q_load_list = [m_load*cp*Delta_T_load/1000 for m_load in data['m_load']]
+    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
     
-    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Load: {round(sum(Q_load_list)*4/60,1)} kWh_th")
+    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Load: {round(sum(Q_load_list)/1000*4/60,1)} kWh_th")
     
     # ------------------------------------------------------
     # First plot
@@ -126,6 +126,7 @@ def plot_MPC(data):
     ax2 = ax[0].twinx()
     ax2.plot([x*100*1000 for x in data['c_el']], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [cts/kWh]")
+    ax2.set_ylim([-20,50])
 
     # x_ticks in hours
     tick_positions = np.arange(0, data['iterations']*15+1, step=int(60/data['pb_type']['time_step']))

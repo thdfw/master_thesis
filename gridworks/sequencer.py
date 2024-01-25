@@ -156,7 +156,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
         sequence_dict[f'combi{i+1}'] = sequence_trimmed[i]
 
     # Report if there are two options (current mode is undetermined)
-    undertermined_now = two_option_indices[hour] == 1
+    undetermined_now = two_option_indices[hour] == 1
     
     # Update the sequence with previous results
     #print("Previous sequence:\n", previous_sequence)
@@ -177,16 +177,16 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     # Final attempts: run through all sequences
     # --------------------------------------------
 
-    if PRINT: print("There are two options") if undertermined_now==True else print("Only one option")
+    if PRINT: print("There are two options") if undetermined_now else print("Only one option")
     
     if load_type == "Low load":
         if attempt == 1:
             sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
         if attempt > 1:
             raise RuntimeError("No feasible sequence was found!")
-    return sequence_dict
+        return sequence_dict
     
-    if undertermined_now == True:
+    if undetermined_now:
         if attempt == 2:
             sequence_dict['combi1'] = [0,1,0]
         if attempt == 3:

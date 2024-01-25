@@ -18,7 +18,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 24
+num_iterations = 14
 
 # Problem type
 pb_type = {
@@ -85,6 +85,9 @@ for iter in range(num_iterations):
     if iter%24==0:
         c_el = c_el[-24:]
         m_load = m_load[-24:]
+        
+    # At 2AM, sudden negative price
+    if iter==2: c_el[2] = -15
      
     # To save the iteration in a csv file
     data = [{
