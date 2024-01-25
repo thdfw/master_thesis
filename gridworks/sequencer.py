@@ -302,12 +302,8 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, mo
                     if sequence012[step-1] == 0 and combi[0]==1: continue #try [0,0,0] and [0,1,0] only
                 
                     # Be selective only if you are not at the last step for the first time
-                    if step==8 and first_try:
-                        # Don't explore previously explored combinations
-                        # print(tested_and_failed)
-                        print("First try at hour 8, allow all combinations")
-                        first_try = False
-                    else:
+                    if not (step==8 and first_try):
+
                         # Don't explore previously explored combinations
                         # print(tested_and_failed)
                         if combi in tested_and_failed[f'combi{step}']: continue
@@ -348,6 +344,9 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, mo
                             print("#########################################")
                             return sequence
              
+        if step==8 and first_try:
+            first_try = False
+        
         # If a feasible operating mode was found move to the next step
         if solved:
             step += 1
