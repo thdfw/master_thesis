@@ -323,7 +323,7 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, mo
                         if most_likely[f'combi{step}']!=[]:
                             if (combi == [0,0,0] and most_likely[f'combi{step}'] == [0,1,0]) \
                             or (combi == [1,1,1] and most_likely[f'combi{step}'] == [1,0,1]):
-                                print(f"Found from previous: {combi} != {most_likely[f'combi{step}']}")
+                                #print(f"Found from previous: {combi} != {most_likely[f'combi{step}']}")
                                 combi = most_likely[f'combi{step}']
                                 
                     # Try solving for {step} hours
