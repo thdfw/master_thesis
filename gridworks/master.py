@@ -33,8 +33,7 @@ plot.print_pb_type(pb_type, num_iterations)
 # ------------------------------------------------------
 
 # Initial state (buffer + storage)
-# x_0 = [314.0, 314.6, 313.7, 308.8] + [310]*12 # TODO: remove this initial state
-x_0 = [308]*16
+x_0 = [310]*16
 
 # Initial solver warm start
 u_opt = np.zeros((6, N))
@@ -83,7 +82,7 @@ for iter in range(num_iterations):
         m_load = m_load[-24:]
         
     # At 2AM, sudden negative price
-    if iter==2: c_el[2] = -15
+    # if iter==2: c_el[2] = -15
      
     # To save the iteration in a csv file
     csv_data = [{
@@ -206,7 +205,7 @@ plot_data = {
 total_time = time.time()-start_time
 hours = round(total_time // 3600)
 minutes = round((total_time % 3600) // 60)
-print(f"The {num_iterations}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
+print(f"\nThe {num_iterations}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
     
 print("\nPlotting the data...\n")
 plot.plot_MPC(plot_data)

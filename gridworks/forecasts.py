@@ -12,7 +12,7 @@ def get_c_el(start, end, delta_t_h):
     41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
     
     # Sudden negative price announced at 2 AM
-    if start >= 15*2 or (start == 0 and end==15*24): c_el_all[2] = -15
+    # if start >= 15*2 or (start == 0 and end==15*24): c_el_all[2] = -15
 
     # Extend to match time step (1 hour is 1/delta_t_h time steps)
     time_steps = int(1/delta_t_h)
