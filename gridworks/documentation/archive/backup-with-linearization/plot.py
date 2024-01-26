@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
-import os
-import forecasts, functions
+import forecasts, optimizer, functions
 
 '''
 Prints the selected problem type
 '''
-def print_pb_type(pb_type, num_iterations):
+def print_pb_type(pb_type):
 
     # Linearized or not
     if pb_type['linearized']: print("\nProblem type: Linearized")
@@ -15,7 +14,7 @@ def print_pb_type(pb_type, num_iterations):
 
     # Variables: mixed integer or continuous
     if pb_type['mixed-integer']: print("Variables: Mixed-Integer")
-    else: print("Variables: Continuous (fixed binary)")
+    else: print("Variables: Continuous (relaxed or fixed binary)")
 
     # Solver: gurobi or ipopt/bonmin
     if pb_type['gurobi']: print("Solver: Gurobi")
@@ -24,7 +23,7 @@ def print_pb_type(pb_type, num_iterations):
     # Time step and horizon
     print(f"\nTime step: {pb_type['time_step']} minutes")
     print(f"Horizon: {pb_type['horizon']*pb_type['time_step']/60} hours ({pb_type['horizon']} time steps)")
-    print(f"Simulation: {num_iterations} hours ({num_iterations} iterations)")
+
 
 '''
 Prints the current iteration (x0, u0*, x1) in way that is easy to visualize
@@ -45,7 +44,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence, iter):
     print(f"      -- {round(x_opt[3,0],1)} |       -- {round(x_opt[15,0],1)}    -- {round(x_opt[11,0],1)}   -- {round(x_opt[7,0],0)}")
     
     # ------------------------------------------------------
-    # Get hourly average mass flow rates, get heat values
+    # Get average mass flow rates and heat over the hour
     # ------------------------------------------------------
     
     Q_HP = []
@@ -57,14 +56,12 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence, iter):
         u_k = [round(float(x),6) for x in u_opt[:,k]]
         x_k = [round(float(x),6) for x in x_opt[:,k]]
         
-        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, sequence, iter, delta_t_h))
-        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, sequence, iter, delta_t_h),1)
+        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, True, False, 0, sequence, iter, delta_t_h))
         m_stor += u_opt[1,k]
+        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, True, False, 0, sequence, iter, delta_t_h),1)
 
     m_buffer = round(m_buffer/15, 1)
     m_stor = round(m_stor/15, 1)
-    
-    # Round -0.0 values to 0.0
     if m_buffer<=0 and m_buffer>-0.04: m_buffer = 0.0
     if m_stor<=0   and m_stor>-0.04:   m_stor = 0.0
 
@@ -90,6 +87,7 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence, iter):
     print(f"m_HP = {m_HP}, m_load = {m_load}")
     # print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:15]]}\n")
     
+
 '''
 The final plot with all the data accumulated during the simulation
 '''
@@ -118,13 +116,13 @@ def plot_MPC(data):
     
     ax[0].set_xlim([0,15*data['iterations']])
 
-    # HP and load
+    # First plot part 1
     ax[0].plot(data['Q_HP'], label="Heat pump", color='blue', alpha=0.4)
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
-    # Electricity price
+    # First plot part 2
     ax2 = ax[0].twinx()
     ax2.plot([x*100*1000 for x in data['c_el']], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [cts/kWh]")
@@ -144,7 +142,6 @@ def plot_MPC(data):
     # Second plot
     # ------------------------------------------------------
 
-    # Temperatures in storage and buffer
     ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
     ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
@@ -155,14 +152,15 @@ def plot_MPC(data):
     ax[1].set_xlabel("Time [hours]")
     ax[1].legend()
 
-    # Save the plot as a png
+    # Save the plot
     current_datetime = datetime.now()
     formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
-    plt.savefig(os.path.join("data", "simulations", "recent", "plot_" + formatted_datetime + ".png"))
+    plt.savefig("plot_" + formatted_datetime + ".png")
     plt.show()
 
+
 '''
-To visualize the 8 hours predicted by a single iteration
+To visualize the 2 hours predicted by a single iteration
 '''
 def plot_single_iter(data):
 
@@ -177,14 +175,14 @@ def plot_single_iter(data):
     cp, Delta_T_load=  4187, 5/9*20
     Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
     
-    # HP and load
+    # First plot part 1
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].plot(data['Q_HP'], label="HP", color='blue', alpha=0.4)
     ax[0].set_xlim([0,120])
     ax[0].set_ylim([0,20000])
     ax[0].set_ylabel("Power [W]")
 
-    # Electricity price
+    # First plot part 2
     ax2 = ax[0].twinx()
     ax2.plot(data['c_el'], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [cts/kWh]")
@@ -198,8 +196,7 @@ def plot_single_iter(data):
     # ------------------------------------------------------
     # Second plot
     # ------------------------------------------------------
-    
-    # Temperatures in storage and buffer
+
     ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
     ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)

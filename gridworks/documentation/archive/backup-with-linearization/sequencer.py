@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
 import csv
-import os
 import optimizer
 
 # ----------------------------------------------------------------------------------
@@ -188,13 +187,13 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
         return sequence_dict
     
     if undetermined_now:
-        #if attempt == 2:
-        #    sequence_dict['combi1'] = [0,1,0]
         if attempt == 2:
-            sequence_dict['combi1'] = [1,1,1]
+            sequence_dict['combi1'] = [0,1,0]
         if attempt == 3:
+            sequence_dict['combi1'] = [1,1,1]
+        if attempt == 4:
             sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
-        if attempt > 3:
+        if attempt > 4:
             raise RuntimeError("No feasible sequence was found!")
         return sequence_dict
 
@@ -253,7 +252,7 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
     pb_type['horizon'] = horizon
 
     # Get u* and x*
-    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, False)
+    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 0, iter, pb_type, sequence, warm_start, False)
         
     return obj_opt, x_opt, u_opt, error
 
@@ -384,7 +383,7 @@ def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, mo
 # The name of the CSV file for the results
 current_datetime = datetime.datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
-csv_file_name = os.path.join("data", "simulations", "recent", "results_" + formatted_datetime + ".csv")
+csv_file_name = "results_" + formatted_datetime + ".csv"
 
 def append_to_csv(data, final_sequence):
     
