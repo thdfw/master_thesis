@@ -40,6 +40,10 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     # For all attempts: get pre-maid sequence
     # --------------------------------------------
     
+    # High-price threshold in cts/kWh (default is 20)
+    threshold = 25
+    if iter==0: print(f"The threshold is {threshold} cts/kWh.")
+    
     # Get the hour of the day
     hour = iter%24
     
@@ -63,10 +67,10 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
 
         # Detect peaks, and their length
         if i<(len(c_el)-1) and abs(c_el[i+1] - c_el[i]) >= 15:
-            if c_el[i+1] - c_el[i] > 0 and c_el[i+1]>20:
+            if c_el[i+1] - c_el[i] > 0 and c_el[i+1] > threshold:
                 length = i
                 if PRINT: print(f"Price peak starting at {i+1}h")
-            if c_el[i+1] - c_el[i] < 0  and c_el[i]>20:
+            if c_el[i+1] - c_el[i] < 0  and c_el[i] > threshold:
                 length = i - length
                 if PRINT: print(f"Price peak finishing at {i+1}h, after {length} hours\n")
 
@@ -263,116 +267,123 @@ def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
 
 def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, most_likely):
     
-    # Unpack values for long sequence check
-    x_0 = long_seq_pack['x_0']
-    x_opt_prev = long_seq_pack['x_opt_prev']
-    u_opt_prev = long_seq_pack['u_opt_prev']
+    done = False
+    while not done:
     
-    print("\n#########################################")
-    print(f"Buffer: {x_0[:4]} \nStorage: {x_0[4:]}")
-    print(f"Electricity forecasts: {elec_prices}")
-    print(f"Load forecasts: {loads}")
-    print(f"Sequence suggestion: {sequence012}")
-    print("\nSearching for feasible sequence...")
+        # Unpack values for long sequence check
+        x_0 = long_seq_pack['x_0']
+        x_opt_prev = long_seq_pack['x_opt_prev']
+        u_opt_prev = long_seq_pack['u_opt_prev']
+        
+        print("\n#########################################")
+        print(f"Buffer: {x_0[:4]} \nStorage: {x_0[4:]}")
+        print(f"Electricity forecasts: {elec_prices}")
+        print(f"Load forecasts: {loads}")
+        print(f"Sequence suggestion: {sequence012}")
+        print("\nSearching for feasible sequence...")
 
-    # Initialize
-    sequence = {}
-    step = 1
-    first_try = True
-    solved = False
-    tested_and_failed = {}
-    for i in range(1,9): tested_and_failed[f'combi{i}'] = []
-    
-    while step<9:
-                    
-        # Either this is our first step or we solved for the previous step
-        if step==1 or solved:
-            
-            # Preparing for next step
-            solved = False
-            #print(f"Searching for an operating mode at step {step}...")
-
-            # Find a operating modes for this step
-            for combi in operating_modes:
-            
-                if not solved:
-                
-                    # Don't explore combinations that are fixed by basic sequencer
-                    if sequence012[step-1] == 1 and combi[0]==0: continue #try [1,1,1] and [1,0,1] only
-                    if sequence012[step-1] == 0 and combi[0]==1: continue #try [0,0,0] and [0,1,0] only
-                
-                    # Be selective only if you are not at the last step for the first time
-                    if not (step==8 and first_try):
-
-                        # Don't explore previously explored combinations
-                        # print(tested_and_failed)
-                        if combi in tested_and_failed[f'combi{step}']: continue
+        # Initialize
+        sequence = {}
+        step = 1
+        first_try = True
+        solved = False
+        tested_and_failed = {}
+        for i in range(1,9): tested_and_failed[f'combi{i}'] = []
+        
+        while step<9:
                         
-                        # Don't explore slight combination variations if
-                        # - You have not already tried the two (one) basic options at this branch
-                        # - You have not already tried all four (two) options at the previous branch
-                        num_basic_step = 2 if sequence012[step-1] == 2 else 1
-                        num_options_prev_step = 4 if sequence012[step-2] == 2 else 2
-                        if step>1 and \
-                         len(tested_and_failed[f'combi{step}']) <= num_basic_step and \
-                         len(tested_and_failed[f'combi{step-1}']) <= num_options_prev_step:
-                            if [1,1,1] in tested_and_failed[f'combi{step}'] and combi == [1,0,1]: continue
-                            if [0,0,0] in tested_and_failed[f'combi{step}'] and combi == [0,1,0]: continue
+            # Either this is our first step or we solved for the previous step
+            if step==1 or solved:
+                
+                # Preparing for next step
+                solved = False
+                #print(f"Searching for an operating mode at step {step}...")
+
+                # Find a operating modes for this step
+                for combi in operating_modes:
+                
+                    if not solved:
+                    
+                        # Don't explore combinations that are fixed by basic sequencer
+                        if sequence012[step-1] == 1 and combi[0]==0: continue #try [1,1,1] and [1,0,1] only
+                        if sequence012[step-1] == 0 and combi[0]==1: continue #try [0,0,0] and [0,1,0] only
+                    
+                        # Be selective only if you are not at the last step for the first time
+                        if not (step==8 and first_try):
+
+                            # Don't explore previously explored combinations
+                            # print(tested_and_failed)
+                            if combi in tested_and_failed[f'combi{step}']: continue
                             
-                        # You need to try the previous answer once
-                        if most_likely[f'combi{step}']!=[]:
-                            if (combi == [0,0,0] and most_likely[f'combi{step}'] == [0,1,0]) \
-                            or (combi == [1,1,1] and most_likely[f'combi{step}'] == [1,0,1]):
-                                #print(f"Found from previous: {combi} != {most_likely[f'combi{step}']}")
-                                combi = most_likely[f'combi{step}']
+                            # Don't explore slight combination variations if
+                            # - You have not already tried the two (one) basic options at this branch
+                            # - You have not already tried all four (two) options at the previous branch
+                            num_basic_step = 2 if sequence012[step-1] == 2 else 1
+                            num_options_prev_step = 4 if sequence012[step-2] == 2 else 2
+                            if step>1 and \
+                             len(tested_and_failed[f'combi{step}']) <= num_basic_step and \
+                             len(tested_and_failed[f'combi{step-1}']) <= num_options_prev_step:
+                                if [1,1,1] in tested_and_failed[f'combi{step}'] and combi == [1,0,1]: continue
+                                if [0,0,0] in tested_and_failed[f'combi{step}'] and combi == [0,1,0]: continue
                                 
-                    # Try solving for {step} hours
-                    sequence[f'combi{step}'] = combi
-                    cost, x_opt, u_opt, error = one_iteration(x_0, 15*iter, sequence, 15*step, x_opt_prev, u_opt_prev)
+                            # You need to try the previous answer once
+                            if most_likely[f'combi{step}']!=[]:
+                                if (combi == [0,0,0] and most_likely[f'combi{step}'] == [0,1,0]\
+                                and [0,1,0] not in tested_and_failed[f'combi{step}'])\
+                                or (combi == [1,1,1] and most_likely[f'combi{step}'] == [1,0,1]\
+                                and [1,0,1] not in tested_and_failed[f'combi{step}']):
+                                    #print(f"Found from previous: {combi} != {most_likely[f'combi{step}']}")
+                                    combi = most_likely[f'combi{step}']
+                                    
+                        # Try solving for {step} hours
+                        sequence[f'combi{step}'] = combi
+                        cost, x_opt, u_opt, error = one_iteration(x_0, 15*iter, sequence, 15*step, x_opt_prev, u_opt_prev)
 
-                    if step==1: print(f"\n******* combi1={combi} *******")
+                        if step==1: print(f"\n******* combi1={combi} *******")
 
-                    if cost == 1e5:
-                        print(f"{'-'*step} combi{step} = {combi} could not be solved: {error}")
-                        tested_and_failed[f'combi{step}'].append(sequence[f'combi{step}'])
-                    else:
-                        solved = True
-                        if step<8:
-                            print(f"{'-'*step} combi{step} = {combi} is feasible. Testing for combi{step+1}:")
+                        if cost == 1e5:
+                            print(f"{'-'*step} combi{step} = {combi} could not be solved: {error}")
+                            tested_and_failed[f'combi{step}'].append(sequence[f'combi{step}'])
                         else:
-                            print(f"Found a working sequence!\n{sequence}")
-                            print("#########################################")
-                            return sequence
-             
-        if step==8 and first_try:
-            first_try = False
-        
-        # If a feasible operating mode was found move to the next step
-        if solved:
-            step += 1
-        
-        # If no feasisble operating mode was found for the current step, go back one step
-        if not solved and step>1:
+                            solved = True
+                            if step<8:
+                                print(f"{'-'*step} combi{step} = {combi} is feasible. Testing for combi{step+1}:")
+                            else:
+                                print(f"Found a working sequence!\n{sequence}")
+                                print("#########################################")
+                                return sequence
+                 
+            if step==8 and first_try:
+                first_try = False
             
-            # No branches worked for combi{step} with this combi{step-1}
-            #print(f"No solution works after combi{step-1}.")
-            # Don't explore that branch again with the same sequence before it
-            tested_and_failed[f'combi{step-1}'].append(sequence[f'combi{step-1}'])
-            # You can now explore branches that did not work again because the sequence before will change
-            tested_and_failed[f'combi{step}'] = []
-            #print(f"Tested and failed combi{step-1}: {tested_and_failed[f'combi{step-1}']}")
+            # If a feasible operating mode was found move to the next step
+            if solved:
+                step += 1
             
-            # Go back one step
-            step = step-1
-            solved = True
-        
-        # Extremely unlikeley case where no feasible combi1 exists
-        if not solved and step==1:
-            step = 9
+            # If no feasisble operating mode was found for the current step, go back one step
+            if not solved and step>1:
+                
+                # No branches worked for combi{step} with this combi{step-1}
+                #print(f"No solution works after combi{step-1}.")
+                # Don't explore that branch again with the same sequence before it
+                tested_and_failed[f'combi{step-1}'].append(sequence[f'combi{step-1}'])
+                # You can now explore branches that did not work again because the sequence before will change
+                tested_and_failed[f'combi{step}'] = []
+                # print(f"Tested and failed combi{step-1}: {tested_and_failed[f'combi{step-1}']}")
+                
+                # Go back one step
+                step = step-1
+                solved = True
+            
+            # Extremely unlikeley case where no feasible combi1 exists
+            #if not solved and step==1:
+            #    step = 9
 
-    # If nothing worked in the end
-    print("\nNo feasible sequence was found.\n")
-    raise RuntimeError("No feasible sequence was found.")
+        # If nothing worked in the end
+        print("\nNo feasible sequence was found within sequence suggestion.")
+        print("Now trying with a more open sequence suggestion.\n")
+        sequence012 = [2]*8
+        # raise RuntimeError("No feasible sequence was found.")
 
 
 # ----------------------------------------------------------------------------------
