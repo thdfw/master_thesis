@@ -128,7 +128,7 @@ def plot_MPC(data):
     ax2 = ax[0].twinx()
     ax2.plot([x*100*1000 for x in data['c_el']], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [cts/kWh]")
-    ax2.set_ylim([-20,50])
+    #ax2.set_ylim([-20,50])
 
     # x_ticks in hours
     tick_positions = np.arange(0, data['iterations']*15+1, step=int(60/data['pb_type']['time_step']))

@@ -42,6 +42,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     
     # High-price threshold in cts/kWh (default is 20)
     threshold = 25
+    hours_charge = 0
     if iter==0: print(f"The threshold is {threshold} cts/kWh.")
     
     # Get the hour of the day
@@ -54,6 +55,7 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
     if round(np.mean(m_load),2) >= 0.10: load_type = "High load"
     elif round(np.mean(m_load),2) >= 0.05: load_type = "Medium load"
     else: load_type = "Low load"
+    load_type = "Low laod"
     if PRINT: print(load_type)
         
     # For every hour in the next 24 hours
