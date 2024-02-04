@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import load_forecast, pareto_algorithm, fmu_simulation
-PLOT = False
 
 print("\n---------------------------------------")
 print("0 - Find the best forecaster")
