@@ -27,9 +27,8 @@ df.index = pd.to_datetime(df.index)
 df.index.name = None
 df['Outside Temp F'] = df['Outside Temp F'].apply(lambda x: round(5/9 * (x-32),2))
 weather = list(df['Outside Temp F'][24*60:24*61])
-weather = [2]*5 + [7]*15 + [2]*4
 
-print(f"\n{len(weather)}-hour weather forecast succesfully obtained.")
+print(f"\n{len(weather)}-hour weather forecast succesfully obtained:\n{weather}")
 
 print("\n--------------------------------")
 print("2 - Get forecasted load")
@@ -42,7 +41,7 @@ print(f"\nFinished predicting the load with {best_forecaster}, {(1-delta)*100}% 
 print([round(x[0],2) for x in pred_load])
 
 print("\n--------------------------------")
-print("3 - Get HP commands from Pareto
+print("3 - Get HP commands from Pareto")
 print("--------------------------------")
 
 # Select price forecast (options are: "GridWorks", "Progressive", "Peter")

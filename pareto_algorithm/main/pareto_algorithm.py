@@ -51,6 +51,25 @@ Q_min = Q_min.round(1)
 COP = pd.DataFrame(COP_table[1:], columns=COP_table[0]).T
 COP.columns = COP.iloc[0]
 COP = COP[1:]
+
+# --------------------------------
+# --------------------------------
+# Polynomial fits of the tables
+# --------------------------------
+# --------------------------------
+def get_range_and_COP(LWT, T_OA):
+
+    # Get the Q_max and COP polyfits
+    Q_max_polyfit = np.polyfit(list(Q_max.index), list(Q_max[LWT]), 3)
+    Q_min_polyfit = np.polyfit(list(Q_min.index), list(Q_min[LWT]), 3)
+    COP_polyfit = np.polyfit(list(COP.index), list(COP[LWT]), 3)
+
+    # Get value for a given temperature forecast
+    Q_HP_max = np.polyval(Q_max_polyfit, T_OA)
+    Q_HP_min = np.polyval(Q_min_polyfit, T_OA)
+    COPs = np.polyval(COP_polyfit, T_OA)
+
+    return Q_HP_max, Q_HP_min, COPs
     
 # --------------------------------
 # --------------------------------
@@ -63,8 +82,13 @@ def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
         
     # Range (min,max) of acceptable Q_HP for each LWT option at the given T_OA
     LWT_options = [list[0] for list in Q_max_table][1:]
-    Q_max_by_LWT = [Q_max[column][T_OA] for column in Q_max.columns]
-    Q_min_by_LWT = [round(Q_min[column][T_OA]) for column in Q_min.columns]
+    
+    # Get the corresponding Q_min and Q_max depending on T_OA
+    Q_min_by_LWT, Q_max_by_LWT = [], []
+    for LWT in LWT_options:
+        Q_HP_max, Q_HP_min, _ = get_range_and_COP(LWT, T_OA)
+        Q_max_by_LWT.append(Q_HP_max)
+        Q_min_by_LWT.append(Q_HP_min)
     
     # Find the LWT(s) that are attainable within this range of Q_HP
     available_LWT = []
@@ -84,15 +108,18 @@ def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
     # The corresponding prices and Q_HP ranges
     for LWT in available_LWT:
         Q_HP = m_HP(LWT)*4187*(LWT-T_HP_in)/1000
-        W_HP = Q_HP/COP[LWT][T_OA]
+        Q_max_LWT_TOA, _, COP_LWT_TOA = get_range_and_COP(LWT, T_OA)
+        W_HP = Q_HP/COP_LWT_TOA
+        
         if PRINT:
             print(f"\n{LWT}°C water is possible:")
             print(f"Requires {round(Q_HP,1)} kW_th => {round(W_HP,1)} kW_elec at {round(W_HP*elec,1)} cts/kWh => [{round(W_HP*elec/Q_HP,2)} cts/kWh_th]")
-            print(f"The Q_HP range for this LWT is => [{round(Q_HP,1)}, {round(Q_max[LWT][T_OA]/1000)}] kW")
+            print(f"The Q_HP range for this LWT is => [{round(Q_HP,1)}, {round(Q_max_LWT_TOA/1000)}] kW")
 
     # There is generally only one LWT option. Save the range and cost for the given hour.
     Q_HP_min = round(Q_HP,3)
-    Q_HP_max = round(Q_max[LWT][T_OA]/1000,3)
+    Q_HP_max, _, __ = get_range_and_COP(LWT, T_OA)
+    Q_HP_max = round(Q_HP_max/1000,3)
     cost_th = round(W_HP*elec/Q_HP,3)
     
     return Q_HP_min, Q_HP_max, cost_th
@@ -165,7 +192,10 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT):
 
     # Get heating ranges and costs for each hour
     Q_HP_min_list, Q_HP_max_list, cost_th_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in)
-    
+    print(f"Q_HP_min_list = {Q_HP_min_list}")
+    print(f"Q_HP_max_list = {Q_HP_max_list}")
+    print(f"cost_th_list = {cost_th_list}")
+
     # Horizon
     N = len(cost_th_list)
 
