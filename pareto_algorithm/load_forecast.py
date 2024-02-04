@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+import csv
 import fcLib
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -13,14 +14,20 @@ PLOT = False
 PRINT = False
 library = fcLib.forecasters(fcLib.forecaster_list)
 
+# Create a CSV file to store past results
+if not os.path.isfile(os.getcwd()+'/data/best_forecasters.csv'):
+    with open(os.getcwd()+'/data/best_forecasters.csv', 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(['Data file', 'Best forecaster'])
+        
 # ---------------------------------------------------------------------
 # Import data
 # ---------------------------------------------------------------------
 
-def get_past_data():
+def get_past_data(path):
 
     # Import yearly load and outside temperature data from GridWorks
-    df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
+    df = pd.read_excel(path, header=3, index_col = 0)
     df.index = pd.to_datetime(df.index)
     df.index.name = None
 
@@ -44,7 +51,26 @@ def get_past_data():
 # Try different models to forecast the load based on weather
 # ---------------------------------------------------------------------
 
-def get_best_forecaster(df):
+def get_best_forecaster(df, path_to_past_data):
+
+    # Check if the best forecaster has already been found before
+    path_to_past_data = path_to_past_data.split('/')[-1]
+    if PRINT: print(f"Past data file: {path_to_past_data}")
+    
+    # Read best forecast from CSV
+    best_forecaster_csv = ""
+    if path_to_past_data != "":
+        with open(os.getcwd()+'/data/best_forecasters.csv', 'r', newline='') as csvfile:
+            csv_reader = csv.reader(csvfile)
+            for row in csv_reader:
+                if row and row[0] == path_to_past_data:
+                    best_forecaster_csv = row[1]
+    
+    if PRINT:
+        if best_forecaster_csv != "":
+            print(f"Best forecaster is known for this past data: {best_forecaster_csv}.")
+        else:
+            print(f"The best forecaster is not yet known for this past data.")
 
     # Split the data into X (weather) and y (load)
     X = df[['T_OA']]
@@ -55,7 +81,6 @@ def get_best_forecaster(df):
 
     # Create a dict to store prediction values for a 48-hour plot
     scores = {}
-    data_plots = {}
 
     # Iterate through each of the forecaster models
     if PRINT: print("\nTrying different models...")
@@ -63,6 +88,9 @@ def get_best_forecaster(df):
     skipped_forecasters = ['todt', 'sarimax_with_forecast']
 
     for forecaster in library.forecasters:
+    
+        # If you already know the best forecaster, skip all others
+        if best_forecaster_csv != "" and forecaster['name'] != best_forecaster_csv: continue
 
         # Skip forecasters that bug
         if PRINT: print(f"- {forecaster['name']}")
@@ -79,42 +107,54 @@ def get_best_forecaster(df):
         rmse = np.sqrt(mean_squared_error(y_test, predict))
         scores[forecaster['name']] = rmse
         
-    # Plot the performance of all forecasters on the first 48 hours
-    if PLOT:
-        
-        data_plots[forecaster['name']] = []
-
-        for i in range(48):
-            
-            forecast = [[X.T_OA[i].tolist()]]
-            predict = model.predict(forecast)
-
-            if forecaster['name'] == 'gradient_boosting':
-                data_plots[forecaster['name']].append(predict[0])
-            else:
-                data_plots[forecaster['name']].append(predict)
-
-        plt.figure(figsize=(15,5))
-        plt.plot(df.Q_load[0:48].tolist(), label="Reality")
-        for forecaster in library.forecasters:
-            if forecaster['name'] in skipped_forecasters: continue
-            plt.plot(data_plots[forecaster['name']], label=f"Prediction {forecaster['name']}", alpha=0.6, linestyle='dashed')
-        plt.xlabel("Time")
-        plt.ylabel("Load")
-        plt.legend()
-        plt.show()
-        
     # Find the best forecaster
     rmse_list = [value for key, value in scores.items()]
     name_list = [key for key, value in scores.items()]
     best_forecaster = name_list[rmse_list.index(min(rmse_list))]
     if PRINT: print(f"\nThe forecaster that performed best on the past data is {best_forecaster}.")
     
+    # Save the result in a csv file for future reference
+    with open(os.getcwd()+'/data/best_forecasters.csv', 'r+', newline='') as csvfile:
+        
+        # Check if a best forecaster has already been found for this data
+        already_saved = False
+        csv_reader = csv.reader(csvfile)
+        for row in csv_reader:
+            if row[:2] == [path_to_past_data, best_forecaster]:
+                already_saved = True
+                
+        # If not, save the new result
+        if not already_saved:
+            csv_writer = csv.writer(csvfile)
+            csv_writer.writerow([path_to_past_data, best_forecaster])
+            if PRINT: print("Saved the best forecaster in the CSV file.")
+    
     # Save the model for the best forecaster
     for forecaster in library.forecasters:
         if forecaster['name'] != best_forecaster: continue
         model = getattr(fcLib, forecaster['fun'])(**forecaster['parameter'])
         model.fit(X_train, y_train)
+        
+    # Plot the performance of the forecaster on the first 48 hours
+    if PLOT:
+    
+        data_plot = []
+
+        for i in range(48):
+            
+            forecast = [[X.T_OA[i].tolist()]]
+            predict = model.predict(forecast)
+            predict = predict[0] if best_forecaster == 'gradient_boosting' else predict
+
+            data_plot.append(predict)
+
+        plt.figure(figsize=(15,5))
+        plt.plot(df.Q_load[0:48].tolist(), label="reality")
+        plt.plot(data_plot, label=f"{best_forecaster} prediction", alpha=0.6, linestyle='dashed')
+        plt.xlabel("Time")
+        plt.ylabel("Load")
+        plt.legend()
+        plt.show()
 
     return best_forecaster, model
 
@@ -122,9 +162,18 @@ def get_best_forecaster(df):
 # Get (1-delta)*100 CI using split conformal prediction
 # ---------------------------------------------------------------------
 
-def get_confidence_interval(best_forecaster, delta):
+def get_confidence_interval(best_forecaster, delta, path):
 
-    df = get_past_data()
+    # If we already know the confidence interval for this past data
+    path_to_past_data = path.split('/')[-1]
+    with open(os.getcwd()+'/data/best_forecasters.csv', 'r+', newline='') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        for row in csv_reader:
+            if row[:3] == [path_to_past_data, best_forecaster, str(delta)] and row[3]!="":
+                if PRINT: print(f"The CI width has already been found to be {row[3]}")
+                return(float(row[3]))
+
+    df = get_past_data(path)
     X = df[['T_OA']]
     y = df[['Q_load']]
 
@@ -213,15 +262,31 @@ def get_confidence_interval(best_forecaster, delta):
         
         print(f"{errors_count} loads ({round(errors_count/plot_length*100,2)}% of {plot_length}) are outside of the predicted {round((1-delta)*100,1)}% confidence interval")
         
+    # Save the result in a csv file for future reference
+    with open(os.getcwd()+'/data/best_forecasters.csv', 'r+', newline='') as csvfile:
+        
+        # Check if a best forecaster has already been found for this data
+        already_saved = False
+        csv_reader = csv.reader(csvfile)
+        for row in csv_reader:
+            if row[:3] == [path_to_past_data, best_forecaster, delta]:
+                already_saved = True
+                
+        # If not, save the new result
+        if not already_saved:
+            csv_writer = csv.writer(csvfile)
+            csv_writer.writerow([path_to_past_data, best_forecaster, delta, CI_width])
+            if PRINT: print("Saved the confidence interval width in the CSV file.")
+        
     return CI_width
     
 # ---------------------------------------------------------------------
 # Get the forecast with confidence interval
 # ---------------------------------------------------------------------
 
-def get_forecast_CI(weather, best_forecaster, model, delta):
+def get_forecast_CI(weather, best_forecaster, model, delta, path):
 
-    CI_width = get_confidence_interval(best_forecaster, delta)
+    CI_width = get_confidence_interval(best_forecaster, delta, path)
     
     predictions, CI_min_load, CI_max_load = [], [], []
     

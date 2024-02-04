@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import casadi
+
 PRINT = False
 
 # --------------------------------
@@ -130,7 +131,7 @@ def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
 # --------------------------------
 # --------------------------------
 
-def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in):
+def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
 
     # --------------------------------
     # Price forecasts and parameters
@@ -155,10 +156,13 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in):
         0.004151, 0.007117, 0.009745, 0.02452, 0.037877, 0.09556,
         0.205067, 0.282588, 0.234866, 0.184225, 0.132268, 0.101679]
         c_el = [x*100 for x in c_el]
-        
+    
     # If it doesn't match assume the prices were given directly
     else:
         c_el = price_forecast
+        
+    # To simulate for more than a single day
+    c_el = c_el * num_days
         
     # Water returning from the PCM (°C)
     if PRINT: print(f"Assuming water going to the HP at {T_HP_in}°C")
@@ -188,13 +192,14 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in):
 # --------------------------------
 # --------------------------------
 
-def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT):
+def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT, PLOT, num_days):
 
     # Get heating ranges and costs for each hour
-    Q_HP_min_list, Q_HP_max_list, cost_th_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in)
-    print(f"Q_HP_min_list = {Q_HP_min_list}")
-    print(f"Q_HP_max_list = {Q_HP_max_list}")
-    print(f"cost_th_list = {cost_th_list}")
+    Q_HP_min_list, Q_HP_max_list, cost_th_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days)
+    if PRINT:
+        print(f"Q_HP_min_list = {Q_HP_min_list}")
+        print(f"Q_HP_max_list = {Q_HP_max_list}")
+        print(f"cost_th_list = {cost_th_list}")
 
     # Horizon
     N = len(cost_th_list)
@@ -449,5 +454,35 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT):
             print(f"Failed at {j}: {storage[j]}")
             print("MAYDAY")
             raise ValueError("MAYDAY")
+            
+    #------------------------------------------------------
+    # Plot
+    #------------------------------------------------------
 
+    if PLOT:
+        # Duplicate the last element of the hourly data for the plot
+        N = len(cost_th_list)
+        cost_th_list2 = cost_th_list + [cost_th_list[-1]]
+        Q_HP = [round(x,3) for x in Q_HP + [Q_HP[-1]]]
+        load2 = load + [load[-1]]
+
+        # Plot the state of the system
+        fig, ax = plt.subplots(1,1, figsize=(13,4))
+        plt.title(f"Cost: {total_cost}$, Supplied: {total_energy} kWh_th \n=> {round(100*total_cost/total_energy,2)} cts/kWh_th")
+        ax2 = ax.twinx()
+        ax2.step(range(N+1), cost_th_list2, where='post', color='gray', alpha=0.6, label='Cost per kWh_th')
+        ax.step(range(N+1), load2, where='post', color='red', alpha=0.4, label='Load')
+        ax.step(range(N+1), Q_HP, where='post', color='blue', alpha=0.5, label='HP')
+        ax.plot(storage, color='orange', alpha=0.6, label='Storage')
+        ax.plot(range(N+1), [max_storage]*(N+1), alpha=0.2, linestyle='dotted', color='gray')
+        ax.set_ylim([0,35])
+        ax.set_xticks(range(N+1))
+        ax.set_xlabel("Time [hours]")
+        ax.set_ylabel("Heat [kWh_th]")
+        ax2.set_ylabel("Price [cts/kWh_th]")
+        lines1, labels1 = ax.get_legend_handles_labels()
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax.legend(lines1 + lines2, labels1 + labels2)
+        plt.show()
+        
     return Q_HP, storage, total_cost, total_energy, cost_th_list
