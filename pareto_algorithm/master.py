@@ -52,14 +52,15 @@ print("---------------------------------------")
 # Select price forecast (options are: "GridWorks", "Progressive", "Peter")
 price_forecast = "Peter"
 
-# Select temperature of water going to the HPs (Celcius)
+# Temperature of water going to the HPs (Celcius)
 T_HP_in = 55
-
-# Select maximum storage capacity (kWh)
+# Minimum temperature of water going to the PCM (Celcius)
+T_sup_HP_min = 58
+# Maximum storage capacity (kWh)
 max_storage = 30
 
 # Get the operation over the forecsats
-Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, max_storage, False, False, num_days)
+Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, T_sup_HP_min, max_storage, False, False, num_days)
 
 print(f"\nObtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}")
 

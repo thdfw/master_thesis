@@ -79,7 +79,7 @@ def get_range_and_COP(LWT, T_OA):
 # --------------------------------
 
 # Get the LWT options available at a given T_OA and T_HP_in
-def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
+def get_LWT_options(T_OA, elec, T_HP_in, T_HP_out_min, PRINT):
         
     # Range (min,max) of acceptable Q_HP for each LWT option at the given T_OA
     LWT_options = [list[0] for list in Q_max_table][1:]
@@ -94,6 +94,8 @@ def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
     # Find the LWT(s) that are attainable within this range of Q_HP
     available_LWT = []
     for i in range(len(LWT_options)):
+        # Make sure the LWT is above the given minimum
+        if LWT_options[i] < T_HP_out_min: continue
         # The heat needed to attain that LWT
         Q_HP = round(m_HP(LWT_options[i])*4187*(LWT_options[i]-T_HP_in),1)
         # If it can be attained
@@ -131,7 +133,7 @@ def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
 # --------------------------------
 # --------------------------------
 
-def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
+def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_days):
 
     # --------------------------------
     # Price forecasts and parameters
@@ -177,7 +179,7 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
             print(f"Hour {i+1} ({T_OA_list[i]}°C outside, {round(c_el[i],2)} cts/kWh)")
             print("----------------------------------------\n")
         
-        Q_HP_min, Q_HP_max, cost_th, m_HP = get_LWT_options(T_OA_list[i], c_el[i], T_HP_in, PRINT)
+        Q_HP_min, Q_HP_max, cost_th, m_HP = get_LWT_options(T_OA_list[i], c_el[i], T_HP_in, T_HP_out_min, PRINT)
     
         # Append the values in lists
         Q_HP_min_list.append(round(Q_HP_min,1))
@@ -193,10 +195,10 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
 # --------------------------------
 # --------------------------------
 
-def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT, PLOT, num_days):
+def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_storage, PRINT, PLOT, num_days):
 
     # Get heating ranges and costs for each hour
-    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days)
+    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_days)
 
     if PRINT:
         print(f"Q_HP_min_list = {Q_HP_min_list}")

@@ -52,10 +52,13 @@ def simulate(delta_HP, T_sup_HP, weather, num_days):
         print("\nPyFMI is not installed on this device.\n")
         return("")
     
-    # Load FMU and simulate
+    # Load FMU
     model = pyfmi.load_fmu(fmuName)
+    if PRINT: print("\nModel {fmuName} was loaded.\n")
+        
+    # Simulate
     res = model.simulate(start_time=start_time, final_time=final_time, input=inputs)
-    if PRINT: print(f"The simulation has been run on the FMU.")
+    if PRINT: print(f"The simulation has finished running on the FMU.")
 
     # If necessary
     time.sleep(1)
