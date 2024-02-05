@@ -23,7 +23,7 @@ print("1 - Import weather forecast")
 print("---------------------------------------")
 
 # Lenght of simulation (days)
-num_days=3
+num_days = 1
 
 # Temporary, need to replace with pvlib
 df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
@@ -59,7 +59,7 @@ T_HP_in = 55
 max_storage = 30
 
 # Get the operation over the forecsats
-Q_HP, storage, total_cost, total_energy, c_el = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, max_storage, False, True, num_days)
+Q_HP, storage, total_cost, total_energy, c_el = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, max_storage, False, False, num_days)
 
 print(f"\nObtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}")
 
@@ -76,4 +76,4 @@ print("\n---------------------------------------")
 print("4 - Send commands to FMU and simulate")
 print("---------------------------------------")
 
-simulation_results = fmu_simulation.simulate(delta_HP, T_sup_HP, weather)
+simulation_results = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_days)

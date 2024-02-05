@@ -12,28 +12,14 @@ PRINT = False
 fmuName = 'fmu_name_here.fmu'
 fmuNameNoSuffix = fmuName.replace(".fmu","")
 
-def simulate(delta_HP, T_sup_HP, weather):
-
-    # Check that PyFMI is installed
-    try:
-        import pyfmi
-        if PRNIT: print("\nPyFMI is installed on this device.")
-    except ImportError:
-        print("\nPyFMI is not installed on this device.\n")
-        return("")
+# Get the FMU inputs for a given hour
+def get_inputs(hour, delta_HP, T_sup_HP, weather):
     
-    # Simulation time in seconds (1 hour)
-    start_time = 0
-    final_time = 3600
-    
-    # Inputs to the FMU
     inputs_dict = {
-    
         # Pareto inputs, change at every hour
-        'HP_On': delta_HP,
-        'TSupSet': T_HP,
-        'T_OA': weather,
-    
+        'HP_On': delta_HP[hour],
+        'TSupSet': T_sup_HP[hour],
+        'T_OA': weather[hour],
         # Other inputs
         'T_closet': 273.15+30,
         'Tdcw': 273.15+12,
@@ -41,14 +27,30 @@ def simulate(delta_HP, T_sup_HP, weather):
         'ResistanceThermalCapacity': 5000,
         'Resistance_On': True,
         'HP_mode': True}
+        
+    return list(inputs_dict.values()), list(inputs_dict)
+
+# Load the FMU and simulate the inputs
+def simulate(delta_HP, T_sup_HP, weather, num_days):
+    
+    # Build the inputs (change every hour)
+    inputs_array = []
+    for hour in range(24*num_days):
+        current_time = hour*3600
+        current_input, input_names = get_inputs(hour, delta_HP, T_sup_HP, weather)
+        inputs_array.append([current_time]+current_input)
+    inputs_array = np.array(inputs_array)
     
     # Final format for the FMU inputs
-    inputs = (
-        list(inputs_dict),
-        # In this case the inputs are constant during the entire simulation
-        np.array(
-            [[start_time]+list(inputs_dict.values()),
-             [final_time]+list(inputs_dict.values())]))
+    inputs = (input_names, inputs_array)
+    
+    # Check that PyFMI is installed
+    try:
+        import pyfmi
+        if PRNIT: print("\nPyFMI is installed on this device.")
+    except ImportError:
+        print("\nPyFMI is not installed on this device.\n")
+        return("")
     
     # Load FMU and simulate
     model = pyfmi.load_fmu(fmuName)
