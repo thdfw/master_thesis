@@ -47,7 +47,7 @@ def simulate(delta_HP, T_sup_HP, weather, num_days):
     # Check that PyFMI is installed
     try:
         import pyfmi
-        if PRNIT: print("\nPyFMI is installed on this device.")
+        print("\nPyFMI is installed on this device.")
     except ImportError:
         print("\nPyFMI is not installed on this device.\n")
         return("")
@@ -55,7 +55,7 @@ def simulate(delta_HP, T_sup_HP, weather, num_days):
     # Load FMU and simulate
     model = pyfmi.load_fmu(fmuName)
     res = model.simulate(start_time=start_time, final_time=final_time, input=inputs)
-    if PRINT: print(f"\nThe simulation has been run on the FMU.")
+    if PRINT: print(f"The simulation has been run on the FMU.")
 
     # If necessary
     time.sleep(1)
@@ -67,5 +67,6 @@ def simulate(delta_HP, T_sup_HP, weather, num_days):
 
     # Read the results file
     results_dataframe = pd.read_csv(fmuNameNoSuffix+'_result.csv').drop('Unnamed: 0', axis=1)
+    display(results_dataframe)
     
     return results_dataframe
