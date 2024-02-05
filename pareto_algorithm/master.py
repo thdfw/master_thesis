@@ -43,7 +43,7 @@ print("---------------------------------------")
 delta = 0.05
 pred_load, min_pred_load, max_pred_load = load_forecast.get_forecast_CI(weather, best_forecaster, model, delta, path_to_past_data)
 print(f"\nLoad succesfully predicted with {best_forecaster}, and {(1-delta)*100}% confidence interval obtained.")
-print(f"{[round(x[0],2) for x in pred_load]} kWh")
+print(f"{[round(x[0],2) for x in pred_load]} +/- {pred_load[0]-min_pred_load[0]} kWh")
 
 print("\n---------------------------------------")
 print("3 - Get HP commands from Pareto")
@@ -59,7 +59,7 @@ T_HP_in = 55
 max_storage = 30
 
 # Get the operation over the forecsats
-Q_HP, storage, total_cost, total_energy, c_el = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, max_storage, False, False, num_days)
+Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, max_storage, False, False, num_days)
 
 print(f"\nObtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}")
 
@@ -68,8 +68,7 @@ delta_HP = [0 if q==0 else 1 for q in Q_HP]
 print(f"\nConverted Q_HP into commands for the FMU:\ndelta_HP = {delta_HP}")
 
 # What temperature setpoint should we give it
-m_HP, c_p = 0.5, 4187
-T_sup_HP = [round(q/m_HP/c_p + T_HP_in,1) if q!=0 else np.nan for q in Q_HP]
+T_sup_HP = [round(Q_HP[i]*1000/m_HP[i]/4187 + T_HP_in,1) if Q_HP[i]!=0 else np.nan for i in range(len(Q_HP))]
 print(f"T_sup_HP = {T_sup_HP}")
     
 print("\n---------------------------------------")

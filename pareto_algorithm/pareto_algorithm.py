@@ -123,7 +123,7 @@ def get_LWT_options(T_OA, elec, T_HP_in, PRINT):
     Q_HP_max = round(Q_HP_max/1000,3)
     cost_th = round(W_HP*elec/Q_HP,3)
     
-    return Q_HP_min, Q_HP_max, cost_th
+    return Q_HP_min, Q_HP_max, cost_th, m_HP(LWT)
     
 # --------------------------------
 # --------------------------------
@@ -168,7 +168,7 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
     if PRINT: print(f"Assuming water going to the HP at {T_HP_in}°C")
     
     # Obtain the costs and available heating ranges for every hour
-    Q_HP_min_list, Q_HP_max_list, cost_th_list = [], [], []
+    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = [], [], [], []
 
     for i in range(len(c_el)):
 
@@ -177,14 +177,15 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
             print(f"Hour {i+1} ({T_OA_list[i]}°C outside, {round(c_el[i],2)} cts/kWh)")
             print("----------------------------------------\n")
         
-        Q_HP_min, Q_HP_max, cost_th = get_LWT_options(T_OA_list[i], c_el[i], T_HP_in, PRINT)
+        Q_HP_min, Q_HP_max, cost_th, m_HP = get_LWT_options(T_OA_list[i], c_el[i], T_HP_in, PRINT)
     
         # Append the values in lists
         Q_HP_min_list.append(round(Q_HP_min,1))
         Q_HP_max_list.append(round(Q_HP_max,1))
         cost_th_list.append(cost_th)
+        m_HP_list.append(m_HP)
 
-    return Q_HP_min_list, Q_HP_max_list, cost_th_list
+    return Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list
 
 # --------------------------------
 # --------------------------------
@@ -195,7 +196,8 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days):
 def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT, PLOT, num_days):
 
     # Get heating ranges and costs for each hour
-    Q_HP_min_list, Q_HP_max_list, cost_th_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days)
+    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, num_days)
+
     if PRINT:
         print(f"Q_HP_min_list = {Q_HP_min_list}")
         print(f"Q_HP_max_list = {Q_HP_max_list}")
@@ -485,4 +487,4 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, max_storage, PRINT, PLO
         ax.legend(lines1 + lines2, labels1 + labels2)
         plt.show()
         
-    return Q_HP, storage, total_cost, total_energy, cost_th_list
+    return Q_HP, m_HP_list
