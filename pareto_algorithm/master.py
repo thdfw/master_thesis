@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-import load_forecast, pareto_algorithm, fmu_simulation
+import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
 
 print("\n---------------------------------------")
 print("0 - Find the best forecaster")
@@ -25,13 +25,17 @@ print("---------------------------------------")
 # Lenght of simulation (days)
 num_days = 1
 
-# Temporary, need to replace with pvlib
-df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
-df.index = pd.to_datetime(df.index)
-df.index.name = None
-df['Outside Temp F'] = df['Outside Temp F'].apply(lambda x: round(5/9 * (x-32),2))
-day_of_the_year = 60
-weather = list(df['Outside Temp F'][24*day_of_the_year:24*(day_of_the_year+num_days)])
+# Get live forecast for Maine
+start, end = None, None
+weather = [round(x,2) for x in weather_forecast.get_weather(start, end)]
+
+# To use past data instead
+#df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
+#df.index = pd.to_datetime(df.index)
+#df.index.name = None
+#df['Outside Temp F'] = df['Outside Temp F'].apply(lambda x: round(5/9 * (x-32),2))
+#day_of_the_year = 60
+#weather = list(df['Outside Temp F'][24*day_of_the_year:24*(day_of_the_year+num_days)])
 
 print(f"\n{len(weather)}-hour weather forecast succesfully obtained:\n{weather} °C")
 
