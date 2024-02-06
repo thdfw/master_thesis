@@ -41,26 +41,22 @@ class weather_forecaster(object):
         
     def get_forecast(self, start=None, end=None):
 
-        # If no start time is provided, choose now (converted to UTC timezone)
+        # If no start time is provided, choose now (converted to timezone)
         if not start:
             start = dtm.datetime.now().replace(minute=0, second=0, microsecond=0)
-            start = start + dtm.timedelta(hours=4) # Time in Maine = Berkeley + 3 hours + 1 hour for forecast
             self.start_dt = pd.Timestamp(start, tz='UTC').tz_convert(self.tz)
 
         # Otherwise read the provided start time
         else:
             self.start_dt = pd.Timestamp(start, tz=self.tz)
         
-        # If no end time is provided, choose now (UTC) + horizon
+        # If no end time is provided, choose now + horizon
         if not end:
             self.end_dt = self.start_dt + pd.Timedelta(hours=self.horizon)
         # Otherwise read th provided end time
         else:
-            self.end_dt = end
+            self.end_dt = pd.Timestamp(end, tz=self.tz)
             
-        print(f"Start {self.start_dt}, end {self.end_dt}")
-        print(self.end_dt - self.start_dt)
-
         # Get the forecast from pvlib
         self.forecast = get_forecast_pvlib(self.latitude, self.longitude, self.start_dt, self.end_dt)
         
@@ -80,7 +76,7 @@ class weather_forecaster(object):
         self.data = self.forecaster.process_data(self.forecast)
         self.data = self.data.loc[self.forecast.index[:-1]]
         self.data.index = self.data.index.tz_localize(None)
-                      
+                              
         return list(self.data['temp_air'])
 
 
@@ -90,6 +86,6 @@ def get_weather(start, end):
     forecaster = weather_forecaster()
 
     # Get the forecast
-    T_OA_list = forecaster.get_forecast()
+    T_OA_list = forecaster.get_forecast(start, end)
     
     return T_OA_list

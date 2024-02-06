@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
+import datetime as dtm
 import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
 
 print("\n---------------------------------------")
@@ -25,11 +26,12 @@ print("---------------------------------------")
 # Lenght of simulation (days)
 num_days = 1
 
-# Get live forecast for Maine
-start, end = None, None
+# Get forecast for Maine (= None for live forecast)
+start = dtm.datetime(2024, 2, 4, 0, 0, 0)
+end = dtm.datetime(2024, 2, 4, 23, 0, 0)
 weather = [round(x,2) for x in weather_forecast.get_weather(start, end)]
 
-# To use past data instead
+# To use GridWorks past data instead
 #df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
 #df.index = pd.to_datetime(df.index)
 #df.index.name = None
