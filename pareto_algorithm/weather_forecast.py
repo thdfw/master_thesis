@@ -6,6 +6,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import datetime as dtm
+import matplotlib.pyplot as plt
 from pvlib.forecast import HRRR
 
 def get_forecast_pvlib(lat, lon, start_time, final_time):
@@ -88,4 +89,24 @@ def get_weather(start, end):
     # Get the forecast
     T_OA_list = forecaster.get_forecast(start, end)
     
+    # Confidence intervals from past data
+    CIs = [0.0, 0.09461075047407164, 0.18882493533593347, 0.28580240707405125, 0.38219431363764755, 0.4747819088905523, 0.5747766482687151, 0.6638091341800951, 0.7586500990609863, 0.8567260079298968, 0.9537706291671864, 1.0515373542667739, 1.1445534761518683, 1.244341372498802, 1.3315083066083968, 1.4306997261223273, 1.5113612834766883]
+    
+    # The CIs are only for 17 hours, use the 17th one to fill in the missing hours
+    # TODO: replace this with an interpolation or something similar
+    if len(CIs) < len(T_OA_list):
+        for _ in range(len(T_OA_list)-len(CIs)):
+            CIs.append(CIs[-1])
+    
+    # Plot the weather with the confidence interval
+    lower_bounds = [T_OA_list[i] - CIs[i] for i in range(len(T_OA_list))]
+    upper_bounds = [T_OA_list[i] + CIs[i] for i in range(len(T_OA_list))]
+    plt.plot(T_OA_list, color='red', alpha=0.6, label='pvlib forecast')
+    plt.fill_between(range(len(CIs)), lower_bounds, upper_bounds, color='red', alpha=0.1, label='95% confidence interval')
+    plt.xlabel("Hour")
+    plt.ylabel("Outside air temperature (°C)")
+    plt.xticks(list(range(24)))
+    plt.legend()
+    plt.show()
+
     return T_OA_list

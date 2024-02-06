@@ -31,6 +31,9 @@ start = dtm.datetime(2024, 2, 4, 0, 0, 0)
 end = dtm.datetime(2024, 2, 4, 23, 0, 0)
 weather = [round(x,2) for x in weather_forecast.get_weather(start, end)]
 
+# Obtained from past data
+CIs = [0.0, 0.09461075047407164, 0.18882493533593347, 0.28580240707405125, 0.38219431363764755, 0.4747819088905523, 0.5747766482687151, 0.6638091341800951, 0.7586500990609863, 0.8567260079298968, 0.9537706291671864, 1.0515373542667739, 1.1445534761518683, 1.244341372498802, 1.3315083066083968, 1.4306997261223273, 1.5113612834766883]
+
 # To use GridWorks past data instead
 #df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
 #df.index = pd.to_datetime(df.index)
@@ -39,7 +42,8 @@ weather = [round(x,2) for x in weather_forecast.get_weather(start, end)]
 #day_of_the_year = 60
 #weather = list(df['Outside Temp F'][24*day_of_the_year:24*(day_of_the_year+num_days)])
 
-print(f"\n{len(weather)}-hour weather forecast succesfully obtained:\n{weather} °C")
+print(f"\n{len(weather)}-hour weather forecast succesfully obtained with 95% confidence interval.")
+print(f"{weather} +/- {CIs}°C")
 
 print("\n---------------------------------------")
 print("2 - Get forecasted load")
