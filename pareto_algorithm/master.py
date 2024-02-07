@@ -52,7 +52,7 @@ print("---------------------------------------")
 # Predict load with 95% confidence interval for predicted weather
 delta = 0.05
 pred_load, min_pred_load, max_pred_load = load_forecast.get_forecast_CI(weather, best_forecaster, model, delta, path_to_past_data)
-print(f"\nLoad succesfully predicted with {best_forecaster}, and {(1-delta)*100}% confidence interval obtained.")
+print(f"\nLoad succesfully predicted with {best_forecaster}, and {round((1-delta)*100)}% confidence interval obtained.")
 print(f"{[round(x[0],2) for x in pred_load]} +/- {pred_load[0]-min_pred_load[0]} kWh")
 
 # Predict load with 95% confidence interval for coldest predicted weather (weather - CI)

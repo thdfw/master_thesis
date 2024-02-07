@@ -306,12 +306,7 @@ def get_forecast_CI(weather, best_forecaster, model, delta, path):
 
 
 
-
-
-
-
-
-   
+'''
 import fcSelector
 
 library = fcLib.forecasters(fcLib.forecaster_list)
@@ -374,3 +369,4 @@ try:
     a.plotPredictions()
 except:
     pass
+'''
