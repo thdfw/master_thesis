@@ -29,7 +29,7 @@ end = None
 start = dtm.datetime(2024, 2, 4, 0, 0, 0)
 end = dtm.datetime(2024, 2, 4, 23, 0, 0)
 weather, CI_weather = weather_forecast.get_weather(start, end)
-weather = weather[:17]
+#weather = weather[:17]
 
 # Lenght of simulation (hours)
 num_hours = len(weather)
@@ -60,7 +60,7 @@ min_weather = [round(weather[i]-CI_weather[i],2) for i in range(num_hours)]
 pred_max_load, min_pred_max_load, max_pred_max_load = load_forecast.get_forecast_CI(min_weather, best_forecaster, model, delta, path_to_past_data)
 
 # The final confidence interval for the load is CI(forecast->weather) + CI(weater->load)
-final_CI = [max_pred_max_load[i]-pred_load[i] for i in range(num_hours)]
+final_CI = [max_pred_max_load[i]-pred_load[i] if CI_weather[i]>0 else [0] for i in range(num_hours)]
 final_CI = [round(x[0],2) for x in final_CI]
 print(f"\nCombining with weather confidence interval:")
 print(f"{[round(x[0],2) for x in pred_load]} \n+/- {final_CI} kWh")

@@ -24,7 +24,7 @@ except:
     root = os.getcwd()
 
 # Append src directory to import forecaster library files
-sys.path.append(os.path.join(root, '..', 'src'))
+# sys.path.append(os.path.join(root, '..', 'src'))
 import fcLib
 
 def adjust_r2(r2, n, p):

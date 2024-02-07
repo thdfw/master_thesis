@@ -301,3 +301,76 @@ def get_forecast_CI(weather, best_forecaster, model, delta, path):
     if PRINT: print(f"\nFinished predicting the load with {best_forecaster}.")
 
     return predictions, CI_min_load, CI_max_load
+
+
+
+
+
+
+
+
+
+
+   
+import fcSelector
+
+library = fcLib.forecasters(fcLib.forecaster_list)
+fcList = fcLib.forecaster_list
+   
+
+# load training data
+path = os.getcwd()+'/data/gridworks_yearly_data.xlsx'
+
+# Import yearly load and outside temperature data from GridWorks
+df = pd.read_excel(path, header=3, index_col = 0)
+df.index = pd.to_datetime(df.index)
+df.index.name = None
+
+# Rename columns
+renamed_columns = {
+    'Outside Temp F': 'weather-oat',
+    'House Power Required AvgKw': 'Q_load'}
+df.rename(columns=renamed_columns, inplace=True)
+
+# Convert outside air temperature from °F to °C
+df['weather-oat'] = df['weather-oat'].apply(lambda x: round(5/9 * (x-32),2))
+df['dataValid'] = True
+
+# Keep only date, weather, and load
+data = df[['weather-oat', 'dataValid', 'Q_load']]#[:1000]
+
+print(f"\nSuccesfully read past hourly weather and load data ({len(data)} hours)")
+
+# Split the data into X and y
+X_columns = [col for col in data.columns if not 'load' in col]
+y_columns = 'Q_load'
+# y_columns = [col for col in data.columns if 'Ppv_forecast' in col]
+
+X = data[X_columns]
+y = data[y_columns]
+
+# package data for framework
+data_eval = {
+    'X': X,
+    'y': y
+}
+
+
+default_params = {'train_size': 0.75, 'train_method': 'train_test_split'}
+params = default_params.copy()
+params['train_method'] = 'daily_split'
+params['min_days'] = 5
+
+a = fcSelector.ForecasterFramework(params=params, data=data_eval, fcList=fcList)
+
+a.evaluateAll(parallel=False)
+
+print(f'best forecaster: {a.bestModelName}')
+print(f'score: {a.bestScore}')
+
+print(a.fcData.sort_values('score', ascending=False))
+
+try:
+    a.plotPredictions()
+except:
+    pass
