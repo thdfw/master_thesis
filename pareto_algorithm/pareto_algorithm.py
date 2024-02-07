@@ -133,7 +133,7 @@ def get_LWT_options(T_OA, elec, T_HP_in, T_HP_out_min, PRINT):
 # --------------------------------
 # --------------------------------
 
-def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_days):
+def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_hours):
 
     # --------------------------------
     # Price forecasts and parameters
@@ -164,7 +164,7 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_d
         c_el = price_forecast
         
     # To simulate for more than a single day
-    c_el = c_el * num_days
+    c_el = c_el[:num_hours]
         
     # Water returning from the PCM (°C)
     if PRINT: print(f"Assuming water going to the HP at {T_HP_in}°C")
@@ -195,10 +195,10 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_d
 # --------------------------------
 # --------------------------------
 
-def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_storage, PRINT, PLOT, num_days):
+def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_storage, PRINT, PLOT, num_hours, CIs):
 
     # Get heating ranges and costs for each hour
-    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_days)
+    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_hours)
 
     if PRINT:
         print(f"Q_HP_min_list = {Q_HP_min_list}")
@@ -487,6 +487,14 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
         lines1, labels1 = ax.get_legend_handles_labels()
         lines2, labels2 = ax2.get_legend_handles_labels()
         ax.legend(lines1 + lines2, labels1 + labels2)
-        plt.show()
         
+        # Plot confidence intreval
+        load = [x[0] for x in load2]
+        CIs = CIs + [CIs[-1]]
+        lower_bounds = [load[i] - CIs[i] for i in range(len(CIs))]
+        upper_bounds = [load[i] + CIs[i] for i in range(len(CIs))]
+        ax.fill_between(range(len(CIs)), lower_bounds, upper_bounds, color='red', alpha=0.05, label='90% confidence interval')
+
+        plt.show()
+
     return Q_HP, m_HP_list

@@ -23,16 +23,16 @@ print("\n---------------------------------------")
 print("1 - Import weather forecast")
 print("---------------------------------------")
 
-# Lenght of simulation (days)
-num_days = 1
-
 # Get forecast for Maine (= None for live forecast)
+start = None
+end = None
 start = dtm.datetime(2024, 2, 4, 0, 0, 0)
 end = dtm.datetime(2024, 2, 4, 23, 0, 0)
-weather = [round(x,2) for x in weather_forecast.get_weather(start, end)]
+weather, CI_weather = weather_forecast.get_weather(start, end)
+weather = weather[:17]
 
-# Obtained from past data
-CIs = [0.0, 0.09461075047407164, 0.18882493533593347, 0.28580240707405125, 0.38219431363764755, 0.4747819088905523, 0.5747766482687151, 0.6638091341800951, 0.7586500990609863, 0.8567260079298968, 0.9537706291671864, 1.0515373542667739, 1.1445534761518683, 1.244341372498802, 1.3315083066083968, 1.4306997261223273, 1.5113612834766883]
+# Lenght of simulation (hours)
+num_hours = len(weather)
 
 # To use GridWorks past data instead
 #df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
@@ -42,18 +42,28 @@ CIs = [0.0, 0.09461075047407164, 0.18882493533593347, 0.28580240707405125, 0.382
 #day_of_the_year = 60
 #weather = list(df['Outside Temp F'][24*day_of_the_year:24*(day_of_the_year+num_days)])
 
-print(f"\n{len(weather)}-hour weather forecast succesfully obtained with 95% confidence interval.")
-print(f"{weather} +/- {CIs}°C")
+print(f"\n{num_hours}-hour weather forecast succesfully obtained with 95% confidence interval.")
+print(f"{weather} \n+/- {CI_weather[:num_hours]}°C")
 
 print("\n---------------------------------------")
 print("2 - Get forecasted load")
 print("---------------------------------------")
 
-# (1-delta)*100 confidence interval
+# Predict load with 95% confidence interval for predicted weather
 delta = 0.05
 pred_load, min_pred_load, max_pred_load = load_forecast.get_forecast_CI(weather, best_forecaster, model, delta, path_to_past_data)
 print(f"\nLoad succesfully predicted with {best_forecaster}, and {(1-delta)*100}% confidence interval obtained.")
 print(f"{[round(x[0],2) for x in pred_load]} +/- {pred_load[0]-min_pred_load[0]} kWh")
+
+# Predict load with 95% confidence interval for coldest predicted weather (weather - CI)
+min_weather = [round(weather[i]-CI_weather[i],2) for i in range(num_hours)]
+pred_max_load, min_pred_max_load, max_pred_max_load = load_forecast.get_forecast_CI(min_weather, best_forecaster, model, delta, path_to_past_data)
+
+# The final confidence interval for the load is CI(forecast->weather) + CI(weater->load)
+final_CI = [max_pred_max_load[i]-pred_load[i] for i in range(num_hours)]
+final_CI = [round(x[0],2) for x in final_CI]
+print(f"\nCombining with weather confidence interval:")
+print(f"{[round(x[0],2) for x in pred_load]} \n+/- {final_CI} kWh")
 
 print("\n---------------------------------------")
 print("3 - Get HP commands from Pareto")
@@ -70,7 +80,7 @@ T_sup_HP_min = 58
 max_storage = 30
 
 # Get the operation over the forecsats
-Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, T_sup_HP_min, max_storage, False, False, num_days)
+Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, T_sup_HP_min, max_storage, False, False, num_hours, final_CI)
 
 print(f"\nObtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}")
 
@@ -86,4 +96,4 @@ print("\n---------------------------------------")
 print("4 - Send commands to FMU and simulate")
 print("---------------------------------------")
 
-simulation_results = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_days)
+simulation_results = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_hours)

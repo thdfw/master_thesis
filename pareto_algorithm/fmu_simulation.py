@@ -31,11 +31,11 @@ def get_inputs(hour, delta_HP, T_sup_HP, weather):
     return list(inputs_dict.values()), list(inputs_dict)
 
 # Load the FMU and simulate the inputs
-def simulate(delta_HP, T_sup_HP, weather, num_days):
+def simulate(delta_HP, T_sup_HP, weather, num_hours):
     
     # Build the inputs (change every hour)
     inputs_array = []
-    for hour in range(24*num_days):
+    for hour in range(num_hours):
         current_time = hour*3600
         current_input, input_names = get_inputs(hour, delta_HP, T_sup_HP, weather)
         inputs_array.append([current_time]+current_input)

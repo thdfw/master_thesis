@@ -9,6 +9,9 @@ import datetime as dtm
 import matplotlib.pyplot as plt
 from pvlib.forecast import HRRR
 
+PRINT = False
+PLOT = False
+
 def get_forecast_pvlib(lat, lon, start_time, final_time):
 
     forecaster = HRRR()
@@ -44,9 +47,13 @@ class weather_forecaster(object):
 
         # If no start time is provided, choose now (converted to timezone)
         if not start:
-            start = dtm.datetime.now().replace(minute=0, second=0, microsecond=0)
+            start = dtm.datetime.utcnow().replace(minute=0, second=0, microsecond=0)
             self.start_dt = pd.Timestamp(start, tz='UTC').tz_convert(self.tz)
-
+            if PRINT:
+                print(f"Current UTC time: {start}")
+                print(f"Current time in {self.tz}: {self.start_dt}")
+                print("")
+            
         # Otherwise read the provided start time
         else:
             self.start_dt = pd.Timestamp(start, tz=self.tz)
@@ -90,23 +97,24 @@ def get_weather(start, end):
     T_OA_list = forecaster.get_forecast(start, end)
     
     # Confidence intervals from past data
-    CIs = [0.0, 0.09461075047407164, 0.18882493533593347, 0.28580240707405125, 0.38219431363764755, 0.4747819088905523, 0.5747766482687151, 0.6638091341800951, 0.7586500990609863, 0.8567260079298968, 0.9537706291671864, 1.0515373542667739, 1.1445534761518683, 1.244341372498802, 1.3315083066083968, 1.4306997261223273, 1.5113612834766883]
+    CIs = [2.4102025555533313, 2.313273333333333, 2.353639999995, 2.228993777773333, 2.5042659999999994, 2.332507777778334, 2.675285666668332, 2.520124333326665, 2.5709882222183325, 2.6398711111166655, 2.678220333335002, 2.7022454444466675, 2.7966293333350016, 3.001692444445002, 2.827686777780002, 3.0397588888849985, 2.757263333331668]
     
-    # The CIs are only for 17 hours, use the 17th one to fill in the missing hours
-    # TODO: replace this with an interpolation or something similar
-    if len(CIs) < len(T_OA_list):
-        for _ in range(len(T_OA_list)-len(CIs)):
-            CIs.append(CIs[-1])
+    # Fill in CI with np.nan
+    if len(T_OA_list) > len(CIs):
+        CIs = CIs + [0]*(len(T_OA_list)-len(CIs))
     
-    # Plot the weather with the confidence interval
-    lower_bounds = [T_OA_list[i] - CIs[i] for i in range(len(T_OA_list))]
-    upper_bounds = [T_OA_list[i] + CIs[i] for i in range(len(T_OA_list))]
-    plt.plot(T_OA_list, color='red', alpha=0.6, label='pvlib forecast')
-    plt.fill_between(range(len(CIs)), lower_bounds, upper_bounds, color='red', alpha=0.1, label='95% confidence interval')
-    plt.xlabel("Hour")
-    plt.ylabel("Outside air temperature (°C)")
-    plt.xticks(list(range(24)))
-    plt.legend()
-    plt.show()
+    if PLOT:
+        length = len(CIs) if len(CIs)<len(T_OA_list) else len(T_OA_list)
+        
+        # Plot the weather with the confidence interval
+        lower_bounds = [T_OA_list[i] - CIs[i] for i in range(length)]
+        upper_bounds = [T_OA_list[i] + CIs[i] for i in range(length)]
+        plt.plot(T_OA_list, color='red', alpha=0.6, label='pvlib forecast')
+        plt.fill_between(range(length), lower_bounds, upper_bounds, color='red', alpha=0.1, label='90% confidence interval')
+        plt.xlabel("Hour")
+        plt.ylabel("Outside air temperature (°C)")
+        plt.xticks(list(range(length)))
+        plt.legend()
+        plt.show()
 
-    return T_OA_list
+    return [round(x,2) for x in T_OA_list], [round(x,2) for x in CIs]
