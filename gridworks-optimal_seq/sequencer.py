@@ -6,7 +6,7 @@ import casadi
 import os
 import forecasts
 
-PLOT = True
+PLOT = False
 
 # ------------------------------------------
 # ------------------------------------------
@@ -31,85 +31,6 @@ def COP1(T_OA):
     T_OA += 273
     B0_C, B1_C = 2.695868, -0.008533
     return round(B0_C + B1_C*T_OA,2)
-    
-# ------------------------------------------
-# ------------------------------------------
-# MINLP optimization problem
-# ------------------------------------------
-# ------------------------------------------
-
-def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_max_list, COP1_list):
-
-    # Initialize
-    opti = casadi.Opti('conic')
-
-    # -----------------------------
-    # Variables and solver
-    # -----------------------------
-
-    storage = opti.variable(1,N+1)  # state
-    Q_HP = opti.variable(1,N)       # input
-    delta_HP = opti.variable(1,N)  # input
-    Q_HP_onoff = opti.variable(1,N) # input (derived)
-
-    # delta_HP is a discrete variable (binary)
-    discrete_var = [0]*(N+1) + [0]*N + [1]*N + [0]*N
-
-    # Solver
-    opti.solver('gurobi', {'discrete':discrete_var, 'gurobi.OutputFlag':0})
-
-    # -----------------------------
-    # Constraints
-    # -----------------------------
-
-    # Initial storage level
-    opti.subject_to(storage[0] == storage_initial)
-
-    # Constraints at every time step
-    for t in range(N+1):
-
-        # Bounds on storage
-        opti.subject_to(storage[t] >= 0)
-        opti.subject_to(storage[t] <= max_storage)
-
-        if t < N:
-            
-            # System dynamics
-            opti.subject_to(storage[t+1] == storage[t] + Q_HP_onoff[t] - load[t])
-
-            # Bounds on delta_HP
-            opti.subject_to(delta_HP[t] >= 0)
-            opti.subject_to(delta_HP[t] <= 1)
-        
-            # Bounds on Q_HP
-            opti.subject_to(Q_HP[t] <= Q_HP_max_list[t])
-            opti.subject_to(Q_HP[t] >= Q_HP_min_list[t]*delta_HP[t])
-        
-            # Bilinear to linear
-            opti.subject_to(Q_HP_onoff[t] <= Q_HP_max_list[t]*delta_HP[t])
-            opti.subject_to(Q_HP_onoff[t] >= Q_HP_min_list[t]*delta_HP[t])
-            opti.subject_to(Q_HP_onoff[t] <= Q_HP[t] + Q_HP_min_list[t]*(delta_HP[t]-1))
-            opti.subject_to(Q_HP_onoff[t] >= Q_HP[t] + Q_HP_max_list[t]*(delta_HP[t]-1))
-
-    # -----------------------------
-    # Objective
-    # -----------------------------
-
-    obj = sum(Q_HP_onoff[t]*c_el[t]*COP1_list[t] for t in range(N))
-    opti.minimize(obj)
-
-    # -----------------------------
-    # Solve and get optimal values
-    # -----------------------------
-
-    sol = opti.solve()
-    Q_opt = sol.value(Q_HP_onoff)
-    stor_opt = sol.value(storage)
-    HP_on_off_opt = sol.value(delta_HP)
-    obj_opt = round(sol.value(obj)/100,2)
-
-    return Q_opt, stor_opt, HP_on_off_opt, obj_opt
-
     
 # ------------------------------------------
 # ------------------------------------------
@@ -236,3 +157,80 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     
     return sequence_combi
 
+# ------------------------------------------
+# ------------------------------------------
+# MINLP optimization problem
+# ------------------------------------------
+# ------------------------------------------
+
+def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_max_list, COP1_list):
+
+    # Initialize
+    opti = casadi.Opti('conic')
+
+    # -----------------------------
+    # Variables and solver
+    # -----------------------------
+
+    storage = opti.variable(1,N+1)  # state
+    Q_HP = opti.variable(1,N)       # input
+    delta_HP = opti.variable(1,N)  # input
+    Q_HP_onoff = opti.variable(1,N) # input (derived)
+
+    # delta_HP is a discrete variable (binary)
+    discrete_var = [0]*(N+1) + [0]*N + [1]*N + [0]*N
+
+    # Solver
+    opti.solver('gurobi', {'discrete':discrete_var, 'gurobi.OutputFlag':0})
+
+    # -----------------------------
+    # Constraints
+    # -----------------------------
+
+    # Initial storage level
+    opti.subject_to(storage[0] == storage_initial)
+
+    # Constraints at every time step
+    for t in range(N+1):
+
+        # Bounds on storage
+        opti.subject_to(storage[t] >= 0)
+        opti.subject_to(storage[t] <= max_storage)
+
+        if t < N:
+            
+            # System dynamics
+            opti.subject_to(storage[t+1] == storage[t] + Q_HP_onoff[t] - load[t])
+
+            # Bounds on delta_HP
+            opti.subject_to(delta_HP[t] >= 0)
+            opti.subject_to(delta_HP[t] <= 1)
+        
+            # Bounds on Q_HP
+            opti.subject_to(Q_HP[t] <= Q_HP_max_list[t])
+            opti.subject_to(Q_HP[t] >= Q_HP_min_list[t]*delta_HP[t])
+        
+            # Bilinear to linear
+            opti.subject_to(Q_HP_onoff[t] <= Q_HP_max_list[t]*delta_HP[t])
+            opti.subject_to(Q_HP_onoff[t] >= Q_HP_min_list[t]*delta_HP[t])
+            opti.subject_to(Q_HP_onoff[t] <= Q_HP[t] + Q_HP_min_list[t]*(delta_HP[t]-1))
+            opti.subject_to(Q_HP_onoff[t] >= Q_HP[t] + Q_HP_max_list[t]*(delta_HP[t]-1))
+
+    # -----------------------------
+    # Objective
+    # -----------------------------
+
+    obj = sum(Q_HP_onoff[t]*c_el[t]*COP1_list[t] for t in range(N))
+    opti.minimize(obj)
+
+    # -----------------------------
+    # Solve and get optimal values
+    # -----------------------------
+
+    sol = opti.solve()
+    Q_opt = sol.value(Q_HP_onoff)
+    stor_opt = sol.value(storage)
+    HP_on_off_opt = sol.value(delta_HP)
+    obj_opt = round(sol.value(obj)/100,2)
+
+    return Q_opt, stor_opt, HP_on_off_opt, obj_opt
