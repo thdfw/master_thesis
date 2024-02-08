@@ -6,6 +6,8 @@ import casadi
 import os
 import forecasts
 
+PLOT = True
+
 # ------------------------------------------
 # ------------------------------------------
 # Gather parameters
@@ -14,7 +16,7 @@ import forecasts
 
 # The maximum storage capacity (kWh)
 mass_of_water = 450*3 # 450kg water per tank
-max_temp, min_temp = 65, 35 #°C
+max_temp, min_temp = 65, 38 #°C
 max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
 max_storage = round(max_storage * 2.77778e-7,1) # in kWh
 
@@ -117,6 +119,9 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
 
 def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, long_seq_pack):
 
+    if attempt > 1:
+        raise ValueError("Stop")
+
     # --------------------------------------------
     # If previous results were given (csv file)
     # --------------------------------------------
@@ -153,17 +158,10 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     cp, Delta_T_load = 4187,  5/9*20
     m_load = forecasts.get_m_load(iter, iter+N, 1)
     load = [round((m*cp*Delta_T_load)/1000, 3) for m in m_load] # TODO: change
-    load = [8.12, 8.07, 8.13, 8.57, 8.46, 8.51, 8.59, 8.55, 8.52, 7.4,
-    6.69, 6.26, 5.87, 5.68, 5.52, 5.5, 5.92, 6.34, 6.49, 6.61, 6.74, 6.81, 6.94, 7.15]*20
-    load = load[iter:iter+N] # because we are using fake data
     print(f"\nload = {load}")
 
     # Outside air tempecrature
-    T_OA = [12]*N*int(1/delta_t_h) # TODO: get real forecasts!
-    T_OA = [-12.52, -12.28, -12.55, -14.18, -13.76, -13.96, -14.26, -14.13,
-    -13.99, -9.65, -6.86, -5.21, -3.69, -2.88, -2.36, -2.29, -3.91,
-    -5.52, -6.13, -6.58, -7.09, -7.43, -7.99, -8.68]*20
-    T_OA = T_OA[iter:iter+N] # because we are using fake data
+    T_OA = [12]*N # TODO: get real forecasts!
 
     # Q_HP_max forecast from T_OA [kWh_th]
     Q_HP_max_list = [Q_HP_max(temp) for temp in T_OA]
@@ -181,7 +179,7 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     # Average temperature of tanks
     current_state = long_seq_pack['x_0']
     T_avg = sum(current_state)/16 - 273
-    min_temp = 30
+    min_temp = 38
     current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
     initial_storage = round(current_storage,1)
     print(f"\nCurrent storage = {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
@@ -201,25 +199,26 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     Q_max2 = Q_HP_max_list + [Q_HP_max_list[-1]]
 
     # Plot
-    fig, ax = plt.subplots(1,1, figsize=(13,5))
-    ax.step(range(N+1), Q_opt2, where='post', label='Heat pump', alpha=0.4, color='blue')
-    ax.plot(range(N+1), stor_opt, label='Storage', alpha=0.6, color='orange')
-    ax.step(range(N+1), load2, where='post', label='Load', alpha=0.4, color='red')
-    ax.step(range(N+1), [max_storage]*(N+1), where='post', color='orange', alpha=0.8, label='Maximum storage', linestyle='dotted')
-    ax.step(range(N+1), Q_max2, where='post', color='blue', alpha=0.6, label='Maximum Q_HP', linestyle='dotted')
-    ax.fill_between(range(N+1), load2, step="post", color='red', alpha=0.1)
-    ax.fill_between(range(N+1), Q_opt2, step="post", color='blue', alpha=0.1)
-    ax.set_xticks(range(N+1))
-    ax.set_xlabel("Time [hours]")
-    ax.set_ylabel("Energy [$kWh_{th}$]")
-    plt.title(f"Cost: {obj_opt}$, Supplied: {round(sum(Q_opt2),1)} kWh_th")
-    ax2 = ax.twinx()
-    ax2.set_ylabel("Price [cts/kWh]")
-    ax2.step(range(N+1), c_el2, where='post', label='Electricity price', color='black', alpha = 0.4)
-    lines1, labels1 = ax.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax.legend(lines2 + lines1, labels2 + labels1)
-    plt.show()
+    if PLOT:
+        fig, ax = plt.subplots(1,1, figsize=(13,5))
+        ax.step(range(N+1), Q_opt2, where='post', label='Heat pump', alpha=0.4, color='blue')
+        ax.plot(range(N+1), stor_opt, label='Storage', alpha=0.6, color='orange')
+        ax.step(range(N+1), load2, where='post', label='Load', alpha=0.4, color='red')
+        ax.step(range(N+1), [max_storage]*(N+1), where='post', color='orange', alpha=0.8, label='Maximum storage', linestyle='dotted')
+        ax.step(range(N+1), Q_max2, where='post', color='blue', alpha=0.6, label='Maximum Q_HP', linestyle='dotted')
+        ax.fill_between(range(N+1), load2, step="post", color='red', alpha=0.1)
+        ax.fill_between(range(N+1), Q_opt2, step="post", color='blue', alpha=0.1)
+        ax.set_xticks(range(N+1))
+        ax.set_xlabel("Time [hours]")
+        ax.set_ylabel("Energy [$kWh_{th}$]")
+        plt.title(f"Cost: {obj_opt}$, Supplied: {round(sum(Q_opt2),1)} kWh_th")
+        ax2 = ax.twinx()
+        ax2.set_ylabel("Price [cts/kWh]")
+        ax2.step(range(N+1), c_el2, where='post', label='Electricity price', color='black', alpha = 0.4)
+        lines1, labels1 = ax.get_legend_handles_labels()
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax.legend(lines2 + lines1, labels2 + labels1)
+        plt.show()
 
     # ------------------------------------------
     # Return operating hours
@@ -227,5 +226,13 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     
     HP_on_off_opt = [int(x) for x in HP_on_off_opt]
     print(HP_on_off_opt)
-    return HP_on_off_opt
+    
+    # Convert to combi
+    sequence_combi = {}
+    for i in range(N):
+        sequence_combi[f'combi{i+1}'] = [1,1,1] if HP_on_off_opt[i]==1 else [0,1,0]
+    
+    print(sequence_combi)
+    
+    return sequence_combi
 
