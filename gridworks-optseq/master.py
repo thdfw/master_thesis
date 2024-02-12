@@ -33,7 +33,8 @@ plot.print_pb_type(pb_type, num_iterations)
 # ------------------------------------------------------
 
 # Initial state (buffer + storage)
-x_0 = [311]*16
+#x_0 = [311]*16
+x_0 = [314,314.6,313.7,308.8] + [310]*12
 
 # Initial solver warm start
 u_opt = np.zeros((6, N))

@@ -23,6 +23,12 @@ max_temp, min_temp = 65, 38 #°C
 max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
 max_storage = round(max_storage * 2.77778e-7,1) # in kWh
 
+# Allow colder water (35°C) as negative storage
+min_storage = mass_of_water * 4187 * (35 - min_temp) # in Joules
+min_storage = round(min_storage * 2.77778e-7,1) # in kWh
+
+if PRINT: print(f"Storage max: {max_storage}kWh, min: {min_storage}kWh")
+
 # Estimate Q_HP_max # TODO: replace with forecast.py
 def Q_HP_max(T_OA):
     T_OA += 273
@@ -42,6 +48,16 @@ def COP1(T_OA):
 # ------------------------------------------
 
 def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, long_seq_pack):
+
+    if attempt==1:
+        # Print simulated date and time
+        days = int(iter/24) + 1
+        hours = iter%24
+        print("\n-----------------------------------------------------")
+        print(f"{hours}:00 - {hours+1}:00 (day {days})")
+        print("-----------------------------------------------------\n")
+    
+    print(f"***** Attempt {attempt} of finding the optimal sequence *****")
 
     # --------------------------------------------
     # If previous results were given (csv file)
@@ -73,13 +89,13 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     
     # Price
     c_el = [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+N, 1)]
-    print(f"\nc_el = {c_el}")
+    if PRINT: print(f"\nc_el = {c_el}")
 
     # Load
     cp, Delta_T_load = 4187,  5/9*20
     m_load = forecasts.get_m_load(iter, iter+N, 1)
     load = [round((m*cp*Delta_T_load)/1000, 3) for m in m_load] # TODO: change
-    print(f"\nload = {load}")
+    if PRINT: print(f"\nload = {load}")
 
     # Outside air tempecrature
     T_OA = [12]*N # TODO: get real forecasts!
@@ -103,7 +119,7 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     min_temp = 38
     current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
     initial_storage = round(current_storage,1)
-    print(f"\nCurrent storage = {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
+    print(f"Current storage level: {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
 
     # ------------------------------------------
     # Solve closed loop with initial storage
@@ -145,8 +161,6 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     # Return operating hours
     # ------------------------------------------
     
-    print(f"\n*****Attempt {attempt}*****\n")
-
     # From optimization problem
     HP_on_off_opt = [int(x) for x in HP_on_off_opt]
     print(f"On/Off from optimization:\n{HP_on_off_opt}")
@@ -167,10 +181,11 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
             c_el_remaining.append(c_el[i])
             
     ranked_all_c_el = [sorted(c_el).index(x) for x in c_el]
-    print(f"Ranked c_el: {ranked_all_c_el}")
+    if PRINT: print(f"Ranked c_el: {ranked_all_c_el}")
     ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
-    print(f"Ranked c_el remaining: {ranked_c_el}")
-    print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
+    if PRINT:
+        print(f"Ranked c_el remaining: {ranked_c_el}")
+        print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
     
     # Turn on the 'attempt' cheapest remaining hours
     for i in range(attempt-1):
@@ -185,9 +200,10 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
                 c_el_remaining.append(c_el[i])
                 
         ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
-        print(f"Ranked c_el remaining: {ranked_c_el}")
+        if PRINT: print(f"Ranked c_el remaining: {ranked_c_el}")
         
     if attempt>1: print(f"On/Off after treatement:\n{HP_on_off_opt}")
+    print("")
 
     # ------------------------------------------
     # Convert to combi and return
@@ -235,8 +251,8 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
     # Constraints at every time step
     for t in range(N+1):
 
-        # Bounds on storage
-        opti.subject_to(storage[t] >= 0)
+        # Bounds on storage (allow for negative storage, means the water is below 311K)
+        opti.subject_to(storage[t] >= min_storage)
         opti.subject_to(storage[t] <= max_storage)
 
         if t < N:

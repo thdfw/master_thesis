@@ -87,15 +87,6 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
     # Horizon
     N = pb_type['horizon']
 
-    # Print simulated date and time
-    days = int(int(iter*delta_t_h)/24) + 1
-    hours = int(iter*delta_t_h)%24
-    minutes = round((iter*delta_t_h-int(iter*delta_t_h))*60)
-    if PRINT:
-        print("\n-----------------------------------------------------")
-        print(f"{hours}:00 - {hours+1}:00 (day {days})")
-        print("-----------------------------------------------------\n")
-
     # ------------------------------------------------------
     # Variables
     # ------------------------------------------------------
