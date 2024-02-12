@@ -195,7 +195,7 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
 
     sequence_combi = {}
     for i in range(N):
-        sequence_combi[f'combi{i+1}'] = [1,1,1] if HP_on_off_opt[i]==1 else [0,1,0]
+        sequence_combi[f'combi{i+1}'] = [1,1,1] if HP_on_off_opt[i]==1 else [0,0,0]
     
     return sequence_combi
 
