@@ -5,8 +5,11 @@ import random
 import casadi
 import os
 import forecasts
+import datetime
+import csv
 
 PLOT = False
+PRINT = False
 
 # ------------------------------------------
 # ------------------------------------------
@@ -39,9 +42,6 @@ def COP1(T_OA):
 # ------------------------------------------
 
 def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, long_seq_pack):
-
-    if attempt > 1:
-        raise ValueError("Stop")
 
     # --------------------------------------------
     # If previous results were given (csv file)
@@ -87,11 +87,11 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     # Q_HP_max forecast from T_OA [kWh_th]
     Q_HP_max_list = [Q_HP_max(temp) for temp in T_OA]
     Q_HP_min_list = [8 for x in Q_HP_max_list]
-    print(f"\nQ_HP_max = {Q_HP_max_list}")
+    if PRINT: print(f"\nQ_HP_max = {Q_HP_max_list}")
 
     # 1/COP forecast from T_OA
     COP1_list = [COP1(temp) for temp in T_OA]
-    print(f"\nCOP1_list = {COP1_list}")
+    if PRINT: print(f"\nCOP1_list = {COP1_list}")
 
     # ------------------------------------------
     # Get current state, estimate storage, set as initial
@@ -145,15 +145,57 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     # Return operating hours
     # ------------------------------------------
     
+    print(f"\n*****Attempt {attempt}*****\n")
+
+    # From optimization problem
     HP_on_off_opt = [int(x) for x in HP_on_off_opt]
-    print(HP_on_off_opt)
+    print(f"On/Off from optimization:\n{HP_on_off_opt}")
     
-    # Convert to combi
+    # Turn on the HP at the 'attempt' remaining cheapest hour(s)
+    
+    #if attempt > 1:
+    # Treat for duplicates
+    for i in range(len(c_el)):
+        for j in range(len(c_el)):
+            if i!=j and c_el[i] == c_el[j]:
+                c_el[j] = c_el[j] + random.uniform(-0.01, 0.01)
+    
+    # Rank remaining hours by price
+    c_el_remaining = []
+    for i in range(len(c_el)):
+        if HP_on_off_opt[i]==0:
+            c_el_remaining.append(c_el[i])
+            
+    ranked_all_c_el = [sorted(c_el).index(x) for x in c_el]
+    print(f"Ranked c_el: {ranked_all_c_el}")
+    ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
+    print(f"Ranked c_el remaining: {ranked_c_el}")
+    print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
+    
+    # Turn on the 'attempt' cheapest remaining hours
+    for i in range(attempt-1):
+
+        # Turn on the ith cheapest
+        HP_on_off_opt[ranked_all_c_el.index(min(ranked_c_el))] = 1
+        
+        # Rank remaining hours by price
+        c_el_remaining = []
+        for i in range(len(c_el)):
+            if HP_on_off_opt[i]==0:
+                c_el_remaining.append(c_el[i])
+                
+        ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
+        print(f"Ranked c_el remaining: {ranked_c_el}")
+        
+    if attempt>1: print(f"On/Off after treatement:\n{HP_on_off_opt}")
+
+    # ------------------------------------------
+    # Convert to combi and return
+    # ------------------------------------------
+
     sequence_combi = {}
     for i in range(N):
         sequence_combi[f'combi{i+1}'] = [1,1,1] if HP_on_off_opt[i]==1 else [0,1,0]
-    
-    print(sequence_combi)
     
     return sequence_combi
 
@@ -234,3 +276,34 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
     obj_opt = round(sol.value(obj)/100,2)
 
     return Q_opt, stor_opt, HP_on_off_opt, obj_opt
+
+
+
+# ----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
+# Save result in a CSV file
+# ----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
+
+# The name of the CSV file for the results
+current_datetime = datetime.datetime.now()
+formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
+csv_file_name = os.path.join("data", "simulations", "recent", "results_" + formatted_datetime + ".csv")
+
+def append_to_csv(data, final_sequence):
+    
+    # Add the sequence to the data going to csv
+    data[0]['sequence'] = [final_sequence[f'combi{i}'] for i in range(1,9)]
+        
+    with open(csv_file_name, 'a', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "prices", "loads", "iter", "sequence"])
+        
+        # If file is empty, write headers
+        if file.tell() == 0:
+            writer.writeheader()
+        
+        # Append data to CSV
+        for row in data:
+            writer.writerow(row)
+            
+    print("Data was appended to", csv_file_name)
