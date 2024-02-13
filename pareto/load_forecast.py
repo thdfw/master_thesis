@@ -346,7 +346,7 @@ def FcSelect(path):
     df['dataValid'] = True
 
     # Keep only date, weather, and load
-    data = df[['weather-oat', 'dataValid', 'Q_load']][:1000]
+    data = df[['weather-oat', 'dataValid', 'Q_load']]
 
     # Split the data into X and y
     X_columns = [col for col in data.columns if not 'load' in col]
