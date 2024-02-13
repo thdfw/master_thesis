@@ -1,0 +1,2442 @@
+(ada) thomasdefauw@Macbook-pro-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (relaxed or fixed binary)
+Solver: Ipopt
+
+Time step: 2 minutes
+Horizon: 2.0 hours (60 time steps)
+Simulation: 10 hours (19 iterations)
+
+Results file (enter to skip): 
+
+#########################################
+Buffer: [314.0, 314.6, 313.7, 308.8] 
+Storage: [310, 310, 310, 310, 310, 310, 310, 310, 310, 310, 310, 310]
+Electricity forecasts: [14.64, 14.64, 18.93, 18.93]
+
+Searching for optimal sequence...
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 3.236 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.195 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 3.256 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.179 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.965 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.039 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 3.013 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 2.792 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 2.925 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 2.631 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 3.192 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.102 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.803 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 2.589 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.074 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.947 $.
+Minimum cost 2.59$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 1, 0]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 1.0 (0h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [0, 1, 0]
+
+Solving the optimization problem...
+Done in 45.1 seconds.
+
+Initial state
+B     -- 314.0 | S        310.0 --    310.0 --   310.0 --
+         314.6 |          310.0       310.0      310.0
+         313.7 |          310.0       310.0      310.0
+      -- 308.8 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.1-> 314.1 | S        310.0 <-    311.2 <-   311.0 <-0.2-
+         314.0 |          310.0       310.6      312.0
+         314.1 |          310.0       310.2      312.0
+  <-0.1- 312.2 |   <-0.2- 310.0    <- 310.1   <- 312.0
+
+Q_HP = [14000, 14000, 14000, 14000, 14000, 14000, 14000, 10561, 14000, 10561, 10561, 10561, 10561, 10561, 10561]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 2.59 $
+[14.64, 14.64, 18.93, 18.93]
+
+#########################################
+Buffer: [314.1317493137504, 314.0093142642066, 314.1239829358999, 312.2416025366744] 
+Storage: [311.14910520355784, 311.55868000094586, 311.90096954513376, 311.7535163278379, 311.184895066212, 310.5923949485303, 310.22172739244616, 310.062180177572, 310.0128498259534, 310.00187982909995, 310.0001805847397, 310.0000098553437]
+Electricity forecasts: [14.64, 18.93, 18.93, 45.56]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.42 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.915 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.668 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.262 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.15 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.235 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.23 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.152 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.562 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 3.102 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 2.631 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.213 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.222 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 2.984 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 2.54 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.189 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.155 $.
+Minimum cost 2.54$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 1, 0]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 2.0 (0h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [0, 1, 0]
+
+Solving the optimization problem...
+Done in 20.4 seconds.
+
+Initial state
+B     -- 314.1 | S        310.0 --    311.2 --   311.0 --
+         314.0 |          310.0       310.6      312.0
+         314.1 |          310.0       310.2      312.0
+      -- 312.2 |       -- 310.0    -- 310.1   -- 312.0
+
+Next state
+B -0.3-> 318.9 | S        310.1 <-    311.5 <-   311.0 <-0.0-
+         318.0 |          310.0       311.0      311.0
+         317.1 |          310.0       310.5      312.0
+  <-0.3- 316.1 |   <-0.0- 310.0    <- 310.2   <- 312.0
+
+Q_HP = [12705, 10561, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 2.54 $
+[14.64, 18.93, 18.93, 45.56]
+
+#########################################
+Buffer: [318.9077029561917, 318.00371078377424, 317.07853956502277, 316.11353572510166] 
+Storage: [311.44076340785836, 311.4984280291471, 311.67431354313976, 311.79771844912585, 311.50652013850976, 310.9702760543519, 310.48252095876484, 310.18634663355283, 310.05587046440934, 310.01287352296055, 310.00222641890025, 310.0002769139904]
+Electricity forecasts: [18.93, 18.93, 45.56, 45.56]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.63 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.644 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.019 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.421 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.127 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.399 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.773 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.109 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.529 $.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.558 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.888 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.335 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.255 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.261 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.25 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.063 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 2.576 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] has cost 2.337 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.035 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.424 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.132 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.252 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.267 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.007 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.159 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.159 $.
+Minimum cost 2.34$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [0, 1, 0], 'combi4': [0, 1, 0]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 3.0 (1h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [0, 1, 0]
+1h30-2h00: [0, 1, 0]
+
+Solving the optimization problem...
+Done in 24.2 seconds.
+
+Initial state
+B     -- 318.9 | S        310.1 --    311.5 --   311.0 --
+         318.0 |          310.0       311.0      311.0
+         317.1 |          310.0       310.5      312.0
+      -- 316.1 |       -- 310.0    -- 310.2   -- 312.0
+
+Next state
+B -0.2-> 320.3 | S        310.4 <-    311.7 <-   316.0 <-0.1-
+         319.9 |          310.2       311.5      313.0
+         319.5 |          310.1       311.1      312.0
+  <-0.2- 319.0 |   <-0.1- 310.0    <- 310.7   <- 312.0
+
+Q_HP = [10560, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 2.34 $
+[18.93, 18.93, 45.56, 45.56]
+
+#########################################
+Buffer: [320.30277050432676, 319.89029952737474, 319.49558415839425, 318.9868602764251] 
+Storage: [316.22696246052857, 312.9358796054972, 311.80963783176657, 311.6626494090762, 311.6619571091946, 311.48267249403165, 311.1118556493907, 310.6926521856477, 310.35921886759746, 310.15586686059663, 310.056837163533, 310.01746816260584]
+Electricity forecasts: [18.93, 45.56, 45.56, 26.42]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] is feasible. Testing for combi2:
+- combi1=[0, 0, 0], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 0, 0], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 0, 0], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.662 $.
+-- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.591 $.
+- combi1=[0, 0, 0], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.328 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.768 $.
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.429 $.
+-- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 6.032 $.
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 0, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.062 $.
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is feasible. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.742 $.
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.539 $.
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.425 $.
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.158 $.
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.716 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.011 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.946 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.723 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.838 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.702 $.
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 2.281 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.46 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.918 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.174 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.937 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 2.146 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.064 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 3.12 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.043 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.9 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.39 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.833 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.636 $.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.167 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 3.919 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] has cost 3.035 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.047 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.636 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.767 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.459 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.459 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.044 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.459 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.459 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 3.711 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 3.409 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] has cost 2.979 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.911 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.636 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.843 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.459 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.459 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.886 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.459 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.459 $.
+Minimum cost 2.15$ achieved for {'combi1': [1, 1, 1], 'combi2': [0, 1, 0], 'combi3': [0, 1, 0], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 4.0 (1h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [0, 1, 0]
+1h00-1h30: [0, 1, 0]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 4.1 seconds.
+
+Initial state
+B     -- 320.3 | S        310.4 --    311.7 --   316.0 --
+         319.9 |          310.2       311.5      313.0
+         319.5 |          310.1       311.1      312.0
+      -- 319.0 |       -- 310.0    -- 310.7   -- 312.0
+
+Next state
+B -0.1-> 316.4 | S        311.6 <-    312.9 <-   316.0 <-0.2-
+         318.3 |          311.3       312.7      314.0
+         319.3 |          311.0       312.3      313.0
+  <-0.1- 319.3 |   <-0.2- 310.7    <- 311.9   <- 313.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 12583, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 2.15 $
+[18.93, 45.56, 45.56, 26.42]
+
+#########################################
+Buffer: [316.4361445123477, 318.267866339647, 319.31149789829385, 319.31750397694327] 
+Storage: [315.6871326554577, 314.14650857302195, 313.1694886577009, 312.89659432700296, 312.87069022142884, 312.6872116226514, 312.3287548987259, 311.9483084162723, 311.61996107020786, 311.3207088244336, 311.01949616205695, 310.72392060050896]
+Electricity forecasts: [45.56, 45.56, 26.42, 26.42]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is feasible. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 2.809 $.
+-- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 2.772 $.
+--- combi1=[0, 1, 0], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 2.305 $.
+- combi1=[0, 1, 0], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.46 $.
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.61 $.
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.433 $.
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.222 $.
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.193 $.
+- combi1=[0, 1, 0], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.196 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.753 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.187 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.072 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.088 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.792 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.046 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.936 $.
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.79 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.256 $.
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.074 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.311 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.202 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.936 $.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 7.28 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 7.246 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.98 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.702 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 6.262 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.758 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.758 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.198 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.758 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.758 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 5.327 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 5.709 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.627 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 5.773 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.702 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 5.568 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.758 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.758 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.143 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.758 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.758 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.98 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.706 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.706 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.741 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.577 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.774 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.211 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.812 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.257 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.155 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.724 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.238 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.087 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.936 $.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.651 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.954 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.702 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 5.416 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.356 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.702 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.758 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 5.737 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] has cost 5.037 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 5.755 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.598 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] has cost 4.24 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.952 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.702 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 5.416 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.758 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.24 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.758 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.758 $.
+Minimum cost 2.31$ achieved for {'combi1': [0, 1, 0], 'combi2': [0, 1, 0], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 5.0 (2h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 1, 0]
+0h30-1h00: [0, 1, 0]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 4.3 seconds.
+
+Initial state
+B     -- 316.4 | S        311.6 --    312.9 --   316.0 --
+         318.3 |          311.3       312.7      314.0
+         319.3 |          311.0       312.3      313.0
+      -- 319.3 |       -- 310.7    -- 311.9   -- 313.0
+
+Next state
+B -0.2-> 313.1 | S        309.9 ->    311.6 ->   312.0 -0.4->
+         314.2 |          308.8       311.7      312.0
+         315.5 |          308.2       311.6      312.0
+  <-0.2- 316.9 |   -0.4-> 308.0    -> 311.0   -> 312.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 2.31 $
+[45.56, 45.56, 26.42, 26.42]
+
+#########################################
+Buffer: [313.10298065353317, 314.2076312120716, 315.5213882178967, 316.8530094631303] 
+Storage: [312.26694034021256, 311.9816646001526, 311.73279891787644, 311.58818649710116, 311.59740060556675, 311.69609582367343, 311.62340255444093, 311.041569456368, 309.93051354228334, 308.79119134336275, 308.1534766527585, 307.99999692044975]
+Electricity forecasts: [45.56, 26.42, 26.42, 18.0]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is feasible. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.057 $.
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.64 $.
+- combi1=[0, 1, 0], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.64 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.649 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.454 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.142 $.
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.166 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.522 $.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.5 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.388 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.762 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.311 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.776 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.509 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.308 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.79 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.925 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.257 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.858 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.599 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.375 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.054 $.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.969 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.733 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.915 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.942 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.297 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.363 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.978 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 5.814 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.885 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.885 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.227 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.935 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.938 $.
+Minimum cost 3.14$ achieved for {'combi1': [0, 1, 0], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 6.0 (2h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 1, 0]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 9.7 seconds.
+
+Initial state
+B     -- 313.1 | S        309.9 --    311.6 --   312.0 --
+         314.2 |          308.8       311.7      312.0
+         315.5 |          308.2       311.6      312.0
+      -- 316.9 |       -- 308.0    -- 311.0   -- 312.0
+
+Next state
+B -0.2-> 311.3 | S        308.0 ->    308.5 ->   311.0 -0.4->
+         311.8 |          308.0       308.2      310.0
+         312.3 |          308.1       308.1      309.0
+  <-0.2- 313.0 |   -0.4-> 308.0    -> 308.0   -> 309.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.14 $
+[45.56, 26.42, 26.42, 18.0]
+
+#########################################
+Buffer: [311.3476622355517, 311.79195696438535, 312.30133650278754, 313.01593707478827] 
+Storage: [310.7167296408494, 310.1221788348671, 309.47072944066645, 308.88366454809415, 308.45001054523044, 308.18947665409246, 308.0639727580313, 308.01660483337463, 308.00310304770585, 308.00036896049374, 308.05098005432603, 307.9999969200852]
+Electricity forecasts: [26.42, 26.42, 18.0, 18.0]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.962 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.882 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.724 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.765 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.477 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.746 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.724 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.765 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.746 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.477 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.46 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.806 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.315 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.289 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.291 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.98 $.
+Minimum cost 3.98$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 7.0 (3h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 15.0 seconds.
+
+Initial state
+B     -- 311.3 | S        308.0 --    308.5 --   311.0 --
+         311.8 |          308.0       308.2      310.0
+         312.3 |          308.1       308.1      309.0
+      -- 313.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         311.1 |          308.0       308.2      310.0
+         311.2 |          308.1       308.1      309.0
+  <-0.3- 311.3 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8090, 8206, 8305, 8396, 8484, 8571, 8658, 8742, 8822]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.98 $
+[26.42, 26.42, 18.0, 18.0]
+
+#########################################
+Buffer: [311.0088534854139, 311.0536939954405, 311.1602374876602, 311.3257994099877] 
+Storage: [310.71672966671514, 310.12217888658864, 309.4707294973378, 308.88366459916466, 308.45001058295526, 308.1894766767571, 308.06397276894927, 308.01660483749527, 308.0031030488804, 308.00036896073163, 308.0509800499232, 307.9999969245205]
+Electricity forecasts: [26.42, 18.0, 18.0, 17.17]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.456 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.428 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.456 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.456 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.039 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.181 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.289 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.223 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.019 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.219 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.834 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.91 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.981 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.684 $.
+Minimum cost 3.68$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 8.0 (3h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 4.8 seconds.
+
+Initial state
+B     -- 311.0 | S        308.0 --    308.5 --   311.0 --
+         311.1 |          308.0       308.2      310.0
+         311.2 |          308.1       308.1      309.0
+      -- 311.3 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+  <-0.3- 311.0 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [8895, 8962, 9021, 9073, 9117, 9153, 9184, 9209, 9230, 9246, 9259, 9270, 9278, 9284, 9289]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.68 $
+[26.42, 18.0, 18.0, 17.17]
+
+#########################################
+Buffer: [311.00002354096364, 311.00034739943516, 311.002249710301, 311.0094663121702] 
+Storage: [310.71672964005023, 310.122178830634, 309.4707294360283, 308.88366454391456, 308.45001054214305, 308.1894766522376, 308.0639727571377, 308.0166048330373, 308.0031030476098, 308.00036896047425, 308.0509800546865, 307.99999691972243]
+Electricity forecasts: [18.0, 18.0, 17.17, 17.17]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.881 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.853 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.87 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.811 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.607 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.866 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.811 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.607 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.793 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.37 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.569 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.272 $.
+Minimum cost 3.27$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 9.0 (4h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 35.7 seconds.
+
+Initial state
+B     -- 311.0 | S        308.0 --    308.5 --   311.0 --
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+      -- 311.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+  <-0.3- 311.0 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [9293, 9296, 9298, 9300, 9301, 9302, 9303, 9303, 9304, 9304, 9304, 9304, 9304, 9304, 9305]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.27 $
+[18.0, 18.0, 17.17, 17.17]
+
+#########################################
+Buffer: [310.99999719761416, 310.99999901308854, 311.0000138664081, 311.0001030997407] 
+Storage: [310.716729674674, 310.1221789032894, 309.47072951563666, 308.8836646156551, 308.4500105951365, 308.1894766840753, 308.0639727724746, 308.01660483882563, 308.00310304925966, 308.00036896080826, 308.05098004850174, 307.9999969259527]
+Electricity forecasts: [18.0, 17.17, 17.17, 16.19]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.786 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.758 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.787 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.786 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.523 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.764 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.508 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.697 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.312 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.369 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.468 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.188 $.
+Minimum cost 3.19$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 10.0 (4h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 8.0 seconds.
+
+Initial state
+B     -- 311.0 | S        308.0 --    308.5 --   311.0 --
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+      -- 311.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+  <-0.3- 311.0 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.19 $
+[18.0, 17.17, 17.17, 16.19]
+
+#########################################
+Buffer: [310.99999691790987, 310.9999969330562, 310.9999970420439, 310.9999978007272] 
+Storage: [310.7167296497118, 310.12217885090774, 309.4707294582421, 308.88366456393294, 308.4500105569304, 308.1894766611215, 308.0639727614173, 308.0166048346524, 308.0031030480701, 308.0003689605674, 308.05098005296054, 307.9999969214609]
+Electricity forecasts: [17.17, 17.17, 16.19, 16.19]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.684 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.659 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.685 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.616 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.423 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.668 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.616 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.423 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 3.242 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.595 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.202 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.384 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.104 $.
+Minimum cost 3.1$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 11.0 (5h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 7.5 seconds.
+
+Initial state
+B     -- 311.0 | S        308.0 --    308.5 --   311.0 --
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+      -- 311.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+  <-0.3- 311.0 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.1 $
+[17.17, 17.17, 16.19, 16.19]
+
+#########################################
+Buffer: [310.9999970828248, 310.9999973143681, 310.9999976046553, 310.9999978046358] 
+Storage: [310.7167296733376, 310.1221789004846, 309.47072951256337, 308.8836646128855, 308.4500105930908, 308.18947668284613, 308.06397277188245, 308.0166048386023, 308.0031030491959, 308.0003689607954, 308.05098004874037, 307.999996925712]
+Electricity forecasts: [17.17, 16.19, 16.19, 30.74]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.265 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.207 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.207 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.265 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.985 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.266 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.265 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.967 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.266 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.967 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.133 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.185 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.266 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.666 $.
+Minimum cost 3.13$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 12.0 (5h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 11.7 seconds.
+
+Initial state
+B     -- 311.0 | S        308.0 --    308.5 --   311.0 --
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.1       308.1      309.0
+      -- 311.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 313.3 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         311.7 |          308.0       308.2      310.0
+         311.1 |          308.1       308.1      309.0
+  <-0.3- 311.0 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 9305, 11740, 14000, 14000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.13 $
+[17.17, 16.19, 16.19, 30.74]
+
+#########################################
+Buffer: [313.30140343918026, 311.65643062288046, 311.0641865820981, 311.0000575507615] 
+Storage: [310.7167296296894, 310.122179016341, 309.4707296395074, 308.88366472728325, 308.4500106775943, 308.1894767336148, 308.06397279633865, 308.01660484783264, 308.0031030518268, 308.00036896132815, 308.05098003887804, 307.9999969356469]
+Electricity forecasts: [16.19, 16.19, 30.74, 30.74]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.322 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.442 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.702 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.759 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.141 $.
+Minimum cost 3.7$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 0, 0]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 13.0 (6h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 8.4 seconds.
+
+Initial state
+B     -- 313.3 | S        308.0 --    308.5 --   311.0 --
+         311.7 |          308.0       308.2      310.0
+         311.1 |          308.1       308.1      309.0
+      -- 311.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 317.7 | S        308.0 <-    308.5 <-   311.0 <-0.0-
+         316.7 |          308.0       308.2      310.0
+         315.8 |          308.1       308.1      309.0
+  <-0.3- 314.9 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.7 $
+[16.19, 16.19, 30.74, 30.74]
+
+#########################################
+Buffer: [317.6614866847704, 316.71489270003883, 315.78222952869726, 314.8598273229876] 
+Storage: [310.71672943284557, 310.1221790220853, 309.4707296458013, 308.8836647329551, 308.4500106817839, 308.1894767361319, 308.0639727975511, 308.01660484829017, 308.0031030519572, 308.00036896135464, 308.050980038389, 307.9999969361394]
+Electricity forecasts: [16.19, 30.74, 30.74, 31.17]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 3.97 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.887 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.266 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.051 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.04 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.533 $.
+Minimum cost 3.89$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [0, 1, 0], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 14.0 (6h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [0, 1, 0]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 19.3 seconds.
+
+Initial state
+B     -- 317.7 | S        308.0 --    308.5 --   311.0 --
+         316.7 |          308.0       308.2      310.0
+         315.8 |          308.1       308.1      309.0
+      -- 314.9 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.2-> 316.8 | S        308.1 <-    309.4 <-   316.0 <-0.1-
+         317.2 |          308.0       308.8      314.0
+         317.3 |          308.0       308.5      312.0
+  <-0.2- 317.0 |   <-0.1- 308.0    <- 308.2   <- 310.0
+
+Q_HP = [14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.89 $
+[16.19, 30.74, 30.74, 31.17]
+
+#########################################
+Buffer: [316.83477755352754, 317.2333685287201, 317.25441137290585, 317.0185270568208] 
+Storage: [315.68938896570796, 313.83210619104705, 311.7472138562563, 310.2966098485991, 309.40405810551124, 308.8300661224346, 308.4523199733294, 308.2202516469573, 308.094334622229, 308.0352302934525, 308.0203074243457, 308.01974070327515]
+Electricity forecasts: [30.74, 30.74, 31.17, 31.17]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.989 $.
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.475 $.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 4.716 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.902 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.493 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.688 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.805 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.422 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.994 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.4 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 4.608 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.699 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.42 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.543 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.545 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.308 $.
+-- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.232 $.
+--- combi1=[1, 1, 1], combi2=[0, 0, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.586 $.
+- combi1=[1, 1, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.283 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.782 $.
+-- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.253 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.735 $.
+--- combi1=[1, 1, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.155 $.
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 5.106 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.396 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.613 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.502 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.563 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.497 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] has cost 4.271 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 5.251 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] has cost 4.27 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.19 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 5.354 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.439 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.559 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 5.365 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.436 $.
+Minimum cost 4.16$ achieved for {'combi1': [1, 1, 1], 'combi2': [0, 1, 0], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 15.0 (7h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [0, 1, 0]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 2.8 seconds.
+
+Initial state
+B     -- 316.8 | S        308.1 --    309.4 --   316.0 --
+         317.2 |          308.0       308.8      314.0
+         317.3 |          308.0       308.5      312.0
+      -- 317.0 |       -- 308.0    -- 308.2   -- 310.0
+
+Next state
+B -0.1-> 312.2 | S        308.9 <-    312.7 <-   312.0 <-0.2-
+         314.2 |          308.5       311.4      313.0
+         315.8 |          308.3       310.3      314.0
+  <-0.1- 316.7 |   <-0.2- 308.1    <- 309.4   <- 314.0
+
+Q_HP = [14000, 14000, 14000, 14000, 14000, 8779, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 4.16 $
+[30.74, 30.74, 31.17, 31.17]
+
+#########################################
+Buffer: [312.18250906570285, 314.17773003121243, 315.81859408491795, 316.6910240372551] 
+Storage: [311.88773022820317, 313.3876623595459, 314.23245847122206, 313.88700226338625, 312.7465106648484, 311.4163266810607, 310.27174680128917, 309.42634618465814, 308.85223064319075, 308.48264564327, 308.2570359553162, 308.12925340409106]
+Electricity forecasts: [30.74, 31.17, 31.17, 16.18]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] is feasible. Testing for combi2:
+- combi1=[0, 1, 0], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[0, 1, 0], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[0, 1, 0], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.543 $.
+-- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.982 $.
+- combi1=[0, 1, 0], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.982 $.
+-- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.188 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.642 $.
+--- combi1=[0, 1, 0], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.36 $.
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.53 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.439 $.
+-- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.087 $.
+--- combi1=[1, 0, 1], combi2=[0, 1, 0], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.817 $.
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.166 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.868 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.954 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.508 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.48 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.907 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 4.166 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.797 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.892 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.886 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.665 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.883 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.883 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.678 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.462 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.658 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.671 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] has cost 4.94 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.534 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 3.861 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 3.502 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 5.507 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] has cost 4.469 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] has cost 4.647 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.646 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.256 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.684 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.564 $.
+Minimum cost 3.36$ achieved for {'combi1': [0, 1, 0], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 16.0 (7h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [0, 1, 0]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 6.3 seconds.
+
+Initial state
+B     -- 312.2 | S        308.9 --    312.7 --   312.0 --
+         314.2 |          308.5       311.4      313.0
+         315.8 |          308.3       310.3      314.0
+      -- 316.7 |       -- 308.1    -- 309.4   -- 314.0
+
+Next state
+B -0.2-> 311.9 | S        308.0 ->    308.4 ->   311.0 -0.4->
+         312.7 |          308.0       308.2      310.0
+         313.1 |          308.0       308.1      309.0
+  <-0.2- 313.6 |   -0.4-> 308.0    -> 308.0   -> 309.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.36 $
+[30.74, 31.17, 31.17, 16.18]
+
+#########################################
+Buffer: [311.8863853930731, 312.66018172489765, 313.06806401568775, 313.635393776603] 
+Storage: [310.5612748670982, 309.7771442447845, 309.15523330204076, 308.7043923637467, 308.3985633218883, 308.2037568573945, 308.0900846154982, 308.0324089361447, 308.008723011765, 308.00153529180363, 308.0001286220563, 307.99999694201057]
+Electricity forecasts: [31.17, 31.17, 16.18, 16.18]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 5.364 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.933 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 5.281 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 5.025 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.969 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.157 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.736 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.969 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 5.157 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.94 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.736 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0], combi4=[1, 1, 1] has cost 4.922 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 0, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 0, 1] has cost 5.328 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0], combi4=[1, 1, 1] has cost 4.968 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 5.227 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.415 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.597 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 4.717 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.393 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.113 $.
+Minimum cost 4.11$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 17.0 (8h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 9.3 seconds.
+
+Initial state
+B     -- 311.9 | S        308.0 --    308.4 --   311.0 --
+         312.7 |          308.0       308.2      310.0
+         313.1 |          308.0       308.1      309.0
+      -- 313.6 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.2 | S        308.0 <-    308.4 <-   311.0 <-0.0-
+         311.4 |          308.0       308.2      310.0
+         311.7 |          308.0       308.1      309.0
+  <-0.3- 312.0 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 4.11 $
+[31.17, 31.17, 16.18, 16.18]
+
+#########################################
+Buffer: [311.16958807993416, 311.4280443804374, 311.6953839491052, 311.95627465158464] 
+Storage: [310.5612746920146, 309.77714411971806, 309.15523320284774, 308.70439229183904, 308.39856327310935, 308.2037568263235, 308.0900845973678, 308.0324089269456, 308.0087230079871, 308.00153529065716, 308.0001286218321, 307.9999969419893]
+Electricity forecasts: [31.17, 16.18, 16.18, 17.11]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.588 $.
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.563 $.
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.515 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.515 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.362 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.5 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 4.284 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 4.195 $.
+-- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 4.403 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 4.178 $.
+--- combi1=[1, 1, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.963 $.
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] has cost 4.403 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.963 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.75 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] has cost 3.882 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.959 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.661 $.
+Minimum cost 3.66$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 18.0 (8h30min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 9.2 seconds.
+
+Initial state
+B     -- 311.2 | S        308.0 --    308.4 --   311.0 --
+         311.4 |          308.0       308.2      310.0
+         311.7 |          308.0       308.1      309.0
+      -- 312.0 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.4 <-   311.0 <-0.0-
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.0       308.1      309.0
+  <-0.3- 311.1 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [8104, 8209, 8315, 8421, 8526, 8627, 8723, 8812, 8892, 8963, 9025, 9077, 9122, 9159, 9189]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.66 $
+[31.17, 16.18, 16.18, 17.11]
+
+#########################################
+Buffer: [311.0005071683212, 311.0049027439384, 311.0231914734551, 311.0724417952787] 
+Storage: [310.5612746220812, 309.7771439947435, 309.15523310372765, 308.70439221998413, 308.3985632243664, 308.2037567952753, 308.0900845792509, 308.0324089177533, 308.0087230042119, 308.0015352895116, 308.0001286216079, 307.99999694196805]
+Electricity forecasts: [16.18, 16.18, 17.11, 17.11]
+
+Searching for optimal sequence...
+
+******* combi1=[0, 0, 0] *******
+combi1 = [0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[0, 1, 0] *******
+combi1 = [0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+
+******* combi1=[1, 0, 1] *******
+combi1 = [1, 0, 1] is feasible. Testing for combi2:
+- combi1=[1, 0, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 0, 1], combi2=[1, 0, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 0, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.628 $.
+- combi1=[1, 0, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.64 $.
+-- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.667 $.
+--- combi1=[1, 0, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.39 $.
+
+******* combi1=[1, 1, 1] *******
+combi1 = [1, 1, 1] is feasible. Testing for combi2:
+- combi1=[1, 1, 1], combi2=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+- combi1=[1, 1, 1], combi2=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+- combi1=[1, 1, 1], combi2=[1, 1, 1] is feasible. Testing for combi3:
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[0, 1, 0] could not be solved: 'Maximum_Iterations_Exceeded'
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 0, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 0, 1] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 0, 1], combi4=[1, 1, 1] has cost 3.626 $.
+-- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1] is feasible. Testing for combi4:
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 0, 0] has cost 3.127 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[0, 1, 0] could not be solved: 'Infeasible_Problem_Detected'
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 0, 1] has cost 3.391 $.
+--- combi1=[1, 1, 1], combi2=[1, 1, 1], combi3=[1, 1, 1], combi4=[1, 1, 1] has cost 3.089 $.
+Minimum cost 3.09$ achieved for {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [1, 1, 1]}
+Data was appended to results_2023-12-19_09-24-05.csv
+#########################################
+
+-----------------------------------------------------
+Iteration 19.0 (9h0min)
+-----------------------------------------------------
+
+Setting all constraints with the requested sequence...
+0h00-0h30: [1, 1, 1]
+0h30-1h00: [1, 1, 1]
+1h00-1h30: [1, 1, 1]
+1h30-2h00: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 8.9 seconds.
+
+Initial state
+B     -- 311.0 | S        308.0 --    308.4 --   311.0 --
+         311.0 |          308.0       308.2      310.0
+         311.0 |          308.0       308.1      309.0
+      -- 311.1 |       -- 308.0    -- 308.0   -- 309.0
+
+Next state
+B -0.3-> 311.0 | S        308.0 <-    308.4 <-   311.0 <-0.0-
+         311.1 |          308.0       308.2      310.0
+         311.4 |          308.0       308.1      309.0
+  <-0.3- 311.6 |   <-0.0- 308.0    <- 308.0   <- 309.0
+
+Q_HP = [13994, 13992, 12136, 9266, 9223, 9092, 8884, 8657, 8459, 8319, 8244, 8231, 8267, 8338, 8430]
+Resistive elements: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+Cost of next 2 hours: 3.09 $
+[16.18, 16.18, 17.11, 17.11]
+
+Plotting the data...
+2023-12-20 03:26:39.900 python[626:11786] ASB: LNW <NSApplication: 0x7ffe129f0900> <Window: 0x7ffe13a13fe0> <NSThemeFrame: 0x7ffe138a8430> (null)
+2023-12-20 09:59:45.391 python[626:11786] ASB: LNW <NSApplication: 0x7ffe129f0900> <NSSavePanel: 0x7ffe13ab9530> <NSThemeFrame: 0x7ffe13a20ac0> <_NSViewBackingLayer: 0x7ffe13a19810>
+

@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from pvlib.forecast import HRRR
 
 PRINT = False
-PLOT = False
+PLOT = True
 
 def get_forecast_pvlib(lat, lon, start_time, final_time):
 

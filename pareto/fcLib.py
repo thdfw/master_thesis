@@ -1007,7 +1007,7 @@ if __name__ == '__main__':
     
     # Read in example data set
     cwd = os.getcwd()
-    path_data = os.path.join(cwd, 'resources', 'data', 'forecaster_example_data.csv')
+    path_data = os.path.join(cwd, '..', 'resources', 'data', 'forecaster_example_data.csv')
     df = pd.read_csv(path_data, index_col = [0])
     df.index = pd.to_datetime(df.index)       
 

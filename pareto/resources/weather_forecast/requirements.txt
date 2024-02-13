@@ -1,5 +1,0 @@
-numpy
-pandas
-netCDF4
-siphon
-pvlib

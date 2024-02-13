@@ -7,7 +7,7 @@ import datetime as dtm
 import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
 
 print("\n---------------------------------------")
-print("0 - Find the best forecaster [Need to use fcSelector]")
+print("0 - Find the best forecaster [Check fcSelector performance]")
 print("---------------------------------------")
 
 # Get past data
@@ -26,8 +26,8 @@ print("---------------------------------------")
 # Get forecast for Maine (= None for live forecast)
 start = None
 end = None
-start = dtm.datetime(2024, 2, 4, 0, 0, 0)
-end = dtm.datetime(2024, 2, 4, 23, 0, 0)
+#start = dtm.datetime(2024, 2, 10, 0, 0, 0)
+#end = dtm.datetime(2024, 2, 10, 23, 0, 0)
 weather, CI_weather = weather_forecast.get_weather(start, end)
 #weather = weather[:17]
 

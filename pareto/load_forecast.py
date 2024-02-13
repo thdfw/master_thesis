@@ -3,14 +3,15 @@ import numpy as np
 import os
 import sys
 import csv
-import fcLib
+from forecaster import fcLib
+from forecaster import fcSelector
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import warnings
 warnings.filterwarnings('ignore')
 
-PLOT = False
+PLOT = True
 PRINT = False
 library = fcLib.forecasters(fcLib.forecaster_list)
 
@@ -52,6 +53,26 @@ def get_past_data(path):
 # ---------------------------------------------------------------------
 
 def get_best_forecaster(df, path_to_past_data):
+
+    # **** To obtain the best forecaster based on fcSelector ****
+    fcselec = True
+    if fcselec:
+    
+        best_forecaster = FcSelect(path_to_past_data)
+        library = fcLib.forecasters(fcLib.forecaster_list)
+        
+        for forecaster in library.forecasters:
+            if forecaster['name'] != best_forecaster: continue
+            
+            X = df[['T_OA']]
+            y = df[['Q_load']]
+            X_train, X_test, y_train, y_test = train_test_split(X, y, train_size = 0.75, random_state = 42)
+            
+            model = getattr(fcLib, forecaster['fun'])(**forecaster['parameter'])
+            model.fit(X_train, y_train)
+        
+        return best_forecaster, model
+    # **** End obtain the best forecaster based on fcSelector ****
 
     # Check if the best forecaster has already been found before
     path_to_past_data = path_to_past_data.split('/')[-1]
@@ -303,70 +324,50 @@ def get_forecast_CI(weather, best_forecaster, model, delta, path):
     return predictions, CI_min_load, CI_max_load
 
 
+def FcSelect(path):
 
+    library = fcLib.forecasters(fcLib.forecaster_list)
+    fcList = fcLib.forecaster_list
 
+    # Import yearly load and outside temperature data from GridWorks
+    df = pd.read_excel(path, header=3, index_col = 0)
+    df.index = pd.to_datetime(df.index)
+    df.index.name = None
+    if PRINT: print("Sucesfully read the data file.")
 
-'''
-import fcSelector
+    # Rename columns
+    renamed_columns = {
+        'Outside Temp F': 'weather-oat',
+        'House Power Required AvgKw': 'Q_load'}
+    df.rename(columns=renamed_columns, inplace=True)
 
-library = fcLib.forecasters(fcLib.forecaster_list)
-fcList = fcLib.forecaster_list
-   
+    # Convert outside air temperature from °F to °C
+    df['weather-oat'] = df['weather-oat'].apply(lambda x: round(5/9 * (x-32),2))
+    df['dataValid'] = True
 
-# load training data
-path = os.getcwd()+'/data/gridworks_yearly_data.xlsx'
+    # Keep only date, weather, and load
+    data = df[['weather-oat', 'dataValid', 'Q_load']][:1000]
 
-# Import yearly load and outside temperature data from GridWorks
-df = pd.read_excel(path, header=3, index_col = 0)
-df.index = pd.to_datetime(df.index)
-df.index.name = None
+    # Split the data into X and y
+    X_columns = [col for col in data.columns if not 'load' in col]
+    y_columns = 'Q_load'
 
-# Rename columns
-renamed_columns = {
-    'Outside Temp F': 'weather-oat',
-    'House Power Required AvgKw': 'Q_load'}
-df.rename(columns=renamed_columns, inplace=True)
+    # package data for framework
+    data_eval = {
+        'X': data[X_columns],
+        'y': data[y_columns]
+    }
 
-# Convert outside air temperature from °F to °C
-df['weather-oat'] = df['weather-oat'].apply(lambda x: round(5/9 * (x-32),2))
-df['dataValid'] = True
+    default_params = {'train_size': 0.75, 'train_method': 'train_test_split'}
+    params = default_params.copy()
 
-# Keep only date, weather, and load
-data = df[['weather-oat', 'dataValid', 'Q_load']]#[:1000]
+    a = fcSelector.ForecasterFramework(params=params, data=data_eval, fcList=fcList)
 
-print(f"\nSuccesfully read past hourly weather and load data ({len(data)} hours)")
+    a.evaluateAll(parallel=False)
+    
+    if PRINT:
+        print(f'best forecaster: {a.bestModelName}')
+        print(f'score: {a.bestScore}')
+        print(a.fcData.sort_values('score', ascending=False))
 
-# Split the data into X and y
-X_columns = [col for col in data.columns if not 'load' in col]
-y_columns = 'Q_load'
-# y_columns = [col for col in data.columns if 'Ppv_forecast' in col]
-
-X = data[X_columns]
-y = data[y_columns]
-
-# package data for framework
-data_eval = {
-    'X': X,
-    'y': y
-}
-
-
-default_params = {'train_size': 0.75, 'train_method': 'train_test_split'}
-params = default_params.copy()
-params['train_method'] = 'daily_split'
-params['min_days'] = 5
-
-a = fcSelector.ForecasterFramework(params=params, data=data_eval, fcList=fcList)
-
-a.evaluateAll(parallel=False)
-
-print(f'best forecaster: {a.bestModelName}')
-print(f'score: {a.bestScore}')
-
-print(a.fcData.sort_values('score', ascending=False))
-
-try:
-    a.plotPredictions()
-except:
-    pass
-'''
+    return a.bestModelName

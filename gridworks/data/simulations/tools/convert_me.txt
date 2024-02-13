@@ -1,0 +1,43 @@
+0h-1h: [0, 0, 0]
+1h-2h: [0, 1, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 1, 0]
+7h-8h: [0, 1, 0]
+
+Results:
+
+if iter==0: sequence = {'combi1': [1,1,1], 'combi2': [1,1,1], 'combi3': [1,1,1], 'combi4': [1,1,1], 'combi5': [1,1,1], 'combi6': [1,1,1], 'combi7': [1,1,1], 'combi8': [0,0,0]}
+
+if iter==1: sequence = 
+{'combi1': [0,1,0], 'combi2': [1,1,1], 'combi3': [1,1,1], 'combi4': [1,1,1], 'combi5': [1,1,1], 'combi6': [1,1,1], 'combi7': [0,0,0], 'combi8': [0,0,0]}
+
+if iter==2: sequence = {'combi1': [0,1,0], 'combi2': [1,1,1], 'combi3': [1,1,1], 'combi4': [1,1,1], 'combi5': [1,1,1], 'combi6': [0,0,0], 'combi7': [0,0,0], 'combi8': [0,0,0]}
+
+if iter==3: sequence = {'combi1': [0,1,0], 'combi2': [1,1,1], 'combi3': [1,1,1], 'combi4': [1,1,1], 'combi5': [0,0,0], 'combi6': [0,0,0], 'combi7': [0,0,0], 'combi8': [0,0,0]}
+
+if iter==4: sequence = {'combi1': [1, 1, 1], 'combi2': [1, 1, 1], 'combi3': [1, 1, 1], 'combi4': [0, 0, 0], 'combi5': [0, 0, 0], 'combi6': [0, 0, 0], 'combi7': [0, 0, 0], 'combi8': [0, 1, 0]}
+
+if iter==5: sequence = {'combi1': [1,1,1], 'combi2': [1,1,1], 'combi3': [0,0,0], 'combi4': [0,0,0], 'combi5': [0,0,0], 'combi6': [0,0,0], 'combi7': [0,1,0], 'combi8': [1,1,1]}
+
+if iter==6: sequence =  {'combi1': [1,1,1], 'combi2': [0,0,0], 'combi3': [0,0,0], 'combi4': [0,0,0], 'combi5': [0,0,0], 'combi6': [0,1,0], 'combi7': [1,1,1], 'combi8': [1,1,1]}
+
+it iter==7: sequence = {'combi1': [0,0,0], 'combi2': [0,0,0], 'combi3': [0,0,0], 'combi4': [0,0,0], 'combi5': [0,1,0], 'combi6': [1,1,1], 'combi7': [1,1,1], 'combi8': [1,1,1]}
+
+if iter==8: sequence = {'combi1': [0,0,0], 'combi2': [0,0,0], 'combi3': [0,0,0], 'combi4': [0,1,0], 'combi5': [1,1,1], 'combi6': [1,1,1], 'combi7': [1,1,1], 'combi8': [1,1,1]}
+
+if iter==9: sequence = {'combi1': [0,0,0], 'combi2': [0,0,0], 'combi3': [0,1,0], 'combi4': [1,1,1], 'combi5': [1,1,1], 'combi6': [1,1,1], 'combi7': [1,1,1], 'combi8': [0,1,0]}
+
+if iter==10: sequence = {'combi1': [0,0,0], 'combi2': [0,1,0], 'combi3': [1,1,1], 'combi4': [1,1,1], 'combi5': [1,1,1], 'combi6': [1,1,1], 'combi7': [0,1,0], 'combi8': [0,1,0]}
+
+
+
+
+
+
+
+
+
+

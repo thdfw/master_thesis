@@ -1,5 +1,0 @@
-{
-    "locations": ["KMIA", "KHOU", "KPHX", "KATL", "KCQT", "KLAS", "KSFO", "KBWI", "KABQ", "KSEA", "KMDW", "KBDU", "KMSP", "KHLN", "KDYT"],
-    "poll_interval": 300,
-    "output_file": "forecasts.csv"
-}

@@ -55,9 +55,9 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
         hours = iter%24
         print("\n-----------------------------------------------------")
         print(f"{hours}:00 - {hours+1}:00 (day {days})")
-        print("-----------------------------------------------------\n")
+        print("-----------------------------------------------------")
     
-    print(f"***** Attempt {attempt} of finding the optimal sequence *****")
+    print(f"\n***** Attempt {attempt} of finding the optimal sequence *****")
 
     # --------------------------------------------
     # If previous results were given (csv file)
@@ -119,7 +119,7 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     min_temp = 38
     current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
     initial_storage = round(current_storage,1)
-    print(f"Current storage level: {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
+    if PRINT: print(f"Current storage level: {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
 
     # ------------------------------------------
     # Solve closed loop with initial storage

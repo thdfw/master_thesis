@@ -1,5 +1,6 @@
 import os
 import sys
+import copy
 import time
 import json
 import logging
@@ -24,11 +25,29 @@ except:
     root = os.getcwd()
 
 # Append src directory to import forecaster library files
-# sys.path.append(os.path.join(root, '..', 'src'))
+sys.path.append(os.path.join(root, '..', 'src'))
 import fcLib
 
 def adjust_r2(r2, n, p):
     return 1-(1-r2)*(n-1)/(n-p-1)
+    
+# default config
+DEFAULT_CONFIG = {
+    'train_size': 0.75,
+    'train_method': 'train_test_split',
+    'min_days': 5,
+#    'colList': [],
+#    'targetColName': None,
+#    'recordPath': './data.csv',
+#    'backupInterval': 7*24*60*60,
+#    'unpackHourly': True,
+    'horizon': 24, # number of steps
+    'stepsize': 60*60, # step size in seconds
+    'seed': int(time.time()),
+    'max_workers': None,
+    'add_features': True,
+    'now': None,
+    }
 
 class ForecasterFramework():
     '''
@@ -54,7 +73,7 @@ class ForecasterFramework():
               
     '''
     
-    def __init__(self, params={}, data=None, fcList=[], debug=False):
+    def __init__(self, params={}, data=None, fcList=[], debug=False, uid='root'):
         '''
         Initializes the framework with a list of models to 
         evaulate, and a training dataset to use for model
@@ -79,8 +98,11 @@ class ForecasterFramework():
 
         '''
         
-        self.params = params
+        self.params = copy.deepcopy(DEFAULT_CONFIG)
+        self.params.update(params)
         self.fcList = fcList
+        self.debug = debug
+        self.uid = uid
         
         self.dataDf = None
         self.dataDfLong = None
@@ -91,10 +113,17 @@ class ForecasterFramework():
         self.bestModel = None
         self.bestScore = None
         self.bestModelName = None
+        self.trainingDate = None
 
-        self.logger = logging.getLogger(__name__)
-        if debug:
-            self.logger.setLevel(logging.DEBUG)
+        self.logger_name = f'{uid}:{__name__}'
+        self.logger = logging.getLogger(self.logger_name)
+        if self.debug:
+            if self.debug == 'info':
+                self.logger.setLevel(logging.INFO)
+            elif self.debug == 'warning':
+                self.logger.setLevel(logging.WARNING)
+            else:
+                self.logger.setLevel(logging.DEBUG)
         else:
             self.logger.setLevel(logging.ERROR)
         self.msg = ''
@@ -108,22 +137,33 @@ class ForecasterFramework():
         self.showWarnings = False
         
         '''
+        # parse parameters
+        self.train_size = self.params['train_size']
+        self.train_method = self.params['train_method']
+        self.min_days = self.params['min_days']
+#        self.colList = self.params['colList']
+#        self.targetColName = self.params['targetColName']
+#        self.recordPath = self.params['recordPath']
+#        self.backupInterval = self.params['backupInterval']
+#        self.unpackHourly = bool(self.params['unpackHourly'])
+        self.horizon = self.params['horizon']
+        self.stepsize = self.params['stepsize']
+        self.seed = self.params['seed']
+        if not self.params['max_workers']:
+            self.max_workers = os.cpu_count()-2
+        else:
+            self.max_workers = int(self.params['max_workers'])
+        self.addFeatures = bool(self.params['add_features'] )
         
-        # parse parameter
-        k = self.params.keys()
-        self.train_size = self.params['train_size'] if 'train_size' in k else 0.75
-        self.train_method = self.params['train_method'] if 'train_method' in k else 'train_test_split'
-        self.min_days = self.params['min_days'] if 'min_days' in k else 5
-#        self.colList = self.params['colList'] if 'colList' in k else []
-#        self.targetColName = self.params['targetColName'] if 'targetColName' in k else None
-#        self.recordPath = self.params['recordPath'] if 'recordPath' in k else './data.csv'
-#        self.backupInterval = self.params['backupInterval'] if 'backupInterval' in k else 7*24*60*60
-#        self.unpackHourly = bool(self.params['unpackHourly']) if 'unpackHourly' in k else True
-        self.horizon = self.params['horizon'] if 'horizon' in k else 24 # number of steps
-        self.stepsize = self.params['stepsize'] if 'stepsize' in k else 60*60 # step size in seconds
-        self.seed = self.params['seed'] if 'seed' in k else int(time.time())
-        self.max_workers = int(self.params['max_workers'] if 'max_workers' in k else os.cpu_count()-2)
-        self.addFeatures = bool(self.params['add_features'] if 'add_features' in k else False)
+        if self.params['now']:
+            self.now = datetime.strptime(self.params['now'], self.dtFormat)
+        else:
+            self.now = datetime.now()
+        
+        # try:
+        #     self.now = pd.to_datetime(self.params.get('now', dtm.datetime.now())).to_pydatetime()
+        # except:
+        #     self.now = pd.to_datetime(dtm.datetime.now()).to_pydatetime()
         
 
         # make sure backupInterval is int
@@ -140,14 +180,14 @@ class ForecasterFramework():
 
 
     # data & setting definition methods
-    def validateData(self):
+    def validateData(self, add_days=0):
         '''method validates training data. may add additional tests'''
         try:
             data = self.data
 
             assert len(data['X']) == len(data['y']), "Length of data differs."
             
-            if data['X'].index[0] + pd.DateOffset(days=self.min_days) > data['X'].index[-1]:
+            if data['X'].index[0] + pd.DateOffset(days=self.min_days+add_days) > data['X'].index[-1]:
                 self.logger.warning(f'Data horizon is too short.')
                 self.msg += 'WARNING: Data horizon is too short.\n'
                 self.validData = False
@@ -216,7 +256,7 @@ class ForecasterFramework():
         self.X = None
         self.y = None
         
-        self.validateData()
+        self.validateData(add_days=1) # add one more day to allow for forecast horizon
 
         if self.validData:
             self.data = self.make_samples(data,
@@ -296,13 +336,15 @@ class ForecasterFramework():
             mse = mean_squared_error(y_test, model.predict(X_test))
             p = 1 if type(y_train)==type(pd.Series(dtype=int)) else len(y_train.columns)
             n = len(np.unique(y_train.index.date))
+            validData = True
+            self.validData = True
         except Exception as e:
             #traceback.print_exc()
-            msg = f'ERROR: {model}\n{e}\n\n{traceback.format_exc()}\n'
+            msg += f'ERROR: {model}\n{e}\n\n{traceback.format_exc()}\n'
             default_output = True
             
         if default_output:
-            self.validData = False
+            validData = False
             score = -1
             prediction = []
             mse = -1
@@ -310,10 +352,10 @@ class ForecasterFramework():
             n = 1
             
         res = {'model': model,
-               'score': score if self.validData else -1,
-               'score_adj': adjust_r2(score, n, p) if self.validData else -1,
-               'score_mse': mse if self.validData else -1,
-               'score_rmse': np.sqrt(mse) if self.validData else -1,
+               'score': score if validData else -1,
+               'score_adj': adjust_r2(score, n, p) if validData else -1,
+               'score_mse': mse if validData else -1,
+               'score_rmse': np.sqrt(mse) if validData else -1,
                'x-cols': json.dumps(list(X_train.columns)),
                'y-cols': json.dumps(list(y_train.columns)),
 #               'y-cols': json.dumps(y.name),
@@ -340,6 +382,9 @@ class ForecasterFramework():
 
             return
         
+        # set traing time to current 'now'
+        self.trainingDate = self.now
+        
         # initialize dict of forecaster data
         fcData = []
         predictions = []
@@ -357,7 +402,7 @@ class ForecasterFramework():
             if self.train_method == 'train_test_split':
                 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=self.train_size,
                                                                     random_state=self.seed)
-            if self.train_method == 'daily_split':
+            elif self.train_method == 'daily_split':
                 X_date = np.unique(X.index.date)
                 y_date = np.unique(y.index.date)
                 X_train, X_test, y_train, y_test = train_test_split(X_date, y_date, train_size=self.train_size,
@@ -367,7 +412,18 @@ class ForecasterFramework():
                 y_train = y.loc[np.isin(y.index.date, y_train)]
                 y_test = y.loc[np.isin(y.index.date, y_test)]
                 
+            else:
+                raise ValueError(f'Training method "{self.train_method}" not available.')
+                
         if len(X_train) >= self.min_days:
+            self.validData = False
+            
+            # store X, y
+            self.X_train = X_train
+            self.X_test = X_test
+            self.y_train = y_train
+            self.y_test = y_test
+
             # loop through forecasters given by user
             with concurrent.futures.ProcessPoolExecutor(max_workers=min(os.cpu_count()-2, self.max_workers)) as executor:
                 for i, fc in enumerate(self.fcList):
