@@ -58,13 +58,13 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
         print(f"{hours}:00 - {hours+1}:00 (day {days})")
         print("-----------------------------------------------------")
     
-    print(f"\n***** Attempt {attempt} of finding the optimal sequence *****")
-
     # --------------------------------------------
     # If previous results were given (csv file)
     # --------------------------------------------
     
     if results_file != "":
+    
+        print(f"\n***** Reading sequence from provided csv file *****")
     
         # Read the csv as a pandas dataframe
         df = pd.read_csv(results_file)
@@ -79,6 +79,8 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
                 sequence_file_dict[f'combi{i}'] = [int(combi[0]), int(combi[1]), int(combi[2])]
             
             return sequence_file_dict
+            
+    print(f"\n***** Attempt {attempt} of finding the optimal sequence *****")
     
     # ------------------------------------------
     # Get current forecasts
