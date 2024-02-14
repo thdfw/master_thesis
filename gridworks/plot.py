@@ -107,11 +107,7 @@ def plot_MPC(data):
     solver = "Gurobi" if data['pb_type']['gurobi'] else "Ipopt"
     N = data['pb_type']['horizon']
     
-    # Get the Q_load from the m_load
-    cp, Delta_T_load= 4187, 5/9*20
-    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
-    
-    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Load: {round(sum(Q_load_list)/1000*4/60,1)} kWh_th")
+    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Supplied: {round(sum(data['Q_HP'])/1000/15,1)} kWh_th")
     
     # ------------------------------------------------------
     # First plot
