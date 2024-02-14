@@ -8,7 +8,7 @@ import forecasts
 import datetime
 import csv
 
-PLOT = True
+PLOT = False
 PRINT = False
 
 # ------------------------------------------
