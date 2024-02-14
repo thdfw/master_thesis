@@ -1,26 +1,70 @@
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
+import random
+import casadi
+import os
+import forecasts
 import datetime
 import csv
-import os
-import optimizer
 
-# ----------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------
-# Main get sequence function
-# ----------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------
+PLOT = False
+PRINT = False
 
-def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, long_seq_pack):
+# ------------------------------------------
+# ------------------------------------------
+# Gather parameters
+# ------------------------------------------
+# ------------------------------------------
+
+# The maximum storage capacity (kWh)
+mass_of_water = 450*3 # 450kg water per tank
+max_temp, min_temp = 65, 38 #°C
+max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
+max_storage = round(max_storage * 2.77778e-7,1) # in kWh
+
+# Allow colder water (35°C) as negative storage?
+min_storage = mass_of_water * 4187 * (35 - min_temp) # in Joules
+min_storage = round(min_storage * 2.77778e-7,1) # in kWh
+min_storage = 0
+
+if PRINT: print(f"Storage max: {max_storage}kWh, min: {min_storage}kWh")
+
+# Estimate Q_HP_max # TODO: replace with forecast.py
+def Q_HP_max(T_OA):
+    T_OA += 273
+    B0_Q, B1_Q = -68851.589, 313.3151
+    return round((B0_Q + B1_Q*T_OA)/1000,2) if T_OA<273-7 else 14
     
-    PLOT, PRINT = False, False
+# Estimate 1/COP # TODO: replace with forecast.py
+def COP1(T_OA):
+    T_OA += 273
+    B0_C, B1_C = 2.695868, -0.008533
+    return round(B0_C + B1_C*T_OA,2)
+    
+# ------------------------------------------
+# ------------------------------------------
+# FIND THE OPTIMAL SEQUENCE
+# ------------------------------------------
+# ------------------------------------------
 
+def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, long_seq_pack):
+
+    if attempt==1:
+        # Print simulated date and time
+        days = int(iter/24) + 1
+        hours = iter%24
+        print("\n-----------------------------------------------------")
+        print(f"{hours}:00 - {hours+1}:00 (day {days})")
+        print("-----------------------------------------------------")
+    
     # --------------------------------------------
     # If previous results were given (csv file)
     # --------------------------------------------
     
     if results_file != "":
+    
+        print(f"\n***** Reading sequence from provided csv file *****")
     
         # Read the csv as a pandas dataframe
         df = pd.read_csv(results_file)
@@ -35,357 +79,235 @@ def get_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, l
                 sequence_file_dict[f'combi{i}'] = [int(combi[0]), int(combi[1]), int(combi[2])]
             
             return sequence_file_dict
+            
+    print(f"\n***** Attempt {attempt} of finding the optimal sequence *****")
     
-    # --------------------------------------------
-    # For all attempts: get pre-maid sequence
-    # --------------------------------------------
+    # ------------------------------------------
+    # Get current forecasts
+    # ------------------------------------------
     
-    # High-price threshold in cts/kWh (default is 20)
-    threshold = 25
-    hours_charge = 0
-    if iter==0: print(f"The threshold is {threshold} cts/kWh.")
+    # Horizon and time step
+    N = 8
+    delta_t_h = 4/60
     
-    # Get the hour of the day
-    hour = iter%24
+    # Price
+    c_el = [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+N, 1)]
+    if PRINT: print(f"\nc_el = {c_el}")
+
+    # Load
+    cp, Delta_T_load = 4187,  5/9*20
+    m_load = forecasts.get_m_load(iter, iter+N, 1)
+    load = [round((m*cp*Delta_T_load)/1000, 3) for m in m_load] # TODO: change
+    if PRINT: print(f"\nload = {load}")
+
+    # Outside air tempecrature
+    T_OA = [12]*N # TODO: get real forecasts!
+
+    # Q_HP_max forecast from T_OA [kWh_th]
+    Q_HP_max_list = [Q_HP_max(temp) for temp in T_OA]
+    Q_HP_min_list = [8 for x in Q_HP_max_list]
+    if PRINT: print(f"\nQ_HP_max = {Q_HP_max_list}")
+
+    # 1/COP forecast from T_OA
+    COP1_list = [COP1(temp) for temp in T_OA]
+    if PRINT: print(f"\nCOP1_list = {COP1_list}")
+
+    # ------------------------------------------
+    # Get current state, estimate storage, set as initial
+    # ------------------------------------------
+
+    # Average temperature of tanks
+    current_state = long_seq_pack['x_0']
+    T_avg = sum(current_state)/16 - 273
+    min_temp = 38
+    current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
+    initial_storage = round(current_storage,1)
+    if PRINT: print(f"Current storage level: {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
+
+    # ------------------------------------------
+    # Solve closed loop with initial storage
+    # ------------------------------------------
     
-    # Initialize the sequence with all '2' (0=off, 1=on, 2=undetermined)
-    sequence = 2*np.ones(len(c_el))
+    # Get the solution from the optimization problem
+    Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
 
-    # Depending on the type of load, the sequence will not be the same
-    if round(np.mean(m_load),2) >= 0.10: load_type = "High load"
-    elif round(np.mean(m_load),2) >= 0.05: load_type = "Medium load"
-    else: load_type = "Low load"
-    load_type = "Low laod"
-    if PRINT: print(load_type)
-        
-    # For every hour in the next 24 hours
-    for i in range(len(c_el)):
+    # Duplicate the last element of the hourly data for the plot
+    c_el2 = c_el + [c_el[-1]]
+    load2 = load + [load[-1]]
+    Q_opt2 = [round(x,3) for x in Q_opt] + [Q_opt[-1]]
+    Q_min2 = Q_HP_min_list + [Q_HP_min_list[-1]]
+    Q_max2 = Q_HP_max_list + [Q_HP_max_list[-1]]
 
-        # Always turn off the heat pump in high price periods
-        if c_el[i] > 20: sequence[i] = 0
-
-        # Always turn on the heat pump in negative price periods
-        if c_el[i] < 0: sequence[i] = 1
-
-        # Detect peaks, and their length
-        if i<(len(c_el)-1) and abs(c_el[i+1] - c_el[i]) >= 15:
-            if c_el[i+1] - c_el[i] > 0 and c_el[i+1] > threshold:
-                length = i
-                if PRINT: print(f"Price peak starting at {i+1}h")
-            if c_el[i+1] - c_el[i] < 0  and c_el[i] > threshold:
-                length = i - length
-                if PRINT: print(f"Price peak finishing at {i+1}h, after {length} hours\n")
-
-                # Depending on the load type, the minimum number of hours to charge before an x hour peak is not the same
-                if load_type == "High load":
-                    hours_charge = length
-                elif load_type == "Medium load":
-                    hours_charge = int(round(length/2 + 0.001)) if length>=2 else 1
-                elif load_type == "Low load":
-                    hours_charge = int(round(length/3 + 0.001)) if length>=3 else 1
-                    # With low loads it might not be necessary to charge, leave undecided
-                    # hours_charge = 0
-
-                # Charge the tanks for as long as necessary before the peak
-                for j in range(hours_charge):
-                    # Hours that are still undefined are turned on
-                    if sequence[i-length-j] == 2:
-                        sequence[i-length-j] = 1
-                    # Hours that were supposed to be turned off are turned on (this setting can change)
-                    if sequence[i-length-j] == 0:
-                        sequence[i-length-j] = 1
-                        if hour < i-length+3-hours_charge:
-                            print(f"\nNeed to charge more before peak {i+1-length}h-{i+1}h.")
-                            print("Current setting is to use normally off periods to charge.")
-
-    # Save the suggested sequence with 0=off, 1=on, 2=undetermined
-    sequence012 = [int(x) for x in sequence[hour:hour+8]]
-    
-    # Get the indices of the hours with remaining undertermined state
-    two_option_indices = [1 if x==2 else np.nan for x in sequence]
-
-    # If the current hour is in an undetermined state, try running it with the HP off
-    if sequence[hour] == 2: sequence[hour] = 0
-        
-    # All other undetermined hours are kept as on for now (as long as it is not their turn)
-    sequence = [1 if x==2 else int(x) for x in sequence]
-
+    # Plot
     if PLOT:
-        
-        # Split electricity price in past and future hours
-        c_el_future = [np.nan]*(hour-1) + c_el[hour-1:] if hour>0 else [np.nan]*(hour) + c_el[hour:]
-        c_el_past = c_el[:hour] + [np.nan]*(len(c_el)-hour)
-
-        # Split sequence in past and future hours
-        sequence_future = [np.nan]*(hour-1) + sequence[hour-1:] if hour>0 else [np.nan]*hour + sequence[hour:]
-        sequence_past = sequence[:hour] + [np.nan]*(len(c_el)-hour)
-
-        # Highlight hours with undetermined mode
-        two_option_indices_plot = [np.nan]*hour + two_option_indices[hour:]
-
-        # Duplicate the final element of each plotted list to extend it midnight
-        c_el_future = c_el_future + [c_el_future[-1]]
-        c_el_past = c_el_past + [c_el_past[-1]]
-        sequence_future = sequence_future + [sequence_future[-1]]
-        sequence_past = sequence_past + [sequence_past[-1]]
-        two_option_indices_plot = two_option_indices_plot + [two_option_indices_plot[-1]]
-        
-        # Plot the past and future electricity prices and load
-        fig, ax = plt.subplots(1,1, figsize=(12,4), sharex=True)
-        ax.step(range(len(c_el)+1), c_el_future, where='post', alpha=0.4, color='black', linestyle='dashed')
-        ax.step(range(len(c_el)+1), c_el_past, where='post', alpha=0.6, color='black')
-        ax.set_xticks(range(len(c_el)+1))
-        ax.set_xlim([-1,len(c_el)+1])
-        ax.set_ylim([-10,45])
+        fig, ax = plt.subplots(1,1, figsize=(13,5))
+        ax.step(range(N+1), Q_opt2, where='post', label='Heat pump', alpha=0.4, color='blue')
+        ax.plot(range(N+1), stor_opt, label='Storage', alpha=0.6, color='orange')
+        ax.step(range(N+1), load2, where='post', label='Load', alpha=0.4, color='red')
+        ax.step(range(N+1), [max_storage]*(N+1), where='post', color='orange', alpha=0.8, label='Maximum storage', linestyle='dotted')
+        ax.step(range(N+1), Q_max2, where='post', color='blue', alpha=0.6, label='Maximum Q_HP', linestyle='dotted')
+        ax.fill_between(range(N+1), load2, step="post", color='red', alpha=0.1)
+        ax.fill_between(range(N+1), Q_opt2, step="post", color='blue', alpha=0.1)
+        ax.set_xticks(range(N+1))
+        ax.set_xlabel("Time [hours]")
+        ax.set_ylabel("Energy [$kWh_{th}$]")
+        plt.title(f"Cost: {obj_opt}$, Supplied: {round(sum(Q_opt2),1)} kWh_th")
         ax2 = ax.twinx()
-        ax2.step(range(len(c_el)+1), sequence_future, where='post', color='blue', alpha=0.6, linestyle='dashed')
-        ax2.step(range(len(c_el)+1), sequence_past, where='post', color='blue', alpha=0.6)
-        ax2.step(range(len(c_el)+1), two_option_indices_plot, where='post', color='red', alpha=0.9)
-        ax2.set_yticks([0,1])
-        ax2.set_ylim([-0.7,1.7])
-        
-        # Highlight the area corresponding to the horizon
-        plt.axvline(x=hour, color='green', linestyle='dotted',alpha=0.2)
-        plt.axvline(x=hour+8, color='green', linestyle='dotted',alpha=0.2)
-        plt.axvspan(hour, hour+8, facecolor='green', alpha=0.05, label='Highlight')
-        
-        # Plot title
-        plt.title(f"{load_type}") if two_option_indices[hour]!=1 else plt.title(f"{load_type} - two options")
+        ax2.set_ylabel("Price [cts/kWh]")
+        ax2.step(range(N+1), c_el2, where='post', label='Electricity price', color='black', alpha = 0.4)
+        lines1, labels1 = ax.get_legend_handles_labels()
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax.legend(lines2 + lines1, labels2 + labels1)
         plt.show()
 
-    # Trim the sequence to fit the 8-hour horizon
-    sequence_trimmed = sequence[hour:hour+8]
+    # ------------------------------------------
+    # Find operating hours
+    # ------------------------------------------
     
-    # Convert to combination format
-    sequence_trimmed = [[1,1,1] if x==1 else [0,0,0] for x in sequence_trimmed]
-    sequence_dict = {}
-    for i in range(len(sequence_trimmed)):
-        sequence_dict[f'combi{i+1}'] = sequence_trimmed[i]
-
-    # Report if there are two options (current mode is undetermined)
-    undetermined_now = two_option_indices[hour] == 1
+    # From optimization problem
+    HP_on_off_opt = [int(x) for x in HP_on_off_opt]
+    print(f"On/Off from optimization:\n{HP_on_off_opt}")
     
-    # Update the sequence with previous results
-    #print("Previous sequence:\n", previous_sequence)
-    #print("Current sequence before comparison:\n", sequence_dict)
-    most_likely = {}
-    for i in range(1,9): most_likely[f'combi{i}'] = []
-    for i in range(1,8):
-        if sequence_dict[f'combi{i}'] != previous_sequence[f'combi{i+1}']:
-            if (sequence_dict[f'combi{i}'] == [0,0,0] and previous_sequence[f'combi{i+1}'] == [0,1,0]) \
-            or (sequence_dict[f'combi{i}'] == [1,1,1] and previous_sequence[f'combi{i+1}'] == [1,0,1]):
-                print(f"Replaced {sequence_dict[f'combi{i}']} by {previous_sequence[f'combi{i+1}']} in combi{i}")
-                sequence_dict[f'combi{i}'] = previous_sequence[f'combi{i+1}']
-                most_likely[f'combi{i}'] = previous_sequence[f'combi{i+1}']
-
-    # --------------------------------------------
-    # Attempt 1: use pre-maid sequence
-    # Next attempts: adjust pre-maid sequence
-    # Final attempts: run through all sequences
-    # --------------------------------------------
-
-    if PRINT: print("There are two options") if undetermined_now else print("Only one option")
+    # Solve the optimization problem with an increased load
+    if attempt > 1:
     
-    if load_type == "Low load":
-        if attempt == 1:
-            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
-        if attempt > 1:
-            raise RuntimeError("No feasible sequence was found!")
-        return sequence_dict
-    
-    if undetermined_now:
-        #if attempt == 2:
-        #    sequence_dict['combi1'] = [0,1,0]
-        if attempt == 2:
-            sequence_dict['combi1'] = [1,1,1]
-        if attempt == 3:
-            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
-        if attempt > 3:
-            raise RuntimeError("No feasible sequence was found!")
-        return sequence_dict
+        # Increase the load
+        print(f"\nLoad before: {load}")
+        load = [attempt*load for x in load]
+        print(f"Load after: {load}\n")
 
-    else:
-        if attempt == 2:
-            if sequence_dict['combi8'] != [0,0,0]: sequence_dict['combi8'] = [0,0,0]
-            else: attempt += 1
-        if attempt == 3:
-            sequence_dict = long_sequence_check(iter, sequence012, long_seq_pack, c_el[hour:hour+8], m_load[hour:hour+8], most_likely)
-        if attempt > 3:
-            raise RuntimeError("No feasible sequence was found!")
-        return sequence_dict
-
-
-# ----------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------
-# If nothing works, go through long check
-# ----------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------
-
-# Problem type
-pb_type = {
-'linearized':       False,
-'mixed-integer':    False,
-'gurobi':           False,
-'horizon':          120,
-'time_step':        4,
-}
-
-# The four possible operating modes, in the order to be checked
-operating_modes = [[0,0,0], [1,1,1], [0,1,0], [1,0,1]]
-
-# ------------------------------------------------------
-# One iteration of the optimization problem
-# ------------------------------------------------------
-
-def one_iteration(x_0, iter, sequence, horizon, x_opt_prev, u_opt_prev):
-
-    # For anything below an 8-hour horizon, warm start with the previous solution
-    if horizon < 105:
-        initial_x = [[float(x) for x in x_opt_prev[k,-106:-(105-horizon)]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-105:-(105-horizon)]] for k in range(6)]
-    else:
-        initial_x = [[float(x) for x in x_opt_prev[k,-106:]] for k in range(16)]
-        initial_u = [[float(u) for u in u_opt_prev[k,-105:]] for k in range(6)]
-    
-    # For a full 8 hour horizon, warm start with previous solution and add zeros for the final hour
-    if horizon == 120:
-        initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
-        initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
-
-    # Put the warm start in the required format
-    warm_start = {'initial_x': np.array(initial_x), 'initial_u': np.array(initial_u)}
+        Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
         
-    # Set the horizon
-    pb_type['horizon'] = horizon
-
-    # Get u* and x*
-    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, False)
-        
-    return obj_opt, x_opt, u_opt, error
-
-# ------------------------------------------------------
-# The long check
-# ------------------------------------------------------
-
-def long_sequence_check(iter, sequence012, long_seq_pack, elec_prices, loads, most_likely):
+        HP_on_off_opt = [int(x) for x in HP_on_off_opt]
+        print(f"On/Off after treatement:\n{HP_on_off_opt}")
     
-    done = False
-    while not done:
-    
-        # Unpack values for long sequence check
-        x_0 = long_seq_pack['x_0']
-        x_opt_prev = long_seq_pack['x_opt_prev']
-        u_opt_prev = long_seq_pack['u_opt_prev']
+    '''
+    # Turn on the HP at the 'attempt' remaining cheapest hour(s)
+    if attempt > 1:
+        # Treat for duplicates
+        for i in range(len(c_el)):
+            for j in range(len(c_el)):
+                if i!=j and c_el[i] == c_el[j]:
+                    c_el[j] = c_el[j] + random.uniform(-0.01, 0.01)
         
-        print("\n#########################################")
-        print(f"Buffer: {x_0[:4]} \nStorage: {x_0[4:]}")
-        print(f"Electricity forecasts: {elec_prices}")
-        print(f"Load forecasts: {loads}")
-        print(f"Sequence suggestion: {sequence012}")
-        print("\nSearching for feasible sequence...")
-
-        # Initialize
-        sequence = {}
-        step = 1
-        first_try = True
-        solved = False
-        tested_and_failed = {}
-        for i in range(1,9): tested_and_failed[f'combi{i}'] = []
-        
-        while step<9:
-                        
-            # Either this is our first step or we solved for the previous step
-            if step==1 or solved:
+        # Rank remaining hours by price
+        c_el_remaining = []
+        for i in range(len(c_el)):
+            if HP_on_off_opt[i]==0:
+                c_el_remaining.append(c_el[i])
                 
-                # Preparing for next step
-                solved = False
-                #print(f"Searching for an operating mode at step {step}...")
+        ranked_all_c_el = [sorted(c_el).index(x) for x in c_el]
+        if PRINT: print(f"Ranked c_el: {ranked_all_c_el}")
+        ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
+        if PRINT:
+            print(f"Ranked c_el remaining: {ranked_c_el}")
+            print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
+        
+        # Turn on the 'attempt' cheapest remaining hours
+        for i in range(attempt-1):
 
-                # Find a operating modes for this step
-                for combi in operating_modes:
-                
-                    if not solved:
+            # Turn on the ith cheapest
+            HP_on_off_opt[ranked_all_c_el.index(min(ranked_c_el))] = 1
+            
+            # Rank remaining hours by price
+            c_el_remaining = []
+            for i in range(len(c_el)):
+                if HP_on_off_opt[i]==0:
+                    c_el_remaining.append(c_el[i])
                     
-                        # Don't explore combinations that are fixed by basic sequencer
-                        if sequence012[step-1] == 1 and combi[0]==0: continue #try [1,1,1] and [1,0,1] only
-                        if sequence012[step-1] == 0 and combi[0]==1: continue #try [0,0,0] and [0,1,0] only
-                    
-                        # Be selective only if you are not at the last step for the first time
-                        if not (step==8 and first_try):
+            ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
+            if PRINT: print(f"Ranked c_el remaining: {ranked_c_el}")
+    '''
+        
+    # ------------------------------------------
+    # Convert to combi and return sequence
+    # ------------------------------------------
 
-                            # Don't explore previously explored combinations
-                            # print(tested_and_failed)
-                            if combi in tested_and_failed[f'combi{step}']: continue
-                            
-                            # Don't explore slight combination variations if
-                            # - You have not already tried the two (one) basic options at this branch
-                            # - You have not already tried all four (two) options at the previous branch
-                            num_basic_step = 2 if sequence012[step-1] == 2 else 1
-                            num_options_prev_step = 4 if sequence012[step-2] == 2 else 2
-                            if step>1 and \
-                             len(tested_and_failed[f'combi{step}']) <= num_basic_step and \
-                             len(tested_and_failed[f'combi{step-1}']) <= num_options_prev_step:
-                                if [1,1,1] in tested_and_failed[f'combi{step}'] and combi == [1,0,1]: continue
-                                if [0,0,0] in tested_and_failed[f'combi{step}'] and combi == [0,1,0]: continue
-                                
-                            # You need to try the previous answer once
-                            if most_likely[f'combi{step}']!=[]:
-                                if (combi == [0,0,0] and most_likely[f'combi{step}'] == [0,1,0]\
-                                and [0,1,0] not in tested_and_failed[f'combi{step}'])\
-                                or (combi == [1,1,1] and most_likely[f'combi{step}'] == [1,0,1]\
-                                and [1,0,1] not in tested_and_failed[f'combi{step}']):
-                                    #print(f"Found from previous: {combi} != {most_likely[f'combi{step}']}")
-                                    combi = most_likely[f'combi{step}']
-                                    
-                        # Try solving for {step} hours
-                        sequence[f'combi{step}'] = combi
-                        cost, x_opt, u_opt, error = one_iteration(x_0, 15*iter, sequence, 15*step, x_opt_prev, u_opt_prev)
+    print("")
+    sequence_combi = {}
+    for i in range(N):
+        sequence_combi[f'combi{i+1}'] = [1,1,1] if HP_on_off_opt[i]==1 else [0,0,0]
+    
+    return sequence_combi
 
-                        if step==1: print(f"\n******* combi1={combi} *******")
+# ------------------------------------------
+# ------------------------------------------
+# MINLP optimization problem
+# ------------------------------------------
+# ------------------------------------------
 
-                        if cost == 1e5:
-                            print(f"{'-'*step} combi{step} = {combi} could not be solved: {error}")
-                            tested_and_failed[f'combi{step}'].append(sequence[f'combi{step}'])
-                        else:
-                            solved = True
-                            if step<8:
-                                print(f"{'-'*step} combi{step} = {combi} is feasible. Testing for combi{step+1}:")
-                            else:
-                                print(f"Found a working sequence!\n{sequence}")
-                                print("#########################################")
-                                return sequence
-                 
-            if step==8 and first_try:
-                first_try = False
+def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_max_list, COP1_list):
+
+    # Initialize
+    opti = casadi.Opti('conic')
+
+    # -----------------------------
+    # Variables and solver
+    # -----------------------------
+
+    storage = opti.variable(1,N+1)  # state
+    Q_HP = opti.variable(1,N)       # input
+    delta_HP = opti.variable(1,N)  # input
+    Q_HP_onoff = opti.variable(1,N) # input (derived)
+
+    # delta_HP is a discrete variable (binary)
+    discrete_var = [0]*(N+1) + [0]*N + [1]*N + [0]*N
+
+    # Solver
+    opti.solver('gurobi', {'discrete':discrete_var, 'gurobi.OutputFlag':0})
+
+    # -----------------------------
+    # Constraints
+    # -----------------------------
+
+    # Initial storage level
+    opti.subject_to(storage[0] == storage_initial)
+
+    # Constraints at every time step
+    for t in range(N+1):
+
+        # Bounds on storage (allow for negative storage in first hour, means the water is below 311K)
+        if t>0: opti.subject_to(storage[t] >= min_storage)
+        opti.subject_to(storage[t] <= max_storage)
+
+        if t < N:
             
-            # If a feasible operating mode was found move to the next step
-            if solved:
-                step += 1
-            
-            # If no feasisble operating mode was found for the current step, go back one step
-            if not solved and step>1:
-                
-                # No branches worked for combi{step} with this combi{step-1}
-                #print(f"No solution works after combi{step-1}.")
-                # Don't explore that branch again with the same sequence before it
-                tested_and_failed[f'combi{step-1}'].append(sequence[f'combi{step-1}'])
-                # You can now explore branches that did not work again because the sequence before will change
-                tested_and_failed[f'combi{step}'] = []
-                # print(f"Tested and failed combi{step-1}: {tested_and_failed[f'combi{step-1}']}")
-                
-                # Go back one step
-                step = step-1
-                solved = True
-            
-            # Extremely unlikeley case where no feasible combi1 exists
-            #if not solved and step==1:
-            #    step = 9
+            # System dynamics
+            opti.subject_to(storage[t+1] == storage[t] + Q_HP_onoff[t] - load[t])
 
-        # If nothing worked in the end
-        print("\nNo feasible sequence was found within sequence suggestion.")
-        print("Now trying with a more open sequence suggestion.\n")
-        sequence012 = [2]*8
-        # raise RuntimeError("No feasible sequence was found.")
+            # Bounds on delta_HP
+            opti.subject_to(delta_HP[t] >= 0)
+            opti.subject_to(delta_HP[t] <= 1)
+        
+            # Bounds on Q_HP
+            opti.subject_to(Q_HP[t] <= Q_HP_max_list[t])
+            opti.subject_to(Q_HP[t] >= Q_HP_min_list[t]*delta_HP[t])
+        
+            # Bilinear to linear
+            opti.subject_to(Q_HP_onoff[t] <= Q_HP_max_list[t]*delta_HP[t])
+            opti.subject_to(Q_HP_onoff[t] >= Q_HP_min_list[t]*delta_HP[t])
+            opti.subject_to(Q_HP_onoff[t] <= Q_HP[t] + Q_HP_min_list[t]*(delta_HP[t]-1))
+            opti.subject_to(Q_HP_onoff[t] >= Q_HP[t] + Q_HP_max_list[t]*(delta_HP[t]-1))
+
+    # -----------------------------
+    # Objective
+    # -----------------------------
+
+    obj = sum(Q_HP_onoff[t]*c_el[t]*COP1_list[t] for t in range(N))
+    opti.minimize(obj)
+
+    # -----------------------------
+    # Solve and get optimal values
+    # -----------------------------
+
+    sol = opti.solve()
+    Q_opt = sol.value(Q_HP_onoff)
+    stor_opt = sol.value(storage)
+    HP_on_off_opt = sol.value(delta_HP)
+    obj_opt = round(sol.value(obj)/100,2)
+
+    return Q_opt, stor_opt, HP_on_off_opt, obj_opt
+
 
 
 # ----------------------------------------------------------------------------------

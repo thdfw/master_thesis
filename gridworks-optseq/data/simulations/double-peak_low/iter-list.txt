@@ -1,2 +1,0 @@
-
-if iter==0: sequence = 

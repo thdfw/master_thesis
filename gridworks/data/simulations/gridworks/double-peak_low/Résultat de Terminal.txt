@@ -1,0 +1,1787 @@
+(ada) thomasdefauw@MBP-2011 gridworks % cd..
+zsh: command not found: cd..
+(ada) thomasdefauw@MBP-2011 gridworks % cd ../gridworks-optseq
+(ada) thomasdefauw@MBP-2011 gridworks-optseq % python master.py      
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+
+Time step: 4 minutes
+Horizon: 8.0 hours (120 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): 
+No file selected.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:49:25.450 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c1723fa0> <NSThemeFrame: 0x7f89c3aee810> (null)
+On/Off from optimization:
+[1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+Done in 87 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 314.0 | S        310.0 --    310.0 --   310.0 --
+         314.6 |          310.0       310.0      310.0
+         313.7 |          310.0       310.0      310.0
+      -- 308.8 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.3-> 319.6 | S        310.0 <-    311.0 <-   317.0 <-0.1-
+         319.0 |          310.0       310.4      315.0
+         318.5 |          310.0       310.1      314.0
+  <-0.3- 317.9 |   <-0.1- 310.0    <- 310.0   <- 312.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.05
+Cost of next 8 hours: 0.27 $
+Prices in the next 8 hours: [6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51]
+
+-----------------------------------------------------
+1:00 - 2:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:51:08.963 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c3cbb500> <NSThemeFrame: 0x7f89c4b0f3d0> (null)
+On/Off from optimization:
+[1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 21 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 319.6 | S        310.0 --    311.0 --   317.0 --
+         319.0 |          310.0       310.4      315.0
+         318.5 |          310.0       310.1      314.0
+      -- 317.9 |       -- 310.0    -- 310.0   -- 312.0
+
+Next state
+B -0.5-> 330.6 | S        310.0 <-    311.3 <-   319.0 <-0.0-
+         330.3 |          310.0       310.5      316.0
+         329.3 |          310.0       310.2      314.0
+  <-0.5- 327.8 |   <-0.0- 310.0    <- 310.1   <- 312.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.13 $
+Prices in the next 8 hours: [6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16]
+
+-----------------------------------------------------
+2:00 - 3:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:51:46.542 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4b59000> <NSThemeFrame: 0x7f89c4b0baf0> (null)
+On/Off from optimization:
+[1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 10 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 330.6 | S        310.0 --    311.3 --   319.0 --
+         330.3 |          310.0       310.5      316.0
+         329.3 |          310.0       310.2      314.0
+      -- 327.8 |       -- 310.0    -- 310.1   -- 312.0
+
+Next state
+B -0.2-> 328.3 | S        315.7 <-    315.5 <-   325.0 <-0.2-
+         327.2 |          315.0       314.9      323.0
+         325.4 |          313.7       315.1      320.0
+  <-0.2- 325.4 |   <-0.2- 312.4    <- 315.6   <- 317.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.13 $
+Prices in the next 8 hours: [6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07]
+
+-----------------------------------------------------
+3:00 - 4:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:52:12.994 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4ae1a80> <NSThemeFrame: 0x7f89c4a25490> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 5 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 328.3 | S        315.7 --    315.5 --   325.0 --
+         327.2 |          315.0       314.9      323.0
+         325.4 |          313.7       315.1      320.0
+      -- 325.4 |       -- 312.4    -- 315.6   -- 317.0
+
+Next state
+B <-0.0- 327.4 | S        314.9 ->    315.2 ->   323.0 -0.0->
+         325.9 |          314.1       315.1      320.0
+         323.7 |          313.5       315.4      318.0
+  -0.0-> 319.8 |   -0.0-> 313.7    -> 315.4   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06]
+
+-----------------------------------------------------
+4:00 - 5:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:52:34.707 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4a48e80> <NSThemeFrame: 0x7f89c4ae5e40> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 327.4 | S        314.9 --    315.2 --   323.0 --
+         325.9 |          314.1       315.1      320.0
+         323.7 |          313.5       315.4      318.0
+      -- 319.8 |       -- 313.7    -- 315.4   -- 316.0
+
+Next state
+B <-0.0- 326.5 | S        314.2 ->    315.2 ->   320.0 -0.0->
+         324.5 |          313.7       315.2      318.0
+         321.3 |          313.3       315.2      316.0
+  -0.0-> 316.6 |   -0.0-> 312.7    -> 314.8   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08]
+
+-----------------------------------------------------
+5:00 - 6:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:52:55.197 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4a144f0> <NSThemeFrame: 0x7f89c6c30b90> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 326.5 | S        314.2 --    315.2 --   320.0 --
+         324.5 |          313.7       315.2      318.0
+         321.3 |          313.3       315.2      316.0
+      -- 316.6 |       -- 312.7    -- 314.8   -- 315.0
+
+Next state
+B <-0.0- 325.5 | S        313.8 ->    315.2 ->   319.0 -0.0->
+         323.0 |          313.2       315.1      317.0
+         319.2 |          312.5       314.8      316.0
+  -0.0-> 314.4 |   -0.0-> 311.4    -> 314.3   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16]
+
+-----------------------------------------------------
+6:00 - 7:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:53:17.527 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4b736f0> <NSThemeFrame: 0x7f89c4bc5c10> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 325.5 | S        313.8 --    315.2 --   319.0 --
+         323.0 |          313.2       315.1      317.0
+         319.2 |          312.5       314.8      316.0
+      -- 314.4 |       -- 311.4    -- 314.3   -- 315.0
+
+Next state
+B <-0.0- 324.2 | S        313.3 ->    315.0 ->   317.0 -0.0->
+         321.1 |          312.5       314.8      316.0
+         317.0 |          311.5       314.4      315.0
+  -0.0-> 312.5 |   -0.0-> 310.3    -> 313.8   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18]
+
+-----------------------------------------------------
+7:00 - 8:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:53:38.628 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c17ecf30> <NSThemeFrame: 0x7f89c17ec710> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 324.2 | S        313.3 --    315.0 --   317.0 --
+         321.1 |          312.5       314.8      316.0
+         317.0 |          311.5       314.4      315.0
+      -- 312.5 |       -- 310.3    -- 313.8   -- 315.0
+
+Next state
+B <-0.0- 323.1 | S        312.7 ->    314.9 ->   317.0 -0.0->
+         319.7 |          311.8       314.5      316.0
+         315.5 |          310.6       314.0      315.0
+  -0.0-> 311.3 |   -0.0-> 309.3    -> 313.4   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.03
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18]
+
+-----------------------------------------------------
+8:00 - 9:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:53:59.382 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7387490> <NSThemeFrame: 0x7f89c7390350> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:55:25.254 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4aa2820> <NSThemeFrame: 0x7f89c4a21800> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 0, 0, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 22 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 323.1 | S        312.7 --    314.9 --   317.0 --
+         319.7 |          311.8       314.5      316.0
+         315.5 |          310.6       314.0      315.0
+      -- 311.3 |       -- 309.3    -- 313.4   -- 315.0
+
+Next state
+B <-0.0- 321.9 | S        312.5 ->    314.8 ->   316.0 -0.0->
+         318.2 |          311.5       314.4      316.0
+         314.1 |          310.3       313.9      315.0
+  -0.0-> 310.5 |   -0.0-> 309.2    -> 313.2   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16]
+
+-----------------------------------------------------
+9:00 - 10:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:56:03.538 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7c48ee0> <NSThemeFrame: 0x7f89c7c3e490> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:57:18.759 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c1766db0> <NSThemeFrame: 0x7f89c1783500> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 34 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 321.9 | S        312.5 --    314.8 --   316.0 --
+         318.2 |          311.5       314.4      316.0
+         314.1 |          310.3       313.9      315.0
+      -- 310.5 |       -- 309.2    -- 313.2   -- 315.0
+
+Next state
+B <-0.0- 321.0 | S        312.4 ->    314.7 ->   316.0 -0.0->
+         317.3 |          311.4       314.3      316.0
+         313.3 |          310.2       313.8      315.0
+  -0.0-> 310.2 |   -0.0-> 309.1    -> 313.2   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2]
+
+-----------------------------------------------------
+10:00 - 11:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:58:09.860 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6b94160> <NSThemeFrame: 0x7f89c6b04a30> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 09:59:27.772 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7cc1c80> <NSThemeFrame: 0x7f89c7c014b0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 26 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 321.0 | S        312.4 --    314.7 --   316.0 --
+         317.3 |          311.4       314.3      316.0
+         313.3 |          310.2       313.8      315.0
+      -- 310.2 |       -- 309.1    -- 313.2   -- 315.0
+
+Next state
+B <-0.0- 320.2 | S        312.3 ->    314.7 ->   316.0 -0.0->
+         316.5 |          311.2       314.3      316.0
+         312.7 |          310.1       313.7      315.0
+  -0.0-> 309.8 |   -0.0-> 309.0    -> 313.1   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64]
+
+-----------------------------------------------------
+11:00 - 12:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:00:14.080 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c71c56a0> <NSThemeFrame: 0x7f89c71c5320> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:01:22.245 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7173880> <NSThemeFrame: 0x7f89c6cf7b10> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 8 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 320.2 | S        312.3 --    314.7 --   316.0 --
+         316.5 |          311.2       314.3      316.0
+         312.7 |          310.1       313.7      315.0
+      -- 309.8 |       -- 309.0    -- 313.1   -- 315.0
+
+Next state
+B <-0.0- 319.4 | S        312.2 ->    314.6 ->   316.0 -0.0->
+         315.7 |          311.1       314.2      316.0
+         312.1 |          310.0       313.7      315.0
+  -0.0-> 309.4 |   -0.0-> 308.9    -> 313.0   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43]
+
+-----------------------------------------------------
+12:00 - 13:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:01:51.632 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6b218d0> <NSThemeFrame: 0x7f89c6baf4b0> (null)
+On/Off from optimization:
+[1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 22 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 319.4 | S        312.2 --    314.6 --   316.0 --
+         315.7 |          311.1       314.2      316.0
+         312.1 |          310.0       313.7      315.0
+      -- 309.4 |       -- 308.9    -- 313.0   -- 315.0
+
+Next state
+B -0.3-> 322.0 | S        315.1 <-    315.9 <-   320.0 <-0.2-
+         320.2 |          315.0       315.2      319.0
+         319.4 |          314.8       315.0      318.0
+  <-0.3- 319.0 |   <-0.2- 314.5    <- 315.0   <- 317.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51]
+
+-----------------------------------------------------
+13:00 - 14:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:02:30.158 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6f78250> <NSThemeFrame: 0x7f89c73dcf70> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 322.0 | S        315.1 --    315.9 --   320.0 --
+         320.2 |          315.0       315.2      319.0
+         319.4 |          314.8       315.0      318.0
+      -- 319.0 |       -- 314.5    -- 315.0   -- 317.0
+
+Next state
+B <-0.0- 321.7 | S        315.1 ->    315.8 ->   320.0 -0.0->
+         320.0 |          315.0       315.2      318.0
+         319.2 |          314.7       315.0      318.0
+  -0.0-> 317.4 |   -0.0-> 313.9    -> 315.0   -> 317.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84]
+
+-----------------------------------------------------
+14:00 - 15:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:03:14.608 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4b616a0> <NSThemeFrame: 0x7f89c6f66b20> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 5 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 321.7 | S        315.1 --    315.8 --   320.0 --
+         320.0 |          315.0       315.2      318.0
+         319.2 |          314.7       315.0      318.0
+      -- 317.4 |       -- 313.9    -- 315.0   -- 317.0
+
+Next state
+B <-0.0- 321.5 | S        315.0 ->    315.7 ->   319.0 -0.0->
+         320.0 |          314.9       315.2      318.0
+         319.0 |          314.4       315.0      317.0
+  -0.0-> 316.8 |   -0.0-> 312.8    -> 315.0   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65]
+
+-----------------------------------------------------
+15:00 - 16:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:03:37.151 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7a2f750> <NSThemeFrame: 0x7f89c7ae5e00> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:04:25.514 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7ca2620> <NSThemeFrame: 0x7f89c7c1cba0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 0, 0, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:05:41.518 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7ecb790> <NSThemeFrame: 0x7f89c7ea1310> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 0, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 55 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 321.5 | S        315.0 --    315.7 --   319.0 --
+         320.0 |          314.9       315.2      318.0
+         319.0 |          314.4       315.0      317.0
+      -- 316.8 |       -- 312.8    -- 315.0   -- 316.0
+
+Next state
+B <-0.0- 321.2 | S        315.0 ->    315.6 ->   319.0 -0.0->
+         319.8 |          314.8       315.1      318.0
+         318.5 |          314.2       315.0      317.0
+  -0.0-> 315.5 |   -0.0-> 312.4    -> 315.0   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.28 $
+Prices in the next 8 hours: [7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46]
+
+-----------------------------------------------------
+16:00 - 17:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:06:52.971 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7e246c0> <NSThemeFrame: 0x7f89c7e09800> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:08:22.888 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7113060> <NSThemeFrame: 0x7f89c6c51080> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 0, 1]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 0, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 37 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 321.2 | S        315.0 --    315.6 --   319.0 --
+         319.8 |          314.8       315.1      318.0
+         318.5 |          314.2       315.0      317.0
+      -- 315.5 |       -- 312.4    -- 315.0   -- 316.0
+
+Next state
+B <-0.0- 321.1 | S        315.0 ->    315.5 ->   319.0 -0.0->
+         319.7 |          314.6       315.1      318.0
+         318.3 |          313.7       315.0      317.0
+  -0.0-> 315.1 |   -0.0-> 311.5    -> 315.0   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.27 $
+Prices in the next 8 hours: [41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
+
+-----------------------------------------------------
+17:00 - 18:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:09:18.208 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c696a990> <NSThemeFrame: 0x7f89c696a620> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:10:22.426 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6ba4ca0> <NSThemeFrame: 0x7f89c6b9f700> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 1, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 0, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:11:24.566 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c68a9770> <NSThemeFrame: 0x7f89c4e17df0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 1, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:12:29.166 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7e90b10> <NSThemeFrame: 0x7f89c4ecbf20> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 0, 1, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 27 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 321.1 | S        315.0 --    315.5 --   319.0 --
+         319.7 |          314.6       315.1      318.0
+         318.3 |          313.7       315.0      317.0
+      -- 315.1 |       -- 311.5    -- 315.0   -- 316.0
+
+Next state
+B <-0.0- 320.9 | S        314.9 ->    315.4 ->   319.0 -0.0->
+         319.4 |          314.5       315.1      318.0
+         317.7 |          313.4       315.0      317.0
+  -0.0-> 314.0 |   -0.0-> 311.2    -> 315.0   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.55 $
+Prices in the next 8 hours: [41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36]
+
+-----------------------------------------------------
+18:00 - 19:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:13:14.601 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6ee5b20> <NSThemeFrame: 0x7f89c689f800> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:14:33.389 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6e6c0f0> <NSThemeFrame: 0x7f89c6e6b840> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 1, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 1, 0, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:15:37.497 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6b815f0> <NSThemeFrame: 0x7f89c7af5ba0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 1, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 0, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:16:48.075 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6e97e20> <NSThemeFrame: 0x7f89c6b60240> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 0, 1, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 28 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 320.9 | S        314.9 --    315.4 --   319.0 --
+         319.4 |          314.5       315.1      318.0
+         317.7 |          313.4       315.0      317.0
+      -- 314.0 |       -- 311.2    -- 315.0   -- 316.0
+
+Next state
+B <-0.0- 320.8 | S        314.5 ->    315.3 ->   318.0 -0.0->
+         319.3 |          313.7       315.0      317.0
+         317.5 |          312.0       315.0      316.0
+  -0.0-> 313.7 |   -0.0-> 309.5    -> 314.9   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.54 $
+Prices in the next 8 hours: [41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34]
+
+-----------------------------------------------------
+19:00 - 20:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:17:33.874 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c89cfc00> <NSThemeFrame: 0x7f89c6a288f0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:18:36.892 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c60b0c40> <NSThemeFrame: 0x7f89c60aeb50> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:19:32.797 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6a01af0> <NSThemeFrame: 0x7f89c6abbaf0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 1, 0, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:26:01.954 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6848270> <NSThemeFrame: 0x7f89c6eef680> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 0, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:27:00.829 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6a5ac50> <NSThemeFrame: 0x7f89c62d83e0> (null)
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 42 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 320.8 | S        314.5 --    315.3 --   318.0 --
+         319.3 |          313.7       315.0      317.0
+         317.5 |          312.0       315.0      316.0
+      -- 313.7 |       -- 309.5    -- 314.9   -- 316.0
+
+Next state
+B <-0.0- 320.6 | S        314.0 ->    315.2 ->   318.0 -0.0->
+         319.1 |          312.7       315.0      317.0
+         317.0 |          310.8       314.9      316.0
+  -0.0-> 313.0 |   -0.0-> 308.7    -> 314.6   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.67 $
+Prices in the next 8 hours: [41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34]
+
+-----------------------------------------------------
+20:00 - 21:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:28:00.304 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c69e7e50> <NSThemeFrame: 0x7f89c69bb5d0> (null)
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:29:10.255 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7a1ab60> <NSThemeFrame: 0x7f89c7a3a060> (null)
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 1, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:30:12.412 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c629ef90> <NSThemeFrame: 0x7f89c62e12f0> (null)
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 1, 0, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:31:01.043 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c8811140> <NSThemeFrame: 0x7f89c8927e40> (null)
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:32:01.330 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6aeb710> <NSThemeFrame: 0x7f89c8a09120> (null)
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 0, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 6 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:33:00.433 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c65214c0> <NSThemeFrame: 0x7f89c6079290> (null)
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 56 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 320.6 | S        314.0 --    315.2 --   318.0 --
+         319.1 |          312.7       315.0      317.0
+         317.0 |          310.8       314.9      316.0
+      -- 313.0 |       -- 308.7    -- 314.6   -- 316.0
+
+Next state
+B <-0.0- 319.5 | S        313.0 ->    315.1 ->   317.0 -0.0->
+         317.5 |          311.4       314.9      316.0
+         314.5 |          309.6       314.6      316.0
+  -0.0-> 310.5 |   -0.0-> 308.2    -> 314.1   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.81 $
+Prices in the next 8 hours: [6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37]
+
+-----------------------------------------------------
+21:00 - 22:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:34:22.807 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c8939c40> <NSThemeFrame: 0x7f89c89370e0> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:35:45.227 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c698a640> <NSThemeFrame: 0x7f89c69356e0> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:36:43.722 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c58561b0> <NSThemeFrame: 0x7f89c5855d50> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 0, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:37:31.767 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c5bf3f60> <NSThemeFrame: 0x7f89c5bbfb90> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 1, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:38:30.797 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c65f5000> <NSThemeFrame: 0x7f89c65f5650> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 6 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:39:27.929 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c6934450> <NSThemeFrame: 0x7f89c69123e0> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 7 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:40:41.588 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c890df50> <NSThemeFrame: 0x7f89c8eb0260> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 51 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 319.5 | S        313.0 --    315.1 --   317.0 --
+         317.5 |          311.4       314.9      316.0
+         314.5 |          309.6       314.6      316.0
+      -- 310.5 |       -- 308.2    -- 314.1   -- 315.0
+
+Next state
+B <-0.0- 316.8 | S        312.7 ->    315.0 ->   317.0 -0.0->
+         314.0 |          311.1       314.8      316.0
+         310.8 |          309.3       314.5      316.0
+  -0.0-> 308.0 |   -0.0-> 308.0    -> 313.9   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.94 $
+Prices in the next 8 hours: [6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41]
+
+-----------------------------------------------------
+22:00 - 23:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:41:53.121 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c8806ae0> <NSThemeFrame: 0x7f89c624b3d0> (null)
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:43:23.497 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c890b690> <NSThemeFrame: 0x7f89c625b5f0> (null)
+2024-02-14 10:43:26.758 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <NSSavePanel: 0x7f89c88c1870> <NSThemeFrame: 0x7f89c88c29e0> <_NSViewBackingLayer: 0x7f89c6507710>
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 0, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:44:42.896 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c622c730> <NSThemeFrame: 0x7f89c6231c90> (null)
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 0, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:47:32.928 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c98a9890> <NSThemeFrame: 0x7f89c5d92d30> (null)
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:48:45.440 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4e19830> <NSThemeFrame: 0x7f89c4e7fec0> (null)
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 6 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:49:27.081 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c5db7490> <NSThemeFrame: 0x7f89c5db0a70> (null)
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 7 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:50:26.079 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c7fd1e30> <NSThemeFrame: 0x7f89c7fd0d40> (null)
+On/Off from optimization:
+[0, 1, 0, 0, 0, 0, 0, 0]
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 11 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 316.8 | S        312.7 --    315.0 --   317.0 --
+         314.0 |          311.1       314.8      316.0
+         310.8 |          309.3       314.5      316.0
+      -- 308.0 |       -- 308.0    -- 313.9   -- 315.0
+
+Next state
+B -0.3-> 318.5 | S        315.4 <-    315.3 <-   318.0 <-0.2-
+         318.0 |          315.3       315.1      318.0
+         317.4 |          315.0       315.2      317.0
+  <-0.3- 316.8 |   <-0.2- 314.6    <- 315.3   <- 316.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.94 $
+Prices in the next 8 hours: [6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46]
+
+-----------------------------------------------------
+23:00 - 24:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+2024-02-14 10:51:00.924 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c4ec8b00> <NSThemeFrame: 0x7f89c4e46a40> (null)
+On/Off from optimization:
+[0, 0, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 37 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_09-49-24.csv
+
+Initial state
+B     -- 318.5 | S        315.4 --    315.3 --   318.0 --
+         318.0 |          315.3       315.1      318.0
+         317.4 |          315.0       315.2      317.0
+      -- 316.8 |       -- 314.6    -- 315.3   -- 316.0
+
+Next state
+B <-0.0- 318.2 | S        315.1 ->    315.2 ->   317.0 -0.0->
+         317.5 |          314.3       315.2      317.0
+         316.1 |          312.6       315.3      316.0
+  -0.0-> 312.5 |   -0.0-> 309.5    -> 315.3   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.13 $
+Prices in the next 8 hours: [6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95]
+
+The 24-hour simulation ran in 1 hour(s) and 2 minute(s).
+
+Plotting the data...
+
+2024-02-14 10:51:58.953 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <Window: 0x7f89c88debe0> <NSThemeFrame: 0x7f89c881ffe0> (null)
+2024-02-14 10:52:39.445 python[850:14696] ASB: LNW <NSApplication: 0x7f89c3bf64c0> <NSSavePanel: 0x7f89c7f4c320> <NSThemeFrame: 0x7f89c7f2bdb0> <_NSViewBackingLayer: 0x7f89c7f2f2d0>
+(ada) thomasdefauw@MBP-2011 gridworks-optseq % 

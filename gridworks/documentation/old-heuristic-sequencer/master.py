@@ -14,7 +14,7 @@ delta_t_h = delta_t_m/60    # hours
 N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 24
+num_iterations = 16
 
 # Problem type
 pb_type = {
@@ -33,8 +33,7 @@ plot.print_pb_type(pb_type, num_iterations)
 # ------------------------------------------------------
 
 # Initial state (buffer + storage)
-#x_0 = [311]*16
-x_0 = [314,314.6,313.7,308.8] + [310]*12
+x_0 = [310]*16
 
 # Initial solver warm start
 u_opt = np.zeros((6, N))
@@ -122,7 +121,7 @@ for iter in range(num_iterations):
     while obj_opt == 1e5:
         
         # Get a good sequence proposition (method depends on attempt)
-        sequence = sequencer.get_optimal_sequence(c_el, m_load, iter, previous_sequence, file_path, attempt, long_seq_pack)
+        sequence = sequencer.get_sequence(c_el, m_load, iter, previous_sequence, file_path, attempt, long_seq_pack)
         
         # Try to solve the optimization problem, get u* and x*
         u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
