@@ -1,7 +1,5 @@
-import numpy as np
-import csv
-from datetime import datetime
 import pandas as pd
+import csv
 
 first_file = input("Path to first csv file: ").replace(" ","")
 second_file = input("Path to second csv file: ").replace(" ","")

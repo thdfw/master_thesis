@@ -3,6 +3,7 @@ import numpy as np
 from datetime import datetime
 import os
 import forecasts, functions
+from sequencer import current_datetime
 
 '''
 Prints the selected problem type
@@ -156,7 +157,6 @@ def plot_MPC(data):
     ax[1].legend()
 
     # Save the plot as a png
-    current_datetime = datetime.now()
     formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
     plt.savefig(os.path.join("data", "simulations", "recent", "plot_" + formatted_datetime + ".png"))
     plt.show()
