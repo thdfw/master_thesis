@@ -8,7 +8,7 @@ import forecasts
 import datetime
 import csv
 
-PLOT = False
+PLOT = True
 PRINT = False
 
 # ------------------------------------------
@@ -23,10 +23,10 @@ max_temp, min_temp = 65, 38 #°C
 max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
 max_storage = round(max_storage * 2.77778e-7,1) # in kWh
 
-# Allow colder water (35°C) as negative storage
+# Allow colder water (35°C) as negative storage?
 min_storage = mass_of_water * 4187 * (35 - min_temp) # in Joules
 min_storage = round(min_storage * 2.77778e-7,1) # in kWh
-#min_storage = 0
+min_storage = 0
 
 if PRINT: print(f"Storage max: {max_storage}kWh, min: {min_storage}kWh")
 
@@ -168,31 +168,12 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     
     # Turn on the HP at the 'attempt' remaining cheapest hour(s)
     
-    #if attempt > 1:
-    # Treat for duplicates
-    for i in range(len(c_el)):
-        for j in range(len(c_el)):
-            if i!=j and c_el[i] == c_el[j]:
-                c_el[j] = c_el[j] + random.uniform(-0.01, 0.01)
-    
-    # Rank remaining hours by price
-    c_el_remaining = []
-    for i in range(len(c_el)):
-        if HP_on_off_opt[i]==0:
-            c_el_remaining.append(c_el[i])
-            
-    ranked_all_c_el = [sorted(c_el).index(x) for x in c_el]
-    if PRINT: print(f"Ranked c_el: {ranked_all_c_el}")
-    ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
-    if PRINT:
-        print(f"Ranked c_el remaining: {ranked_c_el}")
-        print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
-    
-    # Turn on the 'attempt' cheapest remaining hours
-    for i in range(attempt-1):
-
-        # Turn on the ith cheapest
-        HP_on_off_opt[ranked_all_c_el.index(min(ranked_c_el))] = 1
+    if attempt > 1:
+        # Treat for duplicates
+        for i in range(len(c_el)):
+            for j in range(len(c_el)):
+                if i!=j and c_el[i] == c_el[j]:
+                    c_el[j] = c_el[j] + random.uniform(-0.01, 0.01)
         
         # Rank remaining hours by price
         c_el_remaining = []
@@ -200,10 +181,29 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
             if HP_on_off_opt[i]==0:
                 c_el_remaining.append(c_el[i])
                 
+        ranked_all_c_el = [sorted(c_el).index(x) for x in c_el]
+        if PRINT: print(f"Ranked c_el: {ranked_all_c_el}")
         ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
-        if PRINT: print(f"Ranked c_el remaining: {ranked_c_el}")
+        if PRINT:
+            print(f"Ranked c_el remaining: {ranked_c_el}")
+            print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
         
-    if attempt>1: print(f"On/Off after treatement:\n{HP_on_off_opt}")
+        # Turn on the 'attempt' cheapest remaining hours
+        for i in range(attempt-1):
+
+            # Turn on the ith cheapest
+            HP_on_off_opt[ranked_all_c_el.index(min(ranked_c_el))] = 1
+            
+            # Rank remaining hours by price
+            c_el_remaining = []
+            for i in range(len(c_el)):
+                if HP_on_off_opt[i]==0:
+                    c_el_remaining.append(c_el[i])
+                    
+            ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
+            if PRINT: print(f"Ranked c_el remaining: {ranked_c_el}")
+            
+        print(f"On/Off after treatement:\n{HP_on_off_opt}")
     print("")
 
     # ------------------------------------------
@@ -252,8 +252,8 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
     # Constraints at every time step
     for t in range(N+1):
 
-        # Bounds on storage (allow for negative storage, means the water is below 311K)
-        opti.subject_to(storage[t] >= min_storage)
+        # Bounds on storage (allow for negative storage in first hour, means the water is below 311K)
+        if t>0: opti.subject_to(storage[t] >= min_storage)
         opti.subject_to(storage[t] <= max_storage)
 
         if t < N:
