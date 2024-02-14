@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error
 import warnings
 warnings.filterwarnings('ignore')
 
-PLOT = True
+PLOT = False
 PRINT = False
 library = fcLib.forecasters(fcLib.forecaster_list)
 
@@ -54,8 +54,8 @@ def get_past_data(path):
 
 def get_best_forecaster(df, path_to_past_data):
 
-    # **** To obtain the best forecaster based on fcSelector ****
-    fcselec = True
+    # **** To obtain the best forecaster via fcSelector ****
+    fcselec = False
     if fcselec:
     
         best_forecaster = FcSelect(path_to_past_data)
@@ -320,6 +320,19 @@ def get_forecast_CI(weather, best_forecaster, model, delta, path):
         CI_max_load.append(predict + CI_width/2)
         
     if PRINT: print(f"\nFinished predicting the load with {best_forecaster}.")
+    if PLOT:
+                    
+        # Plot the weather with the confidence interval
+        preds = [round(x[0],2) for x in predictions]
+        CI_min = [round(x[0],2) for x in CI_min_load]
+        CI_max = [round(x[0],2) for x in CI_max_load]
+        plt.plot(preds, color='red', alpha=0.6, label='Load forecast')
+        plt.fill_between(range(len(preds)), CI_min, CI_max, color='red', alpha=0.1, label='90% confidence interval')
+        plt.xlabel("Hour")
+        plt.ylabel("Load (kWh)")
+        plt.xticks(list(range(len(predictions))))
+        plt.legend()
+        plt.show()
 
     return predictions, CI_min_load, CI_max_load
 

@@ -45,7 +45,7 @@ def get_m_load(start, end, delta_t_h):
     4.91, 4.91, 4.91, 4.91, 4.98, 4.91]
             
     # Corresponding load mass flow rates in kg/s
-    cp, Delta_T_load = 4187,  5/9*20
+    cp, Delta_T_load = 4187, 5/9*20
     m_load_all = [round(Q_load*1000/(cp*Delta_T_load), 3) for Q_load in Q_load_all]
     
     # High load
@@ -58,7 +58,7 @@ def get_m_load(start, end, delta_t_h):
     # m_load_all = [0.1]*16 + [0]*8
     
     # Low load
-    m_load_all = [0.05, 0.04, 0.04, 0.05, 0.05, 0.04, 0.04, 0.03, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.02, 0.04, 0.04, 0.04, 0.05]
+    # m_load_all = [0.05, 0.04, 0.04, 0.05, 0.05, 0.04, 0.04, 0.03, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.02, 0.04, 0.04, 0.04, 0.05]
     
     # Extend to match time step (1 hour is 1/delta_t_h time steps)
     m_load_all = [item for item in m_load_all for _ in range(int(1/delta_t_h))]

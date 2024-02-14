@@ -7,7 +7,7 @@ import datetime as dtm
 import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
 
 print("\n---------------------------------------")
-print("0 - Find the best forecaster [Check fcSelector performance]")
+print("0 - Find the best forecaster [OK]")
 print("---------------------------------------")
 
 # Get past data
@@ -20,7 +20,7 @@ best_forecaster, model = load_forecast.get_best_forecaster(past_data, path_to_pa
 print(f"\nThe forecaster that performed best on the past data is {best_forecaster}.")
 
 print("\n---------------------------------------")
-print("1 - Import weather forecast [Check forecast length]")
+print("1 - Import weather forecast [OK]")
 print("---------------------------------------")
 
 # Get forecast for Maine (= None for live forecast)
@@ -29,7 +29,6 @@ end = None
 #start = dtm.datetime(2024, 2, 10, 0, 0, 0)
 #end = dtm.datetime(2024, 2, 10, 23, 0, 0)
 weather, CI_weather = weather_forecast.get_weather(start, end)
-#weather = weather[:17]
 
 # Lenght of simulation (hours)
 num_hours = len(weather)
@@ -52,8 +51,9 @@ print("---------------------------------------")
 # Predict load with 95% confidence interval for predicted weather
 delta = 0.05
 pred_load, min_pred_load, max_pred_load = load_forecast.get_forecast_CI(weather, best_forecaster, model, delta, path_to_past_data)
+CI_load = pred_load[0]-min_pred_load[0]
 print(f"\nLoad succesfully predicted with {best_forecaster}, with {round((1-delta)*100)}% confidence interval.")
-print(f"{[round(x[0],2) for x in pred_load]} \n+/- {pred_load[0]-min_pred_load[0]} kWh")
+print(f"{[round(x[0],2) for x in pred_load]} \n+/- {CI_load} kWh")
 
 # Predict load with 95% confidence interval for coldest predicted weather (weather - CI)
 min_weather = [round(weather[i]-CI_weather[i],2) for i in range(num_hours)]
@@ -64,6 +64,43 @@ final_CI = [max_pred_max_load[i]-pred_load[i] if CI_weather[i]>0 else [0] for i 
 final_CI = [round(x[0],2) for x in final_CI]
 print(f"\nCombining with weather confidence interval:")
 print(f"{[round(x[0],2) for x in pred_load]} \n+/- {final_CI} kWh")
+
+# PLOT
+fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
+
+ax[0].set_xlabel("Time [hours]")
+ax[0].set_ylabel("Load [kWh]")
+
+pred_min_load = [pred_load[i][0] - (pred_max_load[i][0] - pred_load[i][0]) for i in range(len(pred_load))]
+pred_max_load = [x[0] for x in pred_max_load]
+
+ax[0].plot(pred_load, color='red', alpha=0.8, label='Load')
+ax[0].fill_between(range(len(pred_load)), pred_min_load, pred_max_load, color='red', alpha=0.1, label='Weather CI')
+
+min1 = [pred_max_load[i]-CI_load[0] for i in range(len(pred_load))]
+max1 = [pred_max_load[i]+CI_load[0] for i in range(len(pred_load))]
+
+min2 = [pred_min_load[i]-CI_load[0] for i in range(len(pred_load))]
+max2 = [pred_min_load[i]+CI_load[0] for i in range(len(pred_load))]
+
+ax[0].fill_between(range(len(pred_load)), min1, max1, color='blue', alpha=0.1, label='Forecaster CI on max/min weather')
+ax[0].fill_between(range(len(pred_load)), min2, max2, color='blue', alpha=0.1)
+
+ax[0].plot([pred_max_load[i]+CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted', label='Overall CI')
+ax[0].plot([pred_min_load[i]-CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted')
+ax[0].legend()
+
+ax[1].set_xlabel("Time [hours]")
+ax[1].set_ylabel("Outside air temperature [°C]")
+
+ax[1].plot(weather, color='gray', alpha=0.8, label='Outside air temperature [°C]')
+
+min_weather = [weather[i]-CI_weather[i] for i in range(len(CI_weather))]
+max_weather = [weather[i]+CI_weather[i] for i in range(len(CI_weather))]
+ax[1].fill_between(range(len(pred_load)), min_weather, max_weather, color='gray', alpha=0.1, label='Weather CI')
+ax[1].legend()
+
+plt.show()
 
 print("\n---------------------------------------")
 print("3 - Get HP commands from Pareto [OK]")

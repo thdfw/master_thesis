@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from pvlib.forecast import HRRR
 
 PRINT = False
-PLOT = True
+PLOT = False
 
 def get_forecast_pvlib(lat, lon, start_time, final_time):
 
@@ -99,10 +99,10 @@ def get_weather(start, end):
     # Confidence intervals from past data
     CIs = [2.4102025555533313, 2.313273333333333, 2.353639999995, 2.228993777773333, 2.5042659999999994, 2.332507777778334, 2.675285666668332, 2.520124333326665, 2.5709882222183325, 2.6398711111166655, 2.678220333335002, 2.7022454444466675, 2.7966293333350016, 3.001692444445002, 2.827686777780002, 3.0397588888849985, 2.757263333331668]
     
-    # Fill in CI with np.nan
+    # Crop if the forecast is longer than the forecast
     if len(T_OA_list) > len(CIs):
-        CIs = CIs + [0]*(len(T_OA_list)-len(CIs))
-    
+        T_OA_list = T_OA_list[:len(CIs)]
+            
     if PLOT:
         length = len(CIs) if len(CIs)<len(T_OA_list) else len(T_OA_list)
         

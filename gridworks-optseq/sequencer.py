@@ -26,6 +26,7 @@ max_storage = round(max_storage * 2.77778e-7,1) # in kWh
 # Allow colder water (35°C) as negative storage
 min_storage = mass_of_water * 4187 * (35 - min_temp) # in Joules
 min_storage = round(min_storage * 2.77778e-7,1) # in kWh
+#min_storage = 0
 
 if PRINT: print(f"Storage max: {max_storage}kWh, min: {min_storage}kWh")
 
