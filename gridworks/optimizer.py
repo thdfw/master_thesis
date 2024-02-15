@@ -165,8 +165,9 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
         opti.subject_to(u[3,t] == d_bu)
         opti.subject_to(u[4,t] == d_HP)
         
+        # Just a print
         if PRINT and t%15==0:
-            section_time = (section+iter)%24
+            section_time = (section+int(iter/15))%24
             section_str = f"0{section_time}" if section_time<10 else f"{section_time}"
             section_1_str = f"0{section_time-1}" if section_time<11 else f"{section_time-1}"
             if section_time == 0: section_1_str = "23"
