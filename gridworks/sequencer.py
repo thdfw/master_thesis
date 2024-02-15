@@ -171,10 +171,10 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     # Solve the optimization problem with an increased load
     if attempt > 1:
     
-        # Increase the load
+        # Increase the load by 25% at each attempt
         print(f"\nLoad before: {load}")
-        load = [attempt*x for x in load]
-        print(f"Load after: {load}\n")
+        load = [(1+(attempt-1)*0.25)*x for x in load]
+        print(f"Load after (+{(attempt-1)*25}%): {load}\n")
 
         Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
         
