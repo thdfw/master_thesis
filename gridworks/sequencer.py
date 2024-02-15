@@ -50,7 +50,7 @@ def COP1(T_OA):
 # ------------------------------------------
 # ------------------------------------------
 
-def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, attempt, long_seq_pack):
+def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_seq_pack):
 
     if attempt==1:
         # Print simulated date and time
@@ -300,11 +300,17 @@ current_datetime = datetime.datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
 csv_file_name = os.path.join("data", "simulations", "recent", "results_" + formatted_datetime + ".csv")
 
-def append_to_csv(data, final_sequence):
+def append_to_csv(x_0, iter, sequence):
+
+    csv_data = [{
+        "T_B": [round(x,1) for x in x_0[:4]],
+        "T_S": [round(x,1) for x in x_0[4:]],
+        "iter": iter,
+        "prices": [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+8, 1)],
+        "loads": forecasts.get_m_load(iter, iter+8, 1),
+        "sequence": [sequence[f'combi{i}'] for i in range(1,9)]
+    }]
     
-    # Add the sequence to the data going to csv
-    data[0]['sequence'] = [final_sequence[f'combi{i}'] for i in range(1,9)]
-        
     with open(csv_file_name, 'a', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=["T_B", "T_S", "prices", "loads", "iter", "sequence"])
         
@@ -313,7 +319,7 @@ def append_to_csv(data, final_sequence):
             writer.writeheader()
         
         # Append data to CSV
-        for row in data:
+        for row in csv_data:
             writer.writerow(row)
             
     print("Data was appended to", csv_file_name)

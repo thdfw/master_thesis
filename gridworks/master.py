@@ -33,8 +33,7 @@ plot.print_pb_type(pb_type, num_iterations)
 # ------------------------------------------------------
 
 # Initial state (buffer + storage)
-#x_0 = [311]*16
-x_0 = [314,314.6,313.7,308.8] + [310]*12
+x_0 = [310]*16
 
 # Initial solver warm start
 u_opt = np.zeros((6, N))
@@ -64,37 +63,6 @@ start_time = time.time()
 for iter in range(num_iterations):
 
     # ---------------------------------------------------
-    # Forecasts
-    # ---------------------------------------------------
-    
-    # Get the first hourly forecasts
-    if iter==0:
-        c_el = [round(x*1000*100,2) for x in forecasts.get_c_el(0, 24, 1)]
-        m_load = forecasts.get_m_load(0, 24, 1)
-
-    # Get next day forecasts at 4:00 PM - TODO: replace with real forecasts
-    if iter%24==16:
-        c_el = c_el + c_el[:24]
-        m_load = m_load + m_load[:24]
-        
-    # At the start of a new day, crop forecasts
-    if iter%24==0:
-        c_el = c_el[-24:]
-        m_load = m_load[-24:]
-        
-    # At 2AM, sudden negative price
-    # if iter==2: c_el[2] = -15
-     
-    # To save the iteration in a csv file
-    csv_data = [{
-        "T_B": [round(x,1) for x in x_0[:4]],
-        "T_S": [round(x,1) for x in x_0[4:]],
-        "iter": iter,
-        "prices": c_el[iter%24:iter%24+8],
-        "loads": m_load[iter%24:iter%24+8]
-    }]
-
-    # ---------------------------------------------------
     # Solver warm start from previous iteration
     # ---------------------------------------------------
     
@@ -122,7 +90,7 @@ for iter in range(num_iterations):
     while obj_opt == 1e5:
         
         # Get a good sequence proposition (method depends on attempt)
-        sequence = sequencer.get_optimal_sequence(c_el, m_load, iter, previous_sequence, file_path, attempt, long_seq_pack)
+        sequence = sequencer.get_optimal_sequence(iter, previous_sequence, file_path, attempt, long_seq_pack)
         
         # Try to solve the optimization problem, get u* and x*
         u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
@@ -134,7 +102,7 @@ for iter in range(num_iterations):
     previous_sequence = sequence
     
     # Save results in a csv file
-    sequencer.append_to_csv(csv_data, sequence)
+    sequencer.append_to_csv(x_0, iter, sequence)
     
     # ---------------------------------------------------
     # Implement u0*, update x_0, print and plot iteration
