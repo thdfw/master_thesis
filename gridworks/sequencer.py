@@ -50,7 +50,7 @@ def COP1(T_OA):
 # ------------------------------------------
 # ------------------------------------------
 
-def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_seq_pack):
+def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_seq_pack, pb_type):
 
     if attempt==1:
         # Print simulated date and time
@@ -89,8 +89,8 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
     # ------------------------------------------
     
     # Horizon and time step
-    N = 8
     delta_t_h = 4/60
+    N = int(pb_type['horizon'] * delta_t_h)
     
     # Price
     c_el = [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+N, 1)]

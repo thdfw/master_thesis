@@ -25,34 +25,36 @@ T_w_max = 273 + 80 #K
 # Other
 cp = 4187 #J/kgK
 
+# Time step
+delta_t_m = 4
+delta_t_h = delta_t_m/60
+delta_t_s = delta_t_m*60
+
 # ------------------------------------------------------
 # System dynamics
 # ------------------------------------------------------
 
-def dynamics(u_t, x_t, delta_t_s, t, sequence, iter):
-
-    # Time step in hours
-    delta_t_h = delta_t_s / 3600
+def dynamics(u_t, x_t, t, sequence, iter):
 
     # All heat transfers are initialized at 0
     Q_top_B, Q_bottom_B, Q_conv_B, Q_losses_B = [0]*4, [0]*4, [0]*4, [0]*4
     Q_top_S, Q_bottom_S, Q_conv_S, Q_losses_S, Q_R_S = [0]*12, [0]*12, [0]*12, [0]*12, [0]*12
     
     # For the buffer tank B
-    Q_top_B[0] = get_function("Q_top_B", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_bottom_B[3] = get_function("Q_bottom_B", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_conv_B = [get_function(f"Q_conv_B{i}", u_t, x_t, t, sequence, iter, delta_t_h) for i in range(1,5)]
+    Q_top_B[0] = get_function("Q_top_B", u_t, x_t, t, sequence, iter)
+    Q_bottom_B[3] = get_function("Q_bottom_B", u_t, x_t, t, sequence, iter)
+    Q_conv_B = [get_function(f"Q_conv_B{i}", u_t, x_t, t, sequence, iter) for i in range(1,5)]
 
     # For the storage tanks S1, S2, S3
-    Q_top_S[0] = get_function("Q_top_S1", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_top_S[4] = get_function("Q_top_S2", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_top_S[8] = get_function("Q_top_S3", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_bottom_S[3] = get_function("Q_bottom_S1", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_bottom_S[7] = get_function("Q_bottom_S2", u_t, x_t, t, sequence, iter, delta_t_h)
-    Q_bottom_S[11] = get_function("Q_bottom_S3", u_t, x_t, t, sequence, iter, delta_t_h)
+    Q_top_S[0] = get_function("Q_top_S1", u_t, x_t, t, sequence, iter)
+    Q_top_S[4] = get_function("Q_top_S2", u_t, x_t, t, sequence, iter)
+    Q_top_S[8] = get_function("Q_top_S3", u_t, x_t, t, sequence, iter)
+    Q_bottom_S[3] = get_function("Q_bottom_S1", u_t, x_t, t, sequence, iter)
+    Q_bottom_S[7] = get_function("Q_bottom_S2", u_t, x_t, t, sequence, iter)
+    Q_bottom_S[11] = get_function("Q_bottom_S3", u_t, x_t, t, sequence, iter)
     for i in range(1,4):
         for j in range(1,5):
-            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, t, sequence, iter, delta_t_h)
+            Q_conv_S[4*(i-1)+(j-1)] = get_function(f"Q_conv_S{i}{j}", u_t, x_t, t, sequence, iter)
             
     # For the resistive elements
     # Q_R_S = ([0] + [4500*u_t[5]] + [0] + [4500*u_t[5]])*3
@@ -75,15 +77,6 @@ def dynamics(u_t, x_t, delta_t_s, t, sequence, iter):
 
 def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
 
-    # ------------------------------------------------------
-    # Read problem type
-    # ------------------------------------------------------
-    
-    # Time step
-    delta_t_m = pb_type['time_step'] #min
-    delta_t_s = delta_t_m*60 #sec
-    delta_t_h = delta_t_m/60 #hours
-    
     # Horizon
     N = pb_type['horizon']
 
@@ -173,30 +166,34 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
         opti.subject_to(u[4,t] == d_HP)
         
         if PRINT and t%15==0:
-            print(f"{section-1}h-{section}h: {sequence[f'combi{section}']}")
+            section_time = (section+iter)%24
+            section_str = f"0{section_time}" if section_time<10 else f"{section_time}"
+            section_1_str = f"0{section_time-1}" if section_time<11 else f"{section_time-1}"
+            if section_time == 0: section_1_str = "23"
+            print(f"{section_1_str}h-{section_str}h: {sequence[f'combi{section}']} ({round(c_el[t]*100*1000)} cts/kWh)")
             
         # ----- Non linear constraints -----
         
         # Heat pump operation
         if d_HP == 1:
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter, delta_t_h) >= Q_HP_min * u[4,t])
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter, delta_t_h) <= Q_HP_max[t])
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter) >= Q_HP_min * u[4,t])
+            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter) <= Q_HP_max[t])
         
         # Load supply temperature
-        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], t, sequence, iter, delta_t_h) >= T_sup_load_min)
+        opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], t, sequence, iter) >= T_sup_load_min)
         
         # Mass flow rates
-        opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], t, sequence, iter, delta_t_h) >= 0)
+        opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], t, sequence, iter) >= 0)
         
         # System dynamics
-        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], delta_t_s, t, sequence, iter))
+        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], t, sequence, iter))
             
     # ------------------------------------------------------
     # Objective
     # ------------------------------------------------------
 
     # Cost of electricity used over the next N steps
-    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter, delta_t_h)*COP1[t] for t in range(N))
+    obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter)*COP1[t] for t in range(N))
     # Adding resistances: +27000*u[5,t]) for t in range(N))
 
     # Set objective

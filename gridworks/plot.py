@@ -5,6 +5,7 @@ import os
 import forecasts, functions
 from sequencer import current_datetime
 from sequencer import BONMIN
+delta_t_h = 4/60
 
 '''
 Prints the selected problem type
@@ -34,7 +35,7 @@ def print_pb_type(pb_type, num_iterations):
 '''
 Prints the current iteration (x0, u0*, x1) in way that is easy to visualize
 '''
-def print_iteration(u_opt, x_opt, x_1, pb_type, sequence, iter):
+def print_iteration(u_opt, x_opt, x_1, sequence, iter):
 
     # ------------------------------------------------------
     # Initial state
@@ -55,15 +56,14 @@ def print_iteration(u_opt, x_opt, x_1, pb_type, sequence, iter):
     
     Q_HP = []
     m_stor, m_buffer = 0, 0
-    delta_t_h = pb_type['time_step']/60
 
     for k in range(15):
     
         u_k = [round(float(x),6) for x in u_opt[:,k]]
         x_k = [round(float(x),6) for x in x_opt[:,k]]
         
-        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, sequence, iter, delta_t_h))
-        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, sequence, iter, delta_t_h),1)
+        Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, sequence, iter))
+        m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, sequence, iter),1)
         m_stor += u_opt[1,k]
 
     m_buffer = round(m_buffer/15, 1)

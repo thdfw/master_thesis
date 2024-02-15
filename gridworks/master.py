@@ -10,8 +10,8 @@ import optimizer, functions, plot, forecasts, sequencer
 delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 
-# Horizon (8 hours)
-N = int(8 * 1/delta_t_h)
+# Horizon (hours * time_steps/hour)
+N = int(12 * 1/delta_t_h)
 
 # Simulation time (hours)
 num_iterations = 24
@@ -45,7 +45,7 @@ for i in range(8): previous_sequence[f'combi{i+1}'] = [1,1,1]
 
 # Load previous sequence results from a csv file
 file_path = input("\nResults file (enter to skip): ").replace(" ","")
-if file_path=="": print("No file selected.")
+print("No file selected.") if file_path=="" else print(f"Reading from {file_path.split('/')[-1]}.")
 
 # For the final plot
 list_B1, list_B4 = [x_0[0]], [x_0[3]]
@@ -66,11 +66,11 @@ for iter in range(num_iterations):
     # Solver warm start from previous iteration
     # ---------------------------------------------------
     
-    # The last 7 hours of the previous iteration
-    initial_x = [[float(x) for x in x_opt[k,-106:]] for k in range(16)]
-    initial_u = [[float(u) for u in u_opt[k,-105:]] for k in range(6)]
+    # The last N-1 hours of the previous iteration
+    initial_x = [[float(x) for x in x_opt[k,-(15*(int(N*delta_t_h)-1))-1:]] for k in range(16)]
+    initial_u = [[float(u) for u in u_opt[k,-(15*(int(N*delta_t_h)-1)):]] for k in range(6)]
     
-    # The last hour (hour 8) of this iteration is not initialized
+    # The last hour of the current iteration is not initialized
     initial_x = np.array([initial_x_i+[0]*15 for initial_x_i in initial_x])
     initial_u = np.array([initial_u_i+[0]*15 for initial_u_i in initial_u])
     
@@ -90,7 +90,7 @@ for iter in range(num_iterations):
     while obj_opt == 1e5:
         
         # Get a good sequence proposition (method depends on attempt)
-        sequence = sequencer.get_optimal_sequence(iter, previous_sequence, file_path, attempt, long_seq_pack)
+        sequence = sequencer.get_optimal_sequence(iter, previous_sequence, file_path, attempt, long_seq_pack, pb_type)
         
         # Try to solve the optimization problem, get u* and x*
         u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
@@ -115,7 +115,7 @@ for iter in range(num_iterations):
     x_0 = x_1
         
     # Print iteration
-    plot.print_iteration(u_opt, x_opt, x_1, pb_type, sequence, 15*iter)
+    plot.print_iteration(u_opt, x_opt, x_1, sequence, 15*iter)
     print(f"Cost of next 8 hours: {round(obj_opt,2)} $")
     print(f"Prices in the next 8 hours: {[round(100*1000*x,2) for x in forecasts.get_c_el(iter,iter+8,1)]}")
     
@@ -126,7 +126,7 @@ for iter in range(num_iterations):
         'T_S11': [round(x,3) for x in x_opt[4,:]],
         'T_S21': [round(x,3) for x in x_opt[8,:]],
         'T_S31': [round(x,3) for x in x_opt[12,:]],
-        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter, delta_t_h) for t in range(120)],
+        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter) for t in range(120)],
         'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*15, iter*15+120, delta_t_h)],
         'm_load': forecasts.get_m_load(iter*15, iter*15+120, delta_t_h),
         'sequence': sequence}
@@ -137,7 +137,7 @@ for iter in range(num_iterations):
     # ------------------------------------------------------
 
     # Update electricity use (kWh) and cost ($) with next hour
-    Q_HP = sum([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter, delta_t_h) for t in range(15)])/15
+    Q_HP = sum([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter) for t in range(15)])/15
     COP1, _ = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
     elec_used += Q_HP*COP1[0]
     elec_cost += Q_HP*COP1[0] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
@@ -148,7 +148,7 @@ for iter in range(num_iterations):
     list_S11.extend([round(float(x),6) for x in x_opt[4,0:15]])
     list_S21.extend([round(float(x),6) for x in x_opt[8,0:15]])
     list_S31.extend([round(float(x),6) for x in x_opt[12,0:15]])
-    list_Q_HP.extend([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, sequence, 15*iter, delta_t_h) for t in range(15)])
+    list_Q_HP.extend([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, sequence, 15*iter) for t in range(15)])
 
 # ------------------------------------------------------
 # Final prints and plot

@@ -4,6 +4,7 @@ import forecasts
 # Some constants
 Delta_T_load = 5/9*20
 cp = 4187
+delta_t_h = 4/60
 
 # For the denominators
 epsilon = 1e-7
@@ -11,7 +12,7 @@ epsilon = 1e-7
 '''
 Returns the value of the function called "id"
 '''
-def get_function(id, u, x, t, sequence, iter, delta_t_h):
+def get_function(id, u, x, t, sequence, iter):
 
     # -----------------------------------------------
     # Get current combination and load mass flow rate
