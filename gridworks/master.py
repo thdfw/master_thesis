@@ -116,8 +116,6 @@ for iter in range(num_iterations):
         
     # Print iteration
     plot.print_iteration(u_opt, x_opt, x_1, sequence, 15*iter)
-    print(f"Cost of next 8 hours: {round(obj_opt,2)} $")
-    print(f"Prices in the next 8 hours: {[round(100*1000*x,2) for x in forecasts.get_c_el(iter,iter+8,1)]}")
     
     # Plot iteration
     plot_data = {
