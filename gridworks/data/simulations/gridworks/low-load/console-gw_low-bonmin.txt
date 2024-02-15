@@ -1,0 +1,1057 @@
+(ada) thomasdefauw@MBP-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+Sequencer Solver: Bonmin
+
+Time step: 4 minutes
+Horizon: 8.0 hours (120 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): 
+No file selected.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 76 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 314.0 | S        310.0 --    310.0 --   310.0 --
+         314.6 |          310.0       310.0      310.0
+         313.7 |          310.0       310.0      310.0
+      -- 308.8 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.3-> 319.6 | S        310.0 <-    311.0 <-   317.0 <-0.1-
+         319.0 |          310.0       310.4      315.0
+         318.5 |          310.0       310.1      314.0
+  <-0.3- 317.9 |   <-0.1- 310.0    <- 310.0   <- 312.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.05
+Cost of next 8 hours: 0.27 $
+Prices in the next 8 hours: [6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51]
+
+-----------------------------------------------------
+1:00 - 2:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 19 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 319.6 | S        310.0 --    311.0 --   317.0 --
+         319.0 |          310.0       310.4      315.0
+         318.5 |          310.0       310.1      314.0
+      -- 317.9 |       -- 310.0    -- 310.0   -- 312.0
+
+Next state
+B -0.5-> 330.6 | S        310.0 <-    311.3 <-   319.0 <-0.0-
+         330.3 |          310.0       310.5      316.0
+         329.3 |          310.0       310.2      314.0
+  <-0.5- 327.8 |   <-0.0- 310.0    <- 310.1   <- 312.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.13 $
+Prices in the next 8 hours: [6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16]
+
+-----------------------------------------------------
+2:00 - 3:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 11 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 330.6 | S        310.0 --    311.3 --   319.0 --
+         330.3 |          310.0       310.5      316.0
+         329.3 |          310.0       310.2      314.0
+      -- 327.8 |       -- 310.0    -- 310.1   -- 312.0
+
+Next state
+B -0.2-> 328.3 | S        315.7 <-    315.5 <-   325.0 <-0.2-
+         327.2 |          315.0       314.9      323.0
+         325.4 |          313.7       315.1      320.0
+  <-0.2- 325.4 |   <-0.2- 312.4    <- 315.6   <- 317.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.04
+Cost of next 8 hours: 0.13 $
+Prices in the next 8 hours: [6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07]
+
+-----------------------------------------------------
+3:00 - 4:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 6 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 328.3 | S        315.7 --    315.5 --   325.0 --
+         327.2 |          315.0       314.9      323.0
+         325.4 |          313.7       315.1      320.0
+      -- 325.4 |       -- 312.4    -- 315.6   -- 317.0
+
+Next state
+B <-0.0- 327.4 | S        314.9 ->    315.2 ->   323.0 -0.0->
+         325.9 |          314.1       315.1      320.0
+         323.7 |          313.5       315.4      318.0
+  -0.0-> 319.8 |   -0.0-> 313.7    -> 315.4   -> 316.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06]
+
+-----------------------------------------------------
+4:00 - 5:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 5 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 327.4 | S        314.9 --    315.2 --   323.0 --
+         325.9 |          314.1       315.1      320.0
+         323.7 |          313.5       315.4      318.0
+      -- 319.8 |       -- 313.7    -- 315.4   -- 316.0
+
+Next state
+B <-0.0- 326.5 | S        314.2 ->    315.2 ->   320.0 -0.0->
+         324.5 |          313.7       315.2      318.0
+         321.3 |          313.3       315.2      316.0
+  -0.0-> 316.6 |   -0.0-> 312.7    -> 314.8   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.05
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08]
+
+-----------------------------------------------------
+5:00 - 6:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 4 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 326.5 | S        314.2 --    315.2 --   320.0 --
+         324.5 |          313.7       315.2      318.0
+         321.3 |          313.3       315.2      316.0
+      -- 316.6 |       -- 312.7    -- 314.8   -- 315.0
+
+Next state
+B <-0.0- 325.5 | S        313.8 ->    315.2 ->   319.0 -0.0->
+         323.0 |          313.2       315.1      317.0
+         319.2 |          312.5       314.8      316.0
+  -0.0-> 314.4 |   -0.0-> 311.4    -> 314.3   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16]
+
+-----------------------------------------------------
+6:00 - 7:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 5 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 325.5 | S        313.8 --    315.2 --   319.0 --
+         323.0 |          313.2       315.1      317.0
+         319.2 |          312.5       314.8      316.0
+      -- 314.4 |       -- 311.4    -- 314.3   -- 315.0
+
+Next state
+B <-0.0- 324.2 | S        313.3 ->    315.0 ->   317.0 -0.0->
+         321.1 |          312.5       314.8      316.0
+         317.0 |          311.5       314.4      315.0
+  -0.0-> 312.5 |   -0.0-> 310.3    -> 313.8   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18]
+
+-----------------------------------------------------
+7:00 - 8:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 5 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 324.2 | S        313.3 --    315.0 --   317.0 --
+         321.1 |          312.5       314.8      316.0
+         317.0 |          311.5       314.4      315.0
+      -- 312.5 |       -- 310.3    -- 313.8   -- 315.0
+
+Next state
+B <-0.0- 323.1 | S        312.7 ->    314.9 ->   317.0 -0.0->
+         319.7 |          311.8       314.5      316.0
+         315.5 |          310.6       314.0      315.0
+  -0.0-> 311.3 |   -0.0-> 309.3    -> 313.4   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.03
+Cost of next 8 hours: 0.0 $
+Prices in the next 8 hours: [41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18]
+
+-----------------------------------------------------
+8:00 - 9:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Load before: [0.93, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465]
+Load after (+25%): [1.1625, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125]
+
+
+Load before: [0.93, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465]
+Load after (+50%): [1.395, 0.6975, 0.6975, 0.6975, 0.6975, 0.6975, 0.6975, 0.6975]
+
+On/Off after treatement:
+[0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 14 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 323.1 | S        312.7 --    314.9 --   317.0 --
+         319.7 |          311.8       314.5      316.0
+         315.5 |          310.6       314.0      315.0
+      -- 311.3 |       -- 309.3    -- 313.4   -- 315.0
+
+Next state
+B <-0.0- 321.4 | S        312.6 ->    314.8 ->   317.0 -0.0->
+         317.7 |          311.6       314.4      316.0
+         313.8 |          310.4       313.9      315.0
+  -0.0-> 310.7 |   -0.0-> 309.4    -> 313.3   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16]
+
+-----------------------------------------------------
+9:00 - 10:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Load before: [0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465]
+Load after (+25%): [0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125]
+
+
+Load before: [0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465]
+Load after (+50%): [0.6975, 0.6975, 0.6975, 0.6975, 0.6975, 0.6975, 0.6975, 0.6975]
+
+On/Off after treatement:
+[0, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 63 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 321.4 | S        312.6 --    314.8 --   317.0 --
+         317.7 |          311.6       314.4      316.0
+         313.8 |          310.4       313.9      315.0
+      -- 310.7 |       -- 309.4    -- 313.3   -- 315.0
+
+Next state
+B <-0.0- 320.9 | S        312.4 ->    314.7 ->   316.0 -0.0->
+         317.2 |          311.4       314.3      316.0
+         313.4 |          310.2       313.8      315.0
+  -0.0-> 310.3 |   -0.0-> 309.0    -> 313.2   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2]
+
+-----------------------------------------------------
+10:00 - 11:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Load before: [0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465]
+Load after (+25%): [0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125]
+
+On/Off after treatement:
+[0, 0, 0, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 19 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 320.9 | S        312.4 --    314.7 --   316.0 --
+         317.2 |          311.4       314.3      316.0
+         313.4 |          310.2       313.8      315.0
+      -- 310.3 |       -- 309.0    -- 313.2   -- 315.0
+
+Next state
+B <-0.0- 320.3 | S        312.2 ->    314.7 ->   316.0 -0.0->
+         316.6 |          311.2       314.3      316.0
+         312.9 |          310.0       313.7      315.0
+  -0.0-> 309.9 |   -0.0-> 308.8    -> 313.1   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64]
+
+-----------------------------------------------------
+11:00 - 12:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+Load before: [0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.465, 0.93]
+Load after (+25%): [0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 0.58125, 1.1625]
+
+On/Off after treatement:
+[0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 15 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 320.3 | S        312.2 --    314.7 --   316.0 --
+         316.6 |          311.2       314.3      316.0
+         312.9 |          310.0       313.7      315.0
+      -- 309.9 |       -- 308.8    -- 313.1   -- 315.0
+
+Next state
+B <-0.0- 319.5 | S        312.1 ->    314.6 ->   316.0 -0.0->
+         315.9 |          311.1       314.2      316.0
+         312.3 |          309.9       313.6      315.0
+  -0.0-> 309.4 |   -0.0-> 308.6    -> 313.0   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43]
+
+-----------------------------------------------------
+12:00 - 13:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 22 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 319.5 | S        312.1 --    314.6 --   316.0 --
+         315.9 |          311.1       314.2      316.0
+         312.3 |          309.9       313.6      315.0
+      -- 309.4 |       -- 308.6    -- 313.0   -- 315.0
+
+Next state
+B <-0.0- 318.7 | S        312.0 ->    314.6 ->   316.0 -0.0->
+         315.0 |          311.0       314.1      315.0
+         311.6 |          309.8       313.6      315.0
+  -0.0-> 309.0 |   -0.0-> 308.5    -> 312.9   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51]
+
+-----------------------------------------------------
+13:00 - 14:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 14 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 318.7 | S        312.0 --    314.6 --   316.0 --
+         315.0 |          311.0       314.1      315.0
+         311.6 |          309.8       313.6      315.0
+      -- 309.0 |       -- 308.5    -- 312.9   -- 315.0
+
+Next state
+B <-0.0- 317.8 | S        311.9 ->    314.5 ->   316.0 -0.0->
+         314.2 |          310.9       314.1      315.0
+         311.0 |          309.7       313.5      315.0
+  -0.0-> 308.4 |   -0.0-> 308.4    -> 312.8   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84]
+
+-----------------------------------------------------
+14:00 - 15:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 14 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 317.8 | S        311.9 --    314.5 --   316.0 --
+         314.2 |          310.9       314.1      315.0
+         311.0 |          309.7       313.5      315.0
+      -- 308.4 |       -- 308.4    -- 312.8   -- 315.0
+
+Next state
+B <-0.0- 317.2 | S        311.8 ->    314.5 ->   316.0 -0.0->
+         313.6 |          310.7       314.0      315.0
+         310.5 |          309.5       313.4      315.0
+  -0.0-> 308.0 |   -0.0-> 308.0    -> 312.7   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65]
+
+-----------------------------------------------------
+15:00 - 16:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 42 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 317.2 | S        311.8 --    314.5 --   316.0 --
+         313.6 |          310.7       314.0      315.0
+         310.5 |          309.5       313.4      315.0
+      -- 308.0 |       -- 308.0    -- 312.7   -- 315.0
+
+Next state
+B -0.5-> 325.2 | S        313.1 <-    315.0 <-   319.0 <-0.0-
+         323.9 |          312.2       314.6      317.0
+         321.8 |          311.3       314.2      316.0
+  <-0.5- 321.4 |   <-0.0- 310.1    <- 313.7   <- 315.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.01
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46]
+
+-----------------------------------------------------
+16:00 - 17:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 47 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 325.2 | S        313.1 --    315.0 --   319.0 --
+         323.9 |          312.2       314.6      317.0
+         321.8 |          311.3       314.2      316.0
+      -- 321.4 |       -- 310.1    -- 313.7   -- 315.0
+
+Next state
+B <-0.0- 324.9 | S        312.9 ->    314.9 ->   319.0 -0.0->
+         323.5 |          312.1       314.6      316.0
+         321.6 |          311.1       314.2      316.0
+  -0.0-> 319.8 |   -0.0-> 310.3    -> 313.6   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.14 $
+Prices in the next 8 hours: [41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
+
+-----------------------------------------------------
+17:00 - 18:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 11 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 324.9 | S        312.9 --    314.9 --   319.0 --
+         323.5 |          312.1       314.6      316.0
+         321.6 |          311.1       314.2      316.0
+      -- 319.8 |       -- 310.3    -- 313.6   -- 315.0
+
+Next state
+B <-0.0- 324.7 | S        312.8 ->    314.9 ->   318.0 -0.0->
+         323.2 |          311.9       314.5      316.0
+         321.2 |          311.0       314.1      315.0
+  -0.0-> 318.4 |   -0.0-> 310.3    -> 313.5   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.01
+Cost of next 8 hours: 0.14 $
+Prices in the next 8 hours: [41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36]
+
+-----------------------------------------------------
+18:00 - 19:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 10 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 324.7 | S        312.8 --    314.9 --   318.0 --
+         323.2 |          311.9       314.5      316.0
+         321.2 |          311.0       314.1      315.0
+      -- 318.4 |       -- 310.3    -- 313.5   -- 315.0
+
+Next state
+B <-0.0- 324.2 | S        312.5 ->    314.7 ->   318.0 -0.0->
+         322.6 |          311.6       314.4      316.0
+         320.2 |          310.8       313.9      315.0
+  -0.0-> 316.2 |   -0.0-> 310.2    -> 313.3   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.14 $
+Prices in the next 8 hours: [41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34]
+
+-----------------------------------------------------
+19:00 - 20:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 37 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 324.2 | S        312.5 --    314.7 --   318.0 --
+         322.6 |          311.6       314.4      316.0
+         320.2 |          310.8       313.9      315.0
+      -- 316.2 |       -- 310.2    -- 313.3   -- 315.0
+
+Next state
+B <-0.0- 323.8 | S        312.2 ->    314.6 ->   317.0 -0.0->
+         321.9 |          311.3       314.2      316.0
+         319.1 |          310.5       313.6      315.0
+  -0.0-> 314.5 |   -0.0-> 309.8    -> 313.0   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.02
+Cost of next 8 hours: 0.14 $
+Prices in the next 8 hours: [41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34]
+
+-----------------------------------------------------
+20:00 - 21:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 0, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 21 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 323.8 | S        312.2 --    314.6 --   317.0 --
+         321.9 |          311.3       314.2      316.0
+         319.1 |          310.5       313.6      315.0
+      -- 314.5 |       -- 309.8    -- 313.0   -- 315.0
+
+Next state
+B <-0.0- 323.2 | S        311.3 ->    314.1 ->   316.0 -0.0->
+         321.0 |          310.4       313.6      315.0
+         317.6 |          309.3       312.9      315.0
+  -0.0-> 312.7 |   -0.0-> 308.2    -> 312.2   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.14 $
+Prices in the next 8 hours: [6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37]
+
+-----------------------------------------------------
+21:00 - 22:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 0, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 20 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 323.2 | S        311.3 --    314.1 --   316.0 --
+         321.0 |          310.4       313.6      315.0
+         317.6 |          309.3       312.9      315.0
+      -- 312.7 |       -- 308.2    -- 312.2   -- 315.0
+
+Next state
+B <-0.0- 321.6 | S        310.7 ->    313.7 ->   316.0 -0.0->
+         318.7 |          309.7       313.1      315.0
+         314.8 |          308.7       312.4      315.0
+  -0.0-> 310.5 |   -0.0-> 308.0    -> 311.6   -> 314.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.15 $
+Prices in the next 8 hours: [6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41]
+
+-----------------------------------------------------
+22:00 - 23:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[0, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 32 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 321.6 | S        310.7 --    313.7 --   316.0 --
+         318.7 |          309.7       313.1      315.0
+         314.8 |          308.7       312.4      315.0
+      -- 310.5 |       -- 308.0    -- 311.6   -- 314.0
+
+Next state
+B <-0.0- 318.6 | S        310.3 ->    313.5 ->   315.0 -0.0->
+         315.1 |          309.3       312.9      315.0
+         311.5 |          308.5       312.1      315.0
+  -0.0-> 308.8 |   -0.0-> 308.0    -> 311.3   -> 314.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.04
+Cost of next 8 hours: 0.17 $
+Prices in the next 8 hours: [6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46]
+
+-----------------------------------------------------
+23:00 - 24:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+On/Off from optimization (bonmin):
+[1, 0, 0, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 15 seconds.
+Data was appended to data/simulations/recent/results_2024-02-14_17-08-05.csv
+
+Initial state
+B     -- 318.6 | S        310.3 --    313.5 --   315.0 --
+         315.1 |          309.3       312.9      315.0
+         311.5 |          308.5       312.1      315.0
+      -- 308.8 |       -- 308.0    -- 311.3   -- 314.0
+
+Next state
+B -0.3-> 322.4 | S        312.6 <-    314.4 <-   316.0 <-0.1-
+         321.3 |          311.9       314.3      314.0
+         319.6 |          311.0       313.9      314.0
+  <-0.3- 319.4 |   <-0.1- 310.1    <- 313.3   <- 314.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.05
+Cost of next 8 hours: 0.27 $
+Prices in the next 8 hours: [6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95]
+
+The 24-hour simulation ran in 0 hour(s) and 24 minute(s).
+
+Plotting the data...
+
+2024-02-14 17:32:50.899 python[3220:180887] ASB: LNW <NSApplication: 0x7fcec8356ea0> <Window: 0x7fcec83f2640> <NSThemeFrame: 0x7fcec8411660> (null)
+2024-02-14 17:33:39.634 python[3220:180887] ASB: LNW <NSApplication: 0x7fcec8356ea0> <NSSavePanel: 0x7fcec9c611c0> <NSThemeFrame: 0x7fcec9c738f0> <_NSViewBackingLayer: 0x7fcec9c7ceb0>
+(ada) thomasdefauw@MBP-2011 gridworks % 

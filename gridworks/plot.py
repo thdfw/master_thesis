@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 import forecasts, functions
 from sequencer import current_datetime
+from sequencer import BONMIN
 
 '''
 Prints the selected problem type
@@ -21,6 +22,9 @@ def print_pb_type(pb_type, num_iterations):
     # Solver: gurobi or ipopt/bonmin
     if pb_type['gurobi']: print("Solver: Gurobi")
     else: print("Solver: Bonmin") if pb_type['mixed-integer'] else print("Solver: Ipopt")
+    
+    # Sequencer solver: gurobi or bonmin
+    print("Sequencer Solver: Bonmin") if BONMIN else print("Sequencer Solver: Gurobi")
     
     # Time step and horizon
     print(f"\nTime step: {pb_type['time_step']} minutes")
@@ -105,7 +109,12 @@ def plot_MPC(data):
     linearized = "Linearized" if data['pb_type']['linearized'] else "Non linear"
     variables = "Mixed-Integer" if data['pb_type']['mixed-integer'] else "Continuous"
     solver = "Gurobi" if data['pb_type']['gurobi'] else "Ipopt"
+    solver += " and Bonmin" if BONMIN else " and Gurobi"
     N = data['pb_type']['horizon']
+    
+    # Get the Q_load from the m_load
+    cp, Delta_T_load= 4187, 5/9*20
+    Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
     
     fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Supplied: {round(sum(data['Q_HP'])/1000/15,1)} kWh_th")
     

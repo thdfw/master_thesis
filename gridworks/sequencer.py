@@ -4,12 +4,14 @@ import matplotlib.pyplot as plt
 import random
 import casadi
 import os
-import forecasts
 import datetime
 import csv
+import sys
+import forecasts
 
 PLOT = False
 PRINT = False
+BONMIN = True
 
 # ------------------------------------------
 # ------------------------------------------
@@ -166,58 +168,29 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
     
     # From optimization problem
     HP_on_off_opt = [int(x) for x in HP_on_off_opt]
-    print(f"On/Off from optimization:\n{HP_on_off_opt}")
+    backup = HP_on_off_opt
+    solver_name = "bonmin" if BONMIN else "gurobi"
+    print(f"On/Off from optimization ({solver_name}):\n{HP_on_off_opt}")
     
     # Solve the optimization problem with an increased load
     if attempt > 1:
     
-        # Increase the load by 25% at each attempt
-        print(f"\nLoad before: {load}")
-        load = [(1+(attempt-1)*0.25)*x for x in load]
-        print(f"Load after (+{(attempt-1)*25}%): {load}\n")
+        # Increase the load as long as the operating hours are the same
+        while [int(x) for x in HP_on_off_opt] == backup:
+    
+            # Increase the load by 25% at each attempt
+            print(f"\nLoad before: {load}")
+            load_increased = [round((1+(attempt-1)*0.25)*x,5) for x in load]
+            print(f"Load after (+{(attempt-1)*25}%): {load_increased}\n")
 
-        Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
+            # Get the recommendation for the increased load
+            Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load_increased, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
+            
+            # Next iteration if no operating hour change
+            attempt += 1
         
         HP_on_off_opt = [int(x) for x in HP_on_off_opt]
         print(f"On/Off after treatement:\n{HP_on_off_opt}")
-    
-    '''
-    # Turn on the HP at the 'attempt' remaining cheapest hour(s)
-    if attempt > 1:
-        # Treat for duplicates
-        for i in range(len(c_el)):
-            for j in range(len(c_el)):
-                if i!=j and c_el[i] == c_el[j]:
-                    c_el[j] = c_el[j] + random.uniform(-0.01, 0.01)
-        
-        # Rank remaining hours by price
-        c_el_remaining = []
-        for i in range(len(c_el)):
-            if HP_on_off_opt[i]==0:
-                c_el_remaining.append(c_el[i])
-                
-        ranked_all_c_el = [sorted(c_el).index(x) for x in c_el]
-        if PRINT: print(f"Ranked c_el: {ranked_all_c_el}")
-        ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
-        if PRINT:
-            print(f"Ranked c_el remaining: {ranked_c_el}")
-            print(f"The cheapest next hour remaining: {ranked_all_c_el.index(min(ranked_c_el))}")
-        
-        # Turn on the 'attempt' cheapest remaining hours
-        for i in range(attempt-1):
-
-            # Turn on the ith cheapest
-            HP_on_off_opt[ranked_all_c_el.index(min(ranked_c_el))] = 1
-            
-            # Rank remaining hours by price
-            c_el_remaining = []
-            for i in range(len(c_el)):
-                if HP_on_off_opt[i]==0:
-                    c_el_remaining.append(c_el[i])
-                    
-            ranked_c_el = [sorted(c_el).index(x) for x in c_el_remaining]
-            if PRINT: print(f"Ranked c_el remaining: {ranked_c_el}")
-    '''
         
     # ------------------------------------------
     # Convert to combi and return sequence
@@ -239,7 +212,7 @@ def get_optimal_sequence(c_el, m_load, iter, previous_sequence, results_file, at
 def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_max_list, COP1_list):
 
     # Initialize
-    opti = casadi.Opti('conic')
+    opti = casadi.Opti() if BONMIN else casadi.Opti('conic')
 
     # -----------------------------
     # Variables and solver
@@ -254,7 +227,10 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
     discrete_var = [0]*(N+1) + [0]*N + [1]*N + [0]*N
 
     # Solver
-    opti.solver('gurobi', {'discrete':discrete_var, 'gurobi.OutputFlag':0})
+    if BONMIN:
+        opti.solver('bonmin', {'discrete': discrete_var, 'bonmin.tol': 1e-4, 'bonmin.print_level': 0, 'print_time': 0})
+    else:
+        opti.solver('gurobi', {'discrete':discrete_var, 'gurobi.OutputFlag':0})
 
     # -----------------------------
     # Constraints
@@ -300,7 +276,10 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
     # Solve and get optimal values
     # -----------------------------
 
+    sys.stdout = open(os.devnull, 'w')
     sol = opti.solve()
+    sys.stdout = sys.__stdout__
+    
     Q_opt = sol.value(Q_HP_onoff)
     stor_opt = sol.value(storage)
     HP_on_off_opt = sol.value(delta_HP)
