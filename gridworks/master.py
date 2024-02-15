@@ -11,10 +11,10 @@ delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 
 # Horizon (hours * time_steps/hour)
-N = int(12 * 1/delta_t_h)
+N = int(16 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 24
+num_iterations = 48
 
 # Problem type
 pb_type = {
@@ -102,7 +102,7 @@ for iter in range(num_iterations):
     previous_sequence = sequence
     
     # Save results in a csv file
-    sequencer.append_to_csv(x_0, iter, sequence)
+    sequencer.append_to_csv(x_0, iter, sequence, pb_type)
     
     # ---------------------------------------------------
     # Implement u0*, update x_0, print and plot iteration

@@ -12,6 +12,7 @@ import forecasts
 PLOT = False
 PRINT = False
 BONMIN = True
+delta_t_h = 4/60
 
 # ------------------------------------------
 # ------------------------------------------
@@ -89,7 +90,6 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
     # ------------------------------------------
     
     # Horizon and time step
-    delta_t_h = 4/60
     N = int(pb_type['horizon'] * delta_t_h)
     
     # Price
@@ -300,15 +300,17 @@ current_datetime = datetime.datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
 csv_file_name = os.path.join("data", "simulations", "recent", "results_" + formatted_datetime + ".csv")
 
-def append_to_csv(x_0, iter, sequence):
+def append_to_csv(x_0, iter, sequence, pb_type):
+
+    N = int(pb_type['horizon'] * delta_t_h)
 
     csv_data = [{
         "T_B": [round(x,1) for x in x_0[:4]],
         "T_S": [round(x,1) for x in x_0[4:]],
         "iter": iter,
-        "prices": [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+8, 1)],
-        "loads": forecasts.get_m_load(iter, iter+8, 1),
-        "sequence": [sequence[f'combi{i}'] for i in range(1,9)]
+        "prices": [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+N, 1)],
+        "loads": forecasts.get_m_load(iter, iter+N, 1),
+        "sequence": [sequence[f'combi{i}'] for i in range(1,N+1)]
     }]
     
     with open(csv_file_name, 'a', newline='') as file:
