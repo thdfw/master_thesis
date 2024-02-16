@@ -96,9 +96,12 @@ def get_weather(start, end):
     # Get the forecast
     T_OA_list = forecaster.get_forecast(start, end)
     
-    # Confidence intervals from past data
-    CIs = [2.4102025555533313, 2.313273333333333, 2.353639999995, 2.228993777773333, 2.5042659999999994, 2.332507777778334, 2.675285666668332, 2.520124333326665, 2.5709882222183325, 2.6398711111166655, 2.678220333335002, 2.7022454444466675, 2.7966293333350016, 3.001692444445002, 2.827686777780002, 3.0397588888849985, 2.757263333331668]
+    # Confidence intervals from past data, without bias removal
+    CIs = [4.844, 4.904, 4.882, 4.850, 4.825, 4.871, 4.908, 4.971, 5.038, 5.009, 4.973, 5.055, 5.036, 5.209, 5.218, 5.297, 5.296]
     
+    # Confidence intervals from past data, with bias removal
+    CIs = [0.000, 2.170, 3.243, 3.881, 4.192, 4.547, 4.887, 5.160, 5.416, 5.625, 5.772, 5.791, 5.790, 5.787, 5.911, 5.853, 5.803]
+
     # Crop if the forecast is longer than the forecast
     if len(T_OA_list) > len(CIs):
         T_OA_list = T_OA_list[:len(CIs)]
@@ -109,8 +112,11 @@ def get_weather(start, end):
         # Plot the weather with the confidence interval
         lower_bounds = [T_OA_list[i] - CIs[i] for i in range(length)]
         upper_bounds = [T_OA_list[i] + CIs[i] for i in range(length)]
+        
+        plt.figure(figsize=(12,5))
         plt.plot(T_OA_list, color='red', alpha=0.6, label='pvlib forecast')
         plt.fill_between(range(length), lower_bounds, upper_bounds, color='red', alpha=0.1, label='90% confidence interval')
+        plt.ylim([max(upper_bounds)+10,min(lower_bounds)-10])
         plt.xlabel("Hour")
         plt.ylabel("Outside air temperature (°C)")
         plt.xticks(list(range(length)))

@@ -26,8 +26,8 @@ print("---------------------------------------")
 # Get forecast for Maine (= None for live forecast)
 start = None
 end = None
-#start = dtm.datetime(2024, 2, 10, 0, 0, 0)
-#end = dtm.datetime(2024, 2, 10, 23, 0, 0)
+#start = dtm.datetime(2024, 2, 15, 0, 0, 0)
+#end = dtm.datetime(2024, 2, 15, 23, 0, 0)
 weather, CI_weather = weather_forecast.get_weather(start, end)
 
 # Lenght of simulation (hours)
@@ -88,6 +88,7 @@ ax[0].fill_between(range(len(pred_load)), min2, max2, color='blue', alpha=0.1)
 
 ax[0].plot([pred_max_load[i]+CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted', label='Overall CI')
 ax[0].plot([pred_min_load[i]-CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted')
+ax[0].set_ylim([max([pred_max_load[i]+CI_load for i in range(len(pred_load))])+2.5, min([pred_min_load[i]-CI_load for i in range(len(pred_load))])-2.5])
 ax[0].legend()
 
 ax[1].set_xlabel("Time [hours]")
@@ -98,6 +99,7 @@ ax[1].plot(weather, color='gray', alpha=0.8, label='Outside air temperature [°C
 min_weather = [weather[i]-CI_weather[i] for i in range(len(CI_weather))]
 max_weather = [weather[i]+CI_weather[i] for i in range(len(CI_weather))]
 ax[1].fill_between(range(len(pred_load)), min_weather, max_weather, color='gray', alpha=0.1, label='Weather CI')
+ax[1].set_ylim([max(max_weather)+10,min(min_weather)-10])
 ax[1].legend()
 
 plt.show()
