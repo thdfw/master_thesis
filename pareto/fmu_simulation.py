@@ -79,6 +79,6 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
     # Read the results file
     results_dataframe = pd.read_csv(fmuNameNoSuffix+'_result.csv').drop('Unnamed: 0', axis=1)
     results_dataframe.to_csv('simulation_results.csv', index=False)
-    print("Results saved in simulation_results.csv.")
+    print("Results saved in simulation_results.csv.\n")
     
     return results_dataframe

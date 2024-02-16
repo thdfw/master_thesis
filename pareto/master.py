@@ -139,4 +139,23 @@ print("\n---------------------------------------")
 print("4 - Send commands to FMU and simulate [OK]")
 print("---------------------------------------")
 
-simulation_results = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_hours)
+# Send commands and obtain simulation results
+df = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_hours)
+
+# Rename columns
+df = df[['time', 'Electric Power Consumption of Heat Pump', 'Heat Flow on Condenser Side of Heat Pump']]
+df = df.rename(columns={'Electric Power Consumption of Heat Pump': 'W_HP'})
+df = df.rename(columns={'Heat Flow on Condenser Side of Heat Pump': 'Q_HP'})
+
+# Group by hour
+df['hour'] = (df['time'] / 3600).astype(int)
+df = df.groupby(['hour']).mean()
+df['W_HP'] = df['W_HP'].round()
+df['Q_HP'] = df['Q_HP'].round()
+df = df.drop('time', axis=1)
+
+# Add commands
+df['on_off'] = delta_HP
+df['T_sup_HP'] = T_sup_HP
+
+print(df)
