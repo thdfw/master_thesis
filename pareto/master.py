@@ -5,6 +5,7 @@ import os
 import sys
 import datetime as dtm
 import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
+PLOT = False
 
 print("\n---------------------------------------")
 print("0 - Find the best forecaster [OK]")
@@ -66,43 +67,44 @@ print(f"\nCombining with weather confidence interval:")
 print(f"{[round(x[0],2) for x in pred_load]} \n+/- {final_CI} kWh")
 
 # PLOT
-fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
+if PLOT:
+    fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
 
-ax[0].set_xlabel("Time [hours]")
-ax[0].set_ylabel("Load [kWh]")
+    ax[0].set_xlabel("Time [hours]")
+    ax[0].set_ylabel("Load [kWh]")
 
-pred_min_load = [pred_load[i][0] - (pred_max_load[i][0] - pred_load[i][0]) for i in range(len(pred_load))]
-pred_max_load = [x[0] for x in pred_max_load]
+    pred_min_load = [pred_load[i][0] - (pred_max_load[i][0] - pred_load[i][0]) for i in range(len(pred_load))]
+    pred_max_load = [x[0] for x in pred_max_load]
 
-ax[0].plot(pred_load, color='red', alpha=0.8, label='Load')
-ax[0].fill_between(range(len(pred_load)), pred_min_load, pred_max_load, color='red', alpha=0.1, label='Weather CI')
+    ax[0].plot(pred_load, color='red', alpha=0.8, label='Load')
+    ax[0].fill_between(range(len(pred_load)), pred_min_load, pred_max_load, color='red', alpha=0.1, label='Weather CI')
 
-min1 = [pred_max_load[i]-CI_load[0] for i in range(len(pred_load))]
-max1 = [pred_max_load[i]+CI_load[0] for i in range(len(pred_load))]
+    min1 = [pred_max_load[i]-CI_load[0] for i in range(len(pred_load))]
+    max1 = [pred_max_load[i]+CI_load[0] for i in range(len(pred_load))]
 
-min2 = [pred_min_load[i]-CI_load[0] for i in range(len(pred_load))]
-max2 = [pred_min_load[i]+CI_load[0] for i in range(len(pred_load))]
+    min2 = [pred_min_load[i]-CI_load[0] for i in range(len(pred_load))]
+    max2 = [pred_min_load[i]+CI_load[0] for i in range(len(pred_load))]
 
-ax[0].fill_between(range(len(pred_load)), min1, max1, color='blue', alpha=0.1, label='Forecaster CI on max/min weather')
-ax[0].fill_between(range(len(pred_load)), min2, max2, color='blue', alpha=0.1)
+    ax[0].fill_between(range(len(pred_load)), min1, max1, color='blue', alpha=0.1, label='Forecaster CI on max/min weather')
+    ax[0].fill_between(range(len(pred_load)), min2, max2, color='blue', alpha=0.1)
 
-ax[0].plot([pred_max_load[i]+CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted', label='Overall CI')
-ax[0].plot([pred_min_load[i]-CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted')
-ax[0].set_ylim([max([pred_max_load[i]+CI_load for i in range(len(pred_load))])+2.5, min([pred_min_load[i]-CI_load for i in range(len(pred_load))])-2.5])
-ax[0].legend()
+    ax[0].plot([pred_max_load[i]+CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted', label='Overall CI')
+    ax[0].plot([pred_min_load[i]-CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted')
+    ax[0].set_ylim([max([pred_max_load[i]+CI_load for i in range(len(pred_load))])+2.5, min([pred_min_load[i]-CI_load for i in range(len(pred_load))])-2.5])
+    ax[0].legend()
 
-ax[1].set_xlabel("Time [hours]")
-ax[1].set_ylabel("Outside air temperature [°C]")
+    ax[1].set_xlabel("Time [hours]")
+    ax[1].set_ylabel("Outside air temperature [°C]")
 
-ax[1].plot(weather, color='gray', alpha=0.8, label='Outside air temperature [°C]')
+    ax[1].plot(weather, color='gray', alpha=0.8, label='Outside air temperature [°C]')
 
-min_weather = [weather[i]-CI_weather[i] for i in range(len(CI_weather))]
-max_weather = [weather[i]+CI_weather[i] for i in range(len(CI_weather))]
-ax[1].fill_between(range(len(pred_load)), min_weather, max_weather, color='gray', alpha=0.1, label='Weather CI')
-ax[1].set_ylim([max(max_weather)+10,min(min_weather)-10])
-ax[1].legend()
+    min_weather = [weather[i]-CI_weather[i] for i in range(len(CI_weather))]
+    max_weather = [weather[i]+CI_weather[i] for i in range(len(CI_weather))]
+    ax[1].fill_between(range(len(pred_load)), min_weather, max_weather, color='gray', alpha=0.1, label='Weather CI')
+    ax[1].set_ylim([max(max_weather)+10,min(min_weather)-10])
+    ax[1].legend()
 
-plt.show()
+    plt.show()
 
 print("\n---------------------------------------")
 print("3 - Get HP commands from Pareto [OK]")
@@ -130,9 +132,11 @@ print(f"\nConverted Q_HP into commands for the FMU:\ndelta_HP = {delta_HP}")
 # What temperature setpoint should we give it
 T_sup_HP = [round(Q_HP[i]*1000/m_HP[i]/4187 + T_HP_in,1) if Q_HP[i]!=0 else np.nan for i in range(len(Q_HP))]
 print(f"T_sup_HP = {T_sup_HP}")
+# To avoid sending NaNs to the FMU we set the setpoint temperature at 40°C
+T_sup_HP = [round(Q_HP[i]*1000/m_HP[i]/4187 + T_HP_in,1) if Q_HP[i]!=0 else 40 for i in range(len(Q_HP))]
     
 print("\n---------------------------------------")
-print("4 - Send commands to FMU and simulate [Check Dymola license]")
+print("4 - Send commands to FMU and simulate [OK]")
 print("---------------------------------------")
 
 simulation_results = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_hours)

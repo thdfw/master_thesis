@@ -5,33 +5,40 @@ import os
 import sys
 import csv
 import time
+import subprocess
 
 PRINT = False
 
 # Name of the FMU
-fmuName = 'fmu_name_here.fmu'
+fmuName = 'weiping_0CCC_0test_Examples_HP_0TES_0water_0test.fmu'
 fmuNameNoSuffix = fmuName.replace(".fmu","")
 
 # Get the FMU inputs for a given hour
 def get_inputs(hour, delta_HP, T_sup_HP, weather):
-    
+
     inputs_dict = {
-        # Pareto inputs, change at every hour
-        'HP_On': delta_HP[hour],
-        'TSupSet': T_sup_HP[hour],
-        'T_OA': weather[hour],
-        # Other inputs
         'T_closet': 273.15+30,
         'Tdcw': 273.15+12,
         'mdot_dcw': 0.2,
         'ResistanceThermalCapacity': 5000,
-        'Resistance_On': True,
-        'HP_mode': True}
+        'Resistance_On': False,
+        'HP_mode': True,
+        'T_OA': weather[hour] + 273,
+        'TSupSet': T_sup_HP[hour] + 273,
+        'HP_On': True if delta_HP[hour]==1 else False}
         
     return list(inputs_dict.values()), list(inputs_dict)
 
 # Load the FMU and simulate the inputs
 def simulate(delta_HP, T_sup_HP, weather, num_hours):
+
+    if PRINT: print(f"num_hours = {num_hours}")
+    # Simulation time frame (in seconds)
+    start_time = 0
+    final_time = (num_hours-1)*3600
+    if PRINT:
+        print(f"\n\nStart time: {start_time}")
+        print(f"Final time: {final_time}")
     
     # Build the inputs (change every hour)
     inputs_array = []
@@ -43,7 +50,8 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
     
     # Final format for the FMU inputs
     inputs = (input_names, inputs_array)
-    
+    if PRINT: print(inputs)
+
     # Check that PyFMI is installed
     try:
         import pyfmi
@@ -54,13 +62,13 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
     
     # Load FMU
     model = pyfmi.load_fmu(fmuName)
-    if PRINT: print("\nModel {fmuName} was loaded.\n")
-        
+    print(f"Model {fmuName} was loaded.\n")
+
     # Simulate
     res = model.simulate(start_time=start_time, final_time=final_time, input=inputs)
-    if PRINT: print(f"The simulation has finished running on the FMU.")
+    print(f"\nThe simulation has finished running on the FMU.")
 
-    # If necessary
+    # Leave time to write .mat file
     time.sleep(1)
 
     # The simulation outputs a .mat file with results, convert to csv.
@@ -70,6 +78,7 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
 
     # Read the results file
     results_dataframe = pd.read_csv(fmuNameNoSuffix+'_result.csv').drop('Unnamed: 0', axis=1)
-    display(results_dataframe)
+    results_dataframe.to_csv('simulation_results.csv', index=False)
+    print("Results saved in simulation_results.csv.")
     
     return results_dataframe
