@@ -1,8 +1,5 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import os
-import sys
 import csv
 import time
 import subprocess
@@ -32,13 +29,9 @@ def get_inputs(hour, delta_HP, T_sup_HP, weather):
 # Load the FMU and simulate the inputs
 def simulate(delta_HP, T_sup_HP, weather, num_hours):
 
-    if PRINT: print(f"num_hours = {num_hours}")
     # Simulation time frame (in seconds)
     start_time = 0
-    final_time = (num_hours-1)*3600
-    if PRINT:
-        print(f"\n\nStart time: {start_time}")
-        print(f"Final time: {final_time}")
+    final_time = (num_hours)*3600
     
     # Build the inputs (change every hour)
     inputs_array = []
@@ -46,6 +39,8 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
         current_time = hour*3600
         current_input, input_names = get_inputs(hour, delta_HP, T_sup_HP, weather)
         inputs_array.append([current_time]+current_input)
+    # Duplicate the commands for the last hour
+    inputs_array.append([current_time+3600]+current_input)
     inputs_array = np.array(inputs_array)
     
     # Final format for the FMU inputs
@@ -71,12 +66,12 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
     # Leave time to write .mat file
     time.sleep(1)
 
-    # The simulation outputs a .mat file with results, convert to csv.
+    # The simulation outputs a .mat file with results, convert it to csv.
     # The > print.txt just saves the prints from the script to another file.
     command = f"python mat_to_csv.py {fmuNameNoSuffix+'_result.mat'} > prints.txt"
     subprocess.call(command, shell=True)
 
-    # Read the results file
+    # Read the results file and save as csv
     results_dataframe = pd.read_csv(fmuNameNoSuffix+'_result.csv').drop('Unnamed: 0', axis=1)
     results_dataframe.to_csv('simulation_results.csv', index=False)
     print("Results saved in simulation_results.csv.\n")

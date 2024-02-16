@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import datetime as dtm
+import math
 import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
 PLOT = False
 
@@ -30,6 +31,15 @@ end = None
 #start = dtm.datetime(2024, 2, 15, 0, 0, 0)
 #end = dtm.datetime(2024, 2, 15, 23, 0, 0)
 weather, CI_weather = weather_forecast.get_weather(start, end)
+
+# Treat NaNs
+for i in range(len(weather)):
+    if math.isnan(weather[i]):
+        print("\nWARNING: A NaN was found in the weather forecast provided by pvlib.")
+        if i>0:
+            weather[i] = weather[i-1]
+        else:
+            weather[i] = 100
 
 # Lenght of simulation (hours)
 num_hours = len(weather)
@@ -150,6 +160,7 @@ df = df.rename(columns={'Heat Flow on Condenser Side of Heat Pump': 'Q_HP'})
 # Group by hour
 df['hour'] = (df['time'] / 3600).astype(int)
 df = df.groupby(['hour']).mean()
+df = df.drop(df.index[-1])
 df['W_HP'] = df['W_HP'].round()
 df['Q_HP'] = df['Q_HP'].round()
 df = df.drop('time', axis=1)
