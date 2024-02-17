@@ -22,6 +22,7 @@ def get_inputs(time, current_state):
         m_stor, m_load, T_sup_HP, delta_HP = get_commands(current_state)
         t = int((time-7200)/4/60)
         inputs_list = [m_stor[t], m_load[t], T_sup_HP[t], delta_HP[t]]
+        inputs_list = [0, 0, 320, 1]
         print(f"{t}: {inputs_list}")
     #print(f"Input at {int(time/60)} min: \n{inputs_list}: ")
     
@@ -79,4 +80,6 @@ result.freeInstance()
 
 # Read final state and print results
 res = pd.DataFrame(rows, columns = vars_output.keys())
+res = res.round(1)
+print('')
 print(res[['T[13]','T[14]','T[15]','T[16]']].loc[30:])
