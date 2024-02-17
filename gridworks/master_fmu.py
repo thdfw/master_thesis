@@ -163,9 +163,9 @@ result.doStep(currentCommunicationPoint=0, communicationStepSize=initialisation_
 
 # Read the new state, from which the simulation will start
 rows.append(result.getReal(list(vars_output.values())))
-print("\n--------------------------------")
-print(f"Initialization ({initialisation_time} hours)")
-print("--------------------------------\n")
+print("\n-----------------------------------------------------")
+print(f"FMU initialization ({initialisation_time} hours)")
+print("-----------------------------------------------------\n")
 print(f"State before initialization:\n{[round(x,1) for x in state]}")
 state = rows[-1]
 print(f"\nState after initialization:\n{[round(x,1) for x in state]}")
@@ -216,13 +216,12 @@ for time in range(initialisation_time, initialisation_time+simulation_time):
     print(res)
 
     # Read the next state of the system
-    print(f"\nInitial state:\n{[round(x,1) for x in state]}")
     state = rows[-1]
-    print(f"\nNext state:\n{[round(x,1) for x in state]}")
     
-    # Print iteration
     # Put x_0 in the same order as the rest of the code: T_B then T_S
     state_modif = state[-4:] + state[:-4]
+    
+    # Print iteration
     plot.print_iteration(old_u, old_x, state_modif, previous_sequence, 15*iter)
 
 # Terminate
