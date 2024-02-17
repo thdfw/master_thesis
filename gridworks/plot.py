@@ -95,6 +95,13 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
     print(f"m_HP = {m_HP} kg/s, m_load = {m_load} kg/s")
     # print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:15]]}\n")
     
+    print(f"\n\nNEXT HOUR INPUTS:")
+    print(f"m_stor = {[round(x,4) for x in u_opt[1,:15]]}")
+    print(f"m_load = {[m_load for _ in range(15)]}")
+    print(f"T_sup_HP = {[round(x,2) for x in u_opt[0,:15]]}")
+    print(f"delta_HP = {u_opt[4,:15]}")
+    print("")
+
 '''
 The final plot with all the data accumulated during the simulation
 '''

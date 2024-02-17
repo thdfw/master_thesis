@@ -4,7 +4,7 @@ import csv
 import time
 import subprocess
 
-PRINT = True
+PRINT = False
 
 # Name of the FMU
 fmuName = 'weiping_0CCC_0test_Examples_HP_0TES_0water_0test.fmu'
@@ -14,10 +14,15 @@ fmuNameNoSuffix = fmuName.replace(".fmu","")
 def get_inputs(hour, delta_HP, T_sup_HP, weather):
 
     inputs_dict = {
-        'storage_m_flow': 0.1,
-        'load_m_flow': 0.2,
-        'hp_T': T_sup_HP[hour] + 273,
-        'hp_on': delta_HP[hour]==1}
+        'T_closet': 273.15+30,
+        'Tdcw': 273.15+12,
+        'mdot_dcw': 0.2,
+        'ResistanceThermalCapacity': 5000,
+        'Resistance_On': False,
+        'HP_mode': True,
+        'T_OA': weather[hour] + 273,
+        'TSupSet': T_sup_HP[hour] + 273,
+        'HP_On': True if delta_HP[hour]==1 else False}
         
     return list(inputs_dict.values()), list(inputs_dict)
 
@@ -70,6 +75,5 @@ def simulate(delta_HP, T_sup_HP, weather, num_hours):
     results_dataframe = pd.read_csv(fmuNameNoSuffix+'_result.csv').drop('Unnamed: 0', axis=1)
     results_dataframe.to_csv('simulation_results.csv', index=False)
     print("Results saved in simulation_results.csv.\n")
-    print(results_dataframe)
     
     return results_dataframe

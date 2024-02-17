@@ -11,7 +11,7 @@ delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 
 # Horizon (hours * time_steps/hour)
-N = int(16 * 1/delta_t_h)
+N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
 num_iterations = 48
