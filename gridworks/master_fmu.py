@@ -24,7 +24,7 @@ delta_t_s = delta_t_m*60    # seconds
 N = int(8 * 1/delta_t_h)
 
 # Simulation time (hours)
-simulation_time = 2
+simulation_time = 7
 
 # FMU initialisation time (hours)
 initialisation_time = 10
