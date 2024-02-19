@@ -1,0 +1,1368 @@
+(ada) thomasdefauw@Macbook-pro-2011 gridworks-optseq % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+
+Time step: 4 minutes
+Horizon: 8.0 hours (120 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): 
+No file selected.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 1, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+Done in 123 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 314.0 | S        310.0 --    310.0 --   310.0 --
+         314.6 |          310.0       310.0      310.0
+         313.7 |          310.0       310.0      310.0
+      -- 308.8 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.4-> 320.7 | S        310.0 <-    310.0 <-   310.0 <-0.0-
+         324.5 |          310.0       310.0      310.0
+         322.6 |          310.0       310.0      310.0
+  <-0.4- 318.8 |   <-0.0- 310.0    <- 310.0   <- 310.0
+
+Q_HP = [9345, 8000, 13637, 14000, 9206, 8000, 8000, 14000, 14000, 8000, 8000, 8000, 14000, 14000, 8000]
+m_HP = 0.5, m_load = 0.127
+Cost of next 8 hours: 0.77 $
+Prices in the next 8 hours: [6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51]
+
+-----------------------------------------------------
+1:00 - 2:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 51 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 320.7 | S        310.0 --    310.0 --   310.0 --
+         324.5 |          310.0       310.0      310.0
+         322.6 |          310.0       310.0      310.0
+      -- 318.8 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.2-> 319.7 | S        311.3 <-    319.4 <-   319.0 <-0.2-
+         320.8 |          310.5       317.4      320.0
+         321.2 |          310.1       315.0      321.0
+  <-0.2- 321.4 |   <-0.2- 310.0    <- 312.9   <- 321.0
+
+Q_HP = [14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+m_HP = 0.5, m_load = 0.124
+Cost of next 8 hours: 0.66 $
+Prices in the next 8 hours: [6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16]
+
+-----------------------------------------------------
+2:00 - 3:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 90 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 319.7 | S        311.3 --    319.4 --   319.0 --
+         320.8 |          310.5       317.4      320.0
+         321.2 |          310.1       315.0      321.0
+      -- 321.4 |       -- 310.0    -- 312.9   -- 321.0
+
+Next state
+B -0.2-> 330.8 | S        320.0 <-    312.3 <-   321.0 <-0.2-
+         329.3 |          320.2       313.0      316.0
+         327.0 |          319.5       315.2      314.0
+  <-0.2- 325.8 |   <-0.2- 318.1    <- 318.1   <- 313.0
+
+Q_HP = [14000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 14000, 14000, 14000, 14000, 14000, 14000, 14000]
+m_HP = 0.5, m_load = 0.122
+Cost of next 8 hours: 0.55 $
+Prices in the next 8 hours: [6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07]
+
+-----------------------------------------------------
+3:00 - 4:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 62 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 330.8 | S        320.0 --    312.3 --   321.0 --
+         329.3 |          320.2       313.0      316.0
+         327.0 |          319.5       315.2      314.0
+      -- 325.8 |       -- 318.1    -- 318.1   -- 313.0
+
+Next state
+B -0.3-> 327.2 | S        313.7 <-    321.6 <-   328.0 <-0.1-
+         327.8 |          314.3       318.3      328.0
+         328.3 |          315.6       315.7      327.0
+  <-0.3- 328.7 |   <-0.1- 317.1    <- 314.2   <- 325.0
+
+Q_HP = [9098, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.124
+Cost of next 8 hours: 0.46 $
+Prices in the next 8 hours: [6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06]
+
+-----------------------------------------------------
+4:00 - 5:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 93 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 327.2 | S        313.7 --    321.6 --   328.0 --
+         327.8 |          314.3       318.3      328.0
+         328.3 |          315.6       315.7      327.0
+      -- 328.7 |       -- 317.1    -- 314.2   -- 325.0
+
+Next state
+B -0.2-> 336.9 | S        326.4 <-    316.1 <-   321.0 <-0.2-
+         334.5 |          326.9       317.4      318.0
+         333.0 |          325.1       320.0      317.0
+  <-0.2- 332.9 |   <-0.2- 322.4    <- 323.4   <- 316.0
+
+Q_HP = [14000, 14000, 14000, 8000, 8000, 8000, 8000, 8000, 8450, 8000, 8000, 14000, 14000, 8000, 14000]
+m_HP = 0.5, m_load = 0.123
+Cost of next 8 hours: 0.33 $
+Prices in the next 8 hours: [6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08]
+
+-----------------------------------------------------
+5:00 - 6:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 62 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 336.9 | S        326.4 --    316.1 --   321.0 --
+         334.5 |          326.9       317.4      318.0
+         333.0 |          325.1       320.0      317.0
+      -- 332.9 |       -- 322.4    -- 323.4   -- 316.0
+
+Next state
+B -0.2-> 327.1 | S        319.2 <-    328.4 <-   325.0 <-0.2-
+         329.0 |          318.0       326.4      328.0
+         330.0 |          317.9       323.8      329.0
+  <-0.2- 330.8 |   <-0.2- 318.7    <- 321.2   <- 329.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.13
+Cost of next 8 hours: 0.28 $
+Prices in the next 8 hours: [6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16]
+
+-----------------------------------------------------
+6:00 - 7:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 33 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 327.1 | S        319.2 --    328.4 --   325.0 --
+         329.0 |          318.0       326.4      328.0
+         330.0 |          317.9       323.8      329.0
+      -- 330.8 |       -- 318.7    -- 321.2   -- 329.0
+
+Next state
+B -0.1-> 329.6 | S        322.7 <-    322.0 <-   329.0 <-0.3-
+         330.7 |          325.2       320.6      328.0
+         330.6 |          327.4       320.1      326.0
+  <-0.1- 329.3 |   <-0.3- 328.4    <- 320.8   <- 324.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.136
+Cost of next 8 hours: 0.3 $
+Prices in the next 8 hours: [6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18]
+
+-----------------------------------------------------
+7:00 - 8:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 0, 1, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 72 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 329.6 | S        322.7 --    322.0 --   329.0 --
+         330.7 |          325.2       320.6      328.0
+         330.6 |          327.4       320.1      326.0
+      -- 329.3 |       -- 328.4    -- 320.8   -- 324.0
+
+Next state
+B <-0.1- 328.6 | S        325.0 ->    321.2 ->   325.0 -0.1->
+         326.1 |          323.5       322.0      324.0
+         322.3 |          320.8       323.4      322.0
+  -0.1-> 318.5 |   -0.1-> 317.8    -> 324.7   -> 321.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.136
+Cost of next 8 hours: 1.02 $
+Prices in the next 8 hours: [41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18]
+
+-----------------------------------------------------
+8:00 - 9:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 48 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 328.6 | S        325.0 --    321.2 --   325.0 --
+         326.1 |          323.5       322.0      324.0
+         322.3 |          320.8       323.4      322.0
+      -- 318.5 |       -- 317.8    -- 324.7   -- 321.0
+
+Next state
+B <-0.0- 328.4 | S        315.4 ->    323.1 ->   322.0 -0.1->
+         325.8 |          313.4       321.9      323.0
+         322.0 |          312.0       320.0      323.0
+  -0.0-> 318.1 |   -0.1-> 311.3    -> 317.7   -> 323.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.129
+Cost of next 8 hours: 0.3 $
+Prices in the next 8 hours: [41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16]
+
+-----------------------------------------------------
+9:00 - 10:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 0, 1, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 45 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 328.4 | S        315.4 --    323.1 --   322.0 --
+         325.8 |          313.4       321.9      323.0
+         322.0 |          312.0       320.0      323.0
+      -- 318.1 |       -- 311.3    -- 317.7   -- 323.0
+
+Next state
+B <-0.0- 327.8 | S        311.7 ->    316.4 ->   322.0 -0.1->
+         324.8 |          311.6       314.6      321.0
+         321.0 |          311.6       313.1      320.0
+  -0.0-> 317.9 |   -0.1-> 311.6    -> 312.2   -> 318.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.124
+Cost of next 8 hours: 0.37 $
+Prices in the next 8 hours: [41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2]
+
+-----------------------------------------------------
+10:00 - 11:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 32 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 327.8 | S        311.7 --    316.4 --   322.0 --
+         324.8 |          311.6       314.6      321.0
+         321.0 |          311.6       313.1      320.0
+      -- 317.9 |       -- 311.6    -- 312.2   -- 318.0
+
+Next state
+B <-0.0- 327.7 | S        310.9 ->    312.4 ->   317.0 -0.1->
+         324.8 |          310.3       311.9      316.0
+         320.9 |          309.2       311.6      314.0
+  -0.0-> 317.7 |   -0.1-> 308.0    -> 311.3   -> 313.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.109
+Cost of next 8 hours: 0.43 $
+Prices in the next 8 hours: [41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64]
+
+-----------------------------------------------------
+11:00 - 12:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 1, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 68 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 327.7 | S        310.9 --    312.4 --   317.0 --
+         324.8 |          310.3       311.9      316.0
+         320.9 |          309.2       311.6      314.0
+      -- 317.7 |       -- 308.0    -- 311.3   -- 313.0
+
+Next state
+B <-0.0- 323.9 | S        309.1 ->    311.5 ->   314.0 -0.1->
+         320.1 |          308.4       311.0      313.0
+         315.6 |          308.1       310.5      312.0
+  -0.0-> 311.0 |   -0.1-> 308.0    -> 309.8   -> 312.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.109
+Cost of next 8 hours: 0.61 $
+Prices in the next 8 hours: [41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43]
+
+-----------------------------------------------------
+12:00 - 13:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 0, 1, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 67 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 323.9 | S        309.1 --    311.5 --   314.0 --
+         320.1 |          308.4       311.0      313.0
+         315.6 |          308.1       310.5      312.0
+      -- 311.0 |       -- 308.0    -- 309.8   -- 312.0
+
+Next state
+B -0.1-> 326.9 | S        311.7 <-    311.9 <-   317.0 <-0.3-
+         322.9 |          312.4       311.4      313.0
+         319.7 |          312.9       311.1      313.0
+  <-0.1- 319.6 |   <-0.3- 312.7    <- 311.2   <- 312.0
+
+Q_HP = [14000, 9881, 9752, 9332, 8592, 8000, 8000, 8000, 14000, 8000, 14000, 8000, 8000, 14000, 14000]
+m_HP = 0.5, m_load = 0.106
+Cost of next 8 hours: 0.63 $
+Prices in the next 8 hours: [7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51]
+
+-----------------------------------------------------
+13:00 - 14:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 32 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 326.9 | S        311.7 --    311.9 --   317.0 --
+         322.9 |          312.4       311.4      313.0
+         319.7 |          312.9       311.1      313.0
+      -- 319.6 |       -- 312.7    -- 311.2   -- 312.0
+
+Next state
+B -0.3-> 327.0 | S        311.4 <-    314.3 <-   318.0 <-0.1-
+         326.3 |          311.3       312.9      319.0
+         326.3 |          311.5       312.3      321.0
+  <-0.3- 326.0 |   <-0.1- 311.9    <- 311.8   <- 317.0
+
+Q_HP = [8000, 8000, 8000, 14000, 14000, 8000, 8000, 14000, 14000, 14000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.106
+Cost of next 8 hours: 0.52 $
+Prices in the next 8 hours: [7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84]
+
+-----------------------------------------------------
+14:00 - 15:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 1, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 26 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 327.0 | S        311.4 --    314.3 --   318.0 --
+         326.3 |          311.3       312.9      319.0
+         326.3 |          311.5       312.3      321.0
+      -- 326.0 |       -- 311.9    -- 311.8   -- 317.0
+
+Next state
+B -0.3-> 326.6 | S        312.1 <-    318.0 <-   325.0 <-0.0-
+         327.2 |          311.6       315.7      322.0
+         327.7 |          311.5       313.9      321.0
+  <-0.3- 328.1 |   <-0.0- 311.5    <- 312.7   <- 320.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 11579, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.106
+Cost of next 8 hours: 0.49 $
+Prices in the next 8 hours: [7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65]
+
+-----------------------------------------------------
+15:00 - 16:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[1, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 47 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 326.6 | S        312.1 --    318.0 --   325.0 --
+         327.2 |          311.6       315.7      322.0
+         327.7 |          311.5       313.9      321.0
+      -- 328.1 |       -- 311.5    -- 312.7   -- 320.0
+
+Next state
+B -0.2-> 321.4 | S        323.5 <-    322.9 <-   319.0 <-0.2-
+         324.3 |          321.9       324.7      317.0
+         325.9 |          320.2       325.3      317.0
+  <-0.2- 326.7 |   <-0.2- 318.4    <- 324.8   <- 320.0
+
+Q_HP = [14000, 14000, 14000, 14000, 14000, 14000, 14000, 14000, 9346, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.106
+Cost of next 8 hours: 0.39 $
+Prices in the next 8 hours: [7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46]
+
+-----------------------------------------------------
+16:00 - 17:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 35 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 321.4 | S        323.5 --    322.9 --   319.0 --
+         324.3 |          321.9       324.7      317.0
+         325.9 |          320.2       325.3      317.0
+      -- 326.7 |       -- 318.4    -- 324.8   -- 320.0
+
+Next state
+B <-0.1- 323.3 | S        320.9 ->    324.5 ->   318.0 -0.0->
+         321.0 |          318.2       324.7      319.0
+         317.0 |          313.9       324.1      321.0
+  -0.1-> 313.8 |   -0.0-> 309.2    -> 322.7   -> 323.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.109
+Cost of next 8 hours: 0.28 $
+Prices in the next 8 hours: [41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
+
+-----------------------------------------------------
+17:00 - 18:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 0, 1, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 19 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 323.3 | S        320.9 --    324.5 --   318.0 --
+         321.0 |          318.2       324.7      319.0
+         317.0 |          313.9       324.1      321.0
+      -- 313.8 |       -- 309.2    -- 322.7   -- 323.0
+
+Next state
+B <-0.0- 318.6 | S        314.3 ->    323.6 ->   321.0 -0.1->
+         315.6 |          311.0       322.4      322.0
+         312.8 |          308.9       320.4      324.0
+  -0.0-> 310.3 |   -0.1-> 308.5    -> 317.6   -> 324.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.11
+Cost of next 8 hours: 0.34 $
+Prices in the next 8 hours: [41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36]
+
+-----------------------------------------------------
+18:00 - 19:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 31 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 318.6 | S        314.3 --    323.6 --   321.0 --
+         315.6 |          311.0       322.4      322.0
+         312.8 |          308.9       320.4      324.0
+      -- 310.3 |       -- 308.5    -- 317.6   -- 324.0
+
+Next state
+B <-0.1- 313.6 | S        310.4 ->    320.8 ->   323.0 -0.1->
+         311.1 |          308.9       318.4      323.0
+         309.2 |          308.2       315.7      323.0
+  -0.1-> 308.2 |   -0.1-> 308.0    -> 312.8   -> 322.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.106
+Cost of next 8 hours: 0.44 $
+Prices in the next 8 hours: [41.43, 41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34]
+
+-----------------------------------------------------
+19:00 - 20:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 1, 0, 1, 0]
+On/Off after treatement:
+[0, 0, 1, 0, 1, 0, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 1, 0, 1, 0]
+On/Off after treatement:
+[0, 0, 1, 0, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [0, 0, 0]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 1, 0, 1, 0]
+On/Off after treatement:
+[0, 0, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 0, 1, 0, 1, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 41 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 313.6 | S        310.4 --    320.8 --   323.0 --
+         311.1 |          308.9       318.4      323.0
+         309.2 |          308.2       315.7      323.0
+      -- 308.2 |       -- 308.0    -- 312.8   -- 322.0
+
+Next state
+B <-0.0- 313.0 | S        309.5 ->    313.0 ->   321.0 -0.1->
+         310.7 |          310.1       311.1      320.0
+         309.1 |          310.6       309.8      318.0
+  -0.0-> 308.8 |   -0.1-> 310.4    -> 309.3   -> 315.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.106
+Cost of next 8 hours: 0.96 $
+Prices in the next 8 hours: [41.51, 6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34]
+
+-----------------------------------------------------
+20:00 - 21:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[0, 1, 0, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[0, 1, 0, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 27 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 313.0 | S        309.5 --    313.0 --   321.0 --
+         310.7 |          310.1       311.1      320.0
+         309.1 |          310.6       309.8      318.0
+      -- 308.8 |       -- 310.4    -- 309.3   -- 315.0
+
+Next state
+B -0.2-> 313.6 | S        315.9 <-    314.3 <-   313.0 <-0.2-
+         313.2 |          314.5       315.6      313.0
+         312.9 |          313.0       316.5      313.0
+  <-0.2- 312.6 |   <-0.2- 311.6    <- 316.7   <- 313.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.106
+Cost of next 8 hours: 1.09 $
+Prices in the next 8 hours: [6.84, 6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37]
+
+-----------------------------------------------------
+21:00 - 22:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[0, 1, 0, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [0, 0, 0]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 0, 1, 1, 1, 0, 0]
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 32 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 313.6 | S        315.9 --    314.3 --   313.0 --
+         313.2 |          314.5       315.6      313.0
+         312.9 |          313.0       316.5      313.0
+      -- 312.6 |       -- 311.6    -- 316.7   -- 313.0
+
+Next state
+B -0.2-> 317.4 | S        313.8 <-    314.7 <-   317.0 <-0.2-
+         317.0 |          314.2       314.1      317.0
+         316.6 |          314.9       313.7      316.0
+  <-0.2- 316.0 |   <-0.2- 315.4    <- 313.6   <- 315.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.106
+Cost of next 8 hours: 1.08 $
+Prices in the next 8 hours: [6.65, 6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41]
+
+-----------------------------------------------------
+22:00 - 23:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 1, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 0, 1, 1, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [0, 0, 0]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 3 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 1, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 4 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 1, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 5 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 1, 1, 0, 0, 0]
+On/Off after treatement:
+[0, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 6 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 0, 1, 1, 1, 0, 0, 0]
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 1, 1]
+
+Setting all constraints with the requested sequence...
+0h-1h: [1, 1, 1]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [1, 1, 1]
+5h-6h: [1, 1, 1]
+6h-7h: [1, 1, 1]
+7h-8h: [1, 1, 1]
+
+Solving the optimization problem...
+Done in 8 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 317.4 | S        313.8 --    314.7 --   317.0 --
+         317.0 |          314.2       314.1      317.0
+         316.6 |          314.9       313.7      316.0
+      -- 316.0 |       -- 315.4    -- 313.6   -- 315.0
+
+Next state
+B -0.2-> 318.1 | S        315.6 <-    317.4 <-   318.0 <-0.2-
+         318.0 |          315.0       317.1      318.0
+         317.9 |          314.5       316.7      318.0
+  <-0.2- 317.8 |   <-0.2- 314.2    <- 316.2   <- 318.0
+
+Q_HP = [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+m_HP = 0.5, m_load = 0.107
+Cost of next 8 hours: 1.08 $
+Prices in the next 8 hours: [6.46, 6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46]
+
+-----------------------------------------------------
+23:00 - 24:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Academic license - for non-commercial use only
+Academic license - for non-commercial use only
+On/Off from optimization:
+[0, 1, 1, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+0h-1h: [0, 0, 0]
+1h-2h: [1, 1, 1]
+2h-3h: [1, 1, 1]
+3h-4h: [1, 1, 1]
+4h-5h: [0, 0, 0]
+5h-6h: [0, 0, 0]
+6h-7h: [0, 0, 0]
+7h-8h: [0, 0, 0]
+
+Solving the optimization problem...
+Done in 26 seconds.
+Data was appended to data/simulations/recent/results_2024-02-13_10-51-43.csv
+
+Initial state
+B     -- 318.1 | S        315.6 --    317.4 --   318.0 --
+         318.0 |          315.0       317.1      318.0
+         317.9 |          314.5       316.7      318.0
+      -- 317.8 |       -- 314.2    -- 316.2   -- 318.0
+
+Next state
+B <-0.0- 317.1 | S        314.2 ->    316.8 ->   318.0 -0.1->
+         315.3 |          312.7       316.3      318.0
+         312.0 |          310.4       315.7      317.0
+  -0.0-> 308.4 |   -0.1-> 308.0    -> 315.1   -> 317.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+m_HP = 0, m_load = 0.106
+Cost of next 8 hours: 0.51 $
+Prices in the next 8 hours: [6.4, 6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95]
+
+The 24-hour simulation ran in 0 hour(s) and 53 minute(s).
+
+Plotting the data...
+
+2024-02-13 11:45:18.986 python[1267:56300] ASB: LNW <NSApplication: 0x7f84d529be40> <Window: 0x7f84d5321aa0> <NSThemeFrame: 0x7f84d5326be0> (null)
+2024-02-13 11:45:27.572 python[1267:56300] ASB: LNW <NSApplication: 0x7f84d529be40> <NSSavePanel: 0x7f84d547dd30> <NSThemeFrame: 0x7f84d544e910> <_NSViewBackingLayer: 0x7f84d56ad7c0>
+(ada) thomasdefauw@Macbook-pro-2011 gridworks-optseq % 
