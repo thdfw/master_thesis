@@ -55,6 +55,7 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
     # ------------------------------------------------------
     
     Q_HP = []
+    m_HP = []
     m_stor, m_buffer = 0, 0
 
     for k in range(15):
@@ -63,6 +64,7 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
         x_k = [round(float(x),6) for x in x_opt[:,k]]
         
         Q_HP.append(functions.get_function("Q_HP", u_k, x_k, 0, sequence, iter))
+        m_HP.append(round(functions.get_function("m_HP", u_k, x_k, 0, sequence, iter),2))
         m_buffer += round(functions.get_function("m_buffer", u_k, x_k, 0, sequence, iter),1)
         m_stor += u_opt[1,k]
 
@@ -88,11 +90,11 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
     print(f"         {round(x_1[2],1)} |          {round(x_1[14],1)}       {round(x_1[10],1)}      {round(x_1[6],0)}")
     print(f"  {B_b} {round(x_1[3],1)} |   {S_t} {round(x_1[15],1)}    {S_t2} {round(x_1[11],1)}   {S_t2} {round(x_1[7],0)}")
     
-    m_HP = 0.5 if u_opt_0[4]==1 else 0
+    m_HP = m_HP if u_opt_0[4]==1 else 0
     m_load = forecasts.get_m_load(iter, iter+1, delta_t_h)
     
     print(f"\nQ_HP = {[round(x/1000) for x in Q_HP]} kW")
-    print(f"m_HP = {m_HP} kg/s, m_load = {m_load} kg/s")
+    print(f"m_HP = {m_HP} kg/s \nm_load = {m_load} kg/s")
     # print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:15]]}\n")
     
     '''
@@ -107,7 +109,7 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
 '''
 The final plot with all the data accumulated during the simulation
 '''
-def plot_MPC(data):
+def plot_MPC(data, FMU):
 
     fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
     
@@ -161,15 +163,15 @@ def plot_MPC(data):
 
     # Temperatures in storage and buffer
     ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
-    ax[1].plot(data['T_S11_pred'], color='green', alpha=0.4, linestyle='dotted')
+    if FMU: ax[1].plot(data['T_S11_pred'], color='green', alpha=0.4, linestyle='dotted')
     ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
-    ax[1].plot(data['T_S21_pred'], color='orange', alpha=0.4, linestyle='dotted')
+    if FMU: ax[1].plot(data['T_S21_pred'], color='orange', alpha=0.4, linestyle='dotted')
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
-    ax[1].plot(data['T_S31_pred'], color='red', alpha=0.4, linestyle='dotted')
+    if FMU: ax[1].plot(data['T_S31_pred'], color='red', alpha=0.4, linestyle='dotted')
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
-    ax[1].plot(data['T_B1_pred'], color='blue', alpha=0.4, linestyle='dotted')
+    if FMU: ax[1].plot(data['T_B1_pred'], color='blue', alpha=0.4, linestyle='dotted')
     ax[1].plot(data['T_B4'], color='purple', label="$T_{B4}$", alpha=0.4)
-    ax[1].plot(data['T_B4_pred'], color='purple', alpha=0.4, linestyle='dotted')
+    if FMU: ax[1].plot(data['T_B4_pred'], color='purple', alpha=0.4, linestyle='dotted')
     ax[1].plot((data['iterations']*15+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dashed')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time [hours]")

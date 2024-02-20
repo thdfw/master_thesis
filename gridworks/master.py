@@ -11,10 +11,10 @@ delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 
 # Horizon (hours * time_steps/hour)
-N = int(8 * 1/delta_t_h)
+N = int(16 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 48
+num_iterations = 24
 
 # Problem type
 pb_type = {
@@ -124,7 +124,7 @@ for iter in range(num_iterations):
         'T_S11': [round(x,3) for x in x_opt[4,:]],
         'T_S21': [round(x,3) for x in x_opt[8,:]],
         'T_S31': [round(x,3) for x in x_opt[12,:]],
-        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter) for t in range(120)],
+        'Q_HP': [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter) for t in range(int(15*N*delta_t_h))],
         'c_el': [round(100*1000*x,2) for x in forecasts.get_c_el(iter*15, iter*15+120, delta_t_h)],
         'm_load': forecasts.get_m_load(iter*15, iter*15+120, delta_t_h),
         'sequence': sequence}
@@ -175,4 +175,4 @@ minutes = round((total_time % 3600) // 60)
 print(f"\nThe {num_iterations}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
     
 print("\nPlotting the data...\n")
-plot.plot_MPC(plot_data)
+plot.plot_MPC(plot_data, False)

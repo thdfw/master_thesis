@@ -21,10 +21,10 @@ delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
 
 # Horizon (hours * time_steps/hour)
-N = int(8 * 1/delta_t_h)
+N = int(16 * 1/delta_t_h)
 
 # Simulation time (hours)
-simulation_time = 7
+simulation_time = 24
 
 # FMU initialisation time (hours)
 initialisation_time = 10
@@ -225,7 +225,6 @@ for time_now in range(initialisation_time, initialisation_time+simulation_time):
     # PRINT State predicted by equations during past hour
     res_pred = pd.DataFrame(state_pred)
     res_pred.columns = vars_output.keys()
-    res_pred = res_pred[['T[13]','T[14]','T[15]','T[16]']]
     res_pred['m_stor'], res_pred['m_load'], res_pred['T_sup_HP'], res_pred['delta_HP'] = m_stor, m_load, T_sup_HP, delta_HP
     print("\nPREDICTED Temperature evolution over the past hour:")
     print(res_pred)
@@ -233,13 +232,17 @@ for time_now in range(initialisation_time, initialisation_time+simulation_time):
     # PRINT State measured in FMU during past hour
     res = pd.DataFrame(rows[-16:-1], columns = vars_output.keys())
     res = res.round(1)
-    res = res[['T[13]','T[14]','T[15]','T[16]']]
     res['m_stor'], res['m_load'], res['T_sup_HP'], res['delta_HP'] = m_stor, m_load, T_sup_HP, delta_HP
     print("\nREAL Temperature evolution over the past hour:")
     print(res)
 
-    # Read the next state of the system
-    state = rows[-1]
+    # Read the next state of the system (and increase to 308K if FMU went lower)
+    for x in rows[-1]:
+        if x<308:
+            print("\nWARNING: The FMU finished with a temperature {x}K, which is below 308K, the minimum allowed.")
+            print("Replaced with 308K to allow the next iteration to be feasible.\n")
+        
+    state = [308 if x<308 else x for x in rows[-1]]
     
     # Put x_0 in the same order as the rest of the code: T_B then T_S
     state_modif = state[-4:] + state[:-4]
@@ -342,4 +345,4 @@ minutes = round((total_time % 3600) // 60)
 print(f"\nThe {simulation_time}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
 
 print("\nPlotting the data...\n")
-plot.plot_MPC(plot_data)
+plot.plot_MPC(plot_data, True)

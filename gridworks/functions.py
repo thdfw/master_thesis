@@ -48,7 +48,8 @@ def get_function(id, u, x, t, sequence, iter):
     # -----------------------------------------------
     
     # Mass flow rate from HP
-    B_0M, B_1M = 0.5, 0 #4.2669, -0.0117
+    # B_0M, B_1M = 4.2669, -0.0117 # variable m_HP
+    B_0M, B_1M = 0.5, 0 # fixed m_HP
     m_HP = B_0M + B_1M * T_sup_HP
 
     # Mass flow rate at buffer tank
@@ -71,6 +72,7 @@ def get_function(id, u, x, t, sequence, iter):
     
     # Objective and constraints [ok]
     if   id=="Q_HP":        return m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP
+    elif id=="m_HP":        return m_HP
     elif id=="T_sup_load":  return T_sup_load
     elif id=="m_buffer":    return m_buffer
             
