@@ -176,9 +176,8 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
         # ----- Non linear constraints -----
         
         # Heat pump operation
-        if d_HP == 1:
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter) >= Q_HP_min * u[4,t])
-            opti.subject_to(get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter) <= Q_HP_max[t])
+        opti.subject_to(get_function("Q_HP_nodelta", u[:,t], x[:,t], t, sequence, iter) >= Q_HP_min * u[4,t])
+        opti.subject_to(get_function("Q_HP_nodelta", u[:,t], x[:,t], t, sequence, iter) <= Q_HP_max[t])
         
         # Load supply temperature
         opti.subject_to(get_function("T_sup_load", u[:,t], x[:,t], t, sequence, iter) >= T_sup_load_min)

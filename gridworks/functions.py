@@ -72,6 +72,7 @@ def get_function(id, u, x, t, sequence, iter):
     
     # Objective and constraints [ok]
     if   id=="Q_HP":        return m_HP * cp * (T_sup_HP - T_ret_HP) * delta_HP
+    elif id=="Q_HP_nodelta":return m_HP * cp * (T_sup_HP - T_ret_HP)
     elif id=="m_HP":        return m_HP
     elif id=="T_sup_load":  return T_sup_load
     elif id=="m_buffer":    return m_buffer
