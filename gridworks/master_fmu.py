@@ -259,7 +259,7 @@ for time_now in range(initialisation_time, initialisation_time+simulation_time):
     #Q_HP = m_HP * c_p * (T_sup_HP - T_ret_HP)
     # T_ret_HP =
     Q_HP = sum([functions.get_function("Q_HP", old_u[:,t], old_x[:,t], t, previous_sequence, 15*iter) for t in range(15)])/15
-    COP1, _ = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
+    _, COP1, __ = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
     elec_used += Q_HP*COP1[0]
     elec_cost += Q_HP*COP1[0] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 

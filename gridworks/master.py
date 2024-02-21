@@ -48,8 +48,10 @@ file_path = input("\nResults file (enter to skip): ").replace(" ","")
 print("No file selected.") if file_path=="" else print(f"Reading from {file_path.split('/')[-1]}.")
 
 # For the final plot
-list_B1, list_B4 = [x_0[0]], [x_0[3]]
-list_S11, list_S21, list_S31 = [x_0[4]], [x_0[8]], [x_0[12]]
+list_B1, list_B2, list_B3, list_B4 = [[elem] for elem in x_0[:4]]
+list_S11, list_S12, list_S13, list_S14 = [[elem] for elem in x_0[4:8]]
+list_S21, list_S22, list_S23, list_S24 = [[elem] for elem in x_0[8:12]]
+list_S31, list_S32, list_S33, list_S34 = [[elem] for elem in x_0[12:16]]
 list_Q_HP = []
 elec_cost, elec_used = 0, 0
 
@@ -136,16 +138,27 @@ for iter in range(num_iterations):
 
     # Update electricity use (kWh) and cost ($) with next hour
     Q_HP = sum([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter) for t in range(15)])/15
-    COP1, _ = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
+    _, COP1, __ = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
     elec_used += Q_HP*COP1[0]
     elec_cost += Q_HP*COP1[0] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 
     # Append state and Q_HP values with next hour
     list_B1.extend([round(float(x),6) for x in x_opt[0,0:15]])
+    list_B2.extend([round(float(x),6) for x in x_opt[1,0:15]])
+    list_B3.extend([round(float(x),6) for x in x_opt[2,0:15]])
     list_B4.extend([round(float(x),6) for x in x_opt[3,0:15]])
     list_S11.extend([round(float(x),6) for x in x_opt[4,0:15]])
+    list_S12.extend([round(float(x),6) for x in x_opt[5,0:15]])
+    list_S13.extend([round(float(x),6) for x in x_opt[6,0:15]])
+    list_S14.extend([round(float(x),6) for x in x_opt[7,0:15]])
     list_S21.extend([round(float(x),6) for x in x_opt[8,0:15]])
+    list_S22.extend([round(float(x),6) for x in x_opt[9,0:15]])
+    list_S23.extend([round(float(x),6) for x in x_opt[10,0:15]])
+    list_S24.extend([round(float(x),6) for x in x_opt[11,0:15]])
     list_S31.extend([round(float(x),6) for x in x_opt[12,0:15]])
+    list_S32.extend([round(float(x),6) for x in x_opt[13,0:15]])
+    list_S33.extend([round(float(x),6) for x in x_opt[14,0:15]])
+    list_S34.extend([round(float(x),6) for x in x_opt[15,0:15]])
     list_Q_HP.extend([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], 0, sequence, 15*iter) for t in range(15)])
 
 # ------------------------------------------------------
@@ -160,9 +173,20 @@ plot_data = {
     'm_load':       forecasts.get_m_load(0, 15*num_iterations, delta_t_h),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
+    'T_S12':        list_S12,
+    'T_S13':        list_S13,
+    'T_S14':        list_S14,
     'T_S21':        list_S21,
+    'T_S22':        list_S22,
+    'T_S23':        list_S23,
+    'T_S24':        list_S24,
     'T_S31':        list_S31,
+    'T_S32':        list_S32,
+    'T_S33':        list_S33,
+    'T_S34':        list_S34,
     'T_B1':         list_B1,
+    'T_B2':         list_B2,
+    'T_B3':         list_B3,
     'T_B4':         list_B4,
     'elec_cost':    round(elec_cost,2),
     'elec_used':    round(elec_used/1000,2),
@@ -175,4 +199,5 @@ minutes = round((total_time % 3600) // 60)
 print(f"\nThe {num_iterations}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
     
 print("\nPlotting the data...\n")
-plot.plot_MPC(plot_data, False)
+plot.plot_MPC(plot_data, False, True)
+plot.plot_MPC(plot_data, False, False)

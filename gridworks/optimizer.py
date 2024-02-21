@@ -126,7 +126,7 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
     m_load = forecasts.get_m_load(iter, iter+N, delta_t_h)
     
     # 1/COP and Q_HP_max for the next N steps
-    COP1, Q_HP_max = forecasts.get_T_OA(iter, iter+N, delta_t_h)
+    T_OA, COP1, Q_HP_max = forecasts.get_T_OA(iter, iter+N, delta_t_h)
 
     # ------------------------------------------------------
     # Constraints
@@ -193,7 +193,10 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
     # Objective
     # ------------------------------------------------------
 
-    # Cost of electricity used over the next N steps
+    # With COP(T_OA, T_OA^2, T_HP_sup) (comment for COP(T_OA) only)
+    B_0, B_1, B_2, B_3 = 11.581585, -0.086161, 0.000140, 0.005700
+    COP1 = [B_0 + B_1*T_OA[t] + B_2*T_OA[t]**2 + B_3*u[0,t] for t in range(N)]
+    
     obj = sum(c_el[t] * delta_t_h * get_function("Q_HP", u[:,t], x[:,t], t, sequence, iter)*COP1[t] for t in range(N))
     # Adding resistances: +27000*u[5,t]) for t in range(N))
 

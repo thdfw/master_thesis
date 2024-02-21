@@ -81,4 +81,4 @@ def get_T_OA(start, end, delta_t_h):
     B0_Q, B1_Q = -68851.589, 313.3151
     Q_HP_max_all = [round(B0_Q + B1_Q*T_OA_all[i],2) if T_OA_all[i]<(273-7) else 14000 for i in range(len(T_OA_all))]
     
-    return COP1_all[start:end], Q_HP_max_all[start:end]
+    return T_OA_all[start:end], COP1_all[start:end], Q_HP_max_all[start:end]

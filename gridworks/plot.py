@@ -109,7 +109,7 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
 '''
 The final plot with all the data accumulated during the simulation
 '''
-def plot_MPC(data, FMU):
+def plot_MPC(data, FMU, DETAILED):
 
     fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
     
@@ -158,24 +158,56 @@ def plot_MPC(data, FMU):
     ax[0].legend(lines1 + lines2, labels1 + labels2)
     
     # ------------------------------------------------------
+    # State of charge computation
+    # ------------------------------------------------------
+    
+    max_temp, min_temp = 65+273, 38+273
+    avg_B_T, avg_S_T, SoC_B, SoC_S = [], [], [], []
+    
+    # Compute buffer SoC
+    for k in range(len(data['T_B1'])):
+        avg_B_T_k = (data['T_B1'][k] + data['T_B2'][k] + data['T_B3'][k] + data['T_B4'][k])/4
+        avg_B_T.append(avg_B_T_k)
+        SoC_B.append((avg_B_T_k-min_temp)/(max_temp-min_temp))
+        
+    # Compute storage SoC
+    for k in range(len(data['T_S11'])):
+        avg_S_T_k = 0
+        avg_S_T_k += data['T_S11'][k] + data['T_S12'][k] + data['T_S13'][k] + data['T_S14'][k]
+        avg_S_T_k += data['T_S21'][k] + data['T_S22'][k] + data['T_S23'][k] + data['T_S24'][k]
+        avg_S_T_k += data['T_S31'][k] + data['T_S32'][k] + data['T_S33'][k] + data['T_S34'][k]
+        avg_S_T_k = avg_S_T_k/12
+        avg_S_T.append(avg_S_T_k)
+        SoC_S.append((avg_S_T_k-min_temp)/(max_temp-min_temp))
+        
+    # ------------------------------------------------------
     # Second plot
     # ------------------------------------------------------
-
-    # Temperatures in storage and buffer
-    ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
-    if FMU: ax[1].plot(data['T_S11_pred'], color='green', alpha=0.4, linestyle='dotted')
-    ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
-    if FMU: ax[1].plot(data['T_S21_pred'], color='orange', alpha=0.4, linestyle='dotted')
-    ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
-    if FMU: ax[1].plot(data['T_S31_pred'], color='red', alpha=0.4, linestyle='dotted')
-    ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
-    if FMU: ax[1].plot(data['T_B1_pred'], color='blue', alpha=0.4, linestyle='dotted')
-    ax[1].plot(data['T_B4'], color='purple', label="$T_{B4}$", alpha=0.4)
-    if FMU: ax[1].plot(data['T_B4_pred'], color='purple', alpha=0.4, linestyle='dotted')
-    ax[1].plot((data['iterations']*15+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dashed')
-    ax[1].set_ylabel("Temperatuere [K]")
-    ax[1].set_xlabel("Time [hours]")
-    ax[1].legend()
+    
+    # Show temperatures inside tanks
+    if DETAILED:
+        ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
+        if FMU: ax[1].plot(data['T_S11_pred'], color='green', alpha=0.4, linestyle='dotted')
+        ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
+        if FMU: ax[1].plot(data['T_S21_pred'], color='orange', alpha=0.4, linestyle='dotted')
+        ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
+        if FMU: ax[1].plot(data['T_S31_pred'], color='red', alpha=0.4, linestyle='dotted')
+        ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
+        if FMU: ax[1].plot(data['T_B1_pred'], color='blue', alpha=0.4, linestyle='dotted')
+        ax[1].plot(data['T_B4'], color='purple', label="$T_{B4}$", alpha=0.4)
+        if FMU: ax[1].plot(data['T_B4_pred'], color='purple', alpha=0.4, linestyle='dotted')
+        ax[1].plot((data['iterations']*15+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dashed')
+        ax[1].set_ylabel("Temperatuere [K]")
+        ax[1].set_xlabel("Time [hours]")
+        ax[1].legend()
+        
+    # Show state of charge only
+    else:
+        ax3 = ax[1].twinx()
+        ax3.plot(SoC_B, color='orange', label='Buffer SoC', linestyle='dashed')
+        ax3.plot(SoC_S, color='orange', label='Storage SoC')
+        ax3.set_ylim([0,1])
+        ax3.legend()
 
     # Save the plot as a png
     formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
