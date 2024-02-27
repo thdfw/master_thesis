@@ -21,7 +21,7 @@ delta_t_h = 4/60
 # ------------------------------------------
 
 # The maximum storage capacity (kWh)
-mass_of_water = 450*3 # 450kg water per tank
+mass_of_water = 450*4 # 450kg water per tank
 max_temp, min_temp = 65, 38 #°C
 max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
 max_storage = round(max_storage * 2.77778e-7,1) # in kWh
@@ -179,9 +179,8 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
         while [int(x) for x in HP_on_off_opt] == backup:
     
             # Increase the load by 25% at each attempt
-            print(f"\nLoad before: {load}")
             load_increased = [round((1+(attempt-1)*0.25)*x,5) for x in load]
-            print(f"Load after (+{(attempt-1)*25}%): {load_increased}\n")
+            print(f"\nIncreased load by {(attempt-1)*25}%")
 
             # Get the recommendation for the increased load
             Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load_increased, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
