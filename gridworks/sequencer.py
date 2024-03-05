@@ -25,10 +25,6 @@ mass_of_water = 450*4 # 450kg water per tank
 max_temp, min_temp = 65, 38 #°C
 max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
 max_storage = round(max_storage * 2.77778e-7,1) # in kWh
-
-# Allow colder water (35°C) as negative storage?
-min_storage = mass_of_water * 4187 * (35 - min_temp) # in Joules
-min_storage = round(min_storage * 2.77778e-7,1) # in kWh
 min_storage = 0
 
 if PRINT: print(f"Storage max: {max_storage}kWh, min: {min_storage}kWh")
@@ -121,17 +117,19 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
     # Average temperature of tanks
     current_state = long_seq_pack['x_0']
     T_avg = sum(current_state)/16 - 273
-    min_temp = 38
     current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
     initial_storage = round(current_storage,1)
-    if PRINT: print(f"Current storage level: {initial_storage} kWh = {round(100*initial_storage/max_storage,1)} %")
+    print(f"Storage level: {initial_storage} kWh ({round(100*initial_storage/max_storage,1)} %)")
+    
+    # If the current storage level is too high, turn off the HP during the first hour
+    too_hot = True if current_storage > 50 else False
 
     # ------------------------------------------
     # Solve closed loop with initial storage
     # ------------------------------------------
     
     # Get the solution from the optimization problem
-    Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
+    Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list, too_hot)
 
     # Duplicate the last element of the hourly data for the plot
     c_el2 = c_el + [c_el[-1]]
@@ -208,7 +206,7 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
 # ------------------------------------------
 # ------------------------------------------
 
-def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_max_list, COP1_list):
+def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_max_list, COP1_list, too_hot):
 
     # Initialize
     opti = casadi.Opti() if BONMIN else casadi.Opti('conic')
@@ -263,6 +261,11 @@ def get_opti(N, c_el, load, max_storage, storage_initial, Q_HP_min_list, Q_HP_ma
             opti.subject_to(Q_HP_onoff[t] >= Q_HP_min_list[t]*delta_HP[t])
             opti.subject_to(Q_HP_onoff[t] <= Q_HP[t] + Q_HP_min_list[t]*(delta_HP[t]-1))
             opti.subject_to(Q_HP_onoff[t] >= Q_HP[t] + Q_HP_max_list[t]*(delta_HP[t]-1))
+            
+    # First hour
+    if too_hot:
+        print("The heat pump must be turned off in the next hour, since the tanks are too hot to further charge.")
+        opti.subject_to(delta_HP[0] == 0)
 
     # -----------------------------
     # Objective
