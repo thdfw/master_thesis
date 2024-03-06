@@ -181,7 +181,7 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
             print(f"\nIncreased load by {(attempt-1)*25}%")
 
             # Get the recommendation for the increased load
-            Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load_increased, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list)
+            Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load_increased, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list, too_hot)
             
             # Next iteration if no operating hour change
             attempt += 1
