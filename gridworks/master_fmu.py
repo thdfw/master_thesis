@@ -20,11 +20,14 @@ delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
 
+# Integration method (euler, rk2, or rk4)
+integration_method = 'rk2'
+
 # Horizon (hours * time_steps/hour)
 N = int(16 * 1/delta_t_h)
 
 # Simulation time (hours)
-simulation_time = 24
+simulation_time = 7
 
 # FMU initialisation time (hours)
 initialisation_time = 10
@@ -36,6 +39,7 @@ pb_type = {
 'gurobi':           False,
 'horizon':          N,
 'time_step':        delta_t_m,
+'integration':      integration_method,
 }
 
 # Print corresponding setup
@@ -345,4 +349,5 @@ minutes = round((total_time % 3600) // 60)
 print(f"\nThe {simulation_time}-hour simulation ran in {hours} hour(s) and {minutes} minute(s).")
 
 print("\nPlotting the data...\n")
-plot.plot_MPC(plot_data, True)
+plot.plot_MPC(plot_data, True, True)
+plot.plot_MPC(plot_data, True, False)
