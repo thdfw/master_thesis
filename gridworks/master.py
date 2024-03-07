@@ -10,6 +10,9 @@ import optimizer, functions, plot, forecasts, sequencer
 delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 
+# Integration method (euler, rk2, or rk4)
+integration_method = 'rk2'
+
 # Horizon (hours * time_steps/hour)
 N = int(16 * 1/delta_t_h)
 
@@ -23,6 +26,7 @@ pb_type = {
 'gurobi':           False,
 'horizon':          N,
 'time_step':        delta_t_m,
+'integration':      integration_method,
 }
 
 # Print corresponding setup

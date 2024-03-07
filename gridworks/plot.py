@@ -28,7 +28,7 @@ def print_pb_type(pb_type, num_iterations):
     print("Sequencer Solver: Bonmin") if BONMIN else print("Sequencer Solver: Gurobi")
     
     # Time step and horizon
-    print(f"\nTime step: {pb_type['time_step']} minutes")
+    print(f"\nTime step: {pb_type['time_step']} minutes \nIntegration method: {pb_type['integration']}")
     print(f"Horizon: {pb_type['horizon']*pb_type['time_step']/60} hours ({pb_type['horizon']} time steps)")
     print(f"Simulation: {num_iterations} hours ({num_iterations} iterations)")
 

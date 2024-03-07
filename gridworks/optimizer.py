@@ -34,7 +34,7 @@ delta_t_s = delta_t_m*60
 # System dynamics
 # ------------------------------------------------------
 
-def dynamics(u_t, x_t, t, sequence, iter):
+def dynamics(u_t, x_t, t, sequence, iter, euler):
 
     # All heat transfers are initialized at 0
     Q_top_B, Q_bottom_B, Q_conv_B, Q_losses_B = [0]*4, [0]*4, [0]*4, [0]*4
@@ -59,17 +59,24 @@ def dynamics(u_t, x_t, t, sequence, iter):
     # For the resistive elements
     # Q_R_S = ([0] + [4500*u_t[5]] + [0] + [4500*u_t[5]])*3
 
-    # Compute the next state
-    const = delta_t_s / (m_layer * cp)
-    x_plus_B = [x_t[i] + const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
-    x_plus_S = [x_t[i+4] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
-    
-    # Bring everything together (need to use casadi.vertcat for symbolic values)
-    x_plus = []
-    for i in range(len(x_plus_B)): x_plus = casadi.vertcat(x_plus, x_plus_B[i])
-    for i in range(len(x_plus_S)): x_plus = casadi.vertcat(x_plus, x_plus_S[i])
+    # For Euler: compute x(t+1) = x(t) + delta_t * f(x(t),u(t))
+    if euler:
+        const = delta_t_s / (m_layer * cp)
+        x_plus_B = [x_t[i] + const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
+        x_plus_S = [x_t[i+4] + const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
         
-    return x_plus
+    # For RK2 and RK4: compute f(x(t),u(t))
+    else:
+        const = 1 / (m_layer * cp)
+        x_plus_B = [const * (Q_top_B[i] + Q_bottom_B[i] + Q_conv_B[i] - Q_losses_B[i]) for i in range(4)]
+        x_plus_S = [const * (Q_top_S[i] + Q_bottom_S[i] + Q_conv_S[i] - Q_losses_S[i] + Q_R_S[i]) for i in range(12)]
+        
+    # Bring everything together (need to use casadi.vertcat for symbolic values)
+    x_or_f = []
+    for i in range(len(x_plus_B)): x_or_f = casadi.vertcat(x_or_f, x_plus_B[i])
+    for i in range(len(x_plus_S)): x_or_f = casadi.vertcat(x_or_f, x_plus_S[i])
+        
+    return x_or_f
 
 # ------------------------------------------------------
 # Optimize over the next N time steps
@@ -186,7 +193,20 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
         opti.subject_to(get_function("m_buffer", u[:,t], x[:,t], t, sequence, iter) >= 0)
         
         # System dynamics
-        opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], t, sequence, iter))
+        if pb_type['integration'] == "euler":
+            opti.subject_to(x[:,t+1] == dynamics(u[:,t], x[:,t], t, sequence, iter, True))
+        
+        elif pb_type['integration'] == "rk2":
+            k1 = dynamics(u[:,t], x[:,t], t, sequence, iter, False)
+            k2 = dynamics(u[:,t], x[:,t] + delta_t_s/2 * k1, t, sequence, iter, False)
+            opti.subject_to(x[:,t+1] == x[:,t] + delta_t_s*k2)
+            
+        elif pb_type['integration'] == "rk4":
+            k1 = dynamics(u[:,t], x[:,t], t, sequence, iter, False)
+            k2 = dynamics(u[:,t], x[:,t] + delta_t_s/2 * k1, t, sequence, iter, False)
+            k3 = dynamics(u[:,t], x[:,t] + delta_t_s/2 * k2, t, sequence, iter, False)
+            k4 = dynamics(u[:,t], x[:,t] + delta_t_s * k3, t, sequence, iter, False)
+            opti.subject_to(x[:,t+1] == x[:,t] + delta_t_s*(k1/6 + k2/3 + k3/3 + k4/6))
             
     # ------------------------------------------------------
     # Objective
