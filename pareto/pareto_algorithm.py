@@ -133,7 +133,7 @@ def get_LWT_options(T_OA, elec, T_HP_in, T_HP_out_min, PRINT):
 # --------------------------------
 # --------------------------------
 
-def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_hours):
+def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_hours, iter):
 
     # --------------------------------
     # Price forecasts and parameters
@@ -163,8 +163,11 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
     else:
         c_el = price_forecast
         
-    # To simulate for more than a single day
+    # Get the future prices at the current iteration time
+    c_el = c_el * 2
+    c_el = c_el[iter%24:]
     c_el = c_el[:num_hours]
+    if PRINT: print(f"Cost forecast:\n{c_el}")
         
     # Water returning from the PCM (°C)
     if PRINT: print(f"Assuming water going to the HP at {T_HP_in}°C")
@@ -186,7 +189,7 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
         Q_HP_max_list.append(round(Q_HP_max,1))
         cost_th_list.append(cost_th)
         m_HP_list.append(m_HP)
-
+        
     return Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list
 
 # --------------------------------
@@ -195,10 +198,10 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
 # --------------------------------
 # --------------------------------
 
-def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_storage, PRINT, PLOT, num_hours, CIs):
+def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_storage, PRINT, PLOT, num_hours, CIs, iter, SoC_current):
 
     # Get heating ranges and costs for each hour
-    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_hours)
+    Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_hours, iter)
 
     if PRINT:
         print(f"Q_HP_min_list = {Q_HP_min_list}")
@@ -219,7 +222,7 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
     if PRINT: print(f"Ranking hours by $/kWh_th:\n{ranking}\n")
 
     # Initialize
-    storage = [0 for i in range(N+1)]
+    storage = [SoC_current] + [0 for i in range(N)]
     Q_HP = [0 for i in range(N)]
     problem_solved = False
     ok = [1]*N
@@ -318,13 +321,15 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
             #------------------------------------------------------
 
             if sum(ok) > 0 and ok.index(1) != first_not_ok:
-
+            
                 # first_minimum available
                 for price in cost_th_list[first_not_ok:ok.index(1)+1]:
                     if price < cost_th_list[ranking.index(i)]:
                         minimum_available = price
                         hour_min_available = first_not_ok + cost_th_list[first_not_ok:ok.index(1)+1].index(price)
                         break
+                    else:
+                        minimum_available = cost_th_list[ranking.index(i)]
                 
                 #minimum_available = np.min(cost_th_list[first_not_ok:ok.index(1)+1])
                 #hour_min_available = first_not_ok + cost_th_list[first_not_ok:ok.index(1)+1].index(minimum_available)
@@ -390,7 +395,7 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
             # Plot the current iteration
             #------------------------------------------------------
 
-            if PRINT and sum(ok) > 0 and ok.index(1) != first_not_ok:
+            if PRINT and sum(ok) > 0 and ok.index(1) != first_not_ok and PLOT:
 
                 # Duplicate the last element of the hourly data for the plot
                 cost_th_list2 = cost_th_list + [cost_th_list[-1]]
@@ -404,7 +409,9 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
                 ax.step(range(N+1), load2, where='post', color='red', alpha=0.4, label='Load')
                 ax.step(range(N+1), Q_HP2, where='post', color='blue', alpha=0.5, label='HP')
                 ax.plot(range(N+1), [max_storage]*(N+1), alpha=0.2, linestyle='dotted', color='gray')
-                ax.plot(storage, color='orange', alpha=0.6, label='Storage')
+                print(storage)
+                #storage = [round(x,2) for x in storage]
+                #ax.plot(storage, color='orange', alpha=0.6, label='Storage')
                 ax.set_ylim([0,35])
                 ax.set_xticks(range(N+1))
                 ax.set_xlabel("Time [hours]")
