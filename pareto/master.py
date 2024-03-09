@@ -265,11 +265,11 @@ c_el_list = [x for x in c_el_list for _ in range(60)]
 fig, ax = plt.subplots(1,1, figsize=(13,4))
 ax.step(range(num_iterations*60), Q_HP_list, where='post', color='blue', alpha=0.6, label="HP real")
 ax.step(range(num_iterations*60), Q_HP_expected_list, where='post', color='blue', alpha=0.6, linestyle='dotted', label="HP predicted")
-ax.step(range(num_iterations*60), load_list, where='post', color='gray', alpha=0.6, label="Load")
+ax.step(range(num_iterations*60), load_list, where='post', color='red', alpha=0.6, label="Load")
 ax.plot([0] + SOC_list, color='orange', alpha=0.8, label="Storage")
 ax.plot([max_storage]*num_iterations*60, color='orange', alpha=0.8, label="Maximum storage", linestyle='dashed')
 ax2 = ax.twinx()
-ax2.step(range(num_iterations*60), c_el_list, where='post', color='red', alpha=0.4, label="Electricity price")
+ax2.step(range(num_iterations*60), c_el_list, where='post', color='gray', alpha=0.4, label="Electricity price")
 
 # Hours in xticks
 hours = range(0, num_iterations+1, 60)
@@ -283,6 +283,7 @@ ax2.set_ylabel("Electricity price [cts/kWh]")
 
 ax.set_ylim([0,25])
 
-ax.legend(loc='upper left', bbox_to_anchor=(1.05, 1), borderaxespad=0.)
+ax.legend(loc='upper left')
+ax2.legend(loc='upper right')
 
 plt.show()
