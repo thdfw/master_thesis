@@ -104,8 +104,9 @@ def get_weather(start, end):
 
     # Crop if the forecast is longer than the forecast
     if len(T_OA_list) > len(CIs):
-        T_OA_list = T_OA_list[:len(CIs)]
-            
+        #T_OA_list = T_OA_list[:len(CIs)]
+        CIs = CIs + [0]* (len(T_OA_list)-len(CIs))
+        
     if PLOT:
         length = len(CIs) if len(CIs)<len(T_OA_list) else len(T_OA_list)
         

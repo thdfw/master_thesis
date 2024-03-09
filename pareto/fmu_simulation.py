@@ -24,7 +24,7 @@ if PRINT: print(f"Model {fmuName} was loaded.\n")
 def m_HP(T):
     if   T<=45: m = 34.5/60
     elif T<=55: m = 21.6/60
-    elif T<=65: m = 17.3/60
+    else:       m = 17.3/60
     return round(m,2)
 
 # Get the FMU inputs for a given hour

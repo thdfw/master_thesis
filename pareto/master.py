@@ -18,12 +18,27 @@ load_list = []
 SOC_list = []
 c_el_list = []
 
+# Get forecast for Maine (= None for live forecast)
+start, end = None, None
+start = dtm.datetime(2024, 3, 6, 0, 0, 0)
+end = start + dtm.timedelta(hours=50)
+weather_total, CI_weather = weather_forecast.get_weather(start, end)
+
+# Treat NaNs
+for i in range(len(weather_total)):
+    if math.isnan(weather_total[i]):
+        print(f"\nWARNING: A NaN was found at hour {i} of the weather forecast provided by pvlib.")
+        if i>0:
+            weather_total[i] = weather_total[i-1]
+        else:
+            weather_total[i] = 100
+
 # ---------------------------------------
 # Parameters
 # ---------------------------------------
 
 # Temperature of water going to the HPs (Celcius)
-T_HP_in = 55
+T_HP_in = 57
 
 # Minimum temperature of water going to the PCM (Celcius)
 T_sup_HP_min = 58
@@ -32,7 +47,7 @@ T_sup_HP_min = 58
 max_storage = 20
 
 # Select price forecast (options are: "GridWorks", "Progressive", "Peter")
-price_forecast = "Peter"
+price_forecast = "CFH"
 
 # ---------------------------------------
 print("0 - Find the best forecaster")
@@ -69,6 +84,7 @@ for iter in range(num_iterations):
     print("1 - Get weather forecast")
     # ---------------------------------------
 
+    '''
     # Get forecast for Maine (= None for live forecast)
     start, end = None, None
     start = dtm.datetime(2024, 3, 6, 0, 0, 0) + dtm.timedelta(hours=iter)
@@ -83,9 +99,14 @@ for iter in range(num_iterations):
                 weather[i] = weather[i-1]
             else:
                 weather[i] = 100
+    '''
+    
+    weather = weather_total[iter:iter+17]
+    print([round(x,1) for x in weather])
 
     # Lenght of simulation (hours)
     num_hours = len(weather)
+    CI_weather = CI_weather[:num_hours]
 
     if PRINT: print(f"\n{num_hours}-hour weather forecast succesfully obtained, with 95% confidence interval.")
     if PRINT: print(f"{weather} \n+/- {CI_weather[:num_hours]}°C")
@@ -100,6 +121,8 @@ for iter in range(num_iterations):
     CI_load = pred_load[0]-min_pred_load[0]
     if PRINT: print(f"\nLoad succesfully predicted with {best_forecaster}, with {round((1-delta)*100)}% confidence interval.")
     if PRINT: print(f"{[round(x[0],2) for x in pred_load]} \n+/- {CI_load} kWh")
+    
+    #pred_load = [0.8*x for x in pred_load]
 
     # Predict load with 95% confidence interval for coldest predicted weather (weather - CI)
     min_weather = [round(weather[i]-CI_weather[i],2) for i in range(num_hours)]
@@ -232,19 +255,34 @@ for iter in range(num_iterations):
     load_list.extend(load)
     SOC_list.extend(df['SOC'])
     
-c_el_list = [0.07919, 0.066283, 0.063061, 0.067943, 0.080084, 0.115845,
-0.193755, 0.215921, 0.110822, 0.044927, 0.01521, 0.00742,
-0.004151, 0.007117, 0.009745, 0.02452, 0.037877, 0.09556,
-0.205067, 0.282588, 0.234866, 0.184225, 0.132268, 0.101679]
+c_el_list = [0.0359, 0.0206, 0.0106, 0.0192, 0.0309, 0.0612, 0.0925, 0.1244, 0.1667, 0.2148, 0.3563,
+0.4893, 0.7098, 0.7882, 0.5586, 0.3326, 0.2152, 0.1487, 0.0864, 0.0587, 0.0385, 0.0246, 0.0165, 0.0215]
+c_el_list = [x*100 for x in c_el_list]
 c_el_list = c_el_list[:num_iterations]
 c_el_list = [x for x in c_el_list for _ in range(60)]
 
 # Plot
 fig, ax = plt.subplots(1,1, figsize=(13,4))
-ax.step(range(num_iterations*60), Q_HP_list, where='post', color='blue', alpha=0.6)
-ax.step(range(num_iterations*60), Q_HP_expected_list, where='post', color='blue', alpha=0.6, linestyle='dashed')
-ax.step(range(num_iterations*60), load_list, where='post', color='red', alpha=0.6)
-ax.plot([0] + SOC_list, color='orange', alpha=0.8)
+ax.step(range(num_iterations*60), Q_HP_list, where='post', color='blue', alpha=0.6, label="HP real")
+ax.step(range(num_iterations*60), Q_HP_expected_list, where='post', color='blue', alpha=0.6, linestyle='dotted', label="HP predicted")
+ax.step(range(num_iterations*60), load_list, where='post', color='gray', alpha=0.6, label="Load")
+ax.plot([0] + SOC_list, color='orange', alpha=0.8, label="Storage")
+ax.plot([max_storage]*num_iterations*60, color='orange', alpha=0.8, label="Maximum storage", linestyle='dashed')
 ax2 = ax.twinx()
-ax2.step(range(num_iterations*60), c_el_list, where='post', color='gray', alpha=0.6)
+ax2.step(range(num_iterations*60), c_el_list, where='post', color='red', alpha=0.4, label="Electricity price")
+
+# Hours in xticks
+hours = range(0, num_iterations+1, 60)
+hour_labels = range(0, num_iterations+1)
+ax.set_xticks(range(0, num_iterations*60+1, 60))
+ax.set_xticklabels(hour_labels)
+
+ax.set_xlabel("Time [hours]")
+ax.set_ylabel("Energy [kWh]")
+ax2.set_ylabel("Electricity price [cts/kWh]")
+
+ax.set_ylim([0,25])
+
+ax.legend(loc='upper left', bbox_to_anchor=(1.05, 1), borderaxespad=0.)
+
 plt.show()

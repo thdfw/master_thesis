@@ -159,6 +159,11 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
         0.205067, 0.282588, 0.234866, 0.184225, 0.132268, 0.101679]
         c_el = [x*100 for x in c_el]
     
+    elif price_forecast=="CFH":
+        c_el = [0.0359, 0.0206, 0.0106, 0.0192, 0.0309, 0.0612, 0.0925, 0.1244, 0.1667, 0.2148, 0.3563,
+        0.4893, 0.7098, 0.7882, 0.5586, 0.3326, 0.2152, 0.1487, 0.0864, 0.0587, 0.0385, 0.0246, 0.0165, 0.0215]
+        c_el = [x*100 for x in c_el]
+
     # If it doesn't match assume the prices were given directly
     else:
         c_el = price_forecast
@@ -175,16 +180,20 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
     # Obtain the costs and available heating ranges for every hour
     Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list = [], [], [], []
 
-    for i in range(len(c_el)):
+    for i in range(num_hours):
 
         if PRINT:
             print("\n----------------------------------------")
             print(f"Hour {i+1} ({T_OA_list[i]}°C outside, {round(c_el[i],2)} cts/kWh)")
             print("----------------------------------------\n")
         
-        Q_HP_min, Q_HP_max, cost_th, m_HP = get_LWT_options(T_OA_list[i], c_el[i], T_HP_in, T_HP_out_min, PRINT)
+        # Q_HP_min, Q_HP_max, cost_th, m_HP = get_LWT_options(T_OA_list[i], c_el[i], T_HP_in, T_HP_out_min, PRINT)
     
         # Append the values in lists
+        Q_HP_min = 6
+        Q_HP_max = 12
+        cost_th = 4/12 * c_el[i]
+        m_HP = 17.3/60
         Q_HP_min_list.append(round(Q_HP_min,1))
         Q_HP_max_list.append(round(Q_HP_max,1))
         cost_th_list.append(cost_th)
@@ -229,6 +238,11 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
     last_not_ok = N-2
     testing = storage.copy()
     Q_HP_discovered_max = Q_HP_max_list.copy()
+    
+    for j in range(N):
+        if Q_HP[j]-load[j]+storage[j] >= 0:
+            storage[j+1] = Q_HP[j]-load[j]+storage[j]
+            ok[j] = 0
 
     #------------------------------------------------------
     # Starting at the first not ok hour
@@ -469,13 +483,22 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
     #------------------------------------------------------
     # Plot
     #------------------------------------------------------
-
+    #PLOT = True
     if PLOT:
         # Duplicate the last element of the hourly data for the plot
         N = len(cost_th_list)
         cost_th_list2 = cost_th_list + [cost_th_list[-1]]
         Q_HP = [round(x,3) for x in Q_HP + [Q_HP[-1]]]
         load2 = load + [load[-1]]
+        
+        # Get the storage
+        flat_list = []
+        for item in storage:
+            if isinstance(item, np.ndarray) and item.size == 1:
+                flat_list.append(item.item())
+            else:
+                flat_list.append(item)
+        storage = flat_list
 
         # Plot the state of the system
         fig, ax = plt.subplots(1,1, figsize=(13,4))
