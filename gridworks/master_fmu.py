@@ -27,7 +27,7 @@ integration_method = 'rk2'
 N = int(16 * 1/delta_t_h)
 
 # Simulation time (hours)
-simulation_time = 7
+simulation_time = 24
 
 # FMU initialisation time (hours)
 initialisation_time = 10
@@ -329,9 +329,20 @@ plot_data = {
     'm_load':       forecasts.get_m_load(0, 15*simulation_time, delta_t_h),
     'Q_HP':         list_Q_HP,
     'T_S11':        list_S11,
+    'T_S12':        list_S11, # TODO: updates with real values
+    'T_S13':        list_S11, # TODO: updates with real values
+    'T_S14':        list_S11, # TODO: updates with real values
     'T_S21':        list_S21,
+    'T_S22':        list_S21, # TODO: updates with real values
+    'T_S23':        list_S21, # TODO: updates with real values
+    'T_S24':        list_S21, # TODO: updates with real values
     'T_S31':        list_S31,
+    'T_S32':        list_S31, # TODO: updates with real values
+    'T_S33':        list_S31, # TODO: updates with real values
+    'T_S34':        list_S31, # TODO: updates with real values
     'T_B1':         list_B1,
+    'T_B2':         list_B1, # TODO: updates with real values
+    'T_B3':         list_B1, # TODO: updates with real values
     'T_B4':         list_B4,
     'T_S11_pred':        list_S11_pred,
     'T_S21_pred':        list_S21_pred,
