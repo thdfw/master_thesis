@@ -14,10 +14,10 @@ delta_t_h = delta_t_m/60    # hours
 integration_method = 'rk2'
 
 # Horizon (hours * time_steps/hour)
-N = int(16 * 1/delta_t_h)
+N = int(2 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 24
+num_iterations = 2
 
 # Problem type
 pb_type = {
@@ -93,16 +93,18 @@ for iter in range(num_iterations):
     # As long as a feasible sequence is not found, try another method (attempt)
     attempt = 1
     obj_opt = 1e5
+    previous_attempt = 0
     while obj_opt == 1e5:
         
         # Get a good sequence proposition (method depends on attempt)
-        sequence = sequencer.get_optimal_sequence(iter, previous_sequence, file_path, attempt, long_seq_pack, pb_type)
-        
+        sequence, prev_attempt = sequencer.get_optimal_sequence(iter, previous_sequence, previous_attempt, file_path, attempt, long_seq_pack, pb_type)
+                
         # Try to solve the optimization problem, get u* and x*
         u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
         
         # Next attempt
         attempt += 1
+        previous_attempt = prev_attempt
     
     # Save the working sequence to compare at the next step
     previous_sequence = sequence
@@ -140,11 +142,18 @@ for iter in range(num_iterations):
     # Update and append values for final plot
     # ------------------------------------------------------
 
-    # Update electricity use (kWh) and cost ($) with next hour
-    Q_HP = sum([functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, sequence, 15*iter) for t in range(15)])/15
-    _, COP1, __ = forecasts.get_T_OA(15*iter, 15*iter+1, delta_t_h)
-    elec_used += Q_HP*COP1[0]
-    elec_cost += Q_HP*COP1[0] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
+    # Get the Q_HP at evey time step over the next hour
+    Q_HP_ = [functions.get_function("Q_HP", u_opt[:,t], x_opt[:,t], t, previous_sequence, 15*iter) for t in range(15)]
+    Q_HP_ = [x/15 for x in Q_HP_]
+    
+    # Find the COP at evey time step over the next hour
+    T_OA_, _, __ = forecasts.get_T_OA(15*iter, 15*(iter+1), delta_t_h)
+    COP_ = [forecasts.get_COP(T_OA_[t], u_opt[0,t]) for t in range(15)]
+
+    # Get the electricty used and the cost of electricity over the next hour
+    for k in range(15):
+        elec_used += Q_HP_[k] / COP_[k]
+        elec_cost += Q_HP_[k] / COP_[k] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 
     # Append state and Q_HP values with next hour
     list_B1.extend([round(float(x),6) for x in x_opt[0,0:15]])

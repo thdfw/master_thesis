@@ -25,7 +25,11 @@ mass_of_water = 450*4 # 450kg water per tank
 max_temp, min_temp = 65, 38 #°C
 max_storage = mass_of_water * 4187 * (max_temp - min_temp) # in Joules
 max_storage = round(max_storage * 2.77778e-7,1) # in kWh
+
+# The minimum storage capacity (kWh)
 min_storage = 0
+min_storage = mass_of_water * 4187 * (-1) # allow for 1°C below minimum temp
+min_storage = round(min_storage * 2.77778e-7,1) # in kWh
 
 if PRINT: print(f"Storage max: {max_storage}kWh, min: {min_storage}kWh")
 
@@ -47,7 +51,7 @@ def COP1(T_OA):
 # ------------------------------------------
 # ------------------------------------------
 
-def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_seq_pack, pb_type):
+def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file, attempt, long_seq_pack, pb_type):
 
     if attempt==1:
         # Print simulated date and time
@@ -119,10 +123,11 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
     T_avg = sum(current_state)/16 - 273
     current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
     initial_storage = round(current_storage,1)
-    print(f"Storage level: {initial_storage} kWh ({round(100*initial_storage/max_storage,1)} %)")
+    if attempt==1:
+        print(f"Storage level: {initial_storage} kWh ({round(100*initial_storage/max_storage,1)} %)")
     
     # If the current storage level is too high, turn off the HP during the first hour
-    too_hot = True if current_storage > 50 else False
+    too_hot = True if current_storage > 45 else False
 
     # ------------------------------------------
     # Solve closed loop with initial storage
@@ -168,17 +173,18 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
     HP_on_off_opt = [int(x) for x in HP_on_off_opt]
     backup = HP_on_off_opt
     solver_name = "bonmin" if BONMIN else "gurobi"
-    print(f"On/Off from optimization ({solver_name}):\n{HP_on_off_opt}")
+    
+    if attempt == 1:
+        print(f"On/Off from optimization ({solver_name}):\n{HP_on_off_opt}")
     
     # Solve the optimization problem with an increased load
     if attempt > 1:
     
         # Increase the load as long as the operating hours are the same
-        while [int(x) for x in HP_on_off_opt] == backup:
+        while [int(x) for x in HP_on_off_opt] == backup or [int(x) for x in HP_on_off_opt]==previous_attempt:
     
-            # Increase the load by 25% at each attempt
-            load_increased = [round((1+(attempt-1)*0.25)*x,5) for x in load]
-            print(f"\nIncreased load by {(attempt-1)*25}%")
+            # Increase the load 1% at a time until the sequence changes from previous attempt
+            load_increased = [round((1+(attempt-1)*0.01)*x,5) for x in load]
 
             # Get the recommendation for the increased load
             Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load_increased, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list, too_hot)
@@ -187,7 +193,7 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
             attempt += 1
         
         HP_on_off_opt = [int(x) for x in HP_on_off_opt]
-        print(f"On/Off after treatement:\n{HP_on_off_opt}")
+        print(f"On/Off after increasing load by {(attempt-2)*1}%:\n{HP_on_off_opt}")
         
     # ------------------------------------------
     # Convert to combi and return sequence
@@ -198,7 +204,7 @@ def get_optimal_sequence(iter, previous_sequence, results_file, attempt, long_se
     for i in range(N):
         sequence_combi[f'combi{i+1}'] = [1,1,1] if HP_on_off_opt[i]==1 else [0,0,0]
     
-    return sequence_combi
+    return sequence_combi, HP_on_off_opt
 
 # ------------------------------------------
 # ------------------------------------------

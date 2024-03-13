@@ -207,6 +207,8 @@ def plot_MPC(data, FMU, DETAILED):
         ax3.plot(SoC_B, color='orange', label='Buffer SoC', linestyle='dashed')
         ax3.plot(SoC_S, color='orange', label='Storage SoC')
         ax3.set_ylim([0,1])
+        ax3.set_ylabel("State of charge")
+        ax3.set_xlabel("Time [hours]")
         ax3.legend()
 
     # Save the plot as a png

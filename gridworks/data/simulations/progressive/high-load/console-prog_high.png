@@ -1,0 +1,2071 @@
+Last login: Mon Mar 11 14:27:39 on ttys000
+(ada) thomasdefauw@MBP-2011 repo % cd gridworks
+(ada) thomasdefauw@MBP-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+Sequencer Solver: Bonmin
+
+Time step: 4 minutes 
+Integration method: rk2
+Horizon: 16.0 hours (240 time steps)
+Simulation: 15 hours (15 iterations)
+
+Results file (enter to skip): 
+No file selected.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: -2.1 kWh (-3.7 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Failed to solve: 'Maximum_Iterations_Exceeded'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Storage level: -2.1 kWh (-3.7 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+
+Increased load by 25%
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Done in 323 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 310.0 | S        310.0 --    310.0 --   310.0 --
+         310.0 |          310.0       310.0      310.0
+         310.0 |          310.0       310.0      310.0
+      -- 310.0 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.1-> 311.3 | S        310.8 <-    311.3 <-   312.0 <-0.3-
+         311.1 |          310.6       311.2      311.0
+         310.8 |          310.4       311.1      311.0
+  <-0.1- 310.5 |   <-0.3- 310.3    <- 310.9   <- 311.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.127 kg/s
+
+-----------------------------------------------------
+1:00 - 2:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: -0.0 kWh (-0.0 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Storage level: -0.0 kWh (-0.0 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
+
+Increased load by 25%
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Done in 122 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 311.3 | S        310.8 --    311.3 --   312.0 --
+         311.1 |          310.6       311.2      311.0
+         310.8 |          310.4       311.1      311.0
+      -- 310.5 |       -- 310.3    -- 310.9   -- 311.0
+
+Next state
+B -0.1-> 312.5 | S        311.7 <-    312.2 <-   313.0 <-0.3-
+         312.2 |          311.6       312.1      313.0
+         311.8 |          311.5       312.0      312.0
+  <-0.1- 311.5 |   <-0.3- 311.4    <- 311.8   <- 312.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.124 kg/s
+
+-----------------------------------------------------
+2:00 - 3:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 2.2 kWh (3.9 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+
+Solving the optimization problem...
+Done in 205 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 312.5 | S        311.7 --    312.2 --   313.0 --
+         312.2 |          311.6       312.1      313.0
+         311.8 |          311.5       312.0      312.0
+      -- 311.5 |       -- 311.4    -- 311.8   -- 312.0
+
+Next state
+B -0.1-> 313.6 | S        312.8 <-    313.3 <-   314.0 <-0.3-
+         313.2 |          312.7       313.2      314.0
+         312.9 |          312.6       313.1      314.0
+  <-0.1- 312.6 |   <-0.3- 312.5    <- 313.0   <- 313.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.122 kg/s
+
+-----------------------------------------------------
+3:00 - 4:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 4.4 kWh (7.8 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+
+Solving the optimization problem...
+Done in 193 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 313.6 | S        312.8 --    313.3 --   314.0 --
+         313.2 |          312.7       313.2      314.0
+         312.9 |          312.6       313.1      314.0
+      -- 312.6 |       -- 312.5    -- 313.0   -- 313.0
+
+Next state
+B -0.1-> 317.3 | S        314.8 <-    316.5 <-   318.0 <-0.3-
+         316.1 |          314.4       316.0      318.0
+         315.1 |          314.1       315.6      317.0
+  <-0.1- 314.2 |   <-0.3- 313.8    <- 315.2   <- 317.0
+
+Q_HP = [10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.124 kg/s
+
+-----------------------------------------------------
+4:00 - 5:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 10.1 kWh (17.9 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+
+Solving the optimization problem...
+Done in 94 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 317.3 | S        314.8 --    316.5 --   318.0 --
+         316.1 |          314.4       316.0      318.0
+         315.1 |          314.1       315.6      317.0
+      -- 314.2 |       -- 313.8    -- 315.2   -- 317.0
+
+Next state
+B -0.1-> 318.4 | S        316.8 <-    317.0 <-   319.0 <-0.3-
+         317.6 |          316.8       316.8      318.0
+         317.0 |          316.7       316.7      318.0
+  <-0.1- 316.5 |   <-0.3- 316.5    <- 316.7   <- 317.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.123 kg/s
+
+-----------------------------------------------------
+5:00 - 6:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 13.1 kWh (23.2 %)
+On/Off from optimization (bonmin):
+[1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+
+Solving the optimization problem...
+Done in 100 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 318.4 | S        316.8 --    317.0 --   319.0 --
+         317.6 |          316.8       316.8      318.0
+         317.0 |          316.7       316.7      318.0
+      -- 316.5 |       -- 316.5    -- 316.7   -- 317.0
+
+Next state
+B -0.1-> 319.1 | S        318.0 <-    318.2 <-   319.0 <-0.3-
+         318.5 |          318.0       318.1      319.0
+         318.1 |          317.8       318.1      319.0
+  <-0.1- 317.8 |   <-0.3- 317.7    <- 318.1   <- 318.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 10] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.13 kg/s
+
+-----------------------------------------------------
+6:00 - 7:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 15.3 kWh (27.1 %)
+On/Off from optimization (bonmin):
+[1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+
+Solving the optimization problem...
+Done in 42 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 319.1 | S        318.0 --    318.2 --   319.0 --
+         318.5 |          318.0       318.1      319.0
+         318.1 |          317.8       318.1      319.0
+      -- 317.8 |       -- 317.7    -- 318.1   -- 318.0
+
+Next state
+B -0.1-> 322.7 | S        321.2 <-    322.9 <-   323.0 <-0.3-
+         321.4 |          320.6       322.6      323.0
+         320.1 |          320.0       322.2      323.0
+  <-0.1- 319.1 |   <-0.3- 319.5    <- 321.7   <- 323.0
+
+Q_HP = [12, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 13, 13, 13] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.136 kg/s
+
+-----------------------------------------------------
+7:00 - 8:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 22.4 kWh (39.6 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+
+Solving the optimization problem...
+Done in 147 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 322.7 | S        321.2 --    322.9 --   323.0 --
+         321.4 |          320.6       322.6      323.0
+         320.1 |          320.0       322.2      323.0
+      -- 319.1 |       -- 319.5    -- 321.7   -- 323.0
+
+Next state
+B <-0.1- 314.5 | S        320.8 ->    322.7 ->   323.0 -0.0->
+         311.8 |          320.0       322.4      323.0
+         309.4 |          318.4       321.9      323.0
+  -0.1-> 308.0 |   -0.0-> 314.4    -> 321.4   -> 323.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.136 kg/s
+
+-----------------------------------------------------
+8:00 - 9:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 16.1 kWh (28.5 %)
+On/Off from optimization (bonmin):
+[0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+
+Solving the optimization problem...
+Done in 69 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 314.5 | S        320.8 --    322.7 --   323.0 --
+         311.8 |          320.0       322.4      323.0
+         309.4 |          318.4       321.9      323.0
+      -- 308.0 |       -- 314.4    -- 321.4   -- 323.0
+
+Next state
+B <-0.0- 310.9 | S        315.4 ->    321.4 ->   323.0 -0.1->
+         309.2 |          312.7       320.7      323.0
+         308.3 |          310.1       319.5      322.0
+  -0.0-> 308.0 |   -0.1-> 308.5    -> 317.8   -> 322.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.129 kg/s
+
+-----------------------------------------------------
+9:00 - 10:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 10.0 kWh (17.7 %)
+On/Off from optimization (bonmin):
+[0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+
+Solving the optimization problem...
+Done in 61 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 310.9 | S        315.4 --    321.4 --   323.0 --
+         309.2 |          312.7       320.7      323.0
+         308.3 |          310.1       319.5      322.0
+      -- 308.0 |       -- 308.5    -- 317.8   -- 322.0
+
+Next state
+B <-0.0- 309.6 | S        309.7 ->    317.1 ->   322.0 -0.1->
+         308.6 |          308.7       315.2      321.0
+         308.1 |          308.5       313.1      320.0
+  -0.0-> 308.0 |   -0.1-> 309.1    -> 311.2   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.124 kg/s
+
+-----------------------------------------------------
+10:00 - 11:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 4.3 kWh (7.6 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+
+Solving the optimization problem...
+Done in 63 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 309.6 | S        309.7 --    317.1 --   322.0 --
+         308.6 |          308.7       315.2      321.0
+         308.1 |          308.5       313.1      320.0
+      -- 308.0 |       -- 309.1    -- 311.2   -- 319.0
+
+Next state
+B -0.4-> 314.3 | S        311.2 <-    318.4 <-   318.0 <-0.0-
+         314.1 |          309.8       316.8      319.0
+         313.7 |          309.0       314.9      321.0
+  <-0.4- 313.3 |   <-0.0- 308.9    <- 312.9   <- 320.0
+
+Q_HP = [10, 10, 14, 9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.109 kg/s
+
+-----------------------------------------------------
+11:00 - 12:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 7.7 kWh (13.6 %)
+On/Off from optimization (bonmin):
+[1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+
+Solving the optimization problem...
+Done in 138 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 314.3 | S        311.2 --    318.4 --   318.0 --
+         314.1 |          309.8       316.8      319.0
+         313.7 |          309.0       314.9      321.0
+      -- 313.3 |       -- 308.9    -- 312.9   -- 320.0
+
+Next state
+B -0.2-> 320.8 | S        318.3 <-    317.9 <-   321.0 <-0.2-
+         320.0 |          317.9       317.9      320.0
+         319.1 |          317.2       318.1      319.0
+  <-0.2- 318.1 |   <-0.2- 316.2    <- 318.3   <- 318.0
+
+Q_HP = [14, 14, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 13, 13, 12] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.109 kg/s
+
+-----------------------------------------------------
+12:00 - 13:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 15.9 kWh (28.1 %)
+On/Off from optimization (bonmin):
+[1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Done in 60 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 320.8 | S        318.3 --    317.9 --   321.0 --
+         320.0 |          317.9       317.9      320.0
+         319.1 |          317.2       318.1      319.0
+      -- 318.1 |       -- 316.2    -- 318.3   -- 318.0
+
+Next state
+B -0.3-> 331.7 | S        318.4 <-    320.8 <-   323.0 <-0.1-
+         331.1 |          318.2       320.1      323.0
+         329.4 |          318.1       319.4      322.0
+  <-0.3- 328.4 |   <-0.1- 318.0    <- 318.8   <- 322.0
+
+Q_HP = [14, 13, 14, 14, 14, 14, 14, 14, 14, 13, 14, 13, 14, 14, 14] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+13:00 - 14:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 24.3 kWh (43.0 %)
+On/Off from optimization (bonmin):
+[0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Done in 145 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 331.7 | S        318.4 --    320.8 --   323.0 --
+         331.1 |          318.2       320.1      323.0
+         329.4 |          318.1       319.4      322.0
+      -- 328.4 |       -- 318.0    -- 318.8   -- 322.0
+
+Next state
+B <-0.0- 331.7 | S        315.1 ->    318.7 ->   321.0 -0.1->
+         331.1 |          313.5       318.2      321.0
+         329.4 |          312.0       317.4      320.0
+  -0.0-> 328.4 |   -0.1-> 310.8    -> 316.4   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+14:00 - 15:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 19.3 kWh (34.2 %)
+On/Off from optimization (bonmin):
+[0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [0, 0, 0] (15 cts/kWh)
+
+Solving the optimization problem...
+Done in 62 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_17-08-13.csv
+
+Initial state
+B     -- 331.7 | S        315.1 --    318.7 --   321.0 --
+         331.1 |          313.5       318.2      321.0
+         329.4 |          312.0       317.4      320.0
+      -- 328.4 |       -- 310.8    -- 316.4   -- 319.0
+
+Next state
+B <-0.0- 331.7 | S        310.9 ->    315.6 ->   319.0 -0.1->
+         331.1 |          310.0       314.4      318.0
+         329.4 |          309.2       313.1      318.0
+  -0.0-> 328.4 |   -0.1-> 308.6    -> 311.9   -> 317.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+The 15-hour simulation ran in 0 hour(s) and 59 minute(s).
+
+Plotting the data...
+
+2024-03-11 18:08:13.482 python[1772:124228] ASB: LNW <NSApplication: 0x7fedaa3e1810> <Window: 0x7fedaa376c50> <NSThemeFrame: 0x7fedaa19e440> (null)
+2024-03-11 18:08:43.174 python[1772:124228] ASB: LNW <NSApplication: 0x7fedaa3e1810> <NSToolTipPanel: 0x7fedb0cf8030> <NSNextStepFrame: 0x7fedb0cf8e30> (null)
+2024-03-11 18:08:58.122 python[1772:124228] ASB: LNW <NSApplication: 0x7fedaa3e1810> <NSSavePanel: 0x7fedb0c04fd0> <NSThemeFrame: 0x7fedb0c1a1f0> <_NSViewBackingLayer: 0x7fedaa4537e0>
+2024-03-11 18:12:08.737 python[1772:124228] ASB: LNW <NSApplication: 0x7fedaa3e1810> <Window: 0x7fedafed6c00> <NSThemeFrame: 0x7fedb0c0c900> (null)
+2024-03-11 18:13:34.297 python[1772:124228] ASB: LNW <NSApplication: 0x7fedaa3e1810> <NSSavePanel: 0x7fedafe8de00> <NSThemeFrame: 0x7fedafe822c0> <_NSViewBackingLayer: 0x7fedafe77df0>
+(ada) thomasdefauw@MBP-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+Sequencer Solver: Bonmin
+
+Time step: 4 minutes 
+Integration method: rk2
+Horizon: 16.0 hours (240 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): /Users/thomasdefauw/Desktop/repo/gridworks/data/simulations/recent/results_2024-03-11_17-08-13.csv 
+Reading from results_2024-03-11_17-08-13.csv.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Reading sequence from provided csv file *****
+Setting all constraints with the requested sequence...
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+Traceback (most recent call last):
+  File "master.py", line 102, in <module>
+    u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
+  File "/Users/thomasdefauw/Desktop/repo/gridworks/optimizer.py", line 161, in optimize_N_steps
+    [d_ch, d_bu, d_HP] = sequence[f'combi{section}']
+KeyError: 'combi9'
+(ada) thomasdefauw@MBP-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+Sequencer Solver: Bonmin
+
+Time step: 4 minutes 
+Integration method: rk2
+Horizon: 16.0 hours (240 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): 
+No file selected.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: -2.1 kWh (-3.7 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+^C^CUser forced interuption
+(ada) thomasdefauw@MBP-2011 gridworks % 
+(ada) thomasdefauw@MBP-2011 gridworks % 
+(ada) thomasdefauw@MBP-2011 gridworks % cle
+zsh: command not found: cle
+(ada) thomasdefauw@MBP-2011 gridworks % python master.py
+
+Problem type: Non-linear
+Variables: Continuous (fixed binary)
+Solver: Ipopt
+Sequencer Solver: Bonmin
+
+Time step: 4 minutes 
+Integration method: rk2
+Horizon: 16.0 hours (240 time steps)
+Simulation: 24 hours (24 iterations)
+
+Results file (enter to skip): 
+No file selected.
+
+-----------------------------------------------------
+0:00 - 1:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: -2.1 kWh (-3.7 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Failed to solve: 'Maximum_Iterations_Exceeded'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Storage level: -2.1 kWh (-3.7 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+
+Increased load by 25%
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Done in 256 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 310.0 | S        310.0 --    310.0 --   310.0 --
+         310.0 |          310.0       310.0      310.0
+         310.0 |          310.0       310.0      310.0
+      -- 310.0 |       -- 310.0    -- 310.0   -- 310.0
+
+Next state
+B -0.1-> 311.3 | S        310.8 <-    311.3 <-   312.0 <-0.3-
+         311.1 |          310.6       311.2      311.0
+         310.8 |          310.4       311.1      311.0
+  <-0.1- 310.5 |   <-0.3- 310.3    <- 310.9   <- 311.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.127 kg/s
+
+-----------------------------------------------------
+1:00 - 2:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: -0.0 kWh (-0.0 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Failed to solve: 'Infeasible_Problem_Detected'!
+
+***** Attempt 2 of finding the optimal sequence *****
+Storage level: -0.0 kWh (-0.0 %)
+On/Off from optimization (bonmin):
+[1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
+
+Increased load by 25%
+On/Off after treatement:
+[1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Done in 99 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 311.3 | S        310.8 --    311.3 --   312.0 --
+         311.1 |          310.6       311.2      311.0
+         310.8 |          310.4       311.1      311.0
+      -- 310.5 |       -- 310.3    -- 310.9   -- 311.0
+
+Next state
+B -0.1-> 312.5 | S        311.7 <-    312.2 <-   313.0 <-0.3-
+         312.2 |          311.6       312.1      313.0
+         311.8 |          311.5       312.0      312.0
+  <-0.1- 311.5 |   <-0.3- 311.4    <- 311.8   <- 312.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.124 kg/s
+
+-----------------------------------------------------
+2:00 - 3:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 2.2 kWh (3.9 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+
+Solving the optimization problem...
+Done in 159 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 312.5 | S        311.7 --    312.2 --   313.0 --
+         312.2 |          311.6       312.1      313.0
+         311.8 |          311.5       312.0      312.0
+      -- 311.5 |       -- 311.4    -- 311.8   -- 312.0
+
+Next state
+B -0.1-> 313.6 | S        312.8 <-    313.3 <-   314.0 <-0.3-
+         313.2 |          312.7       313.2      314.0
+         312.9 |          312.6       313.1      314.0
+  <-0.1- 312.6 |   <-0.3- 312.5    <- 313.0   <- 313.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.122 kg/s
+
+-----------------------------------------------------
+3:00 - 4:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 4.4 kWh (7.8 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [0, 0, 0] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+
+Solving the optimization problem...
+Done in 1387 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 313.6 | S        312.8 --    313.3 --   314.0 --
+         313.2 |          312.7       313.2      314.0
+         312.9 |          312.6       313.1      314.0
+      -- 312.6 |       -- 312.5    -- 313.0   -- 313.0
+
+Next state
+B -0.1-> 317.3 | S        314.8 <-    316.5 <-   318.0 <-0.3-
+         316.1 |          314.4       316.0      318.0
+         315.1 |          314.1       315.6      317.0
+  <-0.1- 314.2 |   <-0.3- 313.8    <- 315.2   <- 317.0
+
+Q_HP = [10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.124 kg/s
+
+-----------------------------------------------------
+4:00 - 5:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 10.1 kWh (17.9 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+
+Solving the optimization problem...
+Done in 74 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 317.3 | S        314.8 --    316.5 --   318.0 --
+         316.1 |          314.4       316.0      318.0
+         315.1 |          314.1       315.6      317.0
+      -- 314.2 |       -- 313.8    -- 315.2   -- 317.0
+
+Next state
+B -0.1-> 318.4 | S        316.8 <-    317.0 <-   319.0 <-0.3-
+         317.6 |          316.8       316.8      318.0
+         317.0 |          316.7       316.7      318.0
+  <-0.1- 316.5 |   <-0.3- 316.5    <- 316.7   <- 317.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.123 kg/s
+
+-----------------------------------------------------
+5:00 - 6:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 13.1 kWh (23.2 %)
+On/Off from optimization (bonmin):
+[1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+
+Solving the optimization problem...
+Done in 79 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 318.4 | S        316.8 --    317.0 --   319.0 --
+         317.6 |          316.8       316.8      318.0
+         317.0 |          316.7       316.7      318.0
+      -- 316.5 |       -- 316.5    -- 316.7   -- 317.0
+
+Next state
+B -0.1-> 319.1 | S        318.0 <-    318.2 <-   319.0 <-0.3-
+         318.5 |          318.0       318.1      319.0
+         318.1 |          317.8       318.1      319.0
+  <-0.1- 317.8 |   <-0.3- 317.7    <- 318.1   <- 318.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 10] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.13 kg/s
+
+-----------------------------------------------------
+6:00 - 7:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 15.3 kWh (27.1 %)
+On/Off from optimization (bonmin):
+[1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+
+Solving the optimization problem...
+Done in 34 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 319.1 | S        318.0 --    318.2 --   319.0 --
+         318.5 |          318.0       318.1      319.0
+         318.1 |          317.8       318.1      319.0
+      -- 317.8 |       -- 317.7    -- 318.1   -- 318.0
+
+Next state
+B -0.1-> 322.7 | S        321.2 <-    322.9 <-   323.0 <-0.3-
+         321.4 |          320.6       322.6      323.0
+         320.1 |          320.0       322.2      323.0
+  <-0.1- 319.1 |   <-0.3- 319.5    <- 321.7   <- 323.0
+
+Q_HP = [12, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 13, 13, 13] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.136 kg/s
+
+-----------------------------------------------------
+7:00 - 8:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 22.4 kWh (39.6 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+
+Solving the optimization problem...
+Done in 112 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 322.7 | S        321.2 --    322.9 --   323.0 --
+         321.4 |          320.6       322.6      323.0
+         320.1 |          320.0       322.2      323.0
+      -- 319.1 |       -- 319.5    -- 321.7   -- 323.0
+
+Next state
+B <-0.1- 314.5 | S        320.8 ->    322.7 ->   323.0 -0.0->
+         311.8 |          320.0       322.4      323.0
+         309.4 |          318.4       321.9      323.0
+  -0.1-> 308.0 |   -0.0-> 314.4    -> 321.4   -> 323.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.136 kg/s
+
+-----------------------------------------------------
+8:00 - 9:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 16.1 kWh (28.5 %)
+On/Off from optimization (bonmin):
+[0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+
+Solving the optimization problem...
+Done in 64 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 314.5 | S        320.8 --    322.7 --   323.0 --
+         311.8 |          320.0       322.4      323.0
+         309.4 |          318.4       321.9      323.0
+      -- 308.0 |       -- 314.4    -- 321.4   -- 323.0
+
+Next state
+B <-0.0- 310.9 | S        315.4 ->    321.4 ->   323.0 -0.1->
+         309.2 |          312.7       320.7      323.0
+         308.3 |          310.1       319.5      322.0
+  -0.0-> 308.0 |   -0.1-> 308.5    -> 317.8   -> 322.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.129 kg/s
+
+-----------------------------------------------------
+9:00 - 10:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 10.0 kWh (17.7 %)
+On/Off from optimization (bonmin):
+[0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+
+Solving the optimization problem...
+Done in 59 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 310.9 | S        315.4 --    321.4 --   323.0 --
+         309.2 |          312.7       320.7      323.0
+         308.3 |          310.1       319.5      322.0
+      -- 308.0 |       -- 308.5    -- 317.8   -- 322.0
+
+Next state
+B <-0.0- 309.6 | S        309.7 ->    317.1 ->   322.0 -0.1->
+         308.6 |          308.7       315.2      321.0
+         308.1 |          308.5       313.1      320.0
+  -0.0-> 308.0 |   -0.1-> 309.1    -> 311.2   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.124 kg/s
+
+-----------------------------------------------------
+10:00 - 11:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 4.3 kWh (7.6 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+10h-11h: [1, 1, 1] (18 cts/kWh)
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+
+Solving the optimization problem...
+Done in 61 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 309.6 | S        309.7 --    317.1 --   322.0 --
+         308.6 |          308.7       315.2      321.0
+         308.1 |          308.5       313.1      320.0
+      -- 308.0 |       -- 309.1    -- 311.2   -- 319.0
+
+Next state
+B -0.4-> 314.3 | S        311.2 <-    318.4 <-   318.0 <-0.0-
+         314.1 |          309.8       316.8      319.0
+         313.7 |          309.0       314.9      321.0
+  <-0.4- 313.3 |   <-0.0- 308.9    <- 312.9   <- 320.0
+
+Q_HP = [10, 10, 14, 9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.109 kg/s
+
+-----------------------------------------------------
+11:00 - 12:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 7.7 kWh (13.6 %)
+On/Off from optimization (bonmin):
+[1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+11h-12h: [1, 1, 1] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+
+Solving the optimization problem...
+Done in 129 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 314.3 | S        311.2 --    318.4 --   318.0 --
+         314.1 |          309.8       316.8      319.0
+         313.7 |          309.0       314.9      321.0
+      -- 313.3 |       -- 308.9    -- 312.9   -- 320.0
+
+Next state
+B -0.2-> 320.8 | S        318.3 <-    317.9 <-   321.0 <-0.2-
+         320.0 |          317.9       317.9      320.0
+         319.1 |          317.2       318.1      319.0
+  <-0.2- 318.1 |   <-0.2- 316.2    <- 318.3   <- 318.0
+
+Q_HP = [14, 14, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 13, 13, 12] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.109 kg/s
+
+-----------------------------------------------------
+12:00 - 13:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 15.9 kWh (28.1 %)
+On/Off from optimization (bonmin):
+[1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [0, 0, 0] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [1, 1, 1] (19 cts/kWh)
+01h-02h: [0, 0, 0] (19 cts/kWh)
+02h-03h: [1, 1, 1] (18 cts/kWh)
+03h-04h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Done in 55 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 320.8 | S        318.3 --    317.9 --   321.0 --
+         320.0 |          317.9       317.9      320.0
+         319.1 |          317.2       318.1      319.0
+      -- 318.1 |       -- 316.2    -- 318.3   -- 318.0
+
+Next state
+B -0.3-> 331.7 | S        318.4 <-    320.8 <-   323.0 <-0.1-
+         331.1 |          318.2       320.1      323.0
+         329.4 |          318.1       319.4      322.0
+  <-0.3- 328.4 |   <-0.1- 318.0    <- 318.8   <- 322.0
+
+Q_HP = [14, 13, 14, 14, 14, 14, 14, 14, 14, 13, 14, 13, 14, 14, 14] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+13:00 - 14:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 24.3 kWh (43.0 %)
+On/Off from optimization (bonmin):
+[0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Done in 130 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 331.7 | S        318.4 --    320.8 --   323.0 --
+         331.1 |          318.2       320.1      323.0
+         329.4 |          318.1       319.4      322.0
+      -- 328.4 |       -- 318.0    -- 318.8   -- 322.0
+
+Next state
+B <-0.0- 331.7 | S        315.1 ->    318.7 ->   321.0 -0.1->
+         331.1 |          313.5       318.2      321.0
+         329.4 |          312.0       317.4      320.0
+  -0.0-> 328.4 |   -0.1-> 310.8    -> 316.4   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+14:00 - 15:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 19.3 kWh (34.2 %)
+On/Off from optimization (bonmin):
+[0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+14h-15h: [0, 0, 0] (31 cts/kWh)
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [0, 0, 0] (15 cts/kWh)
+
+Solving the optimization problem...
+Done in 58 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 331.7 | S        315.1 --    318.7 --   321.0 --
+         331.1 |          313.5       318.2      321.0
+         329.4 |          312.0       317.4      320.0
+      -- 328.4 |       -- 310.8    -- 316.4   -- 319.0
+
+Next state
+B <-0.0- 331.7 | S        310.9 ->    315.6 ->   319.0 -0.1->
+         331.1 |          310.0       314.4      318.0
+         329.4 |          309.2       313.1      318.0
+  -0.0-> 328.4 |   -0.1-> 308.6    -> 311.9   -> 317.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+15:00 - 16:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 14.4 kWh (25.5 %)
+On/Off from optimization (bonmin):
+[1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+15h-16h: [1, 1, 1] (16 cts/kWh)
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [0, 0, 0] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [0, 0, 0] (15 cts/kWh)
+
+Solving the optimization problem...
+Done in 92 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 331.7 | S        310.9 --    315.6 --   319.0 --
+         331.1 |          310.0       314.4      318.0
+         329.4 |          309.2       313.1      318.0
+      -- 328.4 |       -- 308.6    -- 311.9   -- 317.0
+
+Next state
+B -0.0-> 331.7 | S        317.5 <-    319.7 <-   322.0 <-0.4-
+         331.1 |          317.1       319.2      321.0
+         329.4 |          316.8       318.5      321.0
+  <-0.0- 328.4 |   <-0.4- 316.6    <- 318.0   <- 320.0
+
+Q_HP = [14, 14, 14, 14, 14, 14, 13, 13, 13, 13, 13, 13, 13, 14, 14] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+16:00 - 17:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 22.6 kWh (40.0 %)
+On/Off from optimization (bonmin):
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0]
+
+Setting all constraints with the requested sequence...
+16h-17h: [1, 1, 1] (17 cts/kWh)
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [0, 0, 0] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+
+Solving the optimization problem...
+Done in 77 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 331.7 | S        317.5 --    319.7 --   322.0 --
+         331.1 |          317.1       319.2      321.0
+         329.4 |          316.8       318.5      321.0
+      -- 328.4 |       -- 316.6    -- 318.0   -- 320.0
+
+Next state
+B -0.0-> 331.7 | S        323.1 <-    324.9 <-   326.0 <-0.4-
+         331.1 |          322.7       324.6      326.0
+         329.4 |          322.2       324.1      326.0
+  <-0.0- 328.4 |   <-0.4- 321.8    <- 323.6   <- 325.0
+
+Q_HP = [12, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 13, 13, 13] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.109 kg/s
+
+-----------------------------------------------------
+17:00 - 18:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 30.7 kWh (54.3 %)
+On/Off from optimization (bonmin):
+[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+17h-18h: [1, 1, 1] (20 cts/kWh)
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [0, 0, 0] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+
+Solving the optimization problem...
+Done in 95 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 331.7 | S        323.1 --    324.9 --   326.0 --
+         331.1 |          322.7       324.6      326.0
+         329.4 |          322.2       324.1      326.0
+      -- 328.4 |       -- 321.8    -- 323.6   -- 325.0
+
+Next state
+B -0.0-> 331.7 | S        325.5 <-    326.5 <-   327.0 <-0.4-
+         331.1 |          325.3       326.3      327.0
+         329.4 |          325.2       326.0      327.0
+  <-0.0- 328.4 |   <-0.4- 325.1    <- 325.8   <- 327.0
+
+Q_HP = [8, 8, 8, 8, 8, 8, 9, 9, 9, 8, 8, 8, 8, 8, 8] kW
+m_HP = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] kg/s 
+m_load = 0.11 kg/s
+
+-----------------------------------------------------
+18:00 - 19:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 33.6 kWh (59.5 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+18h-19h: [0, 0, 0] (25 cts/kWh)
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+
+Solving the optimization problem...
+Done in 91 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 331.7 | S        325.5 --    326.5 --   327.0 --
+         331.1 |          325.3       326.3      327.0
+         329.4 |          325.2       326.0      327.0
+      -- 328.4 |       -- 325.1    -- 325.8   -- 327.0
+
+Next state
+B <-0.1- 324.9 | S        325.5 ->    326.5 ->   327.0 -0.0->
+         322.1 |          325.3       326.3      327.0
+         319.3 |          325.2       326.0      327.0
+  -0.1-> 316.5 |   -0.0-> 325.1    -> 325.8   -> 327.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+19:00 - 20:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 28.7 kWh (50.8 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+19h-20h: [0, 0, 0] (25 cts/kWh)
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+
+Solving the optimization problem...
+Done in 114 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 324.9 | S        325.5 --    326.5 --   327.0 --
+         322.1 |          325.3       326.3      327.0
+         319.3 |          325.2       326.0      327.0
+      -- 316.5 |       -- 325.1    -- 325.8   -- 327.0
+
+Next state
+B <-0.1- 315.7 | S        325.5 ->    326.4 ->   327.0 -0.0->
+         312.9 |          325.3       326.3      327.0
+         310.2 |          325.1       326.0      327.0
+  -0.1-> 308.0 |   -0.0-> 323.5    -> 325.8   -> 327.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+20:00 - 21:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 23.8 kWh (42.1 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+20h-21h: [0, 0, 0] (26 cts/kWh)
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+
+Solving the optimization problem...
+Done in 105 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 315.7 | S        325.5 --    326.4 --   327.0 --
+         312.9 |          325.3       326.3      327.0
+         310.2 |          325.1       326.0      327.0
+      -- 308.0 |       -- 323.5    -- 325.8   -- 327.0
+
+Next state
+B <-0.1- 311.1 | S        324.0 ->    326.1 ->   327.0 -0.0->
+         309.4 |          321.6       325.9      327.0
+         308.3 |          317.1       325.6      326.0
+  -0.1-> 308.0 |   -0.0-> 311.5    -> 325.1   -> 326.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+21:00 - 22:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 18.8 kWh (33.3 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+
+Setting all constraints with the requested sequence...
+21h-22h: [0, 0, 0] (30 cts/kWh)
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [0, 0, 0] (16 cts/kWh)
+
+Solving the optimization problem...
+Done in 75 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 311.1 | S        324.0 --    326.1 --   327.0 --
+         309.4 |          321.6       325.9      327.0
+         308.3 |          317.1       325.6      326.0
+      -- 308.0 |       -- 311.5    -- 325.1   -- 326.0
+
+Next state
+B <-0.0- 309.2 | S        317.4 ->    325.3 ->   326.0 -0.1->
+         308.4 |          313.7       324.5      326.0
+         308.1 |          310.4       323.0      326.0
+  -0.0-> 308.0 |   -0.1-> 308.5    -> 320.7   -> 326.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+-----------------------------------------------------
+22:00 - 23:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 13.9 kWh (24.6 %)
+On/Off from optimization (bonmin):
+[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+
+Setting all constraints with the requested sequence...
+22h-23h: [0, 0, 0] (23 cts/kWh)
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+
+Solving the optimization problem...
+Done in 131 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 309.2 | S        317.4 --    325.3 --   326.0 --
+         308.4 |          313.7       324.5      326.0
+         308.1 |          310.4       323.0      326.0
+      -- 308.0 |       -- 308.5    -- 320.7   -- 326.0
+
+Next state
+B <-0.0- 308.5 | S        311.5 ->    322.2 ->   326.0 -0.1->
+         308.1 |          309.5       320.0      326.0
+         308.0 |          308.5       317.2      325.0
+  -0.0-> 308.0 |   -0.1-> 308.1    -> 314.2   -> 324.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.107 kg/s
+
+-----------------------------------------------------
+23:00 - 24:00 (day 1)
+-----------------------------------------------------
+
+***** Attempt 1 of finding the optimal sequence *****
+Storage level: 8.9 kWh (15.8 %)
+On/Off from optimization (bonmin):
+[0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0]
+
+Setting all constraints with the requested sequence...
+23h-00h: [0, 0, 0] (24 cts/kWh)
+00h-01h: [0, 0, 0] (19 cts/kWh)
+01h-02h: [1, 1, 1] (19 cts/kWh)
+02h-03h: [0, 0, 0] (18 cts/kWh)
+03h-04h: [1, 1, 1] (17 cts/kWh)
+04h-05h: [1, 1, 1] (16 cts/kWh)
+05h-06h: [1, 1, 1] (15 cts/kWh)
+06h-07h: [1, 1, 1] (15 cts/kWh)
+07h-08h: [0, 0, 0] (19 cts/kWh)
+08h-09h: [0, 0, 0] (46 cts/kWh)
+09h-10h: [0, 0, 0] (26 cts/kWh)
+10h-11h: [0, 0, 0] (18 cts/kWh)
+11h-12h: [0, 0, 0] (17 cts/kWh)
+12h-13h: [1, 1, 1] (16 cts/kWh)
+13h-14h: [0, 0, 0] (31 cts/kWh)
+14h-15h: [0, 0, 0] (31 cts/kWh)
+
+Solving the optimization problem...
+Done in 85 seconds.
+Data was appended to data/simulations/recent/results_2024-03-11_20-51-35.csv
+
+Initial state
+B     -- 308.5 | S        311.5 --    322.2 --   326.0 --
+         308.1 |          309.5       320.0      326.0
+         308.0 |          308.5       317.2      325.0
+      -- 308.0 |       -- 308.1    -- 314.2   -- 324.0
+
+Next state
+B <-0.0- 308.2 | S        308.9 ->    316.7 ->   324.0 -0.1->
+         308.0 |          308.3       314.2      323.0
+         308.0 |          308.1       311.9      321.0
+  -0.0-> 308.0 |   -0.1-> 308.0    -> 310.1   -> 319.0
+
+Q_HP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] kW
+m_HP = 0 kg/s 
+m_load = 0.106 kg/s
+
+The 24-hour simulation ran in 13 hour(s) and 0 minute(s).
+
+Plotting the data...
+
+2024-03-12 10:38:24.770 python[2097:151315] ASB: LNW <NSApplication: 0x7fe03c8faf10> <Window: 0x7fe03cb28340> <NSThemeFrame: 0x7fe0458a3450> (null)
+2024-03-12 10:39:03.983 python[2097:151315] ASB: LNW <NSApplication: 0x7fe03c8faf10> <NSSavePanel: 0x7fe0414691c0> <NSThemeFrame: 0x7fe03cbf2140> <_NSViewBackingLayer: 0x7fe0414ecff0>
+2024-03-12 10:39:14.025 python[2097:151315] ASB: LNW <NSApplication: 0x7fe03c8faf10> <NSPanelViewBridge: 0x7fe03cc04390> <NSThemeFrame: 0x7fe0414e2530> <_NSViewBackingLayer: 0x7fe04145bac0>
+2024-03-12 10:39:40.356 python[2097:151315] ASB: LNW <NSApplication: 0x7fe03c8faf10> <Window: 0x7fe03cc7efc0> <NSThemeFrame: 0x7fe03cce2a40> (null)
+2024-03-12 10:39:46.991 python[2097:151315] ASB: LNW <NSApplication: 0x7fe03c8faf10> <NSSavePanel: 0x7fe0414d2dd0> <NSThemeFrame: 0x7fe0414d2610> <_NSViewBackingLayer: 0x7fe0414cb3d0>
+(ada) thomasdefauw@MBP-2011 gridworks % 

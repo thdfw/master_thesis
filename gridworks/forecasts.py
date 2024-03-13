@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 '''
 Input: index of desired start and end time steps
@@ -10,15 +11,11 @@ def get_c_el(start, end, delta_t_h):
     c_el_all = [6.36, 6.34, 6.34, 6.37, 6.41, 6.46, 6.95, 41.51, 41.16, 41.07, 41.06, 41.08, 7.16, 7.18, 7.18, 7.16, 41.2, 41.64, 41.43, 41.51, 6.84, 6.65, 6.46, 6.4]
     
     # CFH prices
-    # c_el_all = [7.92, 6.63, 6.31, 6.79, 8.01, 11.58, 19.38, 21.59, 11.08, 4.49, 1.52, 0.74, 0.42, 0.71, 0.97, 2.45, 3.79, 9.56, 20.51, 28.26, 23.49, 18.42, 13.23, 10.17]
+    c_el_all = [7.92, 6.63, 6.31, 6.79, 8.01, 11.58, 19.38, 21.59, 11.08, 4.49, 1.52, 0.74, 0.42, 0.71, 0.97, 2.45, 3.79, 9.56, 20.51, 28.26, 23.49, 18.42, 13.23, 10.17]
     
-    # The old prices
-    #c_el_all = [18.97, 18.92, 18.21, 16.58, 16.27, 15.49, 14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
-    #c_el_all = [14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
+    # Old prices
+    # c_el_all = [18.97, 18.92, 18.21, 16.58, 16.27, 15.49, 14.64, 18.93, 45.56, 26.42, 18.0, 17.17, 16.19, 30.74, 31.17, 16.18, 17.11, 20.24, 24.94, 24.69, 26.48, 30.15, 23.14, 24.11]
     
-    # Sudden negative price announced at 2 AM
-    # if start >= 15*2 or (start == 0 and end==15*24): c_el_all[2] = -15
-
     # Extend to match time step (1 hour is 1/delta_t_h time steps)
     time_steps = int(1/delta_t_h)
     c_el_all = [item for item in c_el_all for _ in range(time_steps)]
@@ -48,7 +45,7 @@ def get_m_load(start, end, delta_t_h):
     # m_load_all = [0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.15, 0.14, 0.14, 0.13, 0.13, 0.13, 0.13, 0.13, 0.14, 0.14, 0.14, 0.15, 0.15, 0.15, 0.15, 0.15]
 
     # Intermediate load
-    # m_load_all = [0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.1, 0.1, 0.08, 0.08, 0.08, 0.08, 0.08, 0.07, 0.07, 0.07, 0.07, 0.07, 0.09, 0.09, 0.1, 0.1, 0.11, 0.11]
+    m_load_all = [0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.1, 0.1, 0.08, 0.08, 0.08, 0.08, 0.08, 0.07, 0.07, 0.07, 0.07, 0.07, 0.09, 0.09, 0.1, 0.1, 0.11, 0.11]
     
     # Intermediate load until 4PM, after no more load
     # m_load_all = [0.1]*16 + [0]*8
@@ -74,6 +71,7 @@ def get_T_OA(start, end, delta_t_h):
     T_OA_all = [273+12]*1000
 
     # Get 1/COP from the T_OA with linear regression
+    # TODO: this approximation should not be used anymore
     B0_C, B1_C = 2.695868, -0.008533
     COP1_all = [round(B0_C + B1_C*T_OA_all[i],4) for i in range(len(T_OA_all))]
 
@@ -82,3 +80,11 @@ def get_T_OA(start, end, delta_t_h):
     Q_HP_max_all = [round(B0_Q + B1_Q*T_OA_all[i],2) if T_OA_all[i]<(273-7) else 14000 for i in range(len(T_OA_all))]
     
     return T_OA_all[start:end], COP1_all[start:end], Q_HP_max_all[start:end]
+
+
+def get_COP(T_OA, T_sup_HP):
+
+    B_0, B_1, B_2, B_3 = 11.581585, -0.086161, 0.000140, 0.005700
+    COP = 1/(B_0 + B_1*T_OA + B_2*T_OA**2 + B_3*T_sup_HP)
+        
+    return COP
