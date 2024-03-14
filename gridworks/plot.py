@@ -94,7 +94,8 @@ def print_iteration(u_opt, x_opt, x_1, sequence, iter):
     m_load = forecasts.get_m_load(iter, iter+1, delta_t_h)
     
     print(f"\nQ_HP = {[round(x/1000) for x in Q_HP]} kW")
-    print(f"m_HP = {m_HP} kg/s \nm_load = {m_load} kg/s")
+    # print(f"m_HP = {m_HP} kg/s \nm_load = {m_load} kg/s")
+    print(f"m_load = {m_load} kg/s")
     # print(f"Resistive elements: {[round(float(x),1) for x in u_opt[5,0:15]]}\n")
     
     '''

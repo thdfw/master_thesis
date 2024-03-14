@@ -60,6 +60,21 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
         print("\n-----------------------------------------------------")
         print(f"{hours}:00 - {hours+1}:00 (day {days})")
         print("-----------------------------------------------------")
+        
+    # ------------------------------------------
+    # Get current state, estimate storage, set as initial
+    # ------------------------------------------
+
+    # Average temperature of tanks
+    current_state = long_seq_pack['x_0']
+    T_avg = sum(current_state)/16 - 273
+    current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
+    initial_storage = round(current_storage,1)
+    if attempt==1:
+        print(f"\nCurrent storage level: {initial_storage} kWh ({round(100*initial_storage/max_storage,1)} %)")
+    
+    # If the current storage level is too high, turn off the HP during the first hour
+    too_hot = True if current_storage > 45 else False
     
     # --------------------------------------------
     # If previous results were given (csv file)
@@ -83,7 +98,7 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
             
             return sequence_file_dict
             
-    print(f"\n***** Attempt {attempt} of finding the optimal sequence *****")
+    print(f"\n***** Attempt {attempt} of finding the optimal sequence *****") if attempt>1 else print("")
     
     # ------------------------------------------
     # Get current forecasts
@@ -113,21 +128,6 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
     # 1/COP forecast from T_OA
     COP1_list = [COP1(temp) for temp in T_OA]
     if PRINT: print(f"\nCOP1_list = {COP1_list}")
-
-    # ------------------------------------------
-    # Get current state, estimate storage, set as initial
-    # ------------------------------------------
-
-    # Average temperature of tanks
-    current_state = long_seq_pack['x_0']
-    T_avg = sum(current_state)/16 - 273
-    current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
-    initial_storage = round(current_storage,1)
-    if attempt==1:
-        print(f"Storage level: {initial_storage} kWh ({round(100*initial_storage/max_storage,1)} %)")
-    
-    # If the current storage level is too high, turn off the HP during the first hour
-    too_hot = True if current_storage > 45 else False
 
     # ------------------------------------------
     # Solve closed loop with initial storage
@@ -175,7 +175,7 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
     solver_name = "bonmin" if BONMIN else "gurobi"
     
     if attempt == 1:
-        print(f"On/Off from optimization ({solver_name}):\n{HP_on_off_opt}")
+        print(f"On/Off sequence from MILP ({solver_name}):\n{HP_on_off_opt}")
     
     # Solve the optimization problem with an increased load
     if attempt > 1:

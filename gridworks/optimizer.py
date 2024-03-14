@@ -130,7 +130,7 @@ def optimize_N_steps(x_0, iter, pb_type, sequence, warm_start, PRINT):
     # Constraints
     # ------------------------------------------------------
     
-    if PRINT: print("Setting all constraints with the requested sequence...")
+    if PRINT: print("Setting up the MINLP with the requested sequence...")
     
     # ----- Initial state -----
     opti.subject_to(x[:,0] == x_0)

@@ -14,10 +14,10 @@ delta_t_h = delta_t_m/60    # hours
 integration_method = 'rk2'
 
 # Horizon (hours * time_steps/hour)
-N = int(2 * 1/delta_t_h)
+N = int(16 * 1/delta_t_h)
 
 # Simulation time (hours)
-num_iterations = 2
+num_iterations = 24
 
 # Problem type
 pb_type = {
