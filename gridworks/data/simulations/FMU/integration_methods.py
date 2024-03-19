@@ -31,14 +31,14 @@ def get_rk2(x0, time_step):
 states_real = []
 x0 = 300
 for i in range(10):
-    states_real.append(x0-273)
+    states_real.append(x0)
     x0 = get_real(x0,4*60)
     
 # Do rk2 for 10 time steps
 states_rk2 = []
 x0 = 300
 for i in range(10):
-    states_rk2.append(x0-273)
+    states_rk2.append(x0)
     x0 = get_rk2(x0,4*60)
         
 # Solve using euler
@@ -58,7 +58,7 @@ def get_euler(x0, time_step):
 states_euler = []
 x0 = 300
 for i in range(10):
-    states_euler.append(x0-273)
+    states_euler.append(x0)
     x0 = get_euler(x0,4*60)
 
 plt.plot(states_euler)
@@ -71,7 +71,11 @@ plt.plot(states_real)
 plt.scatter(range(len(states_real)), states_real, label='Runge-Kutta 45')
 
 plt.xlabel("Time steps (4 minutes each)")
-plt.ylabel("Temperature [°C]")
+plt.ylabel("Temperature [K]")
+
+plt.xticks(list(range(0,10)))
+plt.yticks(list(range(295,330,5)))
+plt.ylim([299,321])
 
 plt.legend()
 plt.show()

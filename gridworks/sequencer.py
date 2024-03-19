@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 import casadi
 import os
 import datetime
@@ -179,7 +178,20 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
     
     # Solve the optimization problem with an increased load
     if attempt > 1:
-    
+        
+        # Increase the load by the amount it has been increased in the latest attempt
+        attempt = 0
+        while [int(x) for x in HP_on_off_opt] != previous_attempt:
+            attempt += 1
+            load_increased = [round((1+(attempt-1)*0.01)*x,5) for x in load]
+            Q_opt, stor_opt, HP_on_off_opt, obj_opt = get_opti(N, c_el, load_increased, max_storage, initial_storage, Q_HP_min_list, Q_HP_max_list, COP1_list, too_hot)
+            
+        if PRINT: print(f"Got back to previous try, which was increasing load by {(attempt-1)*1}%")
+        
+        if PRINT: print(f"\nBackup:\n{backup}")
+        if PRINT: print(f"\nPrevious attempt:\n{previous_attempt}")
+        if PRINT: print(f"\nCurrent:\n{[int(x) for x in HP_on_off_opt]}")
+
         # Increase the load as long as the operating hours are the same
         while [int(x) for x in HP_on_off_opt] == backup or [int(x) for x in HP_on_off_opt]==previous_attempt:
     

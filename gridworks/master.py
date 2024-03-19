@@ -11,7 +11,7 @@ delta_t_m = 4               # minutes
 delta_t_h = delta_t_m/60    # hours
 
 # Integration method (euler, rk2, or rk4)
-integration_method = 'rk2'
+integration_method = 'rk4'
 
 # Horizon (hours * time_steps/hour)
 N = int(16 * 1/delta_t_h)
@@ -57,7 +57,7 @@ list_S11, list_S12, list_S13, list_S14 = [[elem] for elem in x_0[4:8]]
 list_S21, list_S22, list_S23, list_S24 = [[elem] for elem in x_0[8:12]]
 list_S31, list_S32, list_S33, list_S34 = [[elem] for elem in x_0[12:16]]
 list_Q_HP = []
-elec_cost, elec_used = 0, 0
+elec_cost, elec_used, heat_supp = 0, 0, 0
 
 # Time the simulation
 start_time = time.time()
@@ -152,6 +152,7 @@ for iter in range(num_iterations):
 
     # Get the electricty used and the cost of electricity over the next hour
     for k in range(15):
+        heat_supp += Q_HP_[k]
         elec_used += Q_HP_[k] / COP_[k]
         elec_cost += Q_HP_[k] / COP_[k] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 
@@ -203,6 +204,7 @@ plot_data = {
     'T_B4':         list_B4,
     'elec_cost':    round(elec_cost,2),
     'elec_used':    round(elec_used/1000,2),
+    'heat_supp':    round(heat_supp/1000,2),
 }
 
 # Print total simulation time

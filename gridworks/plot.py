@@ -124,12 +124,12 @@ def plot_MPC(data, FMU, DETAILED):
     solver += " and Bonmin" if BONMIN else " and Gurobi"
     N = data['pb_type']['horizon']
     
+    fig.suptitle(f"Horizon: {int(N/15)} hours, time step: 4 minutes \nCost: {data['elec_cost']} $, Electricity used: {data['elec_used']} kWh, Heat supplied: {data['heat_supp']} kWh")
+    
     # Get the Q_load from the m_load
     cp, Delta_T_load= 4187, 5/9*20
     Q_load_list = [m_load*cp*Delta_T_load for m_load in data['m_load']]
-    
-    fig.suptitle(f"{linearized}, {variables}, {solver}, N={N} \nPrice: {data['elec_cost']} $, Elec: {data['elec_used']} kWh_e, Supplied: {round(sum(data['Q_HP'])/1000/15,1)} kWh_th")
-    
+
     # ------------------------------------------------------
     # First plot
     # ------------------------------------------------------
@@ -137,27 +137,29 @@ def plot_MPC(data, FMU, DETAILED):
     ax[0].set_xlim([0,15*data['iterations']])
 
     # HP and load
+    from matplotlib.ticker import FuncFormatter
     ax[0].plot(data['Q_HP'], label="Heat pump", color='blue', alpha=0.4)
     ax[0].plot(Q_load_list, label="Load", color='red', alpha=0.4)
     ax[0].set_ylim([0,20000])
-    ax[0].set_ylabel("Power [W]")
+    ax[0].set_yticks(list(range(0,21000,4000)))
+    ax[0].yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:.0f}'.format(x / 1000)))
+    ax[0].set_ylabel("Power [kW]")
 
     # Electricity price
     ax2 = ax[0].twinx()
     ax2.plot([x*100*1000 for x in data['c_el']], label="Price", color='black', alpha=0.4)
     ax2.set_ylabel("Price [cts/kWh]")
-    #ax2.set_ylim([-20,50])
-
+    ax2.set_yticks(list(range(0, int(max(data['c_el'])*100*1000+10), 10)))
+    
     # x_ticks in hours
     tick_positions = np.arange(0, data['iterations']*15+1, step=int(60/data['pb_type']['time_step']))
-    tick_labels = [f"{step * data['pb_type']['time_step'] // 60:02d}:00" for step in tick_positions]
+    tick_labels = [f"{step * data['pb_type']['time_step'] // 60}" for step in tick_positions]
     plt.xticks(tick_positions, tick_labels)
 
     # Common legend
-    lines1, labels1 = ax[0].get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax[0].legend(lines1 + lines2, labels1 + labels2)
-    
+    ax[0].legend(loc='upper left')
+    ax2.legend(loc='upper right')
+
     # ------------------------------------------------------
     # State of charge computation
     # ------------------------------------------------------
@@ -184,9 +186,23 @@ def plot_MPC(data, FMU, DETAILED):
     # ------------------------------------------------------
     # Second plot
     # ------------------------------------------------------
-    
+
     # Show temperatures inside tanks
     if DETAILED:
+    
+        # Convert all temperatures to °C
+        data['T_B1'] = [x-273 for x in data['T_B1']]
+        data['T_B4'] = [x-273 for x in data['T_B4']]
+        data['T_S11'] = [x-273 for x in data['T_S11']]
+        data['T_S21'] = [x-273 for x in data['T_S21']]
+        data['T_S31'] = [x-273 for x in data['T_S31']]
+        if FMU:
+            data['T_B1_pred'] = [x-273 for x in data['T_B1_pred']]
+            data['T_B4_pred'] = [x-273 for x in data['T_B4_pred']]
+            data['T_S11_pred'] = [x-273 for x in data['T_S11_pred']]
+            data['T_S21_pred'] = [x-273 for x in data['T_S21_pred']]
+            data['T_S31_pred'] = [x-273 for x in data['T_S31_pred']]
+            
         ax[1].plot(data['T_S11'], color='green', label="$T_{S11}$", alpha=0.4)
         if FMU: ax[1].plot(data['T_S11_pred'], color='green', alpha=0.4, linestyle='dotted')
         ax[1].plot(data['T_S21'], color='orange', label="$T_{S21}$", alpha=0.4)
@@ -197,20 +213,35 @@ def plot_MPC(data, FMU, DETAILED):
         if FMU: ax[1].plot(data['T_B1_pred'], color='blue', alpha=0.4, linestyle='dotted')
         ax[1].plot(data['T_B4'], color='purple', label="$T_{B4}$", alpha=0.4)
         if FMU: ax[1].plot(data['T_B4_pred'], color='purple', alpha=0.4, linestyle='dotted')
-        ax[1].plot((data['iterations']*15+1)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dashed')
-        ax[1].set_ylabel("Temperatuere [K]")
+        ax[1].plot((data['iterations']*15+1)*[38], color='black', label="$T_{load,in}^{min}$", alpha=0.2, linestyle='dashed')
+        ax[1].set_ylabel("Temperatuere [°C]")
         ax[1].set_xlabel("Time [hours]")
-        ax[1].legend()
+        ax[1].set_ylim([30,70])
+        ax[1].set_yticks(list(range(30,80,10)))
+        ax[1].legend(loc='upper right')
+        
+        # Convert all temperatures back to K
+        data['T_B1'] = [x+273 for x in data['T_B1']]
+        data['T_B4'] = [x+273 for x in data['T_B4']]
+        data['T_S11'] = [x+273 for x in data['T_S11']]
+        data['T_S21'] = [x+273 for x in data['T_S21']]
+        data['T_S31'] = [x+273 for x in data['T_S31']]
+        if FMU:
+            data['T_B1_pred'] = [x+273 for x in data['T_B1_pred']]
+            data['T_B4_pred'] = [x+273 for x in data['T_B4_pred']]
+            data['T_S11_pred'] = [x+273 for x in data['T_S11_pred']]
+            data['T_S21_pred'] = [x+273 for x in data['T_S21_pred']]
+            data['T_S31_pred'] = [x+273 for x in data['T_S31_pred']]
         
     # Show state of charge only
     else:
-        ax3 = ax[1].twinx()
-        ax3.plot(SoC_B, color='orange', label='Buffer SoC', linestyle='dashed')
-        ax3.plot(SoC_S, color='orange', label='Storage SoC')
-        ax3.set_ylim([0,1])
-        ax3.set_ylabel("State of charge")
-        ax3.set_xlabel("Time [hours]")
-        ax3.legend()
+        ax[1].plot(SoC_B, color='orange', label='Buffer', linestyle='dashed')
+        ax[1].plot(SoC_S, color='orange', label='Storage')
+        ax[1].set_ylim([0,1])
+        ax[1].yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:.0f}'.format(x * 100)))
+        ax[1].set_ylabel("State of charge [%]")
+        ax[1].set_xlabel("Time [hours]")
+        ax[1].legend(loc='upper right')
 
     # Save the plot as a png
     formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
@@ -261,7 +292,7 @@ def plot_single_iter(data):
     ax[1].plot(data['T_S31'], color='red', label="$T_{S31}$", alpha=0.4)
     ax[1].plot(data['T_B1'], color='blue', label="$T_{B1}$", alpha=0.4)
     ax[1].plot(data['T_B4'], color='blue', label="$T_{B4}$", alpha=0.4, linestyle='dashed')
-    ax[1].plot((120)*[273+38], color='black', label="$T_{sup,load,min}$", alpha=0.2, linestyle='dotted')
+    ax[1].plot((120)*[273+38], color='black', label="$T_{load,in}^{min}$", alpha=0.2, linestyle='dotted')
     ax[1].set_ylabel("Temperatuere [K]")
     ax[1].set_xlabel("Time steps")
     ax[1].legend()

@@ -22,7 +22,7 @@ delta_t_h = delta_t_m/60    # hours
 delta_t_s = delta_t_m*60    # seconds
 
 # Integration method (euler, rk2, or rk4)
-integration_method = 'rk2'
+integration_method = 'rk4'
 
 # Horizon (hours * time_steps/hour)
 N = int(16 * 1/delta_t_h)
@@ -65,7 +65,7 @@ rows_pred = []
 '''Remove and calculate at the end'''
 # For the final plot
 list_Q_HP = []
-elec_cost, elec_used = 0, 0
+elec_cost, elec_used, heat_supp = 0, 0, 0
 '''Remove and calculate at the end'''
 
 # ------------------------------------------------------
@@ -270,6 +270,7 @@ for time_now in range(initialisation_time, initialisation_time+simulation_time):
     
     # Get the electricty used and the cost of electricity over the next hour
     for k in range(15):
+        heat_supp += Q_HP_[k]
         elec_used += Q_HP_[k] / COP_[k]
         elec_cost += Q_HP_[k] / COP_[k] * forecasts.get_c_el(15*iter, 15*iter+1, delta_t_h)[0]
 
@@ -433,6 +434,7 @@ plot_data = {
     'T_B4_pred':    list_B4_pred,
     'elec_cost':    round(elec_cost,2),
     'elec_used':    round(elec_used/1000,2),
+    'heat_supp':    round(heat_supp/1000,2),
 }
 
 print("\nPlotting the data...\n")
