@@ -18,7 +18,7 @@ def get_function(id, u, x, t, sequence, iter):
     # Get current combination and load mass flow rate
     # -----------------------------------------------
     
-    # Get the section (1 to 8) at time t
+    # Get the section at time t
     section = int(t/15)+1
     
     # Get current combination at time t

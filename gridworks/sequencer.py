@@ -50,7 +50,7 @@ def COP1(T_OA):
 # ------------------------------------------
 # ------------------------------------------
 
-def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file, attempt, long_seq_pack, pb_type):
+def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file, attempt, current_state, pb_type):
 
     if attempt==1:
         # Print simulated date and time
@@ -65,7 +65,6 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
     # ------------------------------------------
 
     # Average temperature of tanks
-    current_state = long_seq_pack['x_0']
     T_avg = sum(current_state)/16 - 273
     current_storage = mass_of_water * 4187 * (T_avg - min_temp) * 2.77778e-7
     initial_storage = round(current_storage,1)
@@ -74,6 +73,9 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
     
     # If the current storage level is too high, turn off the HP during the first hour
     too_hot = True if current_storage > 45 else False
+    
+    # Horizon in hours
+    N = int(pb_type['horizon'] * delta_t_h)
     
     # --------------------------------------------
     # If previous results were given (csv file)
@@ -91,7 +93,7 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
             # Read the corresponding sequence in the file
             sequence_string = df['sequence'][iter]
             sequence_file_dict = {}
-            for i in range(1,9):
+            for i in range(1,N+1):
                 combi = sequence_string[2+(i-1)*11:9+(i-1)*11].split(",")
                 sequence_file_dict[f'combi{i}'] = [int(combi[0]), int(combi[1]), int(combi[2])]
             
@@ -102,9 +104,6 @@ def get_optimal_sequence(iter, previous_sequence, previous_attempt, results_file
     # ------------------------------------------
     # Get current forecasts
     # ------------------------------------------
-    
-    # Horizon and time step
-    N = int(pb_type['horizon'] * delta_t_h)
     
     # Price
     c_el = [round(x*1000*100,2) for x in forecasts.get_c_el(iter, iter+N, 1)]

@@ -8,9 +8,6 @@ from functions import get_function
 # Constants
 # ------------------------------------------------------
 
-# Heat pump
-Q_HP_min = 8000 #W
-
 # Load
 T_sup_load_min = 273 + 38 #K
 
@@ -21,6 +18,9 @@ rho = 997 #kg/m3
 m_layer = rho*A*z #kg (112kg)
 T_w_min = 273 + 35 #K
 T_w_max = 273 + 80 #K
+
+# Heat pump
+Q_HP_min = 8000 #W
 
 # Other
 cp = 4187 #J/kgK

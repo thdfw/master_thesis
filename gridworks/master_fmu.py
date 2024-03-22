@@ -95,9 +95,6 @@ def get_inputs(iter, x_0, x_opt, u_opt):
     # ---------------------------------------------------
     # Find a sequence and solve the optimization problem
     # ---------------------------------------------------
-
-    # Prepare package for possible long sequence search function
-    long_seq_pack = {'x_0': x_0, 'x_opt_prev': x_opt, 'u_opt_prev': u_opt}
     
     # As long as a feasible sequence is not found, try another method (attempt)
     attempt = 1
@@ -105,8 +102,8 @@ def get_inputs(iter, x_0, x_opt, u_opt):
     previous_attempt = 0
     while obj_opt == 1e5:
         
-        # Get a good sequence proposition (method depends on attempt)
-        sequence, prev_attempt = sequencer.get_optimal_sequence(iter, previous_sequence, previous_attempt, file_path, attempt, long_seq_pack, pb_type)
+        # Get a optimal sequence proposition from the MILP
+        sequence, prev_attempt = sequencer.get_optimal_sequence(iter, previous_sequence, previous_attempt, file_path, attempt, x_0, pb_type)
                 
         # Try to solve the optimization problem, get u* and x*
         u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
@@ -324,49 +321,61 @@ print(f"\nThe {simulation_time}-hour simulation ran in {hours} hour(s) and {minu
 
 plt.plot(list_B1, color='tab:blue', label='FMU')
 plt.plot(list_B1_pred, color='tab:orange', label='Prediction')
-plt.plot(list_B2, color='tab:blue')
-plt.plot(list_B2_pred, color='tab:orange')
-plt.plot(list_B3, color='tab:blue')
-plt.plot(list_B3_pred, color='tab:orange')
+#plt.plot(list_B2, color='tab:blue')
+#plt.plot(list_B2_pred, color='tab:orange')
+#plt.plot(list_B3, color='tab:blue')
+#plt.plot(list_B3_pred, color='tab:orange')
 plt.plot(list_B4, color='tab:blue')
 plt.plot(list_B4_pred, color='tab:orange')
-plt.title("Temperatures in buffer tank")
+plt.title("Temperatures of the top and bottom of the buffer tank")
+plt.xlabel("Iterations")
+plt.ylabel("Temperature [K]")
+plt.ylim([305,335])
 plt.legend()
 plt.show()
 
 plt.plot(list_S11, color='tab:blue', label='FMU')
 plt.plot(list_S11_pred, color='tab:orange', label='Prediction',)
-plt.plot(list_S12, color='tab:blue')
-plt.plot(list_S12_pred, color='tab:orange')
-plt.plot(list_S13, color='tab:blue')
-plt.plot(list_S13_pred, color='tab:orange')
+#plt.plot(list_S12, color='tab:blue')
+#plt.plot(list_S12_pred, color='tab:orange')
+#plt.plot(list_S13, color='tab:blue')
+#plt.plot(list_S13_pred, color='tab:orange')
 plt.plot(list_S14, color='tab:blue')
 plt.plot(list_S14_pred, color='tab:orange')
-plt.title("Temperatures in first storage tank")
+plt.title("Temperatures of the top and bottom of storage tank 1")
+plt.xlabel("Iterations")
+plt.ylabel("Temperature [K]")
+plt.ylim([305,335])
 plt.legend()
 plt.show()
 
 plt.plot(list_S21, color='tab:blue', label='FMU')
 plt.plot(list_S21_pred, color='tab:orange', label='Prediction',)
-plt.plot(list_S22, color='tab:blue')
-plt.plot(list_S22_pred, color='tab:orange')
-plt.plot(list_S23, color='tab:blue')
-plt.plot(list_S23_pred, color='tab:orange')
+#plt.plot(list_S22, color='tab:blue')
+#plt.plot(list_S22_pred, color='tab:orange')
+#plt.plot(list_S23, color='tab:blue')
+#plt.plot(list_S23_pred, color='tab:orange')
 plt.plot(list_S24, color='tab:blue')
 plt.plot(list_S24_pred, color='tab:orange')
-plt.title("Temperatures in second storage tank")
+plt.title("Temperatures of the top and bottom of storage tank 2")
+plt.xlabel("Iterations")
+plt.ylabel("Temperature [K]")
+plt.ylim([305,335])
 plt.legend()
 plt.show()
 
 plt.plot(list_S31, color='tab:blue', label='FMU')
 plt.plot(list_S31_pred, color='tab:orange', label='Prediction',)
-plt.plot(list_S32, color='tab:blue')
-plt.plot(list_S32_pred, color='tab:orange')
-plt.plot(list_S33, color='tab:blue')
-plt.plot(list_S33_pred, color='tab:orange')
-plt.plot(list_S34, color='tab:blue')
+#plt.plot(list_S32, color='tab:blue')
+#plt.plot(list_S32_pred, color='tab:orange')
+#plt.plot(list_S33, color='tab:blue')
+#plt.plot(list_S33_pred, color='tab:orange')
+#plt.plot(list_S34, color='tab:blue')
 plt.plot(list_S34_pred, color='tab:orange')
-plt.title("Temperatures in third storage tank")
+plt.title("Temperatures of the top and bottom of storage tank 3")
+plt.xlabel("Iterations")
+plt.ylabel("Temperature [K]")
+plt.ylim([305,335])
 plt.legend()
 plt.show()
 

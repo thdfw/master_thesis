@@ -86,9 +86,6 @@ for iter in range(num_iterations):
     # ---------------------------------------------------
     # Find a sequence and solve the optimization problem
     # ---------------------------------------------------
-
-    # Prepare package for possible long sequence search function
-    long_seq_pack = {'x_0': x_0, 'x_opt_prev': x_opt, 'u_opt_prev': u_opt}
     
     # As long as a feasible sequence is not found, try another method (attempt)
     attempt = 1
@@ -96,8 +93,8 @@ for iter in range(num_iterations):
     previous_attempt = 0
     while obj_opt == 1e5:
         
-        # Get a good sequence proposition (method depends on attempt)
-        sequence, prev_attempt = sequencer.get_optimal_sequence(iter, previous_sequence, previous_attempt, file_path, attempt, long_seq_pack, pb_type)
+        # Get a optimal sequence proposition from the MILP
+        sequence, prev_attempt = sequencer.get_optimal_sequence(iter, previous_sequence, previous_attempt, file_path, attempt, x_0, pb_type)
                 
         # Try to solve the optimization problem, get u* and x*
         u_opt, x_opt, obj_opt, error = optimizer.optimize_N_steps(x_0, 15*iter, pb_type, sequence, warm_start, True)
