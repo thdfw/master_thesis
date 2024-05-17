@@ -20,7 +20,7 @@ c_el_list = []
 
 # Get forecast for Maine (= None for live forecast)
 start, end = None, None
-start = dtm.datetime(2024, 3, 6, 0, 0, 0)
+start = dtm.datetime(2024, 5, 10, 0, 0, 0)
 end = start + dtm.timedelta(hours=50)
 weather_total, CI_weather = weather_forecast.get_weather(start, end)
 

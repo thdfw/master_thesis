@@ -240,7 +240,7 @@ def plot_MPC(data, FMU, DETAILED):
     plt.show()
 
 '''
-To visualize the 8 hours predicted by a single iteration
+To visualize the horizon as predicted by a single iteration
 '''
 def plot_single_iter(data):
 

@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import casadi
+import os
 
 PRINT = False
 
@@ -163,15 +164,21 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
         c_el = [0.0359, 0.0206, 0.0106, 0.0192, 0.0309, 0.0612, 0.0925, 0.1244, 0.1667, 0.2148, 0.3563,
         0.4893, 0.7098, 0.7882, 0.5586, 0.3326, 0.2152, 0.1487, 0.0864, 0.0587, 0.0385, 0.0246, 0.0165, 0.0215]
         c_el = [x*100 for x in c_el]
+        
+    elif price_forecast=="year":
+        df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
+        df.index = pd.to_datetime(df.index)
+        df.index.name = None
+        df['c_el'] = df['Rt Energy Price ($/MWh)'] + df['Dist Price ($/MWh)']
+        c_el = df['c_el'].tolist()
+        c_el += list(df['c_el'][:24])
 
     # If it doesn't match assume the prices were given directly
     else:
         c_el = price_forecast
         
     # Get the future prices at the current iteration time
-    c_el = c_el * 2
-    c_el = c_el[iter%24:]
-    c_el = c_el[:num_hours]
+    c_el = c_el[iter:iter+num_hours]
     if PRINT: print(f"Cost forecast:\n{c_el}")
         
     # Water returning from the PCM (°C)
@@ -193,11 +200,10 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
         Q_HP_min = 6
         Q_HP_max = 12
         cost_th = 4/12 * c_el[i]
-        m_HP = 17.3/60
         Q_HP_min_list.append(round(Q_HP_min,1))
         Q_HP_max_list.append(round(Q_HP_max,1))
         cost_th_list.append(cost_th)
-        m_HP_list.append(m_HP)
+        m_HP_list.append(0) #useless
         
     return Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list
 

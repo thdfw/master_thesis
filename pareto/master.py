@@ -28,8 +28,8 @@ print("---------------------------------------")
 # Get forecast for Maine (= None for live forecast)
 start = None
 end = None
-start = dtm.datetime(2024, 3, 15, 8, 0, 0)
-end = dtm.datetime(2024, 3, 16, 0, 0, 0)
+start = dtm.datetime(2024, 5, 10, 8, 0, 0)
+end = dtm.datetime(2024, 5, 11, 0, 0, 0)
 weather, CI_weather = weather_forecast.get_weather(start, end)
 
 # Treat NaNs
@@ -41,9 +41,6 @@ for i in range(len(weather)):
         else:
             weather[i] = 100
 
-# Lenght of simulation (hours)
-num_hours = len(weather)
-
 # To use GridWorks past data instead
 #df = pd.read_excel(os.getcwd()+'/data/gridworks_yearly_data.xlsx', header=3, index_col = 0)
 #df.index = pd.to_datetime(df.index)
@@ -51,6 +48,9 @@ num_hours = len(weather)
 #df['Outside Temp F'] = df['Outside Temp F'].apply(lambda x: round(5/9 * (x-32),2))
 #day_of_the_year = 60
 #weather = list(df['Outside Temp F'][24*day_of_the_year:24*(day_of_the_year+num_days)])
+
+# Lenght of simulation (hours)
+num_hours = len(weather)
 
 print(f"\n{num_hours}-hour weather forecast succesfully obtained, with 95% confidence interval.")
 print(f"{weather} \n+/- {CI_weather[:num_hours]}°C")
@@ -148,6 +148,7 @@ print("\n---------------------------------------")
 print("4 - Send commands to FMU and simulate [OK]")
 print("---------------------------------------")
 
+'''
 # Send commands and obtain simulation results
 df = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_hours)
 
@@ -169,3 +170,4 @@ df['on_off'] = delta_HP
 df['T_sup_HP'] = T_sup_HP
 
 print(df)
+'''
