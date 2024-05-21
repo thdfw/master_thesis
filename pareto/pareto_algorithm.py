@@ -375,7 +375,7 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
                         best_q = Q_HP[ranking.index(i)]
 
                         # Find the minimum Q_HP in that range that satisfied storage[min hour] > 0
-                        if PRINT: print(f"Looking into range: ({q_mini},{q_maxi})")
+                        if PRINT: print(f"Looking into range: ({q_mini/10}, {q_maxi/10})")
                         for fake_q in range(q_mini, q_maxi+1):
                             
                             real_q = fake_q/10
