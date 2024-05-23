@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
+import random
 
 INTERMEDIATE_PLOT = False
 FINAL_PLOT = False
 PRINT = False
 
-def generic(parameters, costs_pu):
+def generic(parameters):
     """
     Computes a near-optimal sequence of operation 
     based on the given forecasts, contraints, and other parameters
@@ -17,6 +18,9 @@ def generic(parameters, costs_pu):
     # Control variable and range
     control = [0]*parameters['horizon']
     control_max = parameters['control_max']
+
+    # Get hourly costs per unit
+    costs_pu = get_costs_pu(parameters)
 
     # Hours ranked by price
     hours_ranked = [costs_pu.index(x) for x in sorted(costs_pu)]
@@ -79,6 +83,27 @@ def generic(parameters, costs_pu):
                 if INTERMEDIATE_PLOT: iteration_plot(control, parameters)
                 break
     
+
+def get_costs_pu(parameters):
+    """
+    Get costs per unit
+    """
+
+    # Get the costs per unit and treat for duplicates
+    costs_pu = parameters['elec_costs'].copy()
+
+    # Get rid of equal costs by adding a small random number
+    needs_check = True
+    while needs_check:
+        needs_check = False
+        for i in range(parameters['horizon']):
+            for j in range(parameters['horizon']):
+                if i!=j and costs_pu[i] == costs_pu[j]:
+                    costs_pu[j] = round(costs_pu[j] + random.uniform(-0.001, 0.001),4)
+                    needs_check = True
+    
+    return costs_pu
+
 
 def turn_on(hour, control, control_max, parameters, next_not_ok):
     """

@@ -1,6 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import random
 from functions import generic
 
 # ---------------------------------------------------
@@ -39,25 +36,8 @@ parameters = {
 }
 
 # ---------------------------------------------------
-# Get costs per unit
-# ---------------------------------------------------
-
-# Get the costs per unit and treat for duplicates
-costs_pu = parameters['elec_costs'].copy()
-
-# Get rid of equal costs by adding a small random number
-needs_check = True
-while needs_check:
-    needs_check = False
-    for i in range(parameters['horizon']):
-        for j in range(parameters['horizon']):
-            if i!=j and costs_pu[i] == costs_pu[j]:
-                costs_pu[j] = round(costs_pu[j] + random.uniform(-0.001, 0.001),4)
-                needs_check = True
-
-# ---------------------------------------------------
 # Get the sequence
 # ---------------------------------------------------
 
-control = generic(parameters, costs_pu)
+control = generic(parameters)
 print(f"\nThe control sequence is:\n{control}\n")
