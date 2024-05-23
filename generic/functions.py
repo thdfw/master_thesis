@@ -1,23 +1,101 @@
 import matplotlib.pyplot as plt
 
-'''
-Turns on the system during the cheapest hour
-While making sure no constraints are violated
-'''
+INTERMEDIATE_PLOT = False
+FINAL_PLOT = False
+PRINT = False
+
+def generic(parameters, costs_pu):
+    """
+    Computes a near-optimal sequence of operation 
+    based on the given forecasts, contraints, and other parameters
+    """
+
+    # ---------------------------------------------------
+    # Initialize
+    # ---------------------------------------------------
+
+    # Control variable and range
+    control = [0]*parameters['horizon']
+    control_max = parameters['control_max']
+
+    # Hours ranked by price
+    hours_ranked = [costs_pu.index(x) for x in sorted(costs_pu)]
+
+    # Status vector
+    if parameters['timestep'] == 'hourly':
+        status = [1]*parameters['horizon']
+    elif parameters['timestep'] == 'daily':
+        status = [0]*(parameters['horizon']-1) + [1]
+
+    # ---------------------------------------------------
+    # Run the generic algorithm
+    # ---------------------------------------------------
+
+    # While all hours are not satisfied
+    while sum(status) > 0:
+
+        # Find the next unsatisfied hour
+        next_unsatisfied = status.index(1)
+        if PRINT: 
+            print("\n---------------------------------------")
+            print(f"The next unsatisfied hour: {next_unsatisfied}:00")
+            print("---------------------------------------")
+
+        # Find and turn on the cheapest remaining hour(s) before it, until it is satisfied
+        for hour in hours_ranked:
+            
+            # Skip hours that are after the next unsatisfied hour
+            if hour > next_unsatisfied: 
+                continue
+
+            # Skip hours which are already used to their maximum
+            if control[hour] == control_max[hour]: 
+                continue
+
+            # Skip hours before a maximum storage occurence
+            if parameters['constraints']['storage_capacity']:
+                storage_full = [1 if round(x,1)==parameters['constraints']['max_storage'] else 0 for x in get_storage(control, parameters)]
+                if sum(storage_full)>0 and hour <= storage_full.index(1):
+                    continue
+            
+            if PRINT: print(f"\nThe cheapest remaining hour before {next_unsatisfied}:00 is {hour}:00.")
+
+            # Turn on the equipment with constraints in mind, eventually update maximum
+            control[hour], control_max[hour] = turn_on(hour, control, control_max, parameters, next_unsatisfied)
+
+            # Update the status vector
+            status = get_status(control, parameters)
+            
+            # Check implications and plot
+            if sum(status) == 0:
+                if PRINT: print("\n" + "*"*30 + "\nProblem solved!\n" + "*"*30 + "\n")            
+                if FINAL_PLOT: iteration_plot(control, parameters)
+                # compute_costs(control, parameters)
+                return control
+
+            if next_unsatisfied != status.index(1):
+                if PRINT: print(f"\nSatisfied hour {next_unsatisfied}:00, now next unsatisfied is {status.index(1)}:00.")
+                next_unsatisfied = status.index(1)
+                if INTERMEDIATE_PLOT: iteration_plot(control, parameters)
+                break
+    
+
 def turn_on(hour, control, control_max, parameters, next_not_ok):
+    """
+    Turns on the system during the cheapest hour, while ensuring that constraints are respected
+    """
 
     # Backup
     control_backup = control.copy()
 
-    # TODO: make the 0.3 a user input / parameter
+    # Define the minimum control
     control_min = [x*parameters['control_min_max_ratio'] for x in control_max]
 
-    # Start with applying max power or cheapest mode
+    # Start with applying maximum control or cheapest mode
     if parameters['timestep'] == 'hourly':
-        print(f"Try the maximum: {control_max[hour]}")
         control[hour] = control_max[hour]
     if parameters['timestep'] == 'daily':
-        print("Turn on cheapest mode")
+        if PRINT: print("Turn on cheapest mode")
 
     # Check all activated constraints
     for key, value in parameters['constraints'].items():
@@ -28,7 +106,7 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
             # ----------------------------
 
             if key == "storage_capacity":
-                print("\n[Constraint] Check the storage capacity is not exceeded, if not reduce power")
+                if PRINT: print("\n[Constraint] Storage capacity")
 
                 storage = [parameters['constraints']['initial_soc']] + [0]*parameters['horizon']
                 max_storage = parameters['constraints']['max_storage']
@@ -38,22 +116,20 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
 
                 # If there is no excess, stick to maximum
                 if storage_excess == 0:
-                    print(f"[DONE] We can use the maximum power at this hour.")
+                    if PRINT: print(f"[DONE] The maximum control ({control[hour]}) can be used without exceeding the storage capacity.")
 
                 else:
-                    print(f"We need to use {storage_excess} less kW than the maximum.")
-                
                     # See if you can reduce the power at that time
                     if control[hour] - storage_excess > control_min[hour]:
-                        print("[DONE] That is feasible.")
+                        if PRINT: print(f"[DONE] The control was lowered by {storage_excess} to avoid storage excess.")
                         # Set the control to the max power that does not exceed storage
                         control[hour] += -storage_excess
                         # Update the maximum
-                        control_max[hour] = control_max[hour] - storage_excess
+                        control_max[hour] += -storage_excess
 
                     # If not, keep at same power
                     else:
-                        print(f"[DONE] Infeasible, keeped at current power {control_backup[hour]}.\n")
+                        if PRINT: print(f"[DONE] The control could not be lowered by {storage_excess}, kept control at {control_backup[hour]}.")
                         control[hour] = control_backup[hour]
 
             # ----------------------------
@@ -74,7 +150,7 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
 
                     # Check if a cheaper price has been passed while reaching the new next unsatisfied hour
                     if min(costs[next_not_ok:status.index(1)+1]) < costs[hour]:
-                        print(f"\n[Constraint] Another hour on the way to the new next unsatisfied hour ({status.index(1)}:00) is cheaper than now.")
+                        if PRINT: print(f"\n[Constraint] Cheaper hour availability")
 
                         # Find the first hour in that section that is cheaper than the current hour
                         for price in costs[next_not_ok:status.index(1)+1]:
@@ -82,11 +158,12 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
                                 next_lower_price = price
                                 hour_next_lower_price = costs.index(price)
                                 break
-                        print(f"The first cheaper hour that we could have used is {hour_next_lower_price}:00.")
-                        print(f"The price now: {costs[hour]}, and then: {next_lower_price}.")
-                        print(f"Currently the power is {control_backup[hour]}, looking into range: ({int(control_min[hour])}, {int(control_max[hour]*10)})")
+                        
+                        if PRINT: 
+                            print(f"| The current control at {hour}:00 would satisfy all hours up to {status.index(1)}:00.")
+                            print(f"| However, {hour_next_lower_price}:00 is cheaper than {hour}:00.")
 
-                        # Initialize 
+                        # Initialize
                         storage = get_storage(control, parameters)   
                         lowest_storage_level = storage[hour_next_lower_price]
                         lowest_control = control[hour]
@@ -111,20 +188,20 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
                                 lowest_control = c
                         
                         # Implement the solution
-                        print(f"[DONE] A valid lower control level was: {lowest_control}")
+                        if PRINT: print(f"[DONE] Reduced the control to {lowest_control} to reach {hour_next_lower_price}:00 at the lowest cost.")
                         control[hour] = lowest_control
                     
                     else:
-                        print("\n[Constraint] No cheaper hour was reached\n[DONE]")
+                        if PRINT: print("\n[Constraint] Cheaper hour availability\n[DONE] No cheaper hour was reached.")
 
             # ----------------------------
             # Low noise hours
             # ----------------------------
 
             if key == "low_noise":
-                print("\n[Constraint] Check if the hour is in the low noise hours.")
+                if PRINT: print("\n[Constraint] Low noise hours")
                 if hour in parameters['constraints']['low_noise_hours']:
-                    print("[DONE] The selected hour is in low noise hours. Run at maximum authorized.")
+                    if PRINT: print("[DONE] The selected hour is in low noise hours. Run at maximum authorized.")
                     control_max[hour] == 0
 
     return control[hour], control_max[hour]
@@ -160,6 +237,7 @@ def get_status(control, parameters):
             status = [0]*(N-1) + [1]
 
     return status
+
 
 def get_storage(control, parameters):
     """
@@ -225,8 +303,9 @@ def compute_costs(control, parameters):
 
     costs = parameters['elec_costs']
     total_cost = 0
+    COP = 4
 
     for hour in range(parameters['horizon']):
-        total_cost += costs[hour] * control[hour]
+        total_cost += costs[hour] * control[hour] / COP
 
     print(f"The total cost of running the system during {parameters['horizon']} hours is {round(total_cost/1000,2)}")
