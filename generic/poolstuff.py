@@ -67,10 +67,7 @@ def get_modes(elec_costs):
     operating_cost['hour'] = pd.to_numeric(operating_cost['hour'])
     operating_cost = operating_cost.sort_values(by='cost_pu').reset_index()[['hour','cost_pu','mode']]
 
-    #print(f"Required flow: {required_flow_vol}")
-    #print(f"Operating modes by cost:\n{operating_cost}")
-
-    return operating_cost
+    return required_flow_vol, operating_cost
 
 
 def get_mapping(hour_mode, hour, hours_ranked):

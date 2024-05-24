@@ -2,7 +2,7 @@ from functions import generic
 from poolstuff import get_modes
 
 # ---------------------------------------------------
-# User inputs
+# Example 1: User inputs for a HPTES
 # ---------------------------------------------------
 
 parameters_HPTES = { 
@@ -23,8 +23,16 @@ parameters_HPTES = {
                     'max_storage': 30,
                     'initial_soc': 0,
                     'cheaper_hours': True,
-                    'quiet_hours': False}
+                    'quiet_hours': False
+                    },
 }
+
+# ---------------------------------------------------
+# Example 2: User inputs for a pool pump
+# ---------------------------------------------------
+
+# Get required flow volume and hours ranked by price
+required_flow_vol, hours_ranked = get_modes(parameters_HPTES['elec_costs'])
 
 parameters_pool = { 
     'horizon': 24,
@@ -34,19 +42,20 @@ parameters_pool = {
     
     'load': {
         'type': 'daily', 
-        'value': 45676
+        'value': required_flow_vol,
         },
 
     'control': {
         'type': 'mode',
-        'hours_ranked': get_modes(parameters_HPTES['elec_costs'])
+        'hours_ranked': hours_ranked
         },
     
     'constraints': {
         'storage_capacity': False,                    
         'cheaper_hours': False,
         'quiet_hours': True,
-        'quiet_hours_list': [0, 1, 2, 3, 4, 5, 6, 22, 23]}
+        'quiet_hours_list': [0, 1, 2, 3, 4, 5, 6, 22, 23]
+        },
 }
 
 # ---------------------------------------------------

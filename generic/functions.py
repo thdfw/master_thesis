@@ -4,6 +4,7 @@ import pandas as pd
 import random
 from poolstuff import get_mapping
 
+# Choose the desired level of output detail
 INTERMEDIATE_PLOT = False
 FINAL_PLOT = True
 PRINT = True
@@ -30,7 +31,7 @@ def generic(parameters):
         'cost': [0]*parameters['horizon']
         }
 
-    # Hours ranked by price
+    # Hours (with associated modes) ranked by price
     hours_ranked = get_hours_ranked(parameters)
     
     # Status vector
@@ -48,17 +49,18 @@ def generic(parameters):
 
         # Find the next unsatisfied hour
         next_unsatisfied = status.index(1)
-        if PRINT: 
+        if PRINT and parameters['load']['type']=='hourly': 
             print("\n---------------------------------------")
             print(f"The next unsatisfied hour: {next_unsatisfied}:00")
             print("---------------------------------------")
 
-        position = -1
+        rank = -1
 
         # Find and turn on the cheapest remaining hour(s) before it, until it is satisfied
         for hour in hours_ranked['hour']:
-
-            position += 1
+            
+            # The price ranking of the hour
+            rank += 1
             
             # Skip hours that are after the next unsatisfied hour
             if hour > next_unsatisfied: 
@@ -76,13 +78,14 @@ def generic(parameters):
                 if sum(storage_full)>0 and hour <= storage_full.index(1):
                     continue
             
-            current_mode = hours_ranked['mode'][position]
+            current_mode = hours_ranked['mode'][rank]
             current_mode_print = f", in {str(current_mode)} mode." if current_mode!=np.nan else "."
             if PRINT: print(f"\nThe cheapest remaining hour before {next_unsatisfied}:00 is {hour}:00{current_mode_print}")
 
             # Quiet hours
             if (parameters['constraints']['quiet_hours']
-                and hour in parameters['constraints']['quiet_hours_list'] and operation['mode'][hour]=='Shed'): 
+                and hour in parameters['constraints']['quiet_hours_list'] 
+                and operation['mode'][hour]=='Shed'): 
                 if PRINT: 
                     print("\n[Constraint] Quiet hours")
                     print("[DONE] The selected hour is in quiet hours, it can not run at more than 'Shed' mode.")
@@ -94,7 +97,7 @@ def generic(parameters):
             # Update the status vector
             status = get_status(operation['control'], parameters)
             
-            # Check implications and plot
+            # Entire problem is solved
             if sum(status) == 0:
                 if PRINT: print("\n" + "*"*30 + "\nProblem solved!\n" + "*"*30 + "\n")          
                 print(f"The total cost of the {parameters['horizon']} hours of operation is {round(sum(operation['cost'])/100,2)}.\n")  
@@ -102,6 +105,7 @@ def generic(parameters):
                 df_operation = pd.DataFrame(operation)
                 return df_operation[['control','mode']] if parameters['control']['type']=='mode' else list(df_operation['control'])
 
+            # The current next unsatisfied hour is now satisfied
             if next_unsatisfied != status.index(1):
                 if PRINT: print(f"\nSatisfied hour {next_unsatisfied}:00, now next unsatisfied is {status.index(1)}:00.")
                 next_unsatisfied = status.index(1)
@@ -147,7 +151,8 @@ def get_hours_ranked(parameters):
 
 def turn_on(hour, operation, hour_mode, hours_ranked, parameters, next_unsatisfied):
     """
-    Turns on the system during the cheapest hour, while ensuring that constraints are respected
+    Turns on the system during the given hour, 
+    while ensuring that constraints are respected
     """
 
     # Unpack and backup
@@ -168,7 +173,7 @@ def turn_on(hour, operation, hour_mode, hours_ranked, parameters, next_unsatisfi
         mode[hour] = hour_mode
         control[hour], cost[hour] = get_mapping(hour_mode, hour, hours_ranked)
 
-    # Check all activated constraints
+    # Check constraints that were marked as active
     for key, value in parameters['constraints'].items():
         if value:
 
@@ -275,7 +280,7 @@ def turn_on(hour, operation, hour_mode, hours_ranked, parameters, next_unsatisfi
 
 def get_status(control, parameters):
     """
-    Computes the status vector based on the current controls
+    Computes the status vector based on the given control sequence
     """
 
     # Extract from parameters
