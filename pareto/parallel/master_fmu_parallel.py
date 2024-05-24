@@ -8,8 +8,8 @@ import math
 import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
 
 # Rendering
-PLOT = False
-PRINT = False
+PLOT = True
+PRINT = True
 
 # All lists for final plot
 Q_HP_list = []
@@ -20,7 +20,7 @@ c_el_list = []
 
 # Get forecast for Maine (= None for live forecast)
 start, end = None, None
-start = dtm.datetime(2024, 5, 10, 0, 0, 0)
+start = dtm.datetime(2024, 5, 24, 0, 0, 0)
 end = start + dtm.timedelta(hours=50)
 weather_total, CI_weather = weather_forecast.get_weather(start, end)
 
@@ -180,19 +180,16 @@ for iter in range(num_iterations):
 
     # Get the operation over the forecsats
     Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, T_sup_HP_min, max_storage, False, False, num_hours, final_CI, iter, SoC_0)
-
     if PRINT: print(f"Obtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}")
 
-    # Is the heat pump on or off
-    delta_HP = [0 if q==0 else 1 for q in Q_HP]
-    if PRINT: print(f"\nConverted Q_HP into commands for the FMU:\ndelta_HP = {delta_HP}")
+    # ---------------------------------------
+    # Hourly schedule -> minute commands
+    # ---------------------------------------    
 
-    # What temperature setpoint should we give it
-    T_sup_HP = [round(Q_HP[i]*1000/m_HP[i]/4187 + T_HP_in,1) if Q_HP[i]!=0 else np.nan for i in range(len(Q_HP))]
-    if PRINT: print(f"T_sup_HP = {T_sup_HP}")
-    
-    # To avoid sending NaNs to the FMU we set the setpoint temperature at 40°C when the HP is off
-    T_sup_HP = [round(Q_HP[i]*1000/m_HP[i]/4187 + T_HP_in,1) if Q_HP[i]!=0 else 40 for i in range(len(Q_HP))]
+    import commands_parallel
+    import fmu_simulation_parallel
+    pred_load = [x[0] for x in pred_load]
+    commands = commands_parallel.get_commands(Q_HP, pred_load)
         
     # ---------------------------------------
     print("4 - Send commands to FMU and simulate")
@@ -201,7 +198,7 @@ for iter in range(num_iterations):
     num_hours = 1
 
     # Send commands and obtain simulation results
-    df = fmu_simulation.simulate(delta_HP, T_sup_HP, weather, num_hours, pred_load, iter)
+    df = fmu_simulation_parallel.simulate(commands, weather, num_hours, iter)
     df = df.drop(df.index[-1])
 
     # Convert SOC to kWh

@@ -62,5 +62,5 @@ parameters_pool = {
 # Get the sequence
 # ---------------------------------------------------
 
-control = generic(parameters_pool)
+control = generic(parameters_HPTES)
 print(f"\nThe control sequence is:\n{control}\n")
