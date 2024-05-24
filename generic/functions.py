@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import random
+from poolstuff import get_mapping
 
 INTERMEDIATE_PLOT = False
-FINAL_PLOT = False
-PRINT = False
+FINAL_PLOT = True
+PRINT = True
 
 def generic(parameters):
     """
@@ -11,24 +14,29 @@ def generic(parameters):
     based on the given forecasts, contraints, and other parameters
     """
 
+    # Check that parameters are coherent
+    check_parameters(parameters)
+
     # ---------------------------------------------------
     # Initialize
     # ---------------------------------------------------
 
-    # Control variable and range
-    control = [0]*parameters['horizon']
-    control_max = parameters['control_max']
-
-    # Get hourly costs per unit
-    costs_pu = get_costs_pu(parameters)
+    # The solution vector
+    operation = {
+        'control': [0]*parameters['horizon'],
+        'control_max': parameters['control']['max'] if parameters['control']['type']=='range' else [np.nan]*parameters['horizon'],
+        'control_min': parameters['control']['min'] if parameters['control']['type']=='range' else [np.nan]*parameters['horizon'],
+        'mode': [np.nan]*parameters['horizon'],
+        'cost': [0]*parameters['horizon']
+        }
 
     # Hours ranked by price
-    hours_ranked = [costs_pu.index(x) for x in sorted(costs_pu)]
-
+    hours_ranked = get_hours_ranked(parameters)
+    
     # Status vector
-    if parameters['timestep'] == 'hourly':
+    if parameters['load']['type'] == 'hourly':
         status = [1]*parameters['horizon']
-    elif parameters['timestep'] == 'daily':
+    elif parameters['load']['type'] == 'daily':
         status = [0]*(parameters['horizon']-1) + [1]
 
     # ---------------------------------------------------
@@ -45,52 +53,80 @@ def generic(parameters):
             print(f"The next unsatisfied hour: {next_unsatisfied}:00")
             print("---------------------------------------")
 
+        position = -1
+
         # Find and turn on the cheapest remaining hour(s) before it, until it is satisfied
-        for hour in hours_ranked:
+        for hour in hours_ranked['hour']:
+
+            position += 1
             
             # Skip hours that are after the next unsatisfied hour
             if hour > next_unsatisfied: 
                 continue
 
             # Skip hours which are already used to their maximum
-            if control[hour] == control_max[hour]: 
+            if parameters['control']['type']=='range' and operation['control'][hour]==operation['control_max'][hour]: 
+                continue
+            if parameters['control']['type']=='mode' and operation['mode'][hour]=='ALU': 
                 continue
 
             # Skip hours before a maximum storage occurence
             if parameters['constraints']['storage_capacity']:
-                storage_full = [1 if round(x,1)==parameters['constraints']['max_storage'] else 0 for x in get_storage(control, parameters)]
+                storage_full = [1 if round(x,1)==parameters['constraints']['max_storage'] else 0 for x in get_storage(operation['control'], parameters)]
                 if sum(storage_full)>0 and hour <= storage_full.index(1):
                     continue
             
-            if PRINT: print(f"\nThe cheapest remaining hour before {next_unsatisfied}:00 is {hour}:00.")
+            current_mode = hours_ranked['mode'][position]
+            current_mode_print = f", in {str(current_mode)} mode." if current_mode!=np.nan else "."
+            if PRINT: print(f"\nThe cheapest remaining hour before {next_unsatisfied}:00 is {hour}:00{current_mode_print}")
+
+            # Quiet hours
+            if (parameters['constraints']['quiet_hours']
+                and hour in parameters['constraints']['quiet_hours_list'] and operation['mode'][hour]=='Shed'): 
+                if PRINT: 
+                    print("\n[Constraint] Quiet hours")
+                    print("[DONE] The selected hour is in quiet hours, it can not run at more than 'Shed' mode.")
+                continue
 
             # Turn on the equipment with constraints in mind, eventually update maximum
-            control[hour], control_max[hour] = turn_on(hour, control, control_max, parameters, next_unsatisfied)
+            operation = turn_on(hour, operation, current_mode, hours_ranked, parameters, next_unsatisfied)
 
             # Update the status vector
-            status = get_status(control, parameters)
+            status = get_status(operation['control'], parameters)
             
             # Check implications and plot
             if sum(status) == 0:
-                if PRINT: print("\n" + "*"*30 + "\nProblem solved!\n" + "*"*30 + "\n")            
-                if FINAL_PLOT: iteration_plot(control, parameters)
-                # compute_costs(control, parameters)
-                return control
+                if PRINT: print("\n" + "*"*30 + "\nProblem solved!\n" + "*"*30 + "\n")          
+                print(f"The total cost of the {parameters['horizon']} hours of operation is {round(sum(operation['cost'])/100,2)}.\n")  
+                if FINAL_PLOT: iteration_plot(operation, parameters)
+                df_operation = pd.DataFrame(operation)
+                return df_operation[['control','mode']] if parameters['control']['type']=='mode' else list(df_operation['control'])
 
             if next_unsatisfied != status.index(1):
                 if PRINT: print(f"\nSatisfied hour {next_unsatisfied}:00, now next unsatisfied is {status.index(1)}:00.")
                 next_unsatisfied = status.index(1)
-                if INTERMEDIATE_PLOT: iteration_plot(control, parameters)
+                if INTERMEDIATE_PLOT: iteration_plot(operation, parameters)
                 break
     
 
-def get_costs_pu(parameters):
+def get_hours_ranked(parameters):
     """
-    Get costs per unit
+    Get hours ranked by cost per unit
     """
 
-    # Get the costs per unit and treat for duplicates
-    costs_pu = parameters['elec_costs'].copy()
+    # ---------------------------------------------------
+    # Modes are involved in the ranking
+    # ---------------------------------------------------
+
+    if parameters['control']['type'] == 'mode':
+        return parameters['control']['hours_ranked'].to_dict(orient='list')
+
+    # ---------------------------------------------------
+    # Modes are not involved in the ranking
+    # ---------------------------------------------------
+
+    # TODO: replace by actual costs per unit
+    costs_pu = parameters['elec_costs']
 
     # Get rid of equal costs by adding a small random number
     needs_check = True
@@ -101,26 +137,36 @@ def get_costs_pu(parameters):
                 if i!=j and costs_pu[i] == costs_pu[j]:
                     costs_pu[j] = round(costs_pu[j] + random.uniform(-0.001, 0.001),4)
                     needs_check = True
+
+    # Rank hours by cost per unit and create dataframe
+    hours_by_cost = [costs_pu.index(x) for x in sorted(costs_pu)]
+    hours_ranked = {'hour':hours_by_cost, 'cost_pu':sorted(costs_pu), 'mode':[np.nan]*len(costs_pu)}
     
-    return costs_pu
+    return hours_ranked
 
 
-def turn_on(hour, control, control_max, parameters, next_not_ok):
+def turn_on(hour, operation, hour_mode, hours_ranked, parameters, next_unsatisfied):
     """
     Turns on the system during the cheapest hour, while ensuring that constraints are respected
     """
 
-    # Backup
+    # Unpack and backup
+    control = operation['control']
+    control_max = operation['control_max']
+    control_min = operation['control_min']
+    mode = operation['mode']
+    cost = operation['cost']
     control_backup = control.copy()
 
-    # Define the minimum control
-    control_min = [x*parameters['control_min_max_ratio'] for x in control_max]
-
-    # Start with applying maximum control or cheapest mode
-    if parameters['timestep'] == 'hourly':
+    # Apply the maximum control if there is no given mode
+    if parameters['control']['type'] == 'range':
         control[hour] = control_max[hour]
-    if parameters['timestep'] == 'daily':
-        if PRINT: print("Turn on cheapest mode")
+        cost[hour] = control[hour] * parameters['elec_costs'][hour] / 4 # TODO replace 4 by COP estimation
+
+    # Apply the given mode at that hour
+    if parameters['control']['type'] == 'mode':
+        mode[hour] = hour_mode
+        control[hour], cost[hour] = get_mapping(hour_mode, hour, hours_ranked)
 
     # Check all activated constraints
     for key, value in parameters['constraints'].items():
@@ -168,19 +214,18 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
 
                 # If the problem is not solved yet and the next unsatisfied hour has been satisfied
                 if (sum(status) > 0 
-                    and status.index(1) != next_not_ok 
+                    and status.index(1) != next_unsatisfied 
                     and control[hour] > control_min[hour]):
 
                     costs = parameters['elec_costs']
 
                     # Check if a cheaper price has been passed while reaching the new next unsatisfied hour
-                    if min(costs[next_not_ok:status.index(1)+1]) < costs[hour]:
+                    if min(costs[next_unsatisfied:status.index(1)+1]) < costs[hour]:
                         if PRINT: print(f"\n[Constraint] Cheaper hour availability")
 
                         # Find the first hour in that section that is cheaper than the current hour
-                        for price in costs[next_not_ok:status.index(1)+1]:
+                        for price in costs[next_unsatisfied:status.index(1)+1]:
                             if price < costs[hour]:
-                                next_lower_price = price
                                 hour_next_lower_price = costs.index(price)
                                 break
                         
@@ -219,29 +264,26 @@ def turn_on(hour, control, control_max, parameters, next_not_ok):
                     else:
                         if PRINT: print("\n[Constraint] Cheaper hour availability\n[DONE] No cheaper hour was reached.")
 
-            # ----------------------------
-            # Low noise hours
-            # ----------------------------
+    # Add the modifications at this hour to the solution dict
+    operation['control'][hour] = control[hour]
+    operation['control_max'][hour] = control_max[hour]
+    operation['mode'][hour] = mode[hour]
+    operation['cost'][hour] = cost[hour]
 
-            if key == "low_noise":
-                if PRINT: print("\n[Constraint] Low noise hours")
-                if hour in parameters['constraints']['low_noise_hours']:
-                    if PRINT: print("[DONE] The selected hour is in low noise hours. Run at maximum authorized.")
-                    control_max[hour] == 0
+    return operation
 
-    return control[hour], control_max[hour]
 
-'''
-Computes the status vector based on the current controls
-'''
 def get_status(control, parameters):
+    """
+    Computes the status vector based on the current controls
+    """
 
     # Extract from parameters
     N = parameters['horizon']
-    load = parameters['loads']
+    load = parameters['load']['value']
 
     # When every hour must be satisfied
-    if parameters['timestep'] == 'hourly':
+    if parameters['load']['type'] == 'hourly':
 
         storage = [parameters['constraints']['initial_soc']] + [0 for i in range(N)]
         status = [1]*N
@@ -253,10 +295,10 @@ def get_status(control, parameters):
                 status[hour] = 0
 
     # When a full day must be satisfied
-    elif parameters['timestep'] == 'daily':
+    elif parameters['load']['type'] == 'daily':
         
         # Status is OK when daily load is satisfied
-        if sum(control) >= parameters['required_control']:
+        if sum(control) >= parameters['load']['value']:
             status = [0]*N
         else:
             status = [0]*(N-1) + [1]
@@ -270,7 +312,7 @@ def get_storage(control, parameters):
     """
 
     storage = [parameters['constraints']['initial_soc']] + [0]*parameters['horizon']
-    load = parameters['loads']
+    load = parameters['load']['value']
 
     for hour in range(parameters['horizon']):
         if storage[hour] + control[hour] >= load[hour]:
@@ -279,35 +321,34 @@ def get_storage(control, parameters):
     return storage
 
 
-def iteration_plot(control, parameters):
+def iteration_plot(operation, parameters):
     """
     Plots the current iteration
     """
 
     # Extract
     N = parameters['horizon']
-    max_storage = parameters['constraints']['max_storage']
-    control_max = parameters['control_max']
-    control_min = [x*parameters['control_min_max_ratio'] for x in control_max]
-
-    # Duplicate the last element of the hourly data for the plot
-    costs_plot = parameters['elec_costs'] + [parameters['elec_costs'][-1]]
-    controls_plot = control + [control[-1]]
-    controls_max_plot = control_max + [control_max[-1]]
-    controls_min_plot = control_min + [control_min[-1]]
-
-    loads_plot = parameters['loads'] + [parameters['loads'][-1]]
+    control = operation['control']
+    costs_pu = parameters['elec_costs']
 
     fig, ax = plt.subplots(1,1, figsize=(13,4))
     ax2 = ax.twinx()
 
-    ax.step(range(N+1), loads_plot, where='post', color='red', alpha=0.4, label='Load')
+    # Plot the controls and prices
+    controls_plot = control + [control[-1]]
     ax.step(range(N+1), controls_plot, where='post', color='blue', alpha=0.5, label='Control')
-    ax.plot(range(N+1), get_storage(control, parameters), alpha=0.5, color='orange', label='Storage')
-    ax.plot(range(N+1), [max_storage]*(N+1), alpha=0.2, linestyle='dotted', color='orange')
-    #ax.plot(range(N+1), controls_max_plot, alpha=0.2, linestyle='dotted', color='blue')
-    #ax.plot(range(N+1), controls_min_plot, alpha=0.2, linestyle='dotted', color='blue')
+    costs_plot = costs_pu + [costs_pu[-1]]
     ax2.step(range(N+1), costs_plot, where='post', color='gray', alpha=0.6, label='Cost')
+
+    # Plot hourly loads
+    if parameters['load']['type']=='hourly':
+        loads_plot = parameters['load']['value'] + [parameters['load']['value'][-1]]
+        ax.step(range(N+1), loads_plot, where='post', color='red', alpha=0.4, label='Load')
+
+    # Plot the storage levels
+    if parameters['constraints']['storage_capacity']:
+        ax.plot(range(N+1), get_storage(control, parameters), alpha=0.5, color='orange', label='Storage')
+        ax.plot(range(N+1), [parameters['constraints']['max_storage']]*(N+1), alpha=0.2, linestyle='dotted', color='orange')
 
     ax.set_xlabel("Time [hours]")
     ax.set_ylabel("Control variable")
@@ -321,16 +362,19 @@ def iteration_plot(control, parameters):
     plt.show()
 
 
-def compute_costs(control, parameters):
+def check_parameters(parameters):
     """
-    Computes the costs of the running the system with the current control strategy
+    Checks that the entered parameters are coherent
     """
 
-    costs = parameters['elec_costs']
-    total_cost = 0
-    COP = 4
+    if len(parameters['elec_costs']) != parameters['horizon']:
+        raise ValueError("The length of the electricity price forecast must match the specified horizon.")
 
-    for hour in range(parameters['horizon']):
-        total_cost += costs[hour] * control[hour] / COP
-
-    print(f"The total cost of running the system during {parameters['horizon']} hours is {round(total_cost/1000,2)}")
+    if (parameters['load']['type'] == 'hourly' 
+        and len(parameters['load']['value']) != parameters['horizon']):
+            raise ValueError("The length of the load forecast must match the specified horizon.")
+    
+    if parameters['control']['type'] == 'range':
+        if (len(parameters['control']['max']) != parameters['horizon']
+            or len(parameters['control']['min']) != parameters['horizon']):
+            raise ValueError("The length of the control ranges must match the specified horizon.")
