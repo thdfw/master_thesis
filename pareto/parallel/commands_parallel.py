@@ -5,8 +5,6 @@ PRINT = False
 
 def get_commands(Q_HP, load):
 
-    print(f"load={load}"))
-
     # ---------------------------------------
     # Get d_HP, mode, load
     # ---------------------------------------  
@@ -80,14 +78,10 @@ def get_commands(Q_HP, load):
     return commands
 
 
-'''
+''' 
+# EXAMPLE
 Q_HP = [12.0, 0, 12.0, 12.0, 6.0, 0.0, 0.0, 0.0, 0.0, 6.0, 6.2, 12.0, 12.0, 12.0, 12.0, 0.0, 9.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 12.0]   
 load = [5.91, 5.77, 5.67, 5.77, 5.71, 6.06, 6.34, 6.34, 6.01, 5.77, 5.05, 5.05, 4.91, 4.91, 4.91, 4.91, 5.05, 5.1, 4.91, 4.91, 4.91, 4.91, 4.98, 4.91]
-
-crop = 3
-Q_HP=Q_HP[:crop]
-load=load[:crop]
-
 commands = get_commands(Q_HP, load)
 print(pd.DataFrame(commands))
 '''

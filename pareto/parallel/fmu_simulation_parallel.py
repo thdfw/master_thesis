@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import csv
 import time
 import subprocess
 
@@ -85,8 +84,8 @@ def simulate(commands, weather, num_hours, iter):
 
     # The simulation outputs a .mat file with results, convert it to csv.
     # The > print.txt just saves the prints from the script to another file.
-    command = f"python mat_to_csv.py {fmuNameNoSuffix+'_result.mat'} > prints.txt"
-    subprocess.call(command, shell=True)
+    command =f"python MAT_to_CSV_conversion.py {fmuNameNoSuffix+'_result.mat'} {fmuNameNoSuffix+'_data_points.csv'}"
+    subprocess.run(command, shell=True, capture_output=True, text=True)
     if PRINT: print("Converted the .mat results to .csv")
 
     # Read the results file and save as csv

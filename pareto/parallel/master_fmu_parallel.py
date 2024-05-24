@@ -2,10 +2,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import sys
 import datetime as dtm
-import math
-import load_forecast, pareto_algorithm, fmu_simulation, weather_forecast
+import load_forecast, pareto_algorithm
+import commands_parallel, fmu_simulation_parallel
 
 # Rendering
 PLOT = True
@@ -22,16 +21,8 @@ c_el_list = []
 start, end = None, None
 start = dtm.datetime(2024, 5, 24, 0, 0, 0)
 end = start + dtm.timedelta(hours=50)
-weather_total, CI_weather = weather_forecast.get_weather(start, end)
-
-# Treat NaNs
-for i in range(len(weather_total)):
-    if math.isnan(weather_total[i]):
-        print(f"\nWARNING: A NaN was found at hour {i} of the weather forecast provided by pvlib.")
-        if i>0:
-            weather_total[i] = weather_total[i-1]
-        else:
-            weather_total[i] = 100
+weather_total = list(load_forecast.get_past_data(os.getcwd()+'/data/gridworks_yearly_data.xlsx')['T_OA'][:50])
+CI_weather = [0]*50
 
 # ---------------------------------------
 # Parameters
@@ -133,46 +124,6 @@ for iter in range(num_iterations):
     final_CI = [round(x[0],2) for x in final_CI]
     if PRINT: print(f"\nCombining with weather confidence interval:")
     if PRINT: print(f"{[round(x[0],2) for x in pred_load]} \n+/- {final_CI} kWh")
-
-    # PLOT
-    if PLOT:
-        fig, ax = plt.subplots(2,1, figsize=(8,5), sharex=True)
-
-        ax[0].set_xlabel("Time [hours]")
-        ax[0].set_ylabel("Load [kWh]")
-
-        pred_min_load = [pred_load[i][0] - (pred_max_load[i][0] - pred_load[i][0]) for i in range(len(pred_load))]
-        pred_max_load = [x[0] for x in pred_max_load]
-
-        ax[0].plot(pred_load, color='red', alpha=0.8, label='Load')
-        ax[0].fill_between(range(len(pred_load)), pred_min_load, pred_max_load, color='red', alpha=0.1, label='Weather CI')
-
-        min1 = [pred_max_load[i]-CI_load[0] for i in range(len(pred_load))]
-        max1 = [pred_max_load[i]+CI_load[0] for i in range(len(pred_load))]
-
-        min2 = [pred_min_load[i]-CI_load[0] for i in range(len(pred_load))]
-        max2 = [pred_min_load[i]+CI_load[0] for i in range(len(pred_load))]
-
-        ax[0].fill_between(range(len(pred_load)), min1, max1, color='blue', alpha=0.1, label='Forecaster CI on max/min weather')
-        ax[0].fill_between(range(len(pred_load)), min2, max2, color='blue', alpha=0.1)
-
-        ax[0].plot([pred_max_load[i]+CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted', label='Overall CI')
-        ax[0].plot([pred_min_load[i]-CI_load for i in range(len(pred_load))], color='red', alpha=0.8, linestyle='dotted')
-        ax[0].set_ylim([max([pred_max_load[i]+CI_load for i in range(len(pred_load))])+2.5, min([pred_min_load[i]-CI_load for i in range(len(pred_load))])-2.5])
-        ax[0].legend()
-
-        ax[1].set_xlabel("Time [hours]")
-        ax[1].set_ylabel("Outside air temperature [°C]")
-
-        ax[1].plot(weather, color='gray', alpha=0.8, label='Outside air temperature [°C]')
-
-        min_weather = [weather[i]-CI_weather[i] for i in range(len(CI_weather))]
-        max_weather = [weather[i]+CI_weather[i] for i in range(len(CI_weather))]
-        ax[1].fill_between(range(len(pred_load)), min_weather, max_weather, color='gray', alpha=0.1, label='Weather CI')
-        ax[1].set_ylim([max(max_weather)+10,min(min_weather)-10])
-        ax[1].legend()
-
-        plt.show()
     
     # ---------------------------------------
     print("3 - Get HP commands from Pareto")
@@ -180,14 +131,12 @@ for iter in range(num_iterations):
 
     # Get the operation over the forecsats
     Q_HP, m_HP = pareto_algorithm.get_pareto(pred_load, price_forecast, weather, T_HP_in, T_sup_HP_min, max_storage, False, False, num_hours, final_CI, iter, SoC_0)
-    if PRINT: print(f"Obtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}")
+    if PRINT: print(f"\nObtained the solution from the pareto algorithm.\nQ_HP = {Q_HP}\n")
 
     # ---------------------------------------
     # Hourly schedule -> minute commands
     # ---------------------------------------    
 
-    import commands_parallel
-    import fmu_simulation_parallel
     pred_load = [x[0] for x in pred_load]
     commands = commands_parallel.get_commands(Q_HP, pred_load)
         
@@ -206,25 +155,23 @@ for iter in range(num_iterations):
     df['SOC'] = df['SOC'].round(2)
     
     # Compute real Q_HP
-    df['m_HP'] = (df['T_HP_sup']-273).apply(fmu_simulation.m_HP)
-    df['Q_HP'] = df['HeatPumpOnOff'] * df['m_HP'] * 4187 * (df['T_HP_sup'] - df['T_HP_ret'])
+    df['Q_HP'] = df['HeatPumpOnOff'] * 0.29 * 4187 * (df['HpSupplyTemp'] - df['HpReturnTemp'])
     df['Q_HP'] = df['Q_HP'] / 1000
     df['Q_HP'] = df['Q_HP'].round(2)
     df['HeatPumpOnOff'] = df['HeatPumpOnOff'].round()
-    df['T_HP_ret'] = df['T_HP_ret'].round(1)
-    df['T_HP_sup'] = df['T_HP_sup'].round(1)
-    df.drop('m_HP', axis=1, inplace=True)
+    df['HpReturnTemp'] = df['HpReturnTemp'].round(1)
+    df['HpSupplyTemp'] = df['HpSupplyTemp'].round(1)
+    df['ReturnTempFromLoad'] = df['ReturnTempFromLoad'].round(1)
+    df['SupplyTempToLoad'] = df['SupplyTempToLoad'].round(1)
 
     # Add inputs to df
-    df['INPUT_delta_HP'] = [x for x in delta_HP[:num_hours] for _ in range(60)]
-    df['INPUT_T_HP_sup_setpoint'] = [x+273 for x in T_sup_HP[:num_hours] for _ in range(60)]
+    df['INPUT_delta_HP'] = commands['delta_HP'][:num_hours*60]
+    df['INPUT_T_HP_sup'] = commands['T_sup_HP'][:num_hours*60]
 
     # Compute expected Q_HP
-    df['m_HP_expected'] = (df['INPUT_T_HP_sup_setpoint']-273).apply(fmu_simulation.m_HP)
-    df['Q_HP_expected'] = df['INPUT_delta_HP'] * df['m_HP_expected'] * 4187 * (df['INPUT_T_HP_sup_setpoint'] - T_HP_in - 273)
+    df['Q_HP_expected'] = df['INPUT_delta_HP'] * 0.29 * 4187 * (df['INPUT_T_HP_sup'] + 273 - df['HpReturnTemp'])
     df['Q_HP_expected'] = df['Q_HP_expected'] / 1000
     df['Q_HP_expected'] = df['Q_HP_expected'].round(2)
-    df.drop('m_HP_expected', axis=1, inplace=True)
 
     if PRINT: print(df)
 
