@@ -70,7 +70,7 @@ def get_commands(Q_HP, load):
     # --------------------------------------- 
 
     for hour in range(len(Q_HP)):
-        if PRINT or hour==0:
+        if PRINT and hour==0:
             print(f"\nHour {hour}")
             print(f"OnOff: {delta_HP[hour*60:hour*60+60]}")
             print(f"Mode: {modes[hour*60:hour*60+60]}")    
