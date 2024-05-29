@@ -7,8 +7,8 @@ import load_forecast, pareto_algorithm
 import commands_parallel, fmu_simulation_parallel
 
 # Rendering
-PLOT = True
-PRINT = True
+PLOT = False
+PRINT = False
 
 # All lists for final plot
 Q_HP_list = []
@@ -17,10 +17,7 @@ load_list = []
 SOC_list = []
 c_el_list = []
 
-# Get forecast for Maine (= None for live forecast)
-start, end = None, None
-start = dtm.datetime(2024, 5, 24, 0, 0, 0)
-end = start + dtm.timedelta(hours=50)
+# Get weather
 weather_total = list(load_forecast.get_past_data(os.getcwd()+'/data/gridworks_yearly_data.xlsx')['T_OA'][:50])
 CI_weather = [0]*50
 
@@ -74,23 +71,6 @@ for iter in range(num_iterations):
     # ---------------------------------------
     print("1 - Get weather forecast")
     # ---------------------------------------
-
-    '''
-    # Get forecast for Maine (= None for live forecast)
-    start, end = None, None
-    start = dtm.datetime(2024, 3, 6, 0, 0, 0) + dtm.timedelta(hours=iter)
-    end = start + dtm.timedelta(hours=17)
-    weather, CI_weather = weather_forecast.get_weather(start, end)
-
-    # Treat NaNs
-    for i in range(len(weather)):
-        if math.isnan(weather[i]):
-            print(f"\nWARNING: A NaN was found at hour {i} of the weather forecast provided by pvlib.")
-            if i>0:
-                weather[i] = weather[i-1]
-            else:
-                weather[i] = 100
-    '''
     
     weather = weather_total[iter:iter+17]
     print([round(x,1) for x in weather])
@@ -159,21 +139,22 @@ for iter in range(num_iterations):
     df['Q_HP'] = df['Q_HP'] / 1000
     df['Q_HP'] = df['Q_HP'].round(2)
     df['HeatPumpOnOff'] = df['HeatPumpOnOff'].round()
-    df['HpReturnTemp'] = df['HpReturnTemp'].round(1)
-    df['HpSupplyTemp'] = df['HpSupplyTemp'].round(1)
+    df['HpReturnTemp'] = df['HpReturnTemp'].round(1) -273
+    df['HpSupplyTemp'] = df['HpSupplyTemp'].round(1) -273
     df['ReturnTempFromLoad'] = df['ReturnTempFromLoad'].round(1)
     df['SupplyTempToLoad'] = df['SupplyTempToLoad'].round(1)
 
     # Add inputs to df
     df['INPUT_delta_HP'] = commands['delta_HP'][:num_hours*60]
     df['INPUT_T_HP_sup'] = commands['T_sup_HP'][:num_hours*60]
+    df['INPUT_Mode'] = commands['mode'][:num_hours*60]
 
     # Compute expected Q_HP
-    df['Q_HP_expected'] = df['INPUT_delta_HP'] * 0.29 * 4187 * (df['INPUT_T_HP_sup'] + 273 - df['HpReturnTemp'])
-    df['Q_HP_expected'] = df['Q_HP_expected'] / 1000
+    df['Q_HP_expected'] = [Q_HP[0]] * len(df)
     df['Q_HP_expected'] = df['Q_HP_expected'].round(2)
 
     if PRINT: print(df)
+    print(df[['SOC', 'Q_HP', 'Q_HP_expected', 'INPUT_Mode', 'INPUT_T_HP_sup', 'HpSupplyTemp', 'HpReturnTemp']])
 
     # Electricity prices and load
     # c_el_crop = [x for x in c_el[:num_hours] for _ in range(60)]
@@ -207,8 +188,8 @@ c_el_list = [x for x in c_el_list for _ in range(60)]
 
 # Plot
 fig, ax = plt.subplots(1,1, figsize=(13,4))
-ax.step(range(num_iterations*60), Q_HP_list, where='post', color='blue', alpha=0.6, label="HP real")
-ax.step(range(num_iterations*60), Q_HP_expected_list, where='post', color='blue', alpha=0.6, linestyle='dotted', label="HP predicted")
+# ax.step(range(num_iterations*60), Q_HP_list, where='post', color='blue', alpha=0.6, label="HP real")
+ax.step(range(num_iterations*60), Q_HP_expected_list, where='post', color='blue', alpha=0.6, label="Heat Pump")
 ax.step(range(num_iterations*60), load_list, where='post', color='red', alpha=0.6, label="Load")
 ax.plot([0] + SOC_list, color='orange', alpha=0.8, label="Storage")
 ax.plot([max_storage]*num_iterations*60, color='orange', alpha=0.8, label="Maximum storage", linestyle='dashed')

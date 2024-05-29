@@ -20,11 +20,9 @@ except ImportError:
 model = pyfmi.load_fmu(fmuName)
 if PRINT: print(f"Model {fmuName} was loaded.\n")
 
-def m_HP(T):
-    if   T<=45: m = 34.5/60
-    elif T<=55: m = 21.6/60 #(0.36 kg/s)
-    else:       m = 17.3/60 #(0.29 kg/s)
-    return round(m,2)
+# Initial conditions
+model.set('phaseChangeBattery58.TStart_pcm', 273.15+55)
+model.set('phaseChangeBattery58.Design.Tes_nominal', 20*3600000)
 
 # Get the FMU inputs for a given hour
 def get_inputs(min, commands, weather):
@@ -33,11 +31,12 @@ def get_inputs(min, commands, weather):
 
     inputs_dict = {
         'SysMode': commands['mode'][min],
-        'HeatPumpWaterSupplyMassFlow': 0.29,
+        'HeatPumpWaterSupplyMassFlow': 0.29 if commands['delta_HP'][min]==1 else 0,
         'HeatPumpOnOff': commands['delta_HP'][min],
         'HeatPumpMode': 1,
         'HeatPumpWaterTempSetpoint': commands['T_sup_HP'][min] + 273,
         'OutdoorAirTemperature': weather[min] + 273,
+        'PCMPumpWaterSupplyMassFlow': 0.3 if commands['mode'][min]==3 else 0,
         'ZoneHeatingLoad': commands['load'][min]*1000,
     }
         
@@ -92,6 +91,5 @@ def simulate(commands, weather, num_hours, iter):
     results_dataframe = pd.read_csv(fmuNameNoSuffix+'_result.csv').drop('Unnamed: 0', axis=1)
     results_dataframe.to_csv('simulation_results.csv', index=False)
     if PRINT: print("Results saved in simulation_results.csv.\n")
-    print(results_dataframe)
     
     return results_dataframe

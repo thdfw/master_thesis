@@ -178,7 +178,9 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
         c_el = price_forecast
         
     # Get the future prices at the current iteration time
-    c_el = c_el[iter:iter+num_hours]
+    c_el = c_el * 2
+    c_el = c_el[iter%24:]
+    c_el = c_el[:num_hours]
     if PRINT: print(f"Cost forecast:\n{c_el}")
         
     # Water returning from the PCM (°C)
@@ -200,10 +202,11 @@ def get_costs_and_ranges(price_forecast, T_OA_list, T_HP_in, T_HP_out_min, num_h
         Q_HP_min = 6
         Q_HP_max = 12
         cost_th = 4/12 * c_el[i]
+        m_HP = 17.3/60
         Q_HP_min_list.append(round(Q_HP_min,1))
         Q_HP_max_list.append(round(Q_HP_max,1))
         cost_th_list.append(cost_th)
-        m_HP_list.append(0) #useless
+        m_HP_list.append(m_HP)
         
     return Q_HP_min_list, Q_HP_max_list, cost_th_list, m_HP_list
 
@@ -375,7 +378,7 @@ def get_pareto(load, price_forecast, T_OA_list, T_HP_in, T_HP_out_min, max_stora
                         best_q = Q_HP[ranking.index(i)]
 
                         # Find the minimum Q_HP in that range that satisfied storage[min hour] > 0
-                        if PRINT: print(f"Looking into range: ({q_mini/10}, {q_maxi/10})")
+                        if PRINT: print(f"Looking into range: ({q_mini},{q_maxi})")
                         for fake_q in range(q_mini, q_maxi+1):
                             
                             real_q = fake_q/10

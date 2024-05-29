@@ -35,11 +35,14 @@ def get_commands(Q_HP, load):
     # Get T_sup_HP
     # --------------------------------------- 
 
-    Q_HP_by_min = [x for x in Q_HP for _ in range(60)]
-    T_sup_HP = [0 if q==0 else np.nan for q in Q_HP for _ in range(60)]
-    T_ret_PCM = 57 
+    T_ret_PCM = 58 
     T_HP_min = 55
     T_HP_max = 65
+    
+    Q_HP_by_min = [x for x in Q_HP for _ in range(60)]
+    T_sup_HP = [T_HP_min if q==0 else np.nan for q in Q_HP for _ in range(60)]
+
+    count_min_mode2 = 0
 
     for min in range(len(T_sup_HP)):
         # Assume a constant temperature drop at the load for now
@@ -49,24 +52,30 @@ def get_commands(Q_HP, load):
             T_sup_HP[min] = round(Q_HP_by_min[min]*1000/0.29/4187 + (T_sup_HP[min-1] - 10),1)
         # Assume a constant return water temperature from the PCM
         elif modes[min]==2:
-            T_sup_HP[min] = round(Q_HP_by_min[min]*1000/0.29/4187 + T_ret_PCM,1)
+            count_min_mode2 += 1
+            if count_min_mode2==1:
+                T_sup_HP[min] = round(Q_HP_by_min[min]*1000/0.29/4187 + T_sup_HP[min-1]-10,1)
+            elif count_min_mode2<5:
+                T_sup_HP[min] = round(Q_HP_by_min[min]*1000/0.29/4187 + 50 + 2.33*count_min_mode2,1)
+            else:
+                T_sup_HP[min] = round(Q_HP_by_min[min]*1000/0.29/4187 + T_ret_PCM,1)
         
         if T_sup_HP[min] > T_HP_max:
             T_sup_HP[min] = T_HP_max
-        if T_sup_HP[min] < T_HP_min:
+        if T_sup_HP[min] < T_HP_min and T_sup_HP[min]!=0:
             T_sup_HP[min] = T_HP_min
 
     # ---------------------------------------
     # Print results
     # --------------------------------------- 
 
-    if PRINT:
-        for hour in range(len(Q_HP)):
+    for hour in range(len(Q_HP)):
+        if PRINT or hour==0:
             print(f"\nHour {hour}")
-            print(delta_HP[hour*60:hour*60+60])
-            print(modes[hour*60:hour*60+60])    
-            print(loads[hour*60:hour*60+60])
-            print(T_sup_HP[hour*60:hour*60+60])
+            print(f"OnOff: {delta_HP[hour*60:hour*60+60]}")
+            print(f"Mode: {modes[hour*60:hour*60+60]}")    
+            print(f"Load: {[round(x,2) for x in loads[hour*60:hour*60+60]]}")
+            print(f"Tsupply: {T_sup_HP[hour*60:hour*60+60]}")
 
     commands = {
         'mode': modes,
