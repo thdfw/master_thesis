@@ -37,7 +37,7 @@ def get_inputs(min, commands, weather):
         'HeatPumpWaterTempSetpoint': commands['T_sup_HP'][min] + 273,
         'OutdoorAirTemperature': weather[min] + 273,
         'PCMPumpWaterSupplyMassFlow': 0.3 if commands['mode'][min]==3 else 0,
-        'ZoneHeatingLoad': commands['load'][min]*1000,
+        'ZoneHeatingLoad': commands['load'][min]*1000*0.75,
     }
         
     return list(inputs_dict.values()), list(inputs_dict)

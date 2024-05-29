@@ -73,7 +73,7 @@ for iter in range(num_iterations):
     # ---------------------------------------
     
     weather = weather_total[iter:iter+17]
-    print([round(x,1) for x in weather])
+    if PRINT: print([round(x,1) for x in weather])
 
     # Lenght of simulation (hours)
     num_hours = len(weather)
@@ -92,8 +92,6 @@ for iter in range(num_iterations):
     CI_load = pred_load[0]-min_pred_load[0]
     if PRINT: print(f"\nLoad succesfully predicted with {best_forecaster}, with {round((1-delta)*100)}% confidence interval.")
     if PRINT: print(f"{[round(x[0],2) for x in pred_load]} \n+/- {CI_load} kWh")
-    
-    #pred_load = [0.8*x for x in pred_load]
 
     # Predict load with 95% confidence interval for coldest predicted weather (weather - CI)
     min_weather = [round(weather[i]-CI_weather[i],2) for i in range(num_hours)]
@@ -158,7 +156,7 @@ for iter in range(num_iterations):
 
     # Electricity prices and load
     # c_el_crop = [x for x in c_el[:num_hours] for _ in range(60)]
-    load = [x for x in pred_load[:num_hours] for _ in range(60)]
+    load = [x*0.75 for x in pred_load[:num_hours] for _ in range(60)]
 
     if PLOT:
         fig, ax = plt.subplots(1,1, figsize=(13,4))
