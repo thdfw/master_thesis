@@ -341,9 +341,9 @@ def iteration_plot(operation, parameters):
 
     # Plot the controls and prices
     controls_plot = control + [control[-1]]
-    ax.step(range(N+1), controls_plot, where='post', color='blue', alpha=0.5, label='Control')
+    ax.step(range(N+1), controls_plot, where='post', color='blue', alpha=0.5, label='Heat pump')
     costs_plot = costs_pu + [costs_pu[-1]]
-    ax2.step(range(N+1), costs_plot, where='post', color='gray', alpha=0.6, label='Cost')
+    ax2.step(range(N+1), costs_plot, where='post', color='gray', alpha=0.6, label='Electricity price')
 
     # Plot hourly loads
     if parameters['load']['type']=='hourly':
@@ -352,17 +352,17 @@ def iteration_plot(operation, parameters):
 
     # Plot the storage levels
     if parameters['constraints']['storage_capacity']:
-        ax.plot(range(N+1), get_storage(control, parameters), alpha=0.5, color='orange', label='Storage')
-        ax.plot(range(N+1), [parameters['constraints']['max_storage']]*(N+1), alpha=0.2, linestyle='dotted', color='orange')
+        ax.plot(range(N+1), get_storage(control, parameters), alpha=0.6, color='orange', label='Storage')
+        ax.plot(range(N+1), [parameters['constraints']['max_storage']]*(N+1), alpha=0.5, linestyle='dotted', color='orange', label='Maximum storage')
 
     ax.set_xlabel("Time [hours]")
-    ax.set_ylabel("Control variable")
-    ax2.set_ylabel("Price per unit")
+    ax.set_ylabel("Energy [kWh]")
+    ax2.set_ylabel("Cost [cts/kWh]")
 
     ax.set_xticks(range(N+1))
-    lines1, labels1 = ax.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax.legend(lines1 + lines2, labels1 + labels2)
+    
+    ax.legend(loc='upper left')
+    ax2.legend(loc='upper right')
 
     plt.show()
 
