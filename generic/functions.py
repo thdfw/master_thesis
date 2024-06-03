@@ -6,8 +6,8 @@ from poolstuff import get_mapping
 
 # Choose the desired level of output detail
 INTERMEDIATE_PLOT = False
-FINAL_PLOT = True
-PRINT = True
+FINAL_PLOT = False
+PRINT = False
 
 def generic(parameters):
     """
@@ -39,6 +39,8 @@ def generic(parameters):
         status = [1]*parameters['horizon']
     elif parameters['load']['type'] == 'daily':
         status = [0]*(parameters['horizon']-1) + [1]
+    if parameters['constraints']['storage_capacity']:
+        status = get_status(operation['control'], parameters)
 
     # ---------------------------------------------------
     # Run the generic algorithm
@@ -75,7 +77,7 @@ def generic(parameters):
             # Skip hours before a maximum storage occurence
             if parameters['constraints']['storage_capacity']:
                 storage_full = [1 if round(x,1)==parameters['constraints']['max_storage'] else 0 for x in get_storage(operation['control'], parameters)]
-                if sum(storage_full)>0 and hour <= storage_full.index(1):
+                if sum(storage_full)>0 and hour <= storage_full.index(1) and hour!=0:
                     continue
             
             current_mode = hours_ranked['mode'][rank]
@@ -99,8 +101,9 @@ def generic(parameters):
             
             # Entire problem is solved
             if sum(status) == 0:
-                if PRINT: print("\n" + "*"*30 + "\nProblem solved!\n" + "*"*30 + "\n")          
-                print(f"The total cost of the {parameters['horizon']} hours of operation is {round(sum(operation['cost'])/100,2)}.\n")  
+                if PRINT: 
+                    print("\n" + "*"*30 + "\nProblem solved!\n" + "*"*30 + "\n")          
+                    print(f"The total cost of the {parameters['horizon']} hours of operation is {round(sum(operation['cost']),2)}.\n")  
                 if FINAL_PLOT: iteration_plot(operation, parameters)
                 df_operation = pd.DataFrame(operation)
                 return df_operation[['control','mode']] if parameters['control']['type']=='mode' else list(df_operation['control'])
@@ -166,7 +169,9 @@ def turn_on(hour, operation, hour_mode, hours_ranked, parameters, next_unsatisfi
     # Apply the maximum control if there is no given mode
     if parameters['control']['type'] == 'range':
         control[hour] = control_max[hour]
-        cost[hour] = control[hour] * parameters['elec_costs'][hour] / 4 # TODO replace 4 by COP estimation
+        cost[hour] = control[hour] * parameters['elec_costs'][hour]
+        if parameters['hardware']['heatpump']:
+            cost[hour] = cost[hour] / parameters['hardware']['COP'][hour]
 
     # Apply the given mode at that hour
     if parameters['control']['type'] == 'mode':
