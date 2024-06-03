@@ -41,6 +41,8 @@ def generic(parameters):
         status = [0]*(parameters['horizon']-1) + [1]
     if parameters['constraints']['storage_capacity']:
         status = get_status(operation['control'], parameters)
+        if sum(status)==0:
+            return operation['control']
 
     # ---------------------------------------------------
     # Run the generic algorithm
