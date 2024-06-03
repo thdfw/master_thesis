@@ -67,7 +67,7 @@ df['T_OA'] = df['T_OA'].apply(lambda x: round(5/9 * (x-32),2))
 df = df[['elec', 'load', 'T_OA']]
 df.head()
 
-# Initial state of charge
+# Initial state of charge (kWh)
 soc = 0
 
 # Initialize cost of operating the system
@@ -96,7 +96,7 @@ for hour in range(24*2):
                         },
 
         'hardware': {'heatpump': True,
-                        'COP': [3]*24}
+                     'COP': [3]*24}
     }
 
     # Get the controls, update the storage
