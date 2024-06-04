@@ -203,7 +203,7 @@ def turn_on(hour, operation, hour_mode, hours_ranked, parameters, next_unsatisfi
 
                 else:
                     # See if you can reduce the power at that time
-                    if control[hour] - storage_excess > control_min[hour]:
+                    if control[hour] - storage_excess > control_min[hour] and control[hour] - storage_excess > control_backup[hour]:
                         if PRINT: print(f"[DONE] The control was lowered by {storage_excess} to avoid storage excess.")
                         # Set the control to the max power that does not exceed storage
                         control[hour] += -storage_excess
